@@ -1,4 +1,8 @@
-package org.example.model;
+package org.example.model.unit;
+
+import org.example.model.Cost;
+import org.example.model.Player;
+import org.example.model.UnitModeEnum;
 
 public class Unit {
 
