@@ -1,12 +1,12 @@
 package org.example.model;
 
 public class Player {
-
+    // TODO : some functions and constructor
     private int fearRate ;
     private int taxRate ;
     private int foodRate ;
     private int religionRate ;
-    // private Account account ;
+    // TODO : private Account account ;
     private int pitchCapacity ;
     private int meatCapacity ;
     private int breadCapacity ;
@@ -24,16 +24,16 @@ public class Player {
     private int iron ;
     private int population ;
     private int populationCapacity ;
-    // private ArrayList< Unit > units ;
-    // private ArrayList< Building > buildings ;
+    // TODO : private ArrayList< Unit > units ;
+    // TODO : private ArrayList< Building > buildings ;
     private int popularity ;
 
     public void updatePopularity(){
-        // update popularity based on different parameters
+        // TODO : update popularity based on different parameters
     }
 
     public void updatePopulationCapacity(){
-        // updating population capacity based on different parameters
+        // TODO : updating population capacity based on different parameters
     }
 
     public void setTaxRate( int taxRate ){
@@ -52,17 +52,17 @@ public class Player {
 
     public String getName(){
         return null ;
-        // return name
-        // return this.account.getName() ;
+        // TODO : return name
+        // TODO : return this.account.getName() ;
     }
 
     public String getSlogan(){
         return null ;
-        // return slogan
+        // TODO : return slogan
     }
 
     public void updatePopulation(){
-        // update population
+        // TODO update population
     }
 
 }
