@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="469e65d3-e9b9-49c1-8d06-0a7f36b1f7ad" name="Changes" comment="Initial commit for branch">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/unit/Unit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/building/Building.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +16,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -49,7 +50,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1681909859152</updated>
-      <workItem from="1681909860329" duration="6886000" />
+      <workItem from="1681909860329" duration="8445000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit for branch">
       <created>1681912039017</created>
