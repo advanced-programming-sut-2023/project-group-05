@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="469e65d3-e9b9-49c1-8d06-0a7f36b1f7ad" name="Changes" comment="Initial commit for branch" />
+    <list default="true" id="469e65d3-e9b9-49c1-8d06-0a7f36b1f7ad" name="Changes" comment="Initial commit for branch">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Cost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,7 +28,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Oe8nygeOBbLwyprK09XdleF0Gk" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -44,7 +50,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1681909859152</updated>
-      <workItem from="1681909860329" duration="1550000" />
+      <workItem from="1681909860329" duration="2666000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit for branch">
       <created>1681912039017</created>
