@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="469e65d3-e9b9-49c1-8d06-0a7f36b1f7ad" name="Changes" comment="Initial commit for branch">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" afterDir="false" />
     </list>
