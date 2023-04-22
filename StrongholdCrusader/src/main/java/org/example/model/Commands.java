@@ -1,5 +1,4 @@
 package org.example.model;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -68,11 +67,12 @@ public enum Commands {
         this.options = options;
     }
 
-    public static Matcher getMatchingMatcher (String input,Commands command,int i,int permutationSize){
+    public static Matcher getMatchingMatcher (String input,Commands command){
         Matcher matcher;
         String regex = command.commandName;
         if (command.options.size()==0)
             return (matcher = Pattern.compile(regex).matcher(input)).matches() ? matcher : null;
+        int permutationSize = factorial(command.options.size());
         ArrayList<ArrayList<String>> totalSet = new ArrayList<>(permutationSize);
         ArrayList<String> buffer = new ArrayList<>(command.options.size());
         for (String string : command.options)
@@ -98,6 +98,11 @@ public enum Commands {
         if (k == array.size() -1){
             totalSet.add(array);
         }
+    }
+
+    public static int factorial (int n){
+        if (n==1) return 1;
+        return n*factorial(n-1);
     }
 }
 
