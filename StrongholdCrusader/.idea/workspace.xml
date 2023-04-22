@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="469e65d3-e9b9-49c1-8d06-0a7f36b1f7ad" name="Changes" comment="Commands Class (need to get debugged) Full Version Added">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/GameMenuController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/LoginMenuController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/ProfileMenuController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/SignupMenuController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/view/GameMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/view/LoginMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/view/Menu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/view/ProfileMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/view/SignupMenu.java" afterDir="false" />
+    <list default="true" id="469e65d3-e9b9-49c1-8d06-0a7f36b1f7ad" name="Changes" comment="View added (PreDebugged Version)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/LoginMenuController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/SignupMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/SignupLoginMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/LoginMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/SignupMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/SignupLoginMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +129,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682095925313</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="View added (PreDebugged Version)">
+      <created>1682176242892</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1682176242892</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,7 +156,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit for branch" />
     <MESSAGE value="Commands Class (need to get debugged) Full Version Added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commands Class (need to get debugged) Full Version Added" />
+    <MESSAGE value="View added (PreDebugged Version)" />
+    <option name="LAST_COMMIT_MESSAGE" value="View added (PreDebugged Version)" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/StrongholdCrusader$TestClass.ic" NAME="TestClass Coverage Results" MODIFIED="1681928451699" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
