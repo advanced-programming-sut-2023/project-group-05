@@ -24,7 +24,7 @@ public class MyHash
     {
         return (long)c;
     }
-    public long Hsh;
+    private long Hsh;
     public long Encode(String S)
     {
         long nowHsh = 0;
@@ -38,7 +38,7 @@ public class MyHash
     public boolean isEqual(String inp)
     {
         long now = Encode(inp);
-        return now == Hsh;
+        return now == this.Hsh;
     }
     MyHash(String S)
     {
