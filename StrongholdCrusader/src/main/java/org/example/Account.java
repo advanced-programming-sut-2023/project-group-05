@@ -15,6 +15,7 @@ public class Account
     {
         return accountsMap;
     }
+    MyHash accountHash;
     private String userName, nickName, email;
     private long highScore;
     private int slogan, question, answer;
@@ -46,11 +47,12 @@ public class Account
     {
         return question;
     }
-    public Account(String _userName, String _nickName, String _email, long _highScore, int _slogan, int _question, int _answer)
+    public Account(String _userName, String _nickName, String _email, string _password, long _highScore, int _slogan, int _question, int _answer)
     {
         this.userName = _userName;
         this.nickName = _nickName;
         this.email = _email;
+        accountHash = new MyHash(_password);
         this.highScore = _highScore;
         this.slogan = _slogan;
         this.question = _question;
