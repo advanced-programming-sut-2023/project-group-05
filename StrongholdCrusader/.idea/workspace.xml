@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="469e65d3-e9b9-49c1-8d06-0a7f36b1f7ad" name="Changes" comment="Initial commit for branch">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/building/AttackDefenceBuilding.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/building/StorageBuilding.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/building/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/building/Building.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +111,7 @@
       <workItem from="1681926367897" duration="269000" />
       <workItem from="1681926977161" duration="3338000" />
       <workItem from="1682008704006" duration="37000" />
-      <workItem from="1682276364215" duration="549000" />
+      <workItem from="1682276364215" duration="860000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit for branch">
       <created>1681912039017</created>
