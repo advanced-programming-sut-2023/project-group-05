@@ -4,19 +4,19 @@ public class MyHash
 {
     static private long MOD;
     static private long BASE;
-    static public void modSetter(long inp)
+    static public void setMOD(long inp)
     {
         MOD = inp;
     }
-    static public long modGetter()
+    static public long getMOD()
     {
         return MOD;
     }
-    static public void baseSetter(long inp)
+    static public void setBASE(long inp)
     {
         BASE = inp;
     }
-    static public long baseGetter()
+    static public long getBASE()
     {
         return BASE;
     }
@@ -31,7 +31,7 @@ public class MyHash
         int n = S.length();
         for(int i = 0; i < n; i ++)
         {
-            nowHsh = (nowHsh * baseGetter() + getInt(S.charAt(i))) % modGetter();
+            nowHsh = (nowHsh * getBASE() + getInt(S.charAt(i))) % getMOD();
         }
         return nowHsh;
     }
