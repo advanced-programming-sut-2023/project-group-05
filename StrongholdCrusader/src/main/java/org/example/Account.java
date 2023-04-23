@@ -47,7 +47,7 @@ public class Account
     {
         return question;
     }
-    public Account(String _userName, String _nickName, String _email, string _password, long _highScore, int _slogan, int _question, int _answer)
+    public Account(String _userName, String _nickName, String _email, String _password, long _highScore, int _slogan, int _question, int _answer)
     {
         this.userName = _userName;
         this.nickName = _nickName;
