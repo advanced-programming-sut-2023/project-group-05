@@ -19,7 +19,7 @@ public class Building {
     private final int column ;
     private final boolean holdsAnimal ;
     private boolean passable ;
-    private int hitPoint ;
+    protected int hitPoint ;
 
     Building( String name , int width , int height , boolean passable , String category , Player owner
             , int row , int column , Cost cost , int hitPoint , int popularityRate , boolean holdsAnimal ){
