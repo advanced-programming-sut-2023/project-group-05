@@ -1,11 +1,13 @@
 package org.example.controller;
 
 import org.example.MyHash;
+import org.example.SignUpLoginMenu;
 import org.example.model.Account;
 import org.example.model.Commands;
 import org.example.view.MainMenu;
 import org.example.view.Menu;
 import org.example.view.SignupLoginMenu;
+import org.json.simple.JSONObject;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -61,7 +63,7 @@ public class SignupLoginMenuController {
             System.out.println("This username already exists :/\nYou can pick " + randomUsername + "if you like\n" +
                     "Enter ( y / n ) for yes or no : "  ) ;
             String inputYN = scanner.nextLine() ;
-            if( !inputYN.equals( "Y" ) ) return "create user failed" ;
+            if( !inputYN.equals( "y" ) ) return "create user failed" ;
             userName = randomUsername ;
         }
         if(slogan == null)
@@ -71,11 +73,25 @@ public class SignupLoginMenuController {
         }
         if(password.equals("random"))
         {
-            String[26] small = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+            String[] character = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
                 "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"} ;
             password = "" ;
-            password
+            Random random = new Random() ;
+            password += "#$%" ;
+            for(int i = 0 ; i < 4 ; i++)
+                password += character[ Math.abs(random.nextInt()) % 26 ] ;
+            password += "$#5489" ;
+            for(int i = 0 ; i < 4 ; i++)
+                password += character[ Math.abs(random.nextInt()) % 26 ].toUpperCase() ;
+            password += "@!@!" ;
+            for(int i = 0 ; i < 4 ; i++)
+                password += Math.abs(random.nextInt()) % 26 ;
+            password += "#$@" ;
+            passwordConfirm = password ;
             System.out.println("Your random password is here! " + password + "Please re-enter your password ;)");
+            String inputReEnter = scanner.nextLine() ;
+            if( !inputReEnter.equals(password) )
+                return "create user failed : wrong re-entered password" ;
 
         }
         if(!validPassword(password))
@@ -101,12 +117,39 @@ public class SignupLoginMenuController {
         System.out.println("\n") ;
         Account account = new Account( userName , nickName , email , (new MyHash(password)).getHsh() , 0 ,
                 slogan , questionNum - 1 , answer ) ;
-        MainMenu.run(scanner , account );
         return null;
     }
 
-    public static String loginUser( Scanner scanner , Matcher matcher ){
-        return null;
+    public static void loginUser( Scanner scanner , Matcher matcher ){
+        String password = matcher.group("password") ;
+        String userName = matcher.group( "username" ) ;
+
+        if(! SignUpLoginMenu.validUserName(userName) || ! SignUpLoginMenu.validPassword(password)){
+            System.out.println("login failed : Invalid username / password") ;
+            return ;
+        }
+
+        if(!SecurityQuestions.runCaptcha(scanner)){
+            System.out.println("you didn't pass captcha test") ;
+            return ;
+        }
+
+        if( DataBase.getFromDataBase("userName", userName) == null){
+            System.out.println("This username does not exist") ;
+            return ;
+        }
+
+        JSONObject cur = DataBase.getFromDataBase("userName", userName);
+        long pass = (long) cur.get("password");
+        if(pass != MyHash.Encode(password)){
+            System.out.println("Wrong Password!") ;
+            return ;
+        }
+
+        System.out.println("User Logged In! hooray !!") ;
+        Account account = Account.getAccountsMap().get(userName);
+
+        MainMenu.run( scanner , account ) ;
     }
 
     public static String questionPick(Matcher matcher){
@@ -118,7 +161,7 @@ public class SignupLoginMenuController {
     }
 
     public static String logout(Matcher matcher){
-        return null;
+        return "logged out" ;
     }
 
 }

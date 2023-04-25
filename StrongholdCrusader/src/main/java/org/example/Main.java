@@ -14,7 +14,7 @@ public class Main
     public static void main( String[] args )
     {
         Scanner scanner = new Scanner(System.in);
-
+        SecurityQuestions.initialize() ;
         init();
         DataBase.wakeUp();
         SignupLoginMenu.run( scanner ) ;
@@ -30,53 +30,10 @@ public class Main
         MyHash.setMOD(1000000007);
         MyHash.setBASE(5021);
         ArrayList < String > cap0 = new ArrayList< String >();
-        cap0.add("    ,----..    ");
-        cap0.add("   /   /   \\  ");
-        cap0.add("  /   .     :  ");
-        cap0.add(" .   /   ;.  \\ ");
-        cap0.add(".   ;   /  ` ; ");
-        cap0.add(";   |  ; \\ ; | ");
-        cap0.add("|   :  | ; | ' ");
-        cap0.add(".   |  ' ' ' : ");
-        cap0.add("'   ;  \\; /  | ");
-        cap0.add(" \\   \\  ',  /  ");
-        cap0.add("  ;   :    /   ");
-        cap0.add("   \\   \\ .'    ");
-        cap0.add("    `---`      ");
-        SecurityQuestions.addCaptcha(0, cap0);
 
-        ArrayList < String > cap1 = new ArrayList< String >();
-        cap1.add("     ,---, ");
-        cap1.add("  ,`--.' | ");
-        cap1.add(" /    /  : ");
-        cap1.add(":    |.' ' ");
-        cap1.add("`----':  | ");
-        cap1.add("   '   ' ; ");
-        cap1.add("   |   | | ");
-        cap1.add("   '   : ; ");
-        cap1.add("   |   | ' ");
-        cap1.add("   '   : | ");
-        cap1.add("   ;   |.' ");
-        cap1.add("   '---'   ");
-        cap1.add("");
-        cap1.add("");
-        SecurityQuestions.addCaptcha(1, cap1);
 
-        ArrayList < String > cap2 = new ArrayList< String >();
-        cap2.add("      ,----,   ");
-        cap2.add("    .'   .' \\  ");
-        cap2.add("  ,----,'    | ");
-        cap2.add("  |    :  .  ; ");
-        cap2.add("  ;    |.'  /  ");
-        cap2.add("  `----'/  ;   ");
-        cap2.add("    /  ;  /    ");
-        cap2.add("   ;  /  /-,   ");
-        cap2.add("  /  /  /.`|   ");
-        cap2.add("./__;      :   ");
-        cap2.add("|   :    .'    ");
-        cap2.add(";   | .'       ");
-        cap2.add("`---'          ");
-        SecurityQuestions.addCaptcha(2, cap2);
+
+
 
         ///DataBase.addNewAccount(test);
 

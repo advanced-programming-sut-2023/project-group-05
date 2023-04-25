@@ -17,8 +17,9 @@ public class SignupLoginMenu {
                 System.out.println(SignupLoginMenuController.createUser( scanner , matcher));
             else if ((matcher =Commands.getMatchingMatcher(input,Commands.ANSWER_QUESTION))!=null)
                 System.out.println(SignupLoginMenuController.questionPick(matcher));
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.USER_LOGIN))!=null)
-                System.out.println(SignupLoginMenuController.loginUser(scanner , matcher));
+            else if ((matcher = Commands.getMatchingMatcher(input,Commands.USER_LOGIN))!=null){
+                SignupLoginMenuController.loginUser(scanner , matcher) ;
+            }
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.FORGET_PASSWORD))!=null)
                 System.out.println(SignupLoginMenuController.forgetPassword(matcher));
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.LOGOUT))!=null)
