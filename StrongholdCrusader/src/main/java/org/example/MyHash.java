@@ -22,9 +22,13 @@ public class MyHash
     }
     public long getInt(char c)
     {
-        return (long)c;
+        return c;
     }
-    private long Hsh;
+    private final long Hsh;
+    public long getHsh()
+    {
+        return this.Hsh;
+    }
     public long Encode(String S)
     {
         long nowHsh = 0;

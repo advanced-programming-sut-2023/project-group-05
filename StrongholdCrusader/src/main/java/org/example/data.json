@@ -1,0 +1,22 @@
+[
+  {
+    "userName": "Ariya",
+    "nickName": "AH",
+    "email": "prefix.suffix.aria@gmail.com",
+    "password": 10,
+    "highScore": 0,
+    "slogan": 0,
+    "question": 0,
+    "answer": 0
+  },
+  {
+    "userName": "Danial",
+    "nickName": "Dany",
+    "email": "prefix.suffix.danial@gmail.com",
+    "password": 11,
+    "highScore": 0,
+    "slogan": 0,
+    "question": 0,
+    "answer": 0
+  }
+]

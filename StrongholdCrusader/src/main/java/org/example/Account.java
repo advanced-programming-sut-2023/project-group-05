@@ -6,14 +6,15 @@ import java.util.HashMap;
 public class Account
 {
     MyHash accountHash;
-    private String userName, nickName, email;
-
-    private long highScore;
-
-    private int slogan, question, answer;
-
-    static private ArrayList < Account > accounts = new ArrayList< Account >();
-    static private HashMap < String, Account > accountsMap = new HashMap < String, Account >();
+    private final String userName;
+    private final String nickName;
+    private final String email;
+    private final long highScore;
+    private final int slogan;
+    private final int question;
+    private final int answer;
+    static private final ArrayList < Account > accounts = new ArrayList< Account >();
+    static private final HashMap < String, Account > accountsMap = new HashMap < String, Account >();
     static public ArrayList < Account > getAccounts()
     {
         return accounts;

@@ -10,5 +10,6 @@ public class Main {
         MyHash.setBASE(5021);
         Account test = new Account("Ariya", "AH", "prefix.suffix.aria@gmail.com", "hi", 0, 0, 0, 0);
         HashMap < String, Account > getnow = Account.getAccountsMap();
+        DataBase.addNewAccount(test);
     }
 }
