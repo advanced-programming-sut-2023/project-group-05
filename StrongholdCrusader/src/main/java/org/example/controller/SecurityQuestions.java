@@ -1,14 +1,15 @@
-package org.example;
+package org.example.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Scanner;
 
 public class SecurityQuestions
 {
     public ArrayList < String > questions = new ArrayList< String >();
     public ArrayList < String > slogans = new ArrayList< String >();
-    HashMap < Integer, ArrayList < String > > Captcha = new HashMap < Integer, ArrayList < String > >();
+    private static HashMap < Integer, ArrayList < String > > captcha = new HashMap < Integer, ArrayList < String > >();
     public void addQuestion(String S)
     {
         questions.add(S);
@@ -19,34 +20,32 @@ public class SecurityQuestions
     }
     public void addCaptcha(Integer x, ArrayList < String > y)
     {
-        Captcha.put(x, y);
+        captcha.put(x, y);
     }
-    public void showCaptcha(Integer x)
+    public static void showCaptcha(Integer x)
     {
-        ArrayList < String > cur = Captcha.get(x);
+        ArrayList < String > cur = captcha.get(x);
         if(cur == null) return;
         for(String now : cur)
         {
             System.out.println(now);
         }
     }
-    public boolean runCaptcha(Scanner scanner)
+    public static boolean runCaptcha(Scanner scanner)
     {
         System.out.println("Beep Boop Bop!");
         System.out.println("What is the number??");
-        Integer x = this.askRandom() % 3;
-        this.showCaptcha(x);
+        Random random = new Random() ;
+        Integer x = random.nextInt() % 3 ;
+        showCaptcha(x);
         Integer ans = scanner.nextInt();
         if(!ans.equals(x))
-        {
-            System.out.println("I knew it! You are a damn robot :(");
             return false;
-        }
-        System.out.println("You passed!");
+
         return true;
     }
-    public int askRandom() /// here I have to add random function
+    public static String askRandom() /// here I have to add random function
     {
-        return 0;
+        return "You Shall Not Pass My Allies." ;
     }
 }

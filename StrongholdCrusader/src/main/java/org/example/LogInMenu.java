@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.controller.DataBase;
+import org.example.controller.SecurityQuestions;
 import org.json.simple.JSONObject;
 
 import java.util.Scanner;
@@ -17,7 +19,7 @@ public class LogInMenu
         {
             return;
         }
-        if(DataBase.getFromDataBase("userName", userName) == null)
+        if( DataBase.getFromDataBase("userName", userName) == null)
         {
             System.out.println("This username does not exist");
         }

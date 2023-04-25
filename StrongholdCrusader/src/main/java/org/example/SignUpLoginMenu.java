@@ -1,7 +1,6 @@
 package org.example;
-import org.example.controller.SignupLoginMenuController;
+import org.example.controller.SecurityQuestions;
 import org.example.model.Account;
-import org.example.model.Commands;
 
 import java.util.Scanner;
 
@@ -65,50 +64,7 @@ public class SignUpLoginMenu
         /*
 
 
-        if(userName.length() == 0 || nickName.length() == 0 || email.length() == 0)
-        {
-            System.out.println("You left a filed empty!");
-            return;
-        }
-        if(!validUserName(userName))
-        {
-            System.out.println("Invalid Username!");
-            return;
-        }
-        if(!validPassword(email))
-        {
-            System.out.println("Invalid Email address!!");
-            return;
-        }
-        if(DataBase.getFromDataBase("userName", userName) != null)
-        {
-            System.out.println("This username already exists :/");
-            /// do random suggestion afterwards;
-            return;
-        }
-        if(slogan == -1)
-        {
-            slogan = securityQuestions.askRandom();
-            System.out.println("Your slogan is: " + securityQuestions.slogans.get(slogan));
-        }
-        if(password.equals("random")) /// here again you have to generate random strings
-        {
-            password = "abracadabra";
-            System.out.println("Your random password is here! " + password + "Please re-enter your password ;)");
-            /// input the re-entered password for confirmation
-        }
-        if(!validPassword(password))
-        {
-            System.out.println("Invalid Password, good luck");
-            return;
-        }
-        if(!password.equals(passwordConfirm))
-        {
-            System.out.println("You entered your password wrong, It's not confirmed yet");
-            return;
-        }
-        if(!securityQuestions.runCaptcha(scanner)) return;
-        runSignedUp(scanner, securityQuestions);*/
+        */
     }
     private void runSignedUp(Scanner scanner, SecurityQuestions securityQuestions)
     {
@@ -119,7 +75,7 @@ public class SignUpLoginMenu
             System.out.println(securityQuestions.questions.get(i - 1));
         }
         /// here you actually get the input :)
-        Account account = new Account(userName, nickName, email, password, 0, slogan, question, answer);
+        Account account = new Account(userName, nickName, email, password, 0, "slogan", question, answer);
         System.out.println("User SignedUp hooray!!");
     }
 }

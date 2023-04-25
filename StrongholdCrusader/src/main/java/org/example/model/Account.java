@@ -1,6 +1,6 @@
 package org.example.model;
 
-import org.example.DataBase;
+import org.example.controller.DataBase;
 import org.example.MyHash;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class Account
     private final String nickName;
     private final String email;
     private final long highScore;
-    private final int slogan;
+    private final String slogan;
     private final int question;
     private final int answer;
     static private final ArrayList < Account > accounts = new ArrayList< Account >();
@@ -46,7 +46,7 @@ public class Account
     {
         return answer;
     }
-    public int getSlogan()
+    public String getSlogan()
     {
         return slogan;
     }
@@ -54,7 +54,7 @@ public class Account
     {
         return question;
     }
-    public Account(String _userName, String _nickName, String _email, String _password, long _highScore, int _slogan, int _question, int _answer)
+    public Account(String _userName, String _nickName, String _email, String _password, long _highScore, String _slogan, int _question, int _answer)
     {
         this.userName = _userName;
         this.nickName = _nickName;

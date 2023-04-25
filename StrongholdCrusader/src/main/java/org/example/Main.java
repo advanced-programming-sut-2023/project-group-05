@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.controller.SecurityQuestions;
 import org.example.model.Account;
 import org.example.view.SignupLoginMenu;
 
@@ -67,10 +68,10 @@ public class Main
         MyHash.setMOD(1000000007);
         MyHash.setBASE(5021);
 
-        Account test = new Account("Ariya", "AH", "prefix.suffix.aria@gmail.com", "hi", 0, 0, 0, 0);
+        Account test = new Account("Ariya", "AH", "prefix.suffix.aria@gmail.com", "hi", 0, "im king", 0, 0);
 
         SignUpLoginMenu signUpMenu = new SignUpLoginMenu();
-        SignupLoginMenu.run(scanner, securityQuestions);
+        SignupLoginMenu.run(scanner);
 
         ///DataBase.addNewAccount(test);
     }
