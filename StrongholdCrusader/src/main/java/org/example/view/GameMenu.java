@@ -20,6 +20,8 @@ public class GameMenu {
             input = Menu.getScanner().nextLine();
             if ((matcher = Commands.getMatchingMatcher(input,Commands.SHOW_MAP))!=null)
                 System.out.println(gameMenuController.showMap(matcher));
+            else if ((matcher =Commands.getMatchingMatcher(input,Commands.SHOW_DETAILS))!=null)
+                System.out.println(gameMenuController.showDetails(matcher));
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.NAVIGATE_MAP))!=null)
                 System.out.println(gameMenuController.mapNavigation(matcher));
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.SHOW_POPULARITY_FACTORS))!=null)

@@ -1,5 +1,6 @@
 package org.example.view;
 
+import com.sun.org.apache.xpath.internal.operations.Neg;
 import org.example.controller.ProfileMenuController;
 import org.example.model.Commands;
 
@@ -26,6 +27,16 @@ public class ProfileMenu {
                 System.out.println(profileMenuController.changeEmail(matcher));
             else if((matcher = Commands.getMatchingMatcher(input,Commands.CHANGE_SLOGAN))!=null)
                 System.out.println(profileMenuController.changeSlogan(matcher));
+            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DISPLAY_HIGHSCORE))!=null)
+                System.out.println(profileMenuController.displayHighScore(matcher));
+            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DISPLAY_RANK))!=null)
+                System.out.println(profileMenuController.displayRank(matcher));
+            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DISPLAY_SLOGAN))!=null)
+                System.out.println(profileMenuController.displaySlogan(matcher));
+            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DISPLAY_WHOLE_PROFILE))!= null)
+                System.out.println(profileMenuController.displayProfile(matcher));
+            else if ((matcher =Commands.getMatchingMatcher(input,Commands.REMOVE_SLOGAN))!=null)
+                System.out.println(profileMenuController.removeSlogan(matcher));
             else
                 System.out.println("Invalid Command");
         }
