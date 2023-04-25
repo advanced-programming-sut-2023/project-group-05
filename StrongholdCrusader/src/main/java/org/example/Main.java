@@ -1,8 +1,10 @@
 package org.example;
 
+import org.example.controller.DataBase;
 import org.example.controller.SecurityQuestions;
 import org.example.model.Account;
 import org.example.view.SignupLoginMenu;
+import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,9 +15,20 @@ public class Main
     {
         Scanner scanner = new Scanner(System.in);
 
-        SecurityQuestions securityQuestions = new SecurityQuestions();
-        securityQuestions.addQuestion("How old are you?");
-        securityQuestions.addSlogan("We are gonna win! yayy!!");
+        init();
+        DataBase.wakeUp();
+        SignupLoginMenu.run( scanner ) ;
+
+    }
+
+    public static void uploadDataFromDataBase()
+    {
+        DataBase.wakeUp();
+    }
+    public static void init()
+    {
+        MyHash.setMOD(1000000007);
+        MyHash.setBASE(5021);
         ArrayList < String > cap0 = new ArrayList< String >();
         cap0.add("    ,----..    ");
         cap0.add("   /   /   \\  ");
@@ -30,7 +43,7 @@ public class Main
         cap0.add("  ;   :    /   ");
         cap0.add("   \\   \\ .'    ");
         cap0.add("    `---`      ");
-        securityQuestions.addCaptcha(0, cap0);
+        SecurityQuestions.addCaptcha(0, cap0);
 
         ArrayList < String > cap1 = new ArrayList< String >();
         cap1.add("     ,---, ");
@@ -47,7 +60,7 @@ public class Main
         cap1.add("   '---'   ");
         cap1.add("");
         cap1.add("");
-        securityQuestions.addCaptcha(1, cap1);
+        SecurityQuestions.addCaptcha(1, cap1);
 
         ArrayList < String > cap2 = new ArrayList< String >();
         cap2.add("      ,----,   ");
@@ -63,16 +76,19 @@ public class Main
         cap2.add("|   :    .'    ");
         cap2.add(";   | .'       ");
         cap2.add("`---'          ");
-        securityQuestions.addCaptcha(2, cap2);
-
-        MyHash.setMOD(1000000007);
-        MyHash.setBASE(5021);
-
-        Account test = new Account("Ariya", "AH", "prefix.suffix.aria@gmail.com", "hi", 0, "im king", 0, 0);
-
-        SignUpLoginMenu signUpMenu = new SignUpLoginMenu();
-        SignupLoginMenu.run(scanner);
+        SecurityQuestions.addCaptcha(2, cap2);
 
         ///DataBase.addNewAccount(test);
+
+        /// testing();
+    }
+    public static void testing()
+    {
+        Account test = new Account("Ariya4", "AH", "prefix.suffix.aria@gmail.com", new MyHash("hi").getHsh(), 0, "im king", 0, 0);
+        JSONObject cur = DataBase.getFromDataBase("nickName", "AH");
+        if(cur != null)
+        {
+            System.out.println(cur);
+        }
     }
 }

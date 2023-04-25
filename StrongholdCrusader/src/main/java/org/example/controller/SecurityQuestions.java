@@ -1,24 +1,22 @@
 package org.example.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class SecurityQuestions
 {
-    public ArrayList < String > questions = new ArrayList< String >();
-    public ArrayList < String > slogans = new ArrayList< String >();
+    public static ArrayList < String > questions = new ArrayList< String >( Arrays.asList(
+            "How old are you?" ,
+            "How tall are you in centimeters?( floor the answer )" ,
+            "How many kids do you have ?" ,
+            "How much do you weigh ? ( floor the answer )" ,
+            "How many times you committed suicide ?" ) );
+    public static ArrayList < String > slogans = new ArrayList< String >();
     private static HashMap < Integer, ArrayList < String > > captcha = new HashMap < Integer, ArrayList < String > >();
-    public void addQuestion(String S)
+    public static void addQuestion(String S)
     {
         questions.add(S);
     }
-    public void addSlogan(String S)
-    {
-        slogans.add(S);
-    }
-    public void addCaptcha(Integer x, ArrayList < String > y)
+    public static void addCaptcha(Integer x, ArrayList < String > y)
     {
         captcha.put(x, y);
     }
@@ -36,7 +34,7 @@ public class SecurityQuestions
         System.out.println("Beep Boop Bop!");
         System.out.println("What is the number??");
         Random random = new Random() ;
-        Integer x = random.nextInt() % 3 ;
+        Integer x = Math.abs(random.nextInt()) % 3 ;
         showCaptcha(x);
         Integer ans = scanner.nextInt();
         if(!ans.equals(x))

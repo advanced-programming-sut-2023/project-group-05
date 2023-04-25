@@ -8,20 +8,15 @@ import java.util.HashMap;
 
 public class Account
 {
-    private MyHash accountHash;
+    private long Hash;
     private final String userName;
     private final String nickName;
     private final String email;
     private final long highScore;
     private final String slogan;
-    private final int question;
-    private final int answer;
-    static private final ArrayList < Account > accounts = new ArrayList< Account >();
+    private final long question;
+    private final long answer;
     static private final HashMap < String, Account > accountsMap = new HashMap < String, Account >();
-    static public ArrayList < Account > getAccounts()
-    {
-        return accounts;
-    }
     static public HashMap < String , Account > getAccountsMap()
     {
         return accountsMap;
@@ -42,7 +37,7 @@ public class Account
     {
         return highScore;
     }
-    public int getAnswer()
+    public long getAnswer()
     {
         return answer;
     }
@@ -50,27 +45,26 @@ public class Account
     {
         return slogan;
     }
-    public int getQuestion()
+    public long getQuestion()
     {
         return question;
     }
-    public Account(String _userName, String _nickName, String _email, String _password, long _highScore, String _slogan, int _question, int _answer)
+    public long getHash()
+    {
+        return this.Hash;
+    }
+    public Account(String _userName, String _nickName, String _email, long _password, long _highScore, String _slogan, long _question, long _answer)
     {
         this.userName = _userName;
         this.nickName = _nickName;
         this.email = _email;
-        accountHash = new MyHash(_password);
+        this.Hash = _password;
         this.highScore = _highScore;
         this.slogan = _slogan;
         this.question = _question;
         this.answer = _answer;
-        accounts.add(this);
         accountsMap.put(this.userName, this);
         if(! DataBase.isAccountInData(this)) DataBase.addNewAccount(this);
-    }
-
-    public MyHash getAccountHash(){
-        return this.accountHash ;
     }
 
 }

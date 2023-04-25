@@ -75,7 +75,7 @@ public class SignUpLoginMenu
             System.out.println(securityQuestions.questions.get(i - 1));
         }
         /// here you actually get the input :)
-        Account account = new Account(userName, nickName, email, password, 0, "slogan", question, answer);
+        //Account account = new Account(userName, nickName, email, password, 0, "slogan", question, answer);
         System.out.println("User SignedUp hooray!!");
     }
 }

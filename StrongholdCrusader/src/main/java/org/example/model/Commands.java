@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public enum Commands {
-    FIND_USER("find user (\"(?<nickname>.*)\")|(?<nickname>\\S+)",null),
-    CREATE_USER("user create",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"," -p ((?<password>\\S+) (?<passwordConfirmation>\\S+))|random","( -email (?<email>\\S+))?"," -n (?<nickname>\\S+)","( -s (?<slogan>\\S+)|random)?"))),
+    FIND_USER("find user \"(?<nickname>.*)\"",null),
+    CREATE_USER("user create",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"," -p (((?<password>\\S+) (?<passwordConfirmation>\\S+))|random)","( -email (?<email>\\S+))?"," -n (?<nickname>\\S+)","( -s (?<slogan>\\S+)|random)?"))),
     ANSWER_QUESTION("question pick", new ArrayList<String>(Arrays.asList(" -q (?<questionNumber>\\d+)"," -a (?<answer>\\S+)"," -c (?<answerConfirm>\\S+)"))),
     USER_LOGIN("user login",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"," -p (?<password>\\S+)","( --stay-logged-in)?"))),
     FORGET_PASSWORD("forgot my password",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"))),
@@ -15,7 +15,7 @@ public enum Commands {
     CHANGE_PASSWORD("profile change password",new ArrayList<String>(Arrays.asList(" -o (?<oldPassword>\\S+)"," -n (?<newPassword>\\S+)"))),
     CHANGE_EMAIL ("profile change",new ArrayList<String>(Arrays.asList("-e (?<email>\\S+)"))),
     CHANGE_SLOGAN("profile change slogan",new ArrayList<String>(Arrays.asList(" -s (?<slogan>\\S+)"))),
-    REMOVE_SLOGAN("[Pp]rofile remove solgan",null),
+    REMOVE_SLOGAN("profile remove solgan",null),
     DISPLAY_HIGHSCORE("profile display highscore",null),
     DISPLAY_RANK("profile display rank",null),
     DISPLAY_SLOGAN ("profile display slogan",null),
@@ -67,42 +67,51 @@ public enum Commands {
         this.options = options;
     }
 
+    private static ArrayList< String > allPermutations = new ArrayList <String>() ;
+    private static ArrayList< Integer > used = new ArrayList <Integer>() ;
+    private static String currentPermutation ;
+
     public static Matcher getMatchingMatcher (String input,Commands command){
-        Matcher matcher;
-        String regex = command.commandName;
-        if (command.options.size()==0)
-            return (matcher = Pattern.compile(regex).matcher(input)).matches() ? matcher : null;
-        int permutationSize = factorial(command.options.size());
-        ArrayList<ArrayList<String>> totalSet = new ArrayList<>(permutationSize);
-        ArrayList<String> buffer = new ArrayList<>(command.options.size());
-        for (String string : command.options)
-            buffer.add(string);
-        permute(buffer,0,totalSet);
-        for (ArrayList<String> array : totalSet){
-            regex = command.commandName;
-            for (String option : array)
-                regex+=option;
-            matcher = Pattern.compile(regex).matcher(input);
-            if (matcher.matches())
-                return matcher;
+        if( command.options == null ){
+            Matcher matcher = Pattern.compile( command.commandName ).matcher(input) ;
+            if( matcher.find() ){
+                return matcher ;
+            }
+            else return null ;
         }
-        return null;
+        allPermutations.clear() ;
+        used.clear() ;
+        for(int i = 0 ; i < command.options.size() ; i++) used.add(0) ;
+        currentPermutation = "" ;
+        generatePermutations( command , 0 ) ;
+        String currectPerm ;
+        for( String perm : allPermutations ){
+            currectPerm = "^(" + perm + ")$" ;
+            Matcher matcher = Pattern.compile(currectPerm).matcher(input) ;
+            if( matcher.find() ){
+                return matcher ;
+            }
+        }
+        return null ;
     }
 
-    private static void permute(ArrayList<String> array, int k,ArrayList<ArrayList<String>> totalSet){
-        for(int i = k; i < array.size(); i++){
-            java.util.Collections.swap(array, i, k);
-            permute(array, k+1,totalSet);
-            java.util.Collections.swap(array, k, i);
+    private static void generatePermutations( Commands command , int k ){
+
+        if( k == command.options.size() ){
+            allPermutations.add( command.commandName + currentPermutation ) ;
+            return ;
         }
-        if (k == array.size() -1){
-            totalSet.add(array);
+        for( int i = 0 ; i < command.options.size() ; i++ ){
+            if( used.get(i) == 1 ) continue ;
+            used.set( i , 1 ) ;
+            String currentPermutationTemp = currentPermutation ;
+            currentPermutation = command.options.get( i ) + currentPermutation ;
+            generatePermutations( command , k + 1 ) ;
+            currentPermutation = currentPermutationTemp ;
+            used.set( i , 0 ) ;
         }
+
     }
 
-    public static int factorial (int n){
-        if (n==1) return 1;
-        return n*factorial(n-1);
-    }
 }
 

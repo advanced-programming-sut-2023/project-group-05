@@ -21,7 +21,7 @@ public class DataBase
         newObject.put("userName", account.getUserName());
         newObject.put("nickName", account.getNickName());
         newObject.put("email", account.getEmail());
-        newObject.put("password", account.getAccountHash().getHsh());
+        newObject.put("password", account.getHash());
         newObject.put("highScore", account.getHighScore());
         newObject.put("slogan", account.getSlogan());
         newObject.put("question", account.getQuestion());
@@ -30,32 +30,9 @@ public class DataBase
     }
     public static boolean isAccountInData(Account account)
     {
-        JSONObject current = transformAccountToJSONObject(account);
-        JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader( location))
-        {
-            Object obj = jsonParser.parse(reader);
-            JSONArray data = (JSONArray) obj;
-            if(data.contains(current))
-            {
-                return true;
-            }
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-        }
-        return false;
+        return getFromDataBase("userName", account.getUserName()) != null;
     }
-    public static JSONObject getFromDataBase(String type, String userName)
+    public static JSONObject getFromDataBase(String type, String S)
     {
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(location))
@@ -65,8 +42,8 @@ public class DataBase
             for (Object datum : data)
             {
                 JSONObject currentObject = (JSONObject) datum;
-                String thisObjectUserName = (String) currentObject.get(type);
-                if (thisObjectUserName.equals(userName))
+                String thisObjectByType = (String) currentObject.get(type);
+                if (thisObjectByType.equals(S))
                 {
                     return currentObject;
                 }
@@ -108,6 +85,41 @@ public class DataBase
             catch (IOException e)
             {
                 e.printStackTrace();
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public static void wakeUp()
+    {
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader(location))
+        {
+            Object obj = jsonParser.parse(reader);
+            JSONArray data = (JSONArray) obj;
+            for (Object datum : data)
+            {
+                JSONObject currentObject = (JSONObject) datum;
+                String userName = (String) currentObject.get("userName");
+                String nickName = (String) currentObject.get("nickName");
+                String email = (String) currentObject.get("email");
+                long password = (long) currentObject.get("password");
+                long highScore = (long) currentObject.get("highScore");
+                long question = (long) currentObject.get("question");
+                long answer = (long) currentObject.get("answer");
+                String slogan = (String) currentObject.get("slogan");
+                Account account = new Account(userName, nickName, email, password, highScore, slogan, question, answer);
             }
         }
         catch (FileNotFoundException e)
