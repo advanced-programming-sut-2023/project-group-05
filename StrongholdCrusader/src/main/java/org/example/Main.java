@@ -1,7 +1,9 @@
 package org.example;
 
+import org.example.model.Account;
+import org.example.view.SignupLoginMenu;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main
@@ -67,8 +69,8 @@ public class Main
 
         Account test = new Account("Ariya", "AH", "prefix.suffix.aria@gmail.com", "hi", 0, 0, 0, 0);
 
-        SignUpMenu signUpMenu = new SignUpMenu();
-        signUpMenu.run(scanner, securityQuestions);
+        SignUpLoginMenu signUpMenu = new SignUpLoginMenu();
+        SignupLoginMenu.run(scanner, securityQuestions);
 
         ///DataBase.addNewAccount(test);
     }

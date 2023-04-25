@@ -1,11 +1,14 @@
-package org.example;
+package org.example.model;
+
+import org.example.DataBase;
+import org.example.MyHash;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Account
 {
-    MyHash accountHash;
+    private MyHash accountHash;
     private final String userName;
     private final String nickName;
     private final String email;
@@ -63,6 +66,11 @@ public class Account
         this.answer = _answer;
         accounts.add(this);
         accountsMap.put(this.userName, this);
-        if(!DataBase.isAccountInData(this)) DataBase.addNewAccount(this);
+        if(! DataBase.isAccountInData(this)) DataBase.addNewAccount(this);
     }
+
+    public MyHash getAccountHash(){
+        return this.accountHash ;
+    }
+
 }

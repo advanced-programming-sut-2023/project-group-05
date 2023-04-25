@@ -1,8 +1,10 @@
 package org.example.controller;
 
+import org.example.model.Commands;
 import org.example.view.Menu;
 import org.example.view.SignupLoginMenu;
 
+import java.util.Scanner;
 import java.util.regex.Matcher;
 
 public class SignupLoginMenuController {
@@ -15,23 +17,24 @@ public class SignupLoginMenuController {
         return null;
     }
 
-    public String createUser(Matcher matcher){
+    public static String createUser(Scanner scanner , Matcher matcher){
+
         return null;
     }
 
-    public String questionPick(Matcher matcher){
+    public static String loginUser( Scanner scanner , Matcher matcher ){
         return null;
     }
 
-    public String loginUser(Matcher matcher){
+    public static String questionPick(Matcher matcher){
         return null;
     }
 
-    public String forgetPassword (Matcher matcher){
+    public static String forgetPassword (Matcher matcher){
         return null;
     }
 
-    public String logout(Matcher matcher){
+    public static String logout(Matcher matcher){
         return null;
     }
 

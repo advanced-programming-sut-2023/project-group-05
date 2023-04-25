@@ -44,7 +44,7 @@ public class MyHash
         long now = Encode(inp);
         return now == this.Hsh;
     }
-    MyHash(String S)
+    public MyHash(String S)
     {
         Hsh = Encode(S);
     }

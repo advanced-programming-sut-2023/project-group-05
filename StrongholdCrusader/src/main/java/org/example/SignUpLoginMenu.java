@@ -1,8 +1,11 @@
 package org.example;
-import java.util.HashMap;
+import org.example.controller.SignupLoginMenuController;
+import org.example.model.Account;
+import org.example.model.Commands;
+
 import java.util.Scanner;
 
-public class SignUpMenu
+public class SignUpLoginMenu
 {
     private String userName, nickName, email, password, passwordConfirm;
     private int slogan, question, answer;
@@ -57,6 +60,11 @@ public class SignUpMenu
     }
     public void run(Scanner scanner, SecurityQuestions securityQuestions)
     {
+
+
+        /*
+
+
         if(userName.length() == 0 || nickName.length() == 0 || email.length() == 0)
         {
             System.out.println("You left a filed empty!");
@@ -100,7 +108,7 @@ public class SignUpMenu
             return;
         }
         if(!securityQuestions.runCaptcha(scanner)) return;
-        runSignedUp(scanner, securityQuestions);
+        runSignedUp(scanner, securityQuestions);*/
     }
     private void runSignedUp(Scanner scanner, SecurityQuestions securityQuestions)
     {

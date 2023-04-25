@@ -9,7 +9,7 @@ public class LogInMenu
     public String userName, password;
     public void run(Scanner scanner, SecurityQuestions securityQuestions)
     {
-        if(!SignUpMenu.validUserName(userName) || !SignUpMenu.validPassword(password))
+        if(! SignUpLoginMenu.validUserName(userName) || ! SignUpLoginMenu.validPassword(password))
         {
             System.out.println("Invalid input");
         }

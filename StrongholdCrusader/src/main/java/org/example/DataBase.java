@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.model.Account;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,15 +13,15 @@ import java.io.IOException;
 
 public class DataBase
 {
-    public static String location = "data.json";
+    public static String location = "src/main/java/org/example/data.json";
 
-    public static JSONObject transformAccountToJSONObject(Account account)
+    public static JSONObject transformAccountToJSONObject( Account account)
     {
         JSONObject newObject = new JSONObject();
         newObject.put("userName", account.getUserName());
         newObject.put("nickName", account.getNickName());
         newObject.put("email", account.getEmail());
-        newObject.put("password", account.accountHash.getHsh());
+        newObject.put("password", account.getAccountHash().getHsh());
         newObject.put("highScore", account.getHighScore());
         newObject.put("slogan", account.getSlogan());
         newObject.put("question", account.getQuestion());
@@ -31,7 +32,7 @@ public class DataBase
     {
         JSONObject current = transformAccountToJSONObject(account);
         JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader(location))
+        try (FileReader reader = new FileReader( location))
         {
             Object obj = jsonParser.parse(reader);
             JSONArray data = (JSONArray) obj;
@@ -98,6 +99,7 @@ public class DataBase
             Object obj = jsonParser.parse(reader);
             JSONArray data = (JSONArray) obj;
             data.add(current);
+            reader.close() ;
             try (FileWriter file = new FileWriter(location))
             {
                 file.write(data.toJSONString());

@@ -3,24 +3,25 @@ package org.example.view;
 import org.example.controller.SignupLoginMenuController;
 import org.example.model.Commands;
 
+import java.util.Scanner;
 import java.util.regex.Matcher;
 public class SignupLoginMenu {
     SignupLoginMenuController signupLoginMenuController;
     SignupLoginMenu(SignupLoginMenuController signupMenuController){
         this.signupLoginMenuController = signupMenuController;
     }
-    public void run () {
+    public static void run ( Scanner scanner ) {
         Matcher matcher ;
         while (true){
             String input = Menu.getScanner().nextLine();
             if ((matcher = Commands.getMatchingMatcher(input,Commands.FIND_USER))!=null)
                 System.out.println(signupLoginMenuController.findUser(matcher));
             else if ((matcher =Commands.getMatchingMatcher(input,Commands.CREATE_USER))!=null)
-                System.out.println(signupLoginMenuController.createUser(matcher));
+                System.out.println(signupLoginMenuController.createUser( scanner , matcher));
             else if ((matcher =Commands.getMatchingMatcher(input,Commands.ANSWER_QUESTION))!=null)
                 System.out.println(signupLoginMenuController.questionPick(matcher));
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.USER_LOGIN))!=null)
-                System.out.println(signupLoginMenuController.loginUser(matcher));
+                System.out.println(signupLoginMenuController.loginUser(scanner , matcher));
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.FORGET_PASSWORD))!=null)
                 System.out.println(signupLoginMenuController.forgetPassword(matcher));
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.LOGOUT))!=null)

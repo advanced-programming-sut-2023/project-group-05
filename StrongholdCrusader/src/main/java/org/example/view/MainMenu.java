@@ -1,5 +1,7 @@
 package org.example.view;
 
+import org.example.model.Account;
+
 import java.util.Scanner;
 
 public class MainMenu {
