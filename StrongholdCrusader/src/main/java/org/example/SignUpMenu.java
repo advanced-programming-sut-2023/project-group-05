@@ -18,7 +18,7 @@ public class SignUpMenu
         }
         return true;
     }
-    public Integer haveFrom(String s, char l, char r)
+    static public Integer haveFrom(String s, char l, char r)
     {
         Integer ret = 0;
         for(int i = 0; i < s.length(); i ++)
