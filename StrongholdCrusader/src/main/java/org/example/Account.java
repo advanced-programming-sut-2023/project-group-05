@@ -63,5 +63,6 @@ public class Account
         this.answer = _answer;
         accounts.add(this);
         accountsMap.put(this.userName, this);
+        if(!DataBase.isAccountInData(this)) DataBase.addNewAccount(this);
     }
 }

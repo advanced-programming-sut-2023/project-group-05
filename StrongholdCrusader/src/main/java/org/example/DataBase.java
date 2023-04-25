@@ -54,7 +54,7 @@ public class DataBase
         }
         return false;
     }
-    public static JSONObject getFromDataBase(String userName)
+    public static JSONObject getFromDataBase(String type, String userName)
     {
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(location))
@@ -64,7 +64,7 @@ public class DataBase
             for (Object datum : data)
             {
                 JSONObject currentObject = (JSONObject) datum;
-                String thisObjectUserName = (String) currentObject.get("userName");
+                String thisObjectUserName = (String) currentObject.get(type);
                 if (thisObjectUserName.equals(userName))
                 {
                     return currentObject;
@@ -87,10 +87,10 @@ public class DataBase
     }
     public static void addNewAccount(Account account)
     {
-        /*if(isAccountInData(account))
+        if(isAccountInData(account))
         {
             return;
-        }*/
+        }
         JSONObject current = transformAccountToJSONObject(account);
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(location))
