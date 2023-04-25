@@ -7,7 +7,7 @@ public class SignUpMenu
     private String userName, nickName, email, password, passwordConfirm;
     private int slogan, question, answer;
 
-    public boolean validUserName(String S)
+    static public boolean validUserName(String S)
     {
         for(int i = 0; i < S.length(); i ++) {
             char c = S.charAt(i);
@@ -31,7 +31,7 @@ public class SignUpMenu
         }
         return ret;
     }
-    public boolean validPassword(String S)
+    static public boolean validPassword(String S)
     {
         int n = S.length(), a = 0;
         if(n < 6) return false;
@@ -44,7 +44,7 @@ public class SignUpMenu
         if(n == 0) return false;
         return true;
     }
-    public boolean validEmail(String S)
+    static public boolean validEmail(String S)
     {
         int ats = 0;
         for(int i = 1; i < S.length() - 1; i ++)
@@ -99,16 +99,7 @@ public class SignUpMenu
             System.out.println("You entered your password wrong, It's not confirmed yet");
             return;
         }
-        System.out.println("Beep Boop Bop!");
-        System.out.println("What is the number??");
-        Integer x = securityQuestions.askRandom() % 3;
-        securityQuestions.showCaptcha(x);
-        Integer ans = scanner.nextInt();
-        if(!ans.equals(x))
-        {
-            System.out.println("I knew it! You are a damn robot :(");
-            return;
-        }
+        if(!securityQuestions.runCaptcha(scanner)) return;
         runSignedUp(scanner, securityQuestions);
     }
     private void runSignedUp(Scanner scanner, SecurityQuestions securityQuestions)
@@ -121,5 +112,6 @@ public class SignUpMenu
         }
         /// here you actually get the input :)
         Account account = new Account(userName, nickName, email, password, 0, slogan, question, answer);
+        System.out.println("User SignedUp hooray!!");
     }
 }

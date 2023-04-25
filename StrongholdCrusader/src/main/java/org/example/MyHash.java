@@ -20,16 +20,11 @@ public class MyHash
     {
         return BASE;
     }
-    public long getInt(char c)
+    static public long getInt(char c)
     {
         return c;
     }
-    private final long Hsh;
-    public long getHsh()
-    {
-        return this.Hsh;
-    }
-    public long Encode(String S)
+    static public long Encode(String S)
     {
         long nowHsh = 0;
         int n = S.length();
@@ -38,6 +33,11 @@ public class MyHash
             nowHsh = (nowHsh * getBASE() + getInt(S.charAt(i))) % getMOD();
         }
         return nowHsh;
+    }
+    private final long Hsh;
+    public long getHsh()
+    {
+        return this.Hsh;
     }
     public boolean isEqual(String inp)
     {

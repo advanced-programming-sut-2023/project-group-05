@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class SecurityQuestions
 {
@@ -28,6 +29,21 @@ public class SecurityQuestions
         {
             System.out.println(now);
         }
+    }
+    public boolean runCaptcha(Scanner scanner)
+    {
+        System.out.println("Beep Boop Bop!");
+        System.out.println("What is the number??");
+        Integer x = this.askRandom() % 3;
+        this.showCaptcha(x);
+        Integer ans = scanner.nextInt();
+        if(!ans.equals(x))
+        {
+            System.out.println("I knew it! You are a damn robot :(");
+            return false;
+        }
+        System.out.println("You passed!");
+        return true;
     }
     public int askRandom() /// here I have to add random function
     {
