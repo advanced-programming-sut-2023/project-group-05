@@ -11,7 +11,12 @@ public class SecurityQuestions
             "How many kids do you have ?" ,
             "How much do you weigh ? ( floor the answer )" ,
             "How many times you committed suicide ?" ) );
-    public static ArrayList < String > slogans = new ArrayList< String >();
+    public static ArrayList < String > slogans = new ArrayList< String >(Arrays.asList(
+            "we will win" ,
+            "we are great" ,
+            "i am hungry" ,
+            "i love you ( when your dead )"
+    ));
     private static final HashMap < Integer, ArrayList < String > > captcha = new HashMap < Integer, ArrayList < String > >();
 
     public static void initialize(){
@@ -254,15 +259,16 @@ public class SecurityQuestions
         Integer x = 0 ;
         for(int i = 0 ; i < n ; i++)
             x += (int)Math.pow( 10 , n - i - 1 ) * digit[i] ;
-        
+
         Integer ans = scanner.nextInt();
         if(!ans.equals(x))
             return false;
 
         return true;
     }
-    public static String askRandom() /// here I have to add random function
+    public static String askRandom()
     {
-        return "You Shall Not Pass My Allies." ;
+        Random random = new Random() ;
+        return slogans.get( Math.abs(random.nextInt()) % slogans.size() );
     }
 }

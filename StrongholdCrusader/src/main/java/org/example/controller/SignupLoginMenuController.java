@@ -41,7 +41,6 @@ public class SignupLoginMenuController {
         String passwordConfirm = matcher.group("passwordConfirmation") ;
         String email = matcher.group("email") ;
         String slogan = matcher.group("slogan") ;
-        //SecurityQuestions securityQuestions =  ;
 
         if(userName.length() == 0 || nickName.length() == 0 || email.length() == 0)
             return ("You left a filed empty!");
@@ -49,7 +48,10 @@ public class SignupLoginMenuController {
         if(!validUserName(userName))
             return ("Invalid Username!");
 
-        if(!validPassword(email))
+        if(!validPassword(password))
+            return ("Invalid password");
+
+        if(!validEmail(email))
             return ("Invalid Email address!!");
 
         if(DataBase.getFromDataBase("userName", userName) != null)
@@ -114,17 +116,16 @@ public class SignupLoginMenuController {
         long questionNum = scanner.nextInt() ;
         System.out.print( "Insert your answer : " ) ;
         long answer = scanner.nextInt() ;
-        System.out.println("\n") ;
         Account account = new Account( userName , nickName , email , (new MyHash(password)).getHsh() , 0 ,
                 slogan , questionNum - 1 , answer ) ;
-        return null;
+        return "account created successfully" ;
     }
 
     public static void loginUser( Scanner scanner , Matcher matcher ){
         String password = matcher.group("password") ;
         String userName = matcher.group( "username" ) ;
 
-        if(! SignUpLoginMenu.validUserName(userName) || ! SignUpLoginMenu.validPassword(password)){
+        if(!validUserName(userName) || ! validPassword(password)){
             System.out.println("login failed : Invalid username / password") ;
             return ;
         }

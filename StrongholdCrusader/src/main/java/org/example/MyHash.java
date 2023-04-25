@@ -30,7 +30,7 @@ public class MyHash
         int n = S.length();
         for(int i = 0; i < n; i ++)
         {
-            nowHsh = (nowHsh * getBASE() + getInt(S.charAt(i))) % getMOD();
+            nowHsh = (nowHsh * MyHash.getBASE() + getInt(S.charAt(i))) % MyHash.getMOD();
         }
         return nowHsh;
     }

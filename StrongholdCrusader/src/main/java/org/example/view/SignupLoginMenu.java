@@ -22,8 +22,8 @@ public class SignupLoginMenu {
             }
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.FORGET_PASSWORD))!=null)
                 System.out.println(SignupLoginMenuController.forgetPassword(matcher));
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.LOGOUT))!=null)
-                System.out.println(SignupLoginMenuController.logout(matcher));
+            else if ( input.equals("exit") )
+                return ;
             else
                 System.out.println("Invalid Command");
         }
