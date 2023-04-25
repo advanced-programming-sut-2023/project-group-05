@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="469e65d3-e9b9-49c1-8d06-0a7f36b1f7ad" name="Changes" comment="Initial commit for branch">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/building/StorageBuilding.java" afterDir="false" />
+    <list default="true" id="a529b5b8-5318-4144-88c5-befa223a30d0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/view/MainMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,7 +49,7 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.TestClass">
     <configuration name="TestClass" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="StrongholdCrusader" />
       <option name="PACKAGE_NAME" value="" />
@@ -101,7 +101,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="469e65d3-e9b9-49c1-8d06-0a7f36b1f7ad" name="Changes" comment="" />
+      <changelist id="a529b5b8-5318-4144-88c5-befa223a30d0" name="Changes" comment="" />
       <created>1681909859152</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -111,7 +111,8 @@
       <workItem from="1681926367897" duration="269000" />
       <workItem from="1681926977161" duration="3338000" />
       <workItem from="1682008704006" duration="37000" />
-      <workItem from="1682276364215" duration="860000" />
+      <workItem from="1682276364215" duration="1466000" />
+      <workItem from="1682432152329" duration="326000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit for branch">
       <created>1681912039017</created>
