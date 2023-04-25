@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.controller.DataBase;
+import org.example.controller.MyHash;
 import org.example.controller.SecurityQuestions;
 import org.example.model.Account;
 import org.example.view.SignupLoginMenu;

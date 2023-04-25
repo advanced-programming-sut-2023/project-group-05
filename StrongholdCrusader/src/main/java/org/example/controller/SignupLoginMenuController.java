@@ -1,11 +1,7 @@
 package org.example.controller;
 
-import org.example.MyHash;
-import org.example.SignUpLoginMenu;
 import org.example.model.Account;
-import org.example.model.Commands;
 import org.example.view.MainMenu;
-import org.example.view.Menu;
 import org.example.view.SignupLoginMenu;
 import org.json.simple.JSONObject;
 

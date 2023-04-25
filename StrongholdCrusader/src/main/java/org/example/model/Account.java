@@ -1,9 +1,7 @@
 package org.example.model;
 
 import org.example.controller.DataBase;
-import org.example.MyHash;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Account
