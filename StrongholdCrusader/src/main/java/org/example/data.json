@@ -18,5 +18,15 @@
     "slogan": 0,
     "question": 0,
     "answer": 0
+  },
+  {
+    "userName": "kiani",
+    "nickName": "bakeri",
+    "email": "prefix.suffix.bakeri@gmail.com",
+    "password": 12,
+    "highScore": 0,
+    "slogan": 0,
+    "question": 0,
+    "answer": 0
   }
 ]

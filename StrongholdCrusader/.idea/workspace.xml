@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="469e65d3-e9b9-49c1-8d06-0a7f36b1f7ad" name="Changes" comment="SignUp Menu and Captcha Added (still need debugging in database)">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/LogInMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MyHash.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MyHash.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SecurityQuestions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/SecurityQuestions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SignUpMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/SignUpMenu.java" afterDir="false" />
+    <list default="true" id="469e65d3-e9b9-49c1-8d06-0a7f36b1f7ad" name="Changes" comment="LogIn Menu and Captcha Added (still need debugging in database) +little improvements">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/data.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +113,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682394425376</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="LogIn Menu and Captcha Added (still need debugging in database)">
+      <created>1682396048634</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1682396048634</updated>
+    </task>
+    <task id="LOCAL-00010" summary="LogIn Menu and Captcha Added (still need debugging in database) +little improvements">
+      <created>1682396112024</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1682396112024</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,6 +153,8 @@
     <MESSAGE value="Account Class is done! yayy (for real this time)" />
     <MESSAGE value="DataBase Added (not debugged)" />
     <MESSAGE value="SignUp Menu and Captcha Added (still need debugging in database)" />
-    <option name="LAST_COMMIT_MESSAGE" value="SignUp Menu and Captcha Added (still need debugging in database)" />
+    <MESSAGE value="LogIn Menu and Captcha Added (still need debugging in database)" />
+    <MESSAGE value="LogIn Menu and Captcha Added (still need debugging in database) +little improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="LogIn Menu and Captcha Added (still need debugging in database) +little improvements" />
   </component>
 </project>
