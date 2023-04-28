@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 public class ProfileMenu {
 
     public static void run( Account account ){
-        System.out.println( "YOU ARE NOW IN PROFILE MENU" ) ;
+        System.out.println( "YOU ARE NOW IN PROFILE MENU ( enter exit to get back )" ) ;
         ProfileMenuController profileMenuController = new ProfileMenuController( account ) ;
         Matcher matcher;
         String input;
@@ -35,6 +35,8 @@ public class ProfileMenu {
                 profileMenuController.displayProfile(matcher);
             else if ((matcher =Commands.getMatchingMatcher(input,Commands.REMOVE_SLOGAN))!=null)
                 profileMenuController.removeSlogan(matcher);
+            else if ( input.equals("exit") )
+                return ;
             else
                 System.out.println("Invalid Command");
         }

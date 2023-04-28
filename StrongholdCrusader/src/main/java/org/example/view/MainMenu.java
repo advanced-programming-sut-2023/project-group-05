@@ -14,11 +14,17 @@ public class MainMenu {
         String input ;
         while( true ){
             input = scanner.nextLine() ;
+
             if( input.equals("logout") )
                 return ;
-            if( input.equals("enter profile menu") ){
+
+            if( input.equals("enter profile menu") )
                 ProfileMenu.run( account ) ;
+
+            if( Commands.getMatchingMatcher( input , Commands.START_GAME ) ){
+                
             }
+
         }
 
     }
