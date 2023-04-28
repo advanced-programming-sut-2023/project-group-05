@@ -1,6 +1,6 @@
 package org.example.controller;
 
-public class MyHash
+public class Hash
 {
     static private long MOD;
     static private long BASE;
@@ -24,13 +24,13 @@ public class MyHash
     {
         return c;
     }
-    static public long Encode(String S)
+    static public long encode( String S)
     {
         long nowHsh = 0;
         int n = S.length();
         for(int i = 0; i < n; i ++)
         {
-            nowHsh = (nowHsh * MyHash.getBASE() + getInt(S.charAt(i))) % MyHash.getMOD();
+            nowHsh = (nowHsh * Hash.getBASE() + getInt(S.charAt(i))) % Hash.getMOD();
         }
         return nowHsh;
     }
@@ -41,12 +41,12 @@ public class MyHash
     }
     public boolean isEqual(String inp)
     {
-        long now = Encode(inp);
+        long now = encode(inp);
         return now == this.Hsh;
     }
-    public MyHash(String S)
+    public Hash( String S)
     {
-        Hsh = Encode(S);
+        Hsh = encode(S);
     }
 
 }

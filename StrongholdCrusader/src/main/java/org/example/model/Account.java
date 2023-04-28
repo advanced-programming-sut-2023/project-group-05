@@ -6,9 +6,9 @@ import java.util.HashMap;
 
 public class Account
 {
-    private long Hash;
-    private final String userName;
-    private final String nickName;
+    private long passwordHash;
+    private String userName;
+    private String nickName;
     private String email;
     private final long highScore;
     private String slogan;
@@ -47,9 +47,9 @@ public class Account
     {
         return question;
     }
-    public long getHash()
+    public long getPasswordHash()
     {
-        return this.Hash;
+        return this.passwordHash;
     }
     public void setSlogan( String slogan ){
         this.slogan = slogan ;
@@ -57,12 +57,21 @@ public class Account
     public void setEmail( String email ){
         this.email = email ;
     }
+    public void setUserName( String username ){
+        this.userName = username ;
+    }
+    public void setPassword( long password ){
+        this.passwordHash = password ;
+    }
+    public void setNickname( String nickName ){
+        this.nickName = nickName ;
+    }
     public Account(String _userName, String _nickName, String _email, long _password, long _highScore, String _slogan, long _question, long _answer)
     {
         this.userName = _userName;
         this.nickName = _nickName;
         this.email = _email;
-        this.Hash = _password;
+        this.passwordHash = _password;
         this.highScore = _highScore;
         this.slogan = _slogan;
         this.question = _question;

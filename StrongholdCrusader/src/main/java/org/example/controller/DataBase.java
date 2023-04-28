@@ -13,6 +13,20 @@ import java.io.IOException;
 
 public class DataBase
 {
+
+    public static void setStayLoggedIn( Account account ){
+        // TODO : put this account in stay logged-in mode
+    }
+
+    public static Account getStayLoggedInAccount(){
+        /*
+        TODO :  check if there is an account in stay logged-in mode
+                if there is return this account
+                if not return null
+        */
+        return null ;
+    }
+
     public static String location = "src/main/java/org/example/data.json";
 
     public static JSONObject transformAccountToJSONObject( Account account)
@@ -21,7 +35,7 @@ public class DataBase
         newObject.put("userName", account.getUserName());
         newObject.put("nickName", account.getNickName());
         newObject.put("email", account.getEmail());
-        newObject.put("password", account.getHash());
+        newObject.put("password", account.getPasswordHash());
         newObject.put("highScore", account.getHighScore());
         newObject.put("slogan", account.getSlogan());
         newObject.put("question", account.getQuestion());

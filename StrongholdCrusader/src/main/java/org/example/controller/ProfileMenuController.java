@@ -1,8 +1,6 @@
 package org.example.controller;
 
 import org.example.model.Account;
-import org.example.view.Menu;
-import org.example.view.ProfileMenu;
 
 import java.util.regex.Matcher;
 
@@ -15,14 +13,33 @@ public class ProfileMenuController {
     }
 
     public void changeUsername(Matcher matcher){
+        String username = matcher.group( "username" ) ;
+        if( !SignupLoginMenuController.validUserName( username )){
+            System.out.println( "your username is not valid" ) ;
+            return ;
+        }
+        account.setUserName( username );
         System.out.println("your username successfully changed."); ;
     }
 
     public void changeNickname(Matcher matcher){
+        String nickname = matcher.group("nickname") ;
+        if( !SignupLoginMenuController.validNickname( nickname ) ){
+            System.out.println( "nickname is not valid" ) ;
+            return ;
+        }
+        account.setNickname( nickname ) ;
         System.out.println("your nickname successfully changed.");
     }
 
     public void changePassword(Matcher matcher) {
+        String password = matcher.group( "password" ) ;
+        if( !SignupLoginMenuController.validPassword(password) ){
+            System.out.println( "your password is not valid" ) ;
+            return ;
+        }
+        long passwordHash = Hash.encode( password ) ;
+        account.setPassword( passwordHash ) ;
         System.out.println("your password successfully changed.") ;
     }
 

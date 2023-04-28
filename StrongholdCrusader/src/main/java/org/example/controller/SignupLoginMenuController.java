@@ -20,9 +20,17 @@ public class SignupLoginMenuController {
         return null;
     }
 
+    public static boolean validNickname( String nickname ){
+        Pattern pattern = Pattern.compile("^[ A-Za-z]+$") ;
+        Matcher matcher = pattern.matcher( nickname ) ;
+        return matcher.find() ;
+    }
+
     public static boolean validUserName(String userName){
-        // there are no restrictions on username
-        return true ;
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9_\\.]+$") ;
+        if( pattern.matcher(userName).find() )
+            return true ;
+        return false ;
     }
 
     public static boolean validEmail(String email){
@@ -130,7 +138,7 @@ public class SignupLoginMenuController {
         long questionNum = scanner.nextInt() ;
         System.out.print( "Insert your answer : " ) ;
         long answer = scanner.nextInt() ;
-        Account account = new Account( userName , nickName , email , (new MyHash(password)).getHsh() , 0 ,
+        Account account = new Account( userName , nickName , email , (new Hash(password)).getHsh() , 0 ,
                 slogan , questionNum - 1 , answer ) ;
         return "account created successfully" ;
     }
@@ -156,7 +164,7 @@ public class SignupLoginMenuController {
 
         JSONObject cur = DataBase.getFromDataBase("userName", userName);
         long pass = (long) cur.get("password");
-        if(pass != MyHash.Encode(password)){
+        if(pass != Hash.encode(password)){
             System.out.println("Wrong Password!") ;
             return ;
         }
@@ -172,6 +180,7 @@ public class SignupLoginMenuController {
     }
 
     public static String forgetPassword (Matcher matcher){
+
         return null;
     }
 
