@@ -1,13 +1,41 @@
 package org.example.controller;
 
-import org.example.view.GameMenu;
-import org.example.view.Menu;
+import org.example.model.Account;
+import org.example.model.Player;
 
-import javax.print.DocFlavor;
 import java.util.regex.Matcher;
 
-public class GameMenuController {
-    GameMenu gameMenu = new GameMenu(this);
+public class GameController {
+
+    private final Account host ;
+    private final Account guest ;
+    private Player player0 ;
+    private Player player1 ;
+    private int turn ;
+    private Player winner ;
+
+    public GameController( Account host , Account guest ){
+        this.host = host ;
+        this.turn = 0 ;
+        this.guest = guest ;
+        this.player0 = new Player() ;
+        this.winner = null ;
+        this.player1 = new Player() ;
+    }
+
+    public void nextTurn(){
+        this.turn++ ;
+    }
+
+    private void endGame(){
+        // TODO : print match facts , winner , ...
+        // TODO : update accounts' stats , high score , ...
+        System.out.println( "the winner is " + winner.getName() ) ;
+    }
+
+    public Player getWinner(){
+        return winner ;
+    }
 
     public String showMap(Matcher matcher){
         return null;

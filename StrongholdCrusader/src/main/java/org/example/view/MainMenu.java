@@ -21,8 +21,8 @@ public class MainMenu {
             if( input.equals("enter profile menu") )
                 ProfileMenu.run( account ) ;
 
-            if( Commands.getMatchingMatcher( input , Commands.START_GAME ) ){
-                
+            if( Commands.getMatchingMatcher( input , Commands.START_GAME ) != null ){
+
             }
 
         }
