@@ -8,6 +8,7 @@ import org.json.simple.JSONObject;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignupLoginMenuController {
     SignupLoginMenu signupLoginMenu;
@@ -19,15 +20,23 @@ public class SignupLoginMenuController {
         return null;
     }
 
-    private static boolean validUserName(String userName){
+    public static boolean validUserName(String userName){
+        // there are no restrictions on username
         return true ;
     }
 
-    private static boolean validEmail(String userName){
-        return true ;
+    public static boolean validEmail(String email){
+        Pattern pattern = Pattern.compile( "^[a-zA-Z0-9\\.]+\\.[a-zA-Z0-9\\.]+\\.[a-zA-Z0-9\\.]+$" ) ;
+        boolean valid = pattern.matcher( email ).find() ;
+        return valid ;
     }
-    private static boolean validPassword(String userName){
-        return true ;
+    public static boolean validPassword(String password){
+        boolean validLength = password.length() >= 6 ;
+        boolean hasNum = Pattern.compile("[0-9]").matcher(password).find() ;
+        boolean hasCapital = Pattern.compile("[A-Z]").matcher(password).find() ;
+        boolean hasSmall = Pattern.compile("[a-z]").matcher(password).find() ;
+        boolean hasOther = Pattern.compile("[^a-zA-Z0-9]").matcher(password).find() ;
+        return validLength && hasNum && hasCapital && hasSmall && hasOther ;
     }
 
     public static String createUser(Scanner scanner , Matcher matcher){
@@ -38,7 +47,7 @@ public class SignupLoginMenuController {
         String email = matcher.group("email") ;
         String slogan = matcher.group("slogan") ;
 
-        if(userName.length() == 0 || nickName.length() == 0 || email.length() == 0)
+        if(userName == null || nickName == null || email == null)
             return ("You left a filed empty!");
 
         if(!validUserName(userName))
@@ -50,9 +59,18 @@ public class SignupLoginMenuController {
         if(!validEmail(email))
             return ("Invalid Email address!!");
 
+        boolean emailExists = false ;
+        for( Account acc : Account.getAccountsMap().values() ){
+            if( acc.getEmail().equalsIgnoreCase( email ) ){
+                emailExists = true ;
+                break ;
+            }
+        }
+        if( emailExists )
+            return "Email already exists" ;
+
         if(DataBase.getFromDataBase("userName", userName) != null)
         {
-            String ret = "This username already exists :/" ;
             String randomUsername = userName ;
             Random random = new Random() ;
             while( DataBase.getFromDataBase("userName", randomUsername) != null )
@@ -66,7 +84,7 @@ public class SignupLoginMenuController {
         }
         if(slogan == null)
         {
-            slogan = SecurityQuestions.askRandom();
+            slogan = SecurityQuestions.getRandomSlogan();
             return ("Your slogan is: " + slogan);
         }
         if(password.equals("random"))
@@ -98,7 +116,7 @@ public class SignupLoginMenuController {
         }
         if(!password.equals(passwordConfirm))
         {
-            return ("You entered your password wrong, It's not confirmed yet");
+            return ("password confirmation does not match.");
         }
         if(!SecurityQuestions.runCaptcha(scanner)) return "I knew it! You are a damn robot :(" ;
         System.out.println( "you passed" );

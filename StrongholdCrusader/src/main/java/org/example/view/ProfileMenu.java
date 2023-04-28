@@ -1,41 +1,40 @@
 package org.example.view;
 
 import org.example.controller.ProfileMenuController;
+import org.example.model.Account;
 import org.example.model.Commands;
 
 import java.util.regex.Matcher;
 
 public class ProfileMenu {
-    public ProfileMenuController profileMenuController;
-    public ProfileMenu(ProfileMenuController profileMenuController){
-        this.profileMenuController = profileMenuController;
-    }
 
-    public void run(){
+    public static void run( Account account ){
+        System.out.println( "YOU ARE NOW IN PROFILE MENU" ) ;
+        ProfileMenuController profileMenuController = new ProfileMenuController( account ) ;
         Matcher matcher;
         String input;
         while (true){
             input = Menu.getScanner().nextLine();
             if ((matcher = Commands.getMatchingMatcher(input,Commands.CHANGE_USERNAME))!=null)
-                System.out.println(profileMenuController.changeUsername(matcher));
+                profileMenuController.changeUsername(matcher);
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.CHANGE_PASSWORD))!=null)
-                System.out.println(profileMenuController.changePassword(matcher));
+                profileMenuController.changePassword(matcher);
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.CHANGE_NICKNAME))!=null)
-                System.out.println(profileMenuController.changeNickname(matcher));
+                profileMenuController.changeNickname(matcher);
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.CHANGE_EMAIL))!=null)
-                System.out.println(profileMenuController.changeEmail(matcher));
+                profileMenuController.changeEmail(matcher);
             else if((matcher = Commands.getMatchingMatcher(input,Commands.CHANGE_SLOGAN))!=null)
-                System.out.println(profileMenuController.changeSlogan(matcher));
+                profileMenuController.changeSlogan(matcher);
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.DISPLAY_HIGHSCORE))!=null)
-                System.out.println(profileMenuController.displayHighScore(matcher));
+                profileMenuController.displayHighScore(matcher);
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.DISPLAY_RANK))!=null)
-                System.out.println(profileMenuController.displayRank(matcher));
+                profileMenuController.displayRank(matcher);
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.DISPLAY_SLOGAN))!=null)
-                System.out.println(profileMenuController.displaySlogan(matcher));
+                profileMenuController.displaySlogan(matcher);
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.DISPLAY_WHOLE_PROFILE))!= null)
-                System.out.println(profileMenuController.displayProfile(matcher));
+                profileMenuController.displayProfile(matcher);
             else if ((matcher =Commands.getMatchingMatcher(input,Commands.REMOVE_SLOGAN))!=null)
-                System.out.println(profileMenuController.removeSlogan(matcher));
+                profileMenuController.removeSlogan(matcher);
             else
                 System.out.println("Invalid Command");
         }

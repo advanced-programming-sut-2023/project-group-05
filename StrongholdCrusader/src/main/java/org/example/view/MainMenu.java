@@ -1,6 +1,8 @@
 package org.example.view;
 
+import org.example.controller.ProfileMenuController;
 import org.example.model.Account;
+import org.example.model.Commands;
 
 import java.util.Scanner;
 
@@ -14,6 +16,9 @@ public class MainMenu {
             input = scanner.nextLine() ;
             if( input.equals("logout") )
                 return ;
+            if( input.equals("enter profile menu") ){
+                ProfileMenu.run( account ) ;
+            }
         }
 
     }

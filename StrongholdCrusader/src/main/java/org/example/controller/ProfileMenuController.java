@@ -1,50 +1,71 @@
 package org.example.controller;
 
+import org.example.model.Account;
 import org.example.view.Menu;
 import org.example.view.ProfileMenu;
 
 import java.util.regex.Matcher;
 
 public class ProfileMenuController {
-    ProfileMenu profileMenu = new ProfileMenu(this);
 
-    public String changeUsername(Matcher matcher){
-        return null;
+    Account account ;
+
+    public ProfileMenuController( Account account ){
+        this.account = account ;
     }
 
-    public String changeNickname(Matcher matcher){
-        return null;
+    public void changeUsername(Matcher matcher){
+        System.out.println("your username successfully changed."); ;
     }
 
-    public String changePassword(Matcher matcher) {
-        return null;
+    public void changeNickname(Matcher matcher){
+        System.out.println("your nickname successfully changed.");
     }
 
-    public String changeEmail(Matcher matcher){
-        return null;
+    public void changePassword(Matcher matcher) {
+        System.out.println("your password successfully changed.") ;
     }
 
-    public String changeSlogan(Matcher matcher){
-        return null;
+    public void changeEmail(Matcher matcher){
+        String email = matcher.group( "email" ) ;
+        if( !SignupLoginMenuController.validEmail(email) ){
+            System.out.println("Email is not valid.");
+            return ;
+        }
+        account.setEmail( email ) ;
+        System.out.println("your email successfully changed.") ;
     }
 
-    public String removeSlogan(Matcher matcher){
-        return null;
+    public void changeSlogan(Matcher matcher){
+        account.setSlogan( matcher.group("slogan") ) ;
+        System.out.println("your slogan successfully changed.") ;
     }
 
-    public String displayHighScore(Matcher matcher){
-        return null;
+    public void removeSlogan(Matcher matcher){
+        System.out.println("your slogan was successfully removed.") ;
+        account.setSlogan( SecurityQuestions.getRandomSlogan() ) ;
     }
 
-    public String displayRank(Matcher matcher){
-        return null;
+    public void displayHighScore(Matcher matcher){
+        System.out.println("your high score is " + account.getHighScore()) ;
     }
 
-    public String displaySlogan(Matcher matcher){
-        return null;
+    public void displayRank(Matcher matcher){
+        int rank = 1 ;
+        for( Account acc : Account.getAccountsMap().values() ){
+            if( acc.getHighScore() > account.getHighScore() ) rank++ ;
+        }
+        System.out.println( "your rank based on high score is : " ) ;
     }
 
-    public String displayProfile(Matcher matcher){
-        return null;
+    public void displaySlogan(Matcher matcher){
+        System.out.println( "your slogan is : " + account.getSlogan() ) ;
+    }
+
+    public void displayProfile(Matcher matcher){
+        System.out.println( "username : " + account.getUserName() ) ;
+        System.out.println( "nickname : " + account.getNickName() ) ;
+        System.out.println( "slogan : " + account.getSlogan() ) ;
+        System.out.println( "highest score : " + account.getHighScore() ) ;
     }
 }

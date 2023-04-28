@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import java.sql.Array;
 import java.util.*;
 
 public class SecurityQuestions
@@ -266,7 +265,7 @@ public class SecurityQuestions
 
         return true;
     }
-    public static String askRandom()
+    public static String getRandomSlogan()
     {
         Random random = new Random() ;
         return slogans.get( Math.abs(random.nextInt()) % slogans.size() );

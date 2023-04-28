@@ -66,9 +66,7 @@ public class DataBase
     public static void addNewAccount(Account account)
     {
         if(isAccountInData(account))
-        {
-            return;
-        }
+            return ;
         JSONObject current = transformAccountToJSONObject(account);
         JSONParser jsonParser = new JSONParser();
         try (FileReader reader = new FileReader(location))

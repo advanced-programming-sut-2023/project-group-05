@@ -6,13 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="74cc157b-47a4-48f2-9fdd-45a812507ab4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/LogInMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MyHash.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/MyHash.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SignUpLoginMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/DataBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/ProfileMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/ProfileMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/SecurityQuestions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/SecurityQuestions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/SignupLoginMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/SignupLoginMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/data.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/LogInMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/ProfileMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/ProfileMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +49,7 @@
       <updated>1682433718739</updated>
       <workItem from="1682433720387" duration="272000" />
       <workItem from="1682434001390" duration="19845000" />
+      <workItem from="1682673126372" duration="5592000" />
     </task>
     <servers />
   </component>

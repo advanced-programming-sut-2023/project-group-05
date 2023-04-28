@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public enum Commands {
     FIND_USER("find user \"(?<nickname>.*)\"",null),
-    CREATE_USER("user create",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"," -p (((?<password>\\S+) (?<passwordConfirmation>\\S+))|random)","( -email (?<email>\\S+))?"," -n (?<nickname>\\S+)","( -s (?<slogan>\\S+)|random)?"))),
+    CREATE_USER("user create",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)?"," -p (((?<password>\\S+) (?<passwordConfirmation>\\S+))|random)"," -email (?<email>\\S+)?"," -n (?<nickname>\\S+)?","( -s (?<slogan>\\S+)|random)?"))),
     ANSWER_QUESTION("question pick", new ArrayList<String>(Arrays.asList(" -q (?<questionNumber>\\d+)"," -a (?<answer>\\S+)"," -c (?<answerConfirm>\\S+)"))),
     USER_LOGIN("user login",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"," -p (?<password>\\S+)","( --stay-logged-in)?"))),
     FORGET_PASSWORD("forgot my password",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"))),
@@ -14,7 +14,7 @@ public enum Commands {
     CHANGE_NICKNAME ("profile change",new ArrayList<String>(Arrays.asList(" -n (?<nickname>\\S+)"))),
     CHANGE_PASSWORD("profile change password",new ArrayList<String>(Arrays.asList(" -o (?<oldPassword>\\S+)"," -n (?<newPassword>\\S+)"))),
     CHANGE_EMAIL ("profile change",new ArrayList<String>(Arrays.asList("-e (?<email>\\S+)"))),
-    CHANGE_SLOGAN("profile change slogan",new ArrayList<String>(Arrays.asList(" -s (?<slogan>\\S+)"))),
+    CHANGE_SLOGAN("profile change slogan",new ArrayList<String>(Arrays.asList(" -s (?<slogan>(\\S+)|(\".+\"))"))),
     REMOVE_SLOGAN("profile remove solgan",null),
     DISPLAY_HIGHSCORE("profile display highscore",null),
     DISPLAY_RANK("profile display rank",null),

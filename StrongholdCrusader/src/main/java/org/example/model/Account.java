@@ -9,9 +9,9 @@ public class Account
     private long Hash;
     private final String userName;
     private final String nickName;
-    private final String email;
+    private String email;
     private final long highScore;
-    private final String slogan;
+    private String slogan;
     private final long question;
     private final long answer;
     static private final HashMap < String, Account > accountsMap = new HashMap < String, Account >();
@@ -50,6 +50,12 @@ public class Account
     public long getHash()
     {
         return this.Hash;
+    }
+    public void setSlogan( String slogan ){
+        this.slogan = slogan ;
+    }
+    public void setEmail( String email ){
+        this.email = email ;
     }
     public Account(String _userName, String _nickName, String _email, long _password, long _highScore, String _slogan, long _question, long _answer)
     {
