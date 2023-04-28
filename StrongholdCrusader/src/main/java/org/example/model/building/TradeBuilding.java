@@ -22,8 +22,8 @@ public class TradeBuilding extends Building {
         this.requiredNumberOfOperators = requiredNumberOfOperators ;
     }
 
-    public void trade( Cost cost , ArrayList <Object> objects , Object object ){
-        // TODO : trade
+    public void trade( Cost costGive , ArrayList <Object> objectsGive , Object objectGet , Cost costGet ){
+        // TODO : trade the "give"s with "get"s
     }
 
     public void updateFunctionality(){

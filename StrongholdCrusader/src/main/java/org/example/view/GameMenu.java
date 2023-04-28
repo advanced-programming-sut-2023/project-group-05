@@ -18,8 +18,10 @@ public class GameMenu {
         Matcher matcher;
         while (true){
             input = Menu.getScanner().nextLine();
+
             if ((matcher = Commands.getMatchingMatcher(input,Commands.SHOW_MAP))!=null)
                 System.out.println( gameControllerController.showMap(matcher));
+
             else if( input.equals("next turn") )
                 gameController.nextTurn() ;
 
