@@ -10,7 +10,7 @@ public class Account
     private String userName;
     private String nickName;
     private String email;
-    private final long highScore;
+    private long highScore;
     private String slogan;
     private final long question;
     private final long answer;
@@ -65,6 +65,9 @@ public class Account
     }
     public void setNickname( String nickName ){
         this.nickName = nickName ;
+    }
+    public void setHighScore( int newHighScore ){
+        this.highScore = newHighScore ;
     }
     public Account(String _userName, String _nickName, String _email, long _password, long _highScore, String _slogan, long _question, long _answer)
     {

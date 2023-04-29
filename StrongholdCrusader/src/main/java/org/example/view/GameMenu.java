@@ -3,142 +3,146 @@ package org.example.view;
 import org.example.controller.GameController;
 import org.example.model.Account;
 import org.example.model.Commands;
+import org.example.model.Player;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GameMenu {
-    public GameController gameControllerController;
-    public GameMenu ( GameController gameControllerController ){
-        this.gameControllerController = gameControllerController;
-    }
 
-    public void run ( Account host , Account guest ){
-        GameController gameController = new GameController( host , guest ) ;
+    public static void run ( Matcher playersMatcher ){
+        ArrayList<Account> accounts = new ArrayList<Account>() ;
+        Pattern patternUsername = Pattern.compile("(?<username>\\S+)") ;
+        Matcher matcherUsername = patternUsername.matcher( playersMatcher.group("usernames") );
+        while( matcherUsername.find() ){
+            accounts.add( Account.getAccountsMap().get(matcherUsername.group("username")) ) ;
+        }
+        GameController gameController = new GameController( accounts ) ;
         String input;
-        Matcher matcher;
         while (true){
             input = Menu.getScanner().nextLine();
 
-            if ((matcher = Commands.getMatchingMatcher(input,Commands.SHOW_MAP))!=null)
-                System.out.println( gameControllerController.showMap(matcher));
+            if (Commands.getMatchingMatcher(input,Commands.SHOW_MAP)!=null)
+                MapMenu.run(Commands.getMatchingMatcher(input,Commands.SHOW_MAP)) ;
 
             else if( input.equals("next turn") )
                 gameController.nextTurn() ;
 
-            else if ((matcher =Commands.getMatchingMatcher(input,Commands.SHOW_DETAILS))!=null)
-                System.out.println( gameControllerController.showDetails(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SHOW_DETAILS)!=null)
+                System.out.println( gameController.showDetails(Commands.getMatchingMatcher(input,Commands.SHOW_DETAILS)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.NAVIGATE_MAP))!=null)
-                System.out.println( gameControllerController.mapNavigation(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.NAVIGATE_MAP)!=null)
+                System.out.println( gameController.mapNavigation(Commands.getMatchingMatcher(input,Commands.NAVIGATE_MAP)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SHOW_POPULARITY_FACTORS))!=null)
-                System.out.println( gameControllerController.showPopularityFactors(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SHOW_POPULARITY_FACTORS)!=null)
+                System.out.println( gameController.showPopularityFactors(Commands.getMatchingMatcher(input,Commands.SHOW_POPULARITY_FACTORS)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SHOW_POPULARITY))!=null)
-                System.out.println( gameControllerController.showPopularity(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SHOW_POPULARITY)!=null)
+                System.out.println( gameController.showPopularity(Commands.getMatchingMatcher(input,Commands.SHOW_POPULARITY)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SHOW_FOOD_TYPES))!=null)
-                System.out.println( gameControllerController.showFoodList(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SHOW_FOOD_TYPES)!=null)
+                System.out.println( gameController.showFoodList(Commands.getMatchingMatcher(input,Commands.SHOW_FOOD_TYPES)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SET_FOOD_RATE))!=null)
-                System.out.println( gameControllerController.setFoodRate(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SET_FOOD_RATE)!=null)
+                System.out.println( gameController.setFoodRate(Commands.getMatchingMatcher(input,Commands.SET_FOOD_RATE)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SHOW_FOOD_RATE))!=null)
-                System.out.println( gameControllerController.showFoodRate(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SHOW_FOOD_RATE)!=null)
+                System.out.println( gameController.showFoodRate(Commands.getMatchingMatcher(input,Commands.SHOW_FOOD_RATE)));
 
-            else if ((matcher =Commands.getMatchingMatcher(input,Commands.SET_TAX_RATE))!=null)
-                System.out.println( gameControllerController.setTaxRate(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SET_TAX_RATE)!=null)
+                System.out.println( gameController.setTaxRate(Commands.getMatchingMatcher(input,Commands.SET_TAX_RATE)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SHOW_TAX_RATE))!=null)
-                System.out.println( gameControllerController.showTaxRate(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SHOW_TAX_RATE)!=null)
+                System.out.println( gameController.showTaxRate(Commands.getMatchingMatcher(input,Commands.SHOW_TAX_RATE)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SET_FEAR_RATE))!=null)
-                System.out.println( gameControllerController.setFearRate(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SET_FEAR_RATE)!=null)
+                System.out.println( gameController.setFearRate(Commands.getMatchingMatcher(input,Commands.SET_FEAR_RATE)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DROP_BUILDING))!=null)
-                System.out.println( gameControllerController.dropBuilding(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.DROP_BUILDING)!=null)
+                System.out.println( gameController.dropBuilding(Commands.getMatchingMatcher(input,Commands.DROP_BUILDING)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SELECT_BUILDING))!=null)
-                System.out.println( gameControllerController.selectBuilding(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SELECT_BUILDING)!=null)
+                System.out.println( gameController.selectBuilding(Commands.getMatchingMatcher(input,Commands.SELECT_BUILDING)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.CREATE_UNIT))!=null)
-                System.out.println( gameControllerController.createUnit(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.CREATE_UNIT)!=null)
+                System.out.println( gameController.createUnit(Commands.getMatchingMatcher(input,Commands.CREATE_UNIT)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.REPAIR))!=null)
-                System.out.println( gameControllerController.repair(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.REPAIR)!=null)
+                System.out.println( gameController.repair(Commands.getMatchingMatcher(input,Commands.REPAIR)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SELECT_UNIT))!=null)
-                System.out.println( gameControllerController.selectUnit(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SELECT_UNIT)!=null)
+                System.out.println( gameController.selectUnit(Commands.getMatchingMatcher(input,Commands.SELECT_UNIT)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.MOVE_UNIT))!=null)
-                System.out.println( gameControllerController.moveUnit(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.MOVE_UNIT)!=null)
+                System.out.println( gameController.moveUnit(Commands.getMatchingMatcher(input,Commands.MOVE_UNIT)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.PATROL))!=null)
-                System.out.println( gameControllerController.patrolUnit(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.PATROL)!=null)
+                System.out.println( gameController.patrolUnit(Commands.getMatchingMatcher(input,Commands.PATROL)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SET_UNIT_STATE))!=null)
-                System.out.println( gameControllerController.setState(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SET_UNIT_STATE)!=null)
+                System.out.println( gameController.setState(Commands.getMatchingMatcher(input,Commands.SET_UNIT_STATE)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.ATTACK))!=null)
-                System.out.println( gameControllerController.attack(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.ATTACK)!=null)
+                System.out.println( gameController.attack(Commands.getMatchingMatcher(input,Commands.ATTACK)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.AIR_ATTACK))!=null)
-                System.out.println( gameControllerController.airAttack(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.AIR_ATTACK)!=null)
+                System.out.println( gameController.airAttack(Commands.getMatchingMatcher(input,Commands.AIR_ATTACK)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.POUR_OIL))!=null)
-                System.out.println( gameControllerController.pourOil(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.POUR_OIL)!=null)
+                System.out.println( gameController.pourOil(Commands.getMatchingMatcher(input,Commands.POUR_OIL)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DIG_TUNNEL))!=null)
-                System.out.println( gameControllerController.digTunnel(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.DIG_TUNNEL)!=null)
+                System.out.println( gameController.digTunnel(Commands.getMatchingMatcher(input,Commands.DIG_TUNNEL)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.BUILD_EQUIPMENT))!=null)
-                System.out.println( gameControllerController.buildEquipment(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.BUILD_EQUIPMENT)!=null)
+                System.out.println( gameController.buildEquipment(Commands.getMatchingMatcher(input,Commands.BUILD_EQUIPMENT)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DISBAND))!=null)
-                System.out.println( gameControllerController.disbandUnit(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.DISBAND)!=null)
+                System.out.println( gameController.disbandUnit(Commands.getMatchingMatcher(input,Commands.DISBAND)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SET_TEXTURE_OF_CELL))!=null)
-                System.out.println( gameControllerController.setTextureCell(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SET_TEXTURE_OF_CELL)!=null)
+                System.out.println( gameController.setTextureCell(Commands.getMatchingMatcher(input,Commands.SET_TEXTURE_OF_CELL)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SET_TEXTURE_OF_BLOCK))!=null)
-                System.out.println( gameControllerController.setTextureBlock(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SET_TEXTURE_OF_BLOCK)!=null)
+                System.out.println( gameController.setTextureBlock(Commands.getMatchingMatcher(input,Commands.SET_TEXTURE_OF_BLOCK)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.CLEAR_CELL))!=null)
-                System.out.println( gameControllerController.clear(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.CLEAR_CELL)!=null)
+                System.out.println( gameController.clear(Commands.getMatchingMatcher(input,Commands.CLEAR_CELL)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DROP_ROCK))!=null)
-                System.out.println( gameControllerController.dropRock(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.DROP_ROCK)!=null)
+                System.out.println( gameController.dropRock(Commands.getMatchingMatcher(input,Commands.DROP_ROCK)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DROPTREE))!=null)
-                System.out.println( gameControllerController.dropTree(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.DROPTREE)!=null)
+                System.out.println( gameController.dropTree(Commands.getMatchingMatcher(input,Commands.DROPTREE)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.REPLACE_BUILDING))!=null)
-                System.out.println( gameControllerController.replaceBuilding(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.REPLACE_BUILDING)!=null)
+                System.out.println( gameController.replaceBuilding(Commands.getMatchingMatcher(input,Commands.REPLACE_BUILDING)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DROP_UNIT))!=null)
-                System.out.println( gameControllerController.dropUnit(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.DROP_UNIT)!=null)
+                System.out.println( gameController.dropUnit(Commands.getMatchingMatcher(input,Commands.DROP_UNIT)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.TRADE_REQUEST))!=null)
-                System.out.println( gameControllerController.tradeRequest(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.TRADE_REQUEST)!=null)
+                System.out.println( gameController.tradeRequest(Commands.getMatchingMatcher(input,Commands.TRADE_REQUEST)));
 
-            else if ((matcher =Commands.getMatchingMatcher(input,Commands.SHOW_TRADE_LIST))!=null)
-                System.out.println( gameControllerController.tradeList(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SHOW_TRADE_LIST)!=null)
+                System.out.println( gameController.tradeList(Commands.getMatchingMatcher(input,Commands.SHOW_TRADE_LIST)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.TRADE_ACCEPT))!=null)
-                System.out.println( gameControllerController.tradeAccept(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.TRADE_ACCEPT)!=null)
+                System.out.println( gameController.tradeAccept(Commands.getMatchingMatcher(input,Commands.TRADE_ACCEPT)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SHOW_TRADE_HISTORY))!=null)
-                System.out.println( gameControllerController.tradeHistory(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SHOW_TRADE_HISTORY)!=null)
+                System.out.println( gameController.tradeHistory(Commands.getMatchingMatcher(input,Commands.SHOW_TRADE_HISTORY)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SHOW_PRICE_LIST))!=null)
-                System.out.println( gameControllerController.showPriceList(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SHOW_PRICE_LIST)!=null)
+                System.out.println( gameController.showPriceList(Commands.getMatchingMatcher(input,Commands.SHOW_PRICE_LIST)));
 
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.BUY))!=null)
-                System.out.println( gameControllerController.buy(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.BUY)!=null)
+                System.out.println( gameController.buy(Commands.getMatchingMatcher(input,Commands.BUY)));
 
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.SELL))!=null)
-                System.out.println( gameControllerController.sell(matcher));
+            else if (Commands.getMatchingMatcher(input,Commands.SELL)!=null)
+                System.out.println( gameController.sell(Commands.getMatchingMatcher(input,Commands.SELL)));
 
             else
                 System.out.println("Invalid Command");

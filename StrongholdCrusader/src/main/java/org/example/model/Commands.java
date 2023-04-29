@@ -9,7 +9,7 @@ public enum Commands {
     ANSWER_QUESTION("question pick", new ArrayList<String>(Arrays.asList(" -q (?<questionNumber>\\d+)"," -a (?<answer>\\S+)"," -c (?<answerConfirm>\\S+)"))),
     USER_LOGIN("user login",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"," -p (?<password>\\S+)","( --stay-logged-in)?"))),
     FORGET_PASSWORD("forgot my password",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"))),
-    START_GAME( "start game with" , new ArrayList<String>( Arrays.asList( " -u <?username\\S+>" ) ) ) ,
+    START_GAME( "start game with" , new ArrayList<String>( Arrays.asList( " -u(<?usernames>( \\S+)+)" ) ) ) ,
     LOGOUT ("user logout",null),
     CHANGE_USERNAME ("profile change",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"))),
     CHANGE_NICKNAME ("profile change",new ArrayList<String>(Arrays.asList(" -n (?<nickname>(\\S+)|(\".+\"))"))),

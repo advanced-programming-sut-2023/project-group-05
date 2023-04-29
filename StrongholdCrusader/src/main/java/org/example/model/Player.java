@@ -1,8 +1,17 @@
 package org.example.model;
 
+import org.example.model.building.Building;
+import org.example.model.unit.Unit;
+
+import java.util.ArrayList;
+
 public class Player {
     // TODO : some functions and constructor
+    private Account account ;
+    private ArrayList <Building> buildings ;
+    private ArrayList<Unit> units ;
     private int fearRate ;
+    private int score ;
     private int taxRate ;
     private int foodRate ;
     private int religionRate ;
@@ -24,16 +33,45 @@ public class Player {
     private int iron ;
     private int population ;
     private int populationCapacity ;
-    // TODO : private ArrayList< Unit > units ;
-    // TODO : private ArrayList< Building > buildings ;
     private int popularity ;
 
-    public void updatePopularity(){
-        // TODO : update popularity based on different parameters
+    public Player( Account account ){
+        this.account = account ;
+        this.fearRate = 0 ;
+        this.taxRate = 0 ;
+        this.foodRate = 0 ;
+        this.religionRate = 0 ;
+        this.pitchCapacity = 0 ;
+        this.meatCapacity = 0 ;
+        this.breadCapacity = 0 ;
+        this.cheeseCapacity = 0 ;
+        this.hop = 0 ;
+        this.cheese = 0 ;
+        this.bread = 0 ;
+        this.meat = 0 ;
+        this.pitch = 0 ;
+        this.apple = 0 ;
+        this.wineUsage = 0 ;
+        this.gold = 0 ;
+        this.stone = 0 ;
+        this.wood = 0 ;
+        this.iron = 0 ;
+        this.population = 0 ;
+        this.populationCapacity = 0 ;
+        this.popularity = 0 ;
+        this.score = 0 ;
     }
 
-    public void updatePopulationCapacity(){
-        // TODO : updating population capacity based on different parameters
+    public Account getAccount(){
+        return this.account ;
+    }
+
+    public void setPopularity( int popularity ){
+        this.popularity = popularity ;
+    }
+
+    public int getPopularity(){
+        return this.popularity ;
     }
 
     public void setTaxRate( int taxRate ){
@@ -48,21 +86,23 @@ public class Player {
         return this.religionRate ;
     }
 
-    // public Account getAccount(){}
-
-    public String getName(){
-        return null ;
-        // TODO : return name
-        // TODO : return this.account.getName() ;
+    public void setPopulation(int population){
+        this.population = population ;
     }
 
-    public String getSlogan(){
-        return null ;
-        // TODO : return slogan
+    public int getPopulation(){
+        return this.population ;
     }
 
-    public void updatePopulation(){
-        // TODO update population
+    public int getPopulationCapacity(){
+        return this.populationCapacity ;
     }
 
+    public void setPopulationCapacity(int populationCapacity){
+        this.populationCapacity = populationCapacity ;
+    }
+
+    public long getScore(){
+        return this.score;
+    }
 }
