@@ -7,29 +7,28 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class GameMap {
-    public ArrayList<ArrayList<Cell>> map;
+    private Cell[][] map ;
 
     public GameMap(int height , int width){
         //height = number of rows
         //width = number of columns
-        map = new ArrayList<ArrayList<Cell>>(height);
-        for (int row = 0; row <height ;row++){
-            ArrayList<Cell> buffer = new ArrayList<Cell>(width);
-            map.add(buffer);
-        }
+        this.map = new Cell[height][width] ;
+        for(int i = 0 ; i < height ; i++)
+            for(int j = 0 ; j < width ; j++)
+                map[i][j] = new Cell(CellType.GROUND) ;
     }
 
-    public void addBuilding(int row , int column , Building building){
-        map.get(row).get(column).buildings.add(building);
+    /*public void addBuilding(int row , int column , Building building){
+        this.map.get(row).get(column).buildings.add(building);
         //add to objects?
-    }
+    }*/
 
-    public void addUnit(int row , int column , Unit unit){
-        map.get(row).get(column).units.add(unit);
+    /*public void addUnit(int row , int column , Unit unit){
+        this.map.get(row).get(column).units.add(unit);
         //add to objects ?
-    }
+    }*/
 
     public Cell getCell (int row , int column){
-        return map.get(row).get(column);
+        return this.map[row][column];
     }
 }

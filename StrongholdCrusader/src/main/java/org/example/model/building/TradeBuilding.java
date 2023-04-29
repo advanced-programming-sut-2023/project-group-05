@@ -1,5 +1,6 @@
 package org.example.model.building;
 
+import org.example.model.BuildingEnum;
 import org.example.model.Cost;
 import org.example.model.Player;
 
@@ -16,9 +17,9 @@ public class TradeBuilding extends Building {
 
     public TradeBuilding( String name , String category , int width , int height , boolean passable ,
                           int popularityRate , boolean holdsAnimal , Player owner , int row , int column , int hitPoint , Cost cost ,
-                          int requiredNumberOfOperators ){
+                          int requiredNumberOfOperators , BuildingEnum buildingEnum ){
             super( name , height , width , passable , category , owner , row , column , cost , hitPoint ,
-                    popularityRate , holdsAnimal ) ;
+                    popularityRate , holdsAnimal , buildingEnum ) ;
         this.requiredNumberOfOperators = requiredNumberOfOperators ;
     }
 

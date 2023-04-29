@@ -34,7 +34,7 @@ public class SignupLoginMenuController {
     }
 
     public static boolean validEmail(String email){
-        Pattern pattern = Pattern.compile( "^[a-zA-Z0-9\\.]+\\.[a-zA-Z0-9\\.]+\\.[a-zA-Z0-9\\.]+$" ) ;
+        Pattern pattern = Pattern.compile( "^[a-zA-Z0-9\\.]+@[a-zA-Z0-9\\.]+\\.[a-zA-Z0-9\\.]+$" ) ;
         boolean valid = pattern.matcher( email ).find() ;
         return valid ;
     }

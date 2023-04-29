@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 
 public class MapMenu {
     public static void run(Matcher matcher , GameMap gameMap){
+        System.out.println( "YOU HAVE ENTERED MAP MENU" ) ;
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
         MapMenuController.showMap(row,column,gameMap);

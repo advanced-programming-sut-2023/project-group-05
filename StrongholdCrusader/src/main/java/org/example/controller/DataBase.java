@@ -14,6 +14,13 @@ import java.io.IOException;
 public class DataBase
 {
 
+    public static void deleteAccount( String username ){
+        /*
+        *   TODO : delete this user from the database
+        *       don't change anything in Account.getAccounts()
+        * */
+    }
+
     public static void setStayLoggedIn( Account account ){
         // TODO : put this account in stay logged-in mode
     }

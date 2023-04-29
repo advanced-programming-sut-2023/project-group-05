@@ -17,6 +17,7 @@ public class GameController {
 
     public GameController( ArrayList<Account> accounts ){
         this.accounts = accounts ;
+        this.players = new ArrayList<Player>() ;
         for( Account acc : accounts ){
             this.players.add( new Player( acc ) ) ;
         }
