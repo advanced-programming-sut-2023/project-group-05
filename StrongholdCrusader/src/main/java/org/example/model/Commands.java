@@ -23,7 +23,7 @@ public enum Commands {
     DISPLAY_WHOLE_PROFILE("profile display",null),
     SHOW_MAP("show map",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y (?<column>\\d+)"))),
     SHOW_DETAILS("show details",new ArrayList<String>(Arrays.asList(" -x(?<row>\\d+)"," -y(?<column>\\d+)"))),
-    NAVIGATE_MAP("map",new ArrayList<String>(Arrays.asList("( up (?<upNavigation>\\d+))?","( down (?<downNavigation>\\d+))?","( right (?<rightNavigation>\\d+))?","( left (?<leftNavigation>\\d+))?"))),
+    NAVIGATE_MAP("map",new ArrayList<String>(Arrays.asList("( up( (?<upNavigation>\\d+))?)?","( down( (?<downNavigation>\\d+))?)?","( right( (?<rightNavigation>\\d+))?)?","( left( (?<leftNavigation>\\d+))?)?"))),
     SHOW_POPULARITY_FACTORS("show popularity factors",null),
     SHOW_POPULARITY("show popularity",null),
     SHOW_FOOD_TYPES("show food list",null),
