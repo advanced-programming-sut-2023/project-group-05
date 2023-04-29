@@ -18,7 +18,7 @@ public class Cell {
         this.objects = new ArrayList<>();
     }
 
-    public CellType getCellType(){
+    public CellType getCellTypeName(){
         return this.cellType;
     }
 
@@ -36,5 +36,12 @@ public class Cell {
         //handle special units through special places
         return true;
     }
-
+    public int getUnitNumbers(Unit unit){
+        int count = 0;
+        for (Unit unit1 : units){
+            if (unit1.getName().equals(unit.getName()))
+                ++count;
+        }
+        return count;
+    }
 }

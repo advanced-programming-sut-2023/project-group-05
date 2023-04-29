@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.model.Account;
+import org.example.model.GameMap;
 import org.example.model.Player;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class GameController {
     ArrayList <Account> accounts ;
     private int turn ;
     private Player winner ;
+    private GameMap gameMap;
 
     public GameController( ArrayList<Account> accounts ){
         this.accounts = accounts ;
@@ -20,6 +22,7 @@ public class GameController {
         }
         this.turn = 0 ;
         this.winner = null ;
+        gameMap = new GameMap(400,400);
     }
 
     public void nextTurn(){
@@ -38,16 +41,8 @@ public class GameController {
         return winner ;
     }
 
-    public String showMap(Matcher matcher){
-        return null;
-    }
-
-    public String mapNavigation(Matcher matcher){
-        return null;
-    }
-
-    public String showDetails(Matcher matcher){
-        return null;
+    public GameMap getGameMap(){
+        return this.gameMap;
     }
 
     public String showPopularityFactors(Matcher matcher){

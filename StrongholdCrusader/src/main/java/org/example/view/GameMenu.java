@@ -22,22 +22,12 @@ public class GameMenu {
         String input;
         while (true){
             input = Menu.getScanner().nextLine();
-
             if (Commands.getMatchingMatcher(input,Commands.SHOW_MAP)!=null)
-                MapMenu.run(Commands.getMatchingMatcher(input,Commands.SHOW_MAP)) ;
-
+                MapMenu.run(Commands.getMatchingMatcher(input,Commands.SHOW_MAP),gameController.getGameMap()) ;
             else if( input.equals("next turn") )
                 gameController.nextTurn() ;
-
-            else if (Commands.getMatchingMatcher(input,Commands.SHOW_DETAILS)!=null)
-                System.out.println( gameController.showDetails(Commands.getMatchingMatcher(input,Commands.SHOW_DETAILS)));
-
-            else if (Commands.getMatchingMatcher(input,Commands.NAVIGATE_MAP)!=null)
-                System.out.println( gameController.mapNavigation(Commands.getMatchingMatcher(input,Commands.NAVIGATE_MAP)));
-
             else if (Commands.getMatchingMatcher(input,Commands.SHOW_POPULARITY_FACTORS)!=null)
                 System.out.println( gameController.showPopularityFactors(Commands.getMatchingMatcher(input,Commands.SHOW_POPULARITY_FACTORS)));
-
             else if (Commands.getMatchingMatcher(input,Commands.SHOW_POPULARITY)!=null)
                 System.out.println( gameController.showPopularity(Commands.getMatchingMatcher(input,Commands.SHOW_POPULARITY)));
 
