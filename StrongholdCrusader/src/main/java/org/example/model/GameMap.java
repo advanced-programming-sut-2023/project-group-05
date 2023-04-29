@@ -28,4 +28,8 @@ public class GameMap {
         map.get(row).get(column).units.add(unit);
         //add to objects ?
     }
+
+    public Cell getCell (int row , int column){
+        return map.get(row).get(column);
+    }
 }

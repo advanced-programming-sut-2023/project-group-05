@@ -1,26 +1,28 @@
 package org.example.controller;
 
 import org.example.model.Account;
+import org.example.model.GameMap;
 import org.example.model.Player;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class GameController {
 
-    private final Account host ;
-    private final Account guest ;
-    private Player player0 ;
-    private Player player1 ;
+    ArrayList<Player> players ;
+    ArrayList <Account> accounts ;
     private int turn ;
     private Player winner ;
+    private GameMap gameMap;
 
-    public GameController( Account host , Account guest ){
-        this.host = host ;
+    public GameController( ArrayList<Account> accounts ){
+        this.accounts = accounts ;
+        for( Account acc : accounts ){
+            this.players.add( new Player( acc ) ) ;
+        }
         this.turn = 0 ;
-        this.guest = guest ;
-        this.player0 = new Player() ;
         this.winner = null ;
-        this.player1 = new Player() ;
+        gameMap = new GameMap(400,400);
     }
 
     public void nextTurn(){
@@ -28,25 +30,19 @@ public class GameController {
     }
 
     private void endGame(){
-        // TODO : print match facts , winner , ...
-        // TODO : update accounts' stats , high score , ...
-        System.out.println( "the winner is " + winner.getName() ) ;
+        System.out.println( "\nTHIS MATCH HAS ENDED AFTER " + this.turn / accounts.size() + " ROUNDS \n" +
+                            "THE WINNER IS " + winner.getAccount().getNickName() + "\n" ) ;
+        for(Player player : this.players)
+            player.getAccount().setHighScore((int)Math.max(player.getAccount().getHighScore(),player.getScore())) ;
+        System.out.println( "the winner is " + winner.getAccount().getNickName() ) ;
     }
 
     public Player getWinner(){
         return winner ;
     }
 
-    public String showMap(Matcher matcher){
-        return null;
-    }
-
-    public String mapNavigation(Matcher matcher){
-        return null;
-    }
-
-    public String showDetails(Matcher matcher){
-        return null;
+    public GameMap getGameMap(){
+        return this.gameMap;
     }
 
     public String showPopularityFactors(Matcher matcher){

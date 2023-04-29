@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class MainMenu {
 
     public static void run( Scanner scanner , Account account ){
-
         System.out.println("You are currently in MainMenu") ;
         String input ;
         while( true ){
@@ -22,7 +21,7 @@ public class MainMenu {
                 ProfileMenu.run( account ) ;
 
             if( Commands.getMatchingMatcher( input , Commands.START_GAME ) != null ){
-
+                GameMenu.run( Commands.getMatchingMatcher( input , Commands.START_GAME ) ) ;
             }
 
         }
