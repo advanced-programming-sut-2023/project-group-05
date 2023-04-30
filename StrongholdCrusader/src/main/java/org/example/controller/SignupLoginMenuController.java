@@ -90,10 +90,9 @@ public class SignupLoginMenuController {
             if( !inputYN.equals( "y" ) ) return "create user failed" ;
             userName = randomUsername ;
         }
-        if(slogan == null)
-        {
+        if( slogan.equals("random") ){
             slogan = SecurityQuestions.getRandomSlogan();
-            return ("Your slogan is: " + slogan);
+            System.out.println( "YOUR SLOGAN IS RANDOMLY CHOSEN : " + slogan ) ;
         }
         if(password.equals("random"))
         {

@@ -6,41 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="74cc157b-47a4-48f2-9fdd-45a812507ab4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/DataBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/SecurityQuestions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/SecurityQuestions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/SignupLoginMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/SignupLoginMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Cell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/GameMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/GameMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/building/AttackDefenceBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/building/AttackDefenceBuilding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/building/StorageBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/building/StorageBuilding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/building/TradeBuilding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/building/TradeBuilding.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/GameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/MainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/MapMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/MapMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/DataBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/controller/DataBase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/GameMenuController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/MyHash.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/ProfileMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/controller/ProfileMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/SecurityQuestions.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/controller/SecurityQuestions.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/SignupLoginMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/controller/SignupLoginMenuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/model/Account.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/Cell.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/model/Cell.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/Commands.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/model/Commands.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/GameMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/model/GameMap.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/model/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/building/AttackDefenceBuilding.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/model/building/AttackDefenceBuilding.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/building/Building.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/model/building/Building.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/building/StorageBuilding.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/model/building/StorageBuilding.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/building/TradeBuilding.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/model/building/TradeBuilding.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/view/GameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/view/GameMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/view/MainMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/view/MainMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/view/ProfileMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/view/ProfileMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/TestClass.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/TestClass2.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +52,8 @@
       <updated>1682433718739</updated>
       <workItem from="1682433720387" duration="272000" />
       <workItem from="1682434001390" duration="19845000" />
-      <workItem from="1682802580537" duration="861000" />
+      <workItem from="1682802580537" duration="933000" />
+      <workItem from="1682885787860" duration="2065000" />
     </task>
     <servers />
   </component>
