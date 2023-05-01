@@ -4,19 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db69725f-ad79-44ab-af66-87cc35ba5895" name="Changes" comment="Building getter function added - primary version : need to get reviewed.">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="db69725f-ad79-44ab-af66-87cc35ba5895" name="Changes" comment="some commands added !">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/MapMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/MapMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Cell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/CellType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/CellType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/ConsoleColors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/ConsoleColors.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/UnitTypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/UnitTypeEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/building/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/building/Building.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/unit/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/unit/Unit.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,13 +75,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682948106414</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="some commands added !">
+      <created>1682952333366</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1682952333366</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="DropUnit + UnitEnum added" />
     <MESSAGE value="Building getter function added - primary version : need to get reviewed." />
-    <option name="LAST_COMMIT_MESSAGE" value="Building getter function added - primary version : need to get reviewed." />
+    <MESSAGE value="some commands added !" />
+    <option name="LAST_COMMIT_MESSAGE" value="some commands added !" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

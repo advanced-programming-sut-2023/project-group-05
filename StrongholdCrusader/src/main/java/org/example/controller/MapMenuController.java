@@ -23,7 +23,7 @@ public class MapMenuController {
         for (int i = row - 21; i < row + 21; ++i) {
             for (int j = column - 21; j < column + 21; ++j) {
                 Cell cell = gameMap.getCell(i, j);
-                System.out.print("|"+getCellTypeByColor(cell) +
+                System.out.print("|"+getCellTypeByColor(cell) + ConsoleColors.BLACK_BOLD+
                         getCellContentByCharacter(cell) +
                         ConsoleColors.RESET);
             }
@@ -114,12 +114,12 @@ public class MapMenuController {
             right += (matcher.group("rightNumber")==null)? 1 : Integer.parseInt(matcher.group("rightNumber"));
         if (matcher.group("leftNavigation")!=null)
             left += (matcher.group("leftNumber")==null)? 1 : Integer.parseInt(matcher.group("leftNumber"));
-        row += (up - down);
+        row -= (up - down);
         column +=(right - left);
         if (row > 400 || row < 0 || column > 400 || column <0){
             System.out.println("The Navigation Can't Be Applied : Numbers Exceed Map Size!");
-            row -=(up-down);
-            column -=(right - left);
+            row +=(up-down);
+            column +=(right - left);
             return;
         }
         showMap(row,column,gameMap);

@@ -186,6 +186,8 @@ public class GameController {
     }
 
     public String setState(Matcher matcher){
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
         return null;
     }
 
@@ -281,7 +283,9 @@ public class GameController {
         if ((error = dropUnitErrorChecker(type,count,row,column))!=null)
             return error;
         Unit unit = Unit.createUnitByName(type,player);
-        gameMap.getCell(row,column).addUnit(unit);
+        Cell cell = gameMap.getCell(row,column);
+        while (--count>0)
+            cell.addUnit(unit);
         return "Unit Dropped Successfully!";
     }
 

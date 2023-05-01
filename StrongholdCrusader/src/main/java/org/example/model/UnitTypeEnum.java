@@ -5,6 +5,7 @@ import org.example.model.unit.Unit;
 import java.util.HashMap;
 
 public enum UnitTypeEnum {
+    //TODO : Handle King
     ARCHER("archer"),
     CROSSBOWMEN("crowwbowmen"),
     SPEARMEN("spearmen"),
