@@ -144,7 +144,7 @@ public class Building {
         if (type.equals("cagedwardog"))
             return new TradeBuilding(type,"",2,2,false,0,true,owner,row,column,100,getBuildingCost(type),3,BuildingEnum.CAGED_WAR_DOGS);//TODO : HOW MANY OPERATOR?
         if (type.equals("siegetent"))
-            return new TradeBuilding(type,"",5,5,false,0,false,owner,row,column,300,getBuildingCost(type),0,BuildingEnum.SIEGE_TENT);
+            return new TradeBuilding(type,"",5,5,false,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.SIEGE_TENT);
         if (type.equals("stable"))
             return new TradeBuilding(type,"",3,5,false,0,false,owner,row,column,200,getBuildingCost(type),0,BuildingEnum.STABLE);//TODO : HOW MANY OPERATORS?
         if (type.equals("tunnelerguild"))
@@ -168,23 +168,23 @@ public class Building {
         if (type.equals("inn"))
             return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.INN);
         if (type.equals("mill"))
-            return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,400,getBuildingCost(type),1,BuildingEnum.MILL);
+            return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,400,getBuildingCost(type),3,BuildingEnum.MILL);
         if (type.equals("ironmine"))
             return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.IRON_MINE);
         if (type.equals("market"))
-            return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,400,getBuildingCost(type),0,BuildingEnum.MARKET);//TODO : HOW MANY OPERAYORS?
+            return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,400,getBuildingCost(type),1,BuildingEnum.MARKET);//TODO : HOW MANY OPERAYORS?
         if (type.equals("oxtether"))
             return new TradeBuilding(type,"",1,2,false,0,false,owner,row,column,100,getBuildingCost(type),0,BuildingEnum.OX_TETHER);//TODO
         if (type.equals("pitchrig"))
-            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,0,getBuildingCost(type),0,BuildingEnum.PITCH_RIG);//TODO
+            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,0,getBuildingCost(type),1,BuildingEnum.PITCH_RIG);//TODO
         if (type.equals("quarry"))
-            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),0,BuildingEnum.QUARRY);//TODO
+            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),3,BuildingEnum.QUARRY);//TODO
         if (type.equals("stockpile"))
             return new StorageBuilding(type,3,3,false,"",owner,row,column,getBuildingCost(type),-1,0,false,1000,BuildingEnum.STOCKPILE);//TODO
         if (type.equals("woodcutter"))
-            return new TradeBuilding(type,"",2,3,false,0,false,owner,row,column,300,getBuildingCost(type),0,BuildingEnum.WOODCUTTER);//TODO
+            return new TradeBuilding(type,"",2,3,false,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.WOODCUTTER);//TODO
         if (type.equals("apothecary"))
-            return new TradeBuilding(type,"",2,3,false,+1,false,owner,row,column,300,getBuildingCost(type),0,BuildingEnum.APOTHECARY);//TODO
+            return new TradeBuilding(type,"",2,3,false,+1,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.APOTHECARY);//TODO
         if (type.equals("hovel"))
             return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,200,getBuildingCost(type),0,BuildingEnum.HOVEL);//TODO
         if (type.equals("chapel"))
@@ -194,21 +194,21 @@ public class Building {
         if (type.equals("cathedral"))
             return new TradeBuilding(type,"",3,5,false,+1,false,owner,row,column,400,getBuildingCost(type),0,BuildingEnum.CATHEDRAL);//TODO
         if (type.equals("well"))
-            return new TradeBuilding(type,"",1,1,false,0,false,owner,row,column,50,getBuildingCost(type),0,BuildingEnum.WELL);//TODO
+            return new TradeBuilding(type,"",1,1,false,0,false,owner,row,column,50,getBuildingCost(type),1,BuildingEnum.WELL);//TODO
         if (type.equals("waterpot"))
-            return new TradeBuilding(type,"",1,2,false,0,false,owner,row,column,150,getBuildingCost(type),0,BuildingEnum.WATER_POT);//TODO
+            return new TradeBuilding(type,"",1,2,false,0,false,owner,row,column,150,getBuildingCost(type),3,BuildingEnum.WATER_POT);//TODO
         if (type.equals("goodthings"))
             return new TradeBuilding(type,"",1,1,false,+2,false,owner,row,column,50,getBuildingCost(type),0,BuildingEnum.GOOD_THINGS);//TODO
         if (type.equals("badthings"))
             return new TradeBuilding(type,"",1,1,false,-2,false,owner,row,column,50,getBuildingCost(type),0,BuildingEnum.BAD_THINGS);//TODO
         if (type.equals("armourer"))
-            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),0,BuildingEnum.ARMOURER);//TODO
+            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.ARMOURER);//TODO
         if (type.equals("blacksmith"))
-            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),0,BuildingEnum.BLACKSMITH);//TODO
+            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.BLACKSMITH);//TODO
         if (type.equals("fletcher"))
-            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),0,BuildingEnum.FLETCHER);//TODO
+            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.FLETCHER);//TODO
         if (type.equals("poleturner"))
-            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),0,BuildingEnum.POLE_TURNER);//TODO
+            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.POLE_TURNER);//TODO
         if (type.equals("signpost"))
             return new TradeBuilding(type,"",1,1,false,-3,false,owner,row,column,150,getBuildingCost(type),0,BuildingEnum.SIGNPOST);//TODO
         if (type.equals("tunnelentrance"))
