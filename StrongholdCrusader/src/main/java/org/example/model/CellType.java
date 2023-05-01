@@ -1,5 +1,7 @@
 package org.example.model;
 
+import org.example.model.unit.Unit;
+
 import javax.swing.*;
 
 public enum CellType {
@@ -21,9 +23,13 @@ public enum CellType {
     private String name;
     private CellType(String name){
         this.name = name;
+        Cell.getCellTypeEnumByName().put(name,this);
     }
-    public static String getCellTypeName(CellType cellType){
+    public static String getCellTypeNameByEnum(CellType cellType){
         return cellType.name;
+    }
+    public static CellType getCellTypeEnumByName(String name){
+        return Cell.getCellTypeEnumByName().get(name);
     }
 
 }
