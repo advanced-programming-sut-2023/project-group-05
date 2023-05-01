@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 public class GameMenu {
 
     public static void run ( Matcher playersMatcher ){
+        System.out.println("WELCOME TO YOUR KINGDOM MY LORD.") ;
         ArrayList<Account> accounts = new ArrayList<Account>() ;
         Pattern patternUsername = Pattern.compile("(?<username>\\S+)") ;
         Matcher matcherUsername = patternUsername.matcher( playersMatcher.group("usernames") );
@@ -22,8 +23,10 @@ public class GameMenu {
         String input;
         while (true){
             input = Menu.getScanner().nextLine();
-            if (Commands.getMatchingMatcher(input,Commands.SHOW_MAP)!=null)
+            if (Commands.getMatchingMatcher(input,Commands.SHOW_MAP)!=null){
                 MapMenu.run(Commands.getMatchingMatcher(input,Commands.SHOW_MAP),gameController.getGameMap()) ;
+                System.out.println( "YOU CAME BACK FROM MAP MENU TO GAME MENU" ) ;
+            }
             else if( input.equals("next turn") )
                 gameController.nextTurn() ;
             else if (Commands.getMatchingMatcher(input,Commands.SHOW_POPULARITY_FACTORS)!=null)
@@ -62,10 +65,10 @@ public class GameMenu {
                 System.out.println( gameController.repair(Commands.getMatchingMatcher(input,Commands.REPAIR)));
 
             else if (Commands.getMatchingMatcher(input,Commands.SELECT_UNIT)!=null)
-                System.out.println( gameController.selectUnit(Commands.getMatchingMatcher(input,Commands.SELECT_UNIT)));
+                gameController.selectUnit(Commands.getMatchingMatcher(input,Commands.SELECT_UNIT));
 
             else if (Commands.getMatchingMatcher(input,Commands.MOVE_UNIT)!=null)
-                System.out.println( gameController.moveUnit(Commands.getMatchingMatcher(input,Commands.MOVE_UNIT)));
+                gameController.moveUnit(Commands.getMatchingMatcher(input,Commands.MOVE_UNIT));
 
             else if (Commands.getMatchingMatcher(input,Commands.PATROL)!=null)
                 System.out.println( gameController.patrolUnit(Commands.getMatchingMatcher(input,Commands.PATROL)));

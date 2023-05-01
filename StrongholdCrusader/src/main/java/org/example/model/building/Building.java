@@ -1,5 +1,6 @@
 package org.example.model.building;
 
+import org.example.model.BuildingEnum;
 import org.example.model.Cost;
 import org.example.model.unit.Unit ;
 import org.example.model.Player ;
@@ -7,7 +8,6 @@ import org.example.model.Player ;
 import java.util.ArrayList;
 
 public class Building {
-
     private final String name ;
     private final String category ;
     private ArrayList <Unit> units ;
@@ -16,13 +16,16 @@ public class Building {
     private final int width ;
     private final Cost cost ;
     private final int row ;
+    private BuildingEnum buildingEnum ;
     private final int column ;
+    private int popularityRate ;
     private final boolean holdsAnimal ;
     private boolean passable ;
     protected int hitPoint ;
 
     Building( String name , int width , int height , boolean passable , String category , Player owner
-            , int row , int column , Cost cost , int hitPoint , int popularityRate , boolean holdsAnimal ){
+            , int row , int column , Cost cost , int hitPoint , int popularityRate , boolean holdsAnimal ,
+              BuildingEnum buildingEnum ){
 
         this.name = name ;
         this.category = category ;
@@ -32,9 +35,12 @@ public class Building {
         this.cost = cost ;
         this.row = row ;
         this.column = column ;
+        this.buildingEnum = buildingEnum ;
         this.holdsAnimal = holdsAnimal ;
         this.passable = passable ;
         this.hitPoint = hitPoint ;
+        this.popularityRate = popularityRate ;
+        owner.setPopularity( owner.getPopularity() + popularityRate );
 
     }
 

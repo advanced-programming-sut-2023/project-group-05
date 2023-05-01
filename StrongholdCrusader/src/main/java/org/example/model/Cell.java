@@ -13,9 +13,9 @@ public class Cell {
     public CellType cellType;
     public Cell(CellType cellType){
         this.cellType = cellType;
-        this.buildings = new ArrayList<>();
-        this.units = new ArrayList<>();
-        this.objects = new ArrayList<>();
+        this.buildings = new ArrayList<>(0);
+        this.units = new ArrayList<>(0);
+        this.objects = new ArrayList<>(0);
     }
 
     public CellType getCellTypeName(){
@@ -27,11 +27,11 @@ public class Cell {
     }
 
     public boolean permeable (Unit unit){
-        if (this.cellType.equals("boulder")||
-            this.cellType.equals("river")||
-            this.cellType.equals("smallPond")||
-            this.cellType.equals("bigPond")||
-            this.cellType.equals("sea"))
+        if (this.cellType == CellType.BOULDER ||
+            this.cellType == CellType.RIVER ||
+            this.cellType == CellType.SMALL_POND ||
+            this.cellType == CellType.BIG_POND ||
+            this.cellType == CellType.SEA)
             return false;
         //handle special units through special places
         return true;
