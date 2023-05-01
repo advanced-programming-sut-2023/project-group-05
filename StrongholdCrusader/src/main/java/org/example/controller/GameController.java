@@ -1,8 +1,7 @@
 package org.example.controller;
 
-import org.example.model.Account;
-import org.example.model.GameMap;
-import org.example.model.Player;
+import org.example.model.*;
+import org.example.model.unit.Unit;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -154,12 +153,9 @@ public class GameController {
     }
 
     public String setFearRate (Matcher matcher){
-        int rate = matcher.group("rate") ;
-        if( rate < -5 || rate > 5 ){
-            return "invalid rate" ;
-        }
-        player.setFearRate( rate ) ;
+        return null;
     }
+
 
     public String dropBuilding(Matcher matcher){
         return null;
@@ -242,6 +238,29 @@ public class GameController {
     }
 
     public String dropUnit(Matcher matcher){
+        String type = matcher.group("type");
+        int count = Integer.parseInt(matcher.group("count"));
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        String error;
+        if ((error = dropUnitErrorChecker(type,count,row,column))!=null)
+            return error;
+        Unit unit = Unit.createUnitByName(type,player);
+        gameMap.getCell(row,column).addUnit(unit);
+        return "Unit Dropped Successfully!";
+    }
+
+    public String dropUnitErrorChecker(String type , int count , int row , int column){
+        if (row > 400 || row <0 || column >400 || column < 0)
+            return "DropUnit Failed : x or y exceeded map!";
+        if (count <=0)
+            return "DropUnit Failed : count is smaller than 1!";
+        Cell cell = gameMap.getCell(row,column);
+        UnitTypeEnum unitTypeEnum = UnitTypeEnum.getUnitTypeByName(type);
+        if (unitTypeEnum == null)
+            return "DropUnit Failed : Unit Type Does Not Exists!";
+        if (!cell.permeable(unitTypeEnum))
+            return "DropUnit Failed : Cell Is Not Permeable!";
         return null;
     }
 

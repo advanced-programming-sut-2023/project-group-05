@@ -26,14 +26,14 @@ public class Cell {
         this.cellType = cellType;
     }
 
-    public boolean permeable (Unit unit){
+    public boolean permeable (UnitTypeEnum unitType){
         if (this.cellType == CellType.BOULDER ||
             this.cellType == CellType.RIVER ||
             this.cellType == CellType.SMALL_POND ||
             this.cellType == CellType.BIG_POND ||
             this.cellType == CellType.SEA)
             return false;
-        //handle special units through special places
+        //TODO : handle special units through special places
         return true;
     }
     public int getUnitNumbers(Unit unit){
@@ -43,5 +43,13 @@ public class Cell {
                 ++count;
         }
         return count;
+    }
+
+    public void addUnit(Unit unit){
+        units.add(unit);
+    }
+
+    public void addBuilding(Building building){
+        buildings.add(building);
     }
 }
