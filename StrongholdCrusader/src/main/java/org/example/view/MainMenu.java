@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class MainMenu {
 
     public static void run( Scanner scanner , Account account ){
-
         System.out.println("You are currently in MainMenu") ;
         String input ;
         while( true ){
@@ -18,12 +17,14 @@ public class MainMenu {
             if( input.equals("logout") )
                 return ;
 
-            if( input.equals("enter profile menu") )
+            else if( input.equals("enter profile menu") )
                 ProfileMenu.run( account ) ;
 
-            if( Commands.getMatchingMatcher( input , Commands.START_GAME ) != null ){
+            else if( Commands.getMatchingMatcher( input , Commands.START_GAME ) != null ){
                 GameMenu.run( Commands.getMatchingMatcher( input , Commands.START_GAME ) ) ;
             }
+
+            else System.out.println( "invalid command" ) ;
 
         }
 

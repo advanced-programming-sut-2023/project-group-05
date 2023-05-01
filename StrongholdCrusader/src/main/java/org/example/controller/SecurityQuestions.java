@@ -259,7 +259,16 @@ public class SecurityQuestions
         for(int i = 0 ; i < n ; i++)
             x += (int)Math.pow( 10 , n - i - 1 ) * digit[i] ;
 
-        Integer ans = scanner.nextInt();
+        String input = scanner.nextLine() ;
+        Integer ans ;
+        try{
+            ans = Integer.parseInt( input ) ;
+        }
+        catch( NumberFormatException e ){
+            System.out.println( "You have not entered a number!" );
+            return false ;
+        }
+
         if(!ans.equals(x))
             return false;
 

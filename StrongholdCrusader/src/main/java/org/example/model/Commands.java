@@ -9,7 +9,7 @@ public enum Commands {
     ANSWER_QUESTION("question pick", new ArrayList<String>(Arrays.asList(" -q (?<questionNumber>\\d+)"," -a (?<answer>\\S+)"," -c (?<answerConfirm>\\S+)"))),
     USER_LOGIN("user login",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"," -p (?<password>\\S+)","( --stay-logged-in)?"))),
     FORGET_PASSWORD("forgot my password",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"))),
-    START_GAME( "start game with" , new ArrayList<String>( Arrays.asList( " -u(<?usernames>( \\S+)+)" ) ) ) ,
+    START_GAME( "start game with" , new ArrayList<String>( Arrays.asList( " -u(?<usernames>( \\S+)+)" ) ) ) ,
     LOGOUT ("user logout",null),
     CHANGE_USERNAME ("profile change",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"))),
     CHANGE_NICKNAME ("profile change",new ArrayList<String>(Arrays.asList(" -n (?<nickname>(\\S+)|(\".+\"))"))),
@@ -21,9 +21,15 @@ public enum Commands {
     DISPLAY_RANK("profile display rank",null),
     DISPLAY_SLOGAN ("profile display slogan",null),
     DISPLAY_WHOLE_PROFILE("profile display",null),
+
+    //MAP MENU :
+
     SHOW_MAP("show map",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y (?<column>\\d+)"))),
     SHOW_DETAILS("show details",new ArrayList<String>(Arrays.asList(" -x(?<row>\\d+)"," -y(?<column>\\d+)"))),
-    NAVIGATE_MAP("map",new ArrayList<String>(Arrays.asList("( up( (?<upNavigation>\\d+))?)?","( down( (?<downNavigation>\\d+))?)?","( right( (?<rightNavigation>\\d+))?)?","( left( (?<leftNavigation>\\d+))?)?"))),
+    NAVIGATE_MAP("map",new ArrayList<String>(Arrays.asList("(?<upNavigation> up( (?<upNumber>\\d+))?)?","(?<downNavigation> down( (?<downNumber>\\d+))?)?","(?<rightNavigation> right( (?<rightNumber>\\d+))?)?","(?<leftNavigation> left( (?<leftNumber>\\d+))?)?"))),
+
+    //GAME MENU
+
     SHOW_POPULARITY_FACTORS("show popularity factors",null),
     SHOW_POPULARITY("show popularity",null),
     SHOW_FOOD_TYPES("show food list",null),
@@ -47,7 +53,7 @@ public enum Commands {
     BUILD_EQUIPMENT("build",new ArrayList<String>(Arrays.asList(" -q (?<equipment>\\S+)"))),
     DISBAND("disband unit",null),
     SET_TEXTURE_OF_CELL("settexture",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y (?<column>\\d+)"," -t (?<type>\\S+)"))),
-    SET_TEXTURE_OF_BLOCK("settexture",new ArrayList<String>(Arrays.asList(" -x1 (?<beginRow>\\d+)"," -y1 (?<beginColumn\\d+)"," -x2 (?<endRow>\\d+)"," -y2 (?<endColumn>\\d+)"," -t (?<type>\\S+)"))),
+    SET_TEXTURE_OF_BLOCK("settexture",new ArrayList<String>(Arrays.asList(" -x1 (?<beginRow>\\d+)"," -y1 (?<beginColumn>\\d+)"," -x2 (?<endRow>\\d+)"," -y2 (?<endColumn>\\d+)"," -t (?<type>\\S+)"))),
     CLEAR_CELL ("clear",new ArrayList<String>(Arrays.asList(" -x(?<row>\\d+)"," -y(?<column>\\d+)"))),
     DROP_ROCK("droprock",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y (?<column>\\d+)"," -d (?<direction>(n|e|w|s|r))"))),
     DROPTREE("droptree",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y (?<column>\\d+)"," -t (?<type>\\S+)"))),
@@ -74,7 +80,7 @@ public enum Commands {
 
     public static Matcher getMatchingMatcher (String input,Commands command){
         if( command.options == null ){
-            Matcher matcher = Pattern.compile( command.commandName ).matcher(input) ;
+            Matcher matcher = Pattern.compile( "^(" + command.commandName + ")$" ).matcher(input) ;
             if( matcher.find() ){
                 return matcher ;
             }
@@ -115,4 +121,3 @@ public enum Commands {
     }
 
 }
-

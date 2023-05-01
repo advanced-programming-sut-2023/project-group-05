@@ -19,7 +19,6 @@ public class Main
         init();
         DataBase.wakeUp();
         SignupLoginMenu.run( scanner ) ;
-
     }
 
     public static void uploadDataFromDataBase()
