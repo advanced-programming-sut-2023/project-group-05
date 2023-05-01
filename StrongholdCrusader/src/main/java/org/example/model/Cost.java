@@ -3,6 +3,10 @@ package org.example.model;
 public class Cost {
 
     private final double gold ;
+    private int apple ;
+    private int cheese ;
+    private int bread ;
+    private int meat ;
     private final int wood ;
     private final int stone ;
     private final int bow ;

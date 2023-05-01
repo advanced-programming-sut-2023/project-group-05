@@ -1,7 +1,8 @@
 package org.example.controller;
 
-import org.example.model.*;
-import org.example.model.unit.Unit;
+import org.example.model.Account;
+import org.example.model.GameMap;
+import org.example.model.Player;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -153,9 +154,13 @@ public class GameController {
     }
 
     public String setFearRate (Matcher matcher){
-        return null;
+        int rate = Integer.parseInt(matcher.group("rate")) ;
+        if( rate < -5 || rate > 5 ){
+            return "invalid rate" ;
+        }
+        player.setFearRate( rate ) ;
+        return "FEAR RATE SET TO " + rate ;
     }
-
 
     public String dropBuilding(Matcher matcher){
         return null;
@@ -186,8 +191,6 @@ public class GameController {
     }
 
     public String setState(Matcher matcher){
-        int row = Integer.parseInt(matcher.group("row"));
-        int column = Integer.parseInt(matcher.group("column"));
         return null;
     }
 
@@ -216,50 +219,15 @@ public class GameController {
     }
 
     public String setTextureCell (Matcher matcher){
-        int row = Integer.parseInt(matcher.group("row"));
-        int column = Integer.parseInt(matcher.group("column"));
-        if (row > 400 || row <0 || column >400 || column < 0)
-            return "SetTexture Failed : Row Or Column Exceeded Map";
-        Cell cell = gameMap.getCell(row,column);
-        if (cell.units.size()>0)
-            return "SetTexture Failed  : Cell Contains Units";
-        if (cell.buildings.size() > 0)
-            return "SetTexture Failed : Cell Contains Building";
-        cell.cellType = CellType.getCellTypeEnumByName(matcher.group("type"));
-        return "SetTexture Successful!";
+        return null;
     }
 
     public String setTextureBlock(Matcher matcher){
-        int beginRow = Integer.parseInt(matcher.group("beginRow"));
-        int endRow = Integer.parseInt(matcher.group("endRow"));
-        int beginColumn = Integer.parseInt(matcher.group("beginColumn"));
-        int endColumn = Integer.parseInt(matcher.group("endColumn"));
-        if (beginRow > endRow || beginColumn > endColumn)
-            return "SetTexture Failed : Invalid Row Or Column Order";
-        if (endRow > 400 || endRow < 0 || endColumn >400 || endColumn <0)
-            return "SetTexture Failed : Row Or Column Exceeded Map";
-        for (int i =beginRow-1;i<endRow;++i){
-            for (int j = beginColumn -1 ; j<endColumn;++j){
-                if (gameMap.getCell(i,j).buildings.size() > 0 || gameMap.getCell(i,j).units.size()>0)
-                    return "SetTexture Failed : Block Contains Unit Or Building";
-            }
-        }
-        CellType cellType = CellType.getCellTypeEnumByName(matcher.group("type"));
-        for (int i =beginRow-1;i<endRow;++i){
-            for (int j = beginColumn -1 ; j<endColumn;++j)
-                gameMap.getCell(i,j).cellType = cellType;
-        }
-        return "SetTexture Successful!";
+        return null;
     }
 
     public String clear (Matcher matcher){
-        int row = Integer.parseInt(matcher.group("row"));
-        int column = Integer.parseInt(matcher.group("column"));
-        if (row > 400 || row <0 || column > 400 || column < 0)
-            return "Clear Failed : Row Or Column Exceeded Map!";
-        gameMap.getCell(row,column).units.clear();
-        gameMap.getCell(row,column).cellType = CellType.GROUND;
-        return "Cell Cleared Successfully!";
+        return null;
     }
 
     public String dropRock(Matcher matcher){
@@ -275,31 +243,6 @@ public class GameController {
     }
 
     public String dropUnit(Matcher matcher){
-        String type = matcher.group("type");
-        int count = Integer.parseInt(matcher.group("count"));
-        int row = Integer.parseInt(matcher.group("row"));
-        int column = Integer.parseInt(matcher.group("column"));
-        String error;
-        if ((error = dropUnitErrorChecker(type,count,row,column))!=null)
-            return error;
-        Unit unit = Unit.createUnitByName(type,player);
-        Cell cell = gameMap.getCell(row,column);
-        while (--count>0)
-            cell.addUnit(unit);
-        return "Unit Dropped Successfully!";
-    }
-
-    public String dropUnitErrorChecker(String type , int count , int row , int column){
-        if (row > 400 || row <0 || column >400 || column < 0)
-            return "DropUnit Failed : x or y exceeded map!";
-        if (count <=0)
-            return "DropUnit Failed : count is smaller than 1!";
-        Cell cell = gameMap.getCell(row,column);
-        UnitTypeEnum unitTypeEnum = UnitTypeEnum.getUnitTypeByName(type);
-        if (unitTypeEnum == null)
-            return "DropUnit Failed : Unit Type Does Not Exists!";
-        if (!cell.permeable(unitTypeEnum))
-            return "DropUnit Failed : Cell Is Not Permeable!";
         return null;
     }
 
