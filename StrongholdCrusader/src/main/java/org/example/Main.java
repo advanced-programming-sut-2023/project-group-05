@@ -4,6 +4,7 @@ import org.example.controller.DataBase;
 import org.example.controller.Hash;
 import org.example.controller.SecurityQuestions;
 import org.example.model.Account;
+import org.example.view.Menu;
 import org.example.view.SignupLoginMenu;
 import org.json.simple.JSONObject;
 
@@ -14,11 +15,10 @@ public class Main
 {
     public static void main( String[] args )
     {
-        Scanner scanner = new Scanner(System.in);
-        SecurityQuestions.initialize() ;
+        SecurityQuestions.initialize();
         init();
         DataBase.wakeUp();
-        SignupLoginMenu.run( scanner ) ;
+        SignupLoginMenu.run(Menu.getScanner()) ;
     }
 
     public static void uploadDataFromDataBase()

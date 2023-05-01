@@ -1,7 +1,8 @@
 package org.example.model;
 
 public enum BuildingEnum {
-
+    SMALL_STONE_WALL,
+    BIG_STONE_WALL,
     SMALL_STONE_GATEHOUSE,
     LARGE_STONE_GATEHOUSE,
     DRAW_BRIDGE,
@@ -24,7 +25,7 @@ public enum BuildingEnum {
     APPLE_ORCHARD,
     DIARY_FARMER,
     HOPS_FARMER,
-    HUNTER,POST,
+    HUNTER_POST,
     WHEAT_FARM,
     BAKERY,
     BREWER,
