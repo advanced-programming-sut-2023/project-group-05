@@ -27,13 +27,14 @@ public class Player {
     private int pitch ;
     private int apple ;
     private int wineUsage ;
-    private int gold ;
+    private double gold ;
     private int stone ;
     private int wood ;
     private int iron ;
     private int population ;
     private int populationCapacity ;
     private int popularity ;
+    private double taxForEachUnit ;
 
     public Player( Account account ){
         this.account = account ;
@@ -64,6 +65,50 @@ public class Player {
 
     public Account getAccount(){
         return this.account ;
+    }
+
+    public double getGold(){
+        return this.gold ;
+    }
+
+    public double getTaxForEachUnit(){
+        return this.taxForEachUnit ;
+    }
+
+    public void setTaxForEachUnit( double taxForEachOne ){
+        this.taxForEachUnit = taxForEachOne ;
+    }
+
+    public int getMeat(){
+        return this.meat ;
+    }
+
+    public int getCheese(){
+        return this.cheese ;
+    }
+
+    public int getBread(){
+        return this.bread ;
+    }
+
+    public int getApple(){
+        return this.apple ;
+    }
+
+    public int getFearRate(){
+        return this.fearRate ;
+    }
+
+    public void setFoodRate(int rate){
+        this.foodRate = rate ;
+    }
+
+    public int getFoodRate(){
+        return this.foodRate ;
+    }
+
+    public int getFoodCount(){
+        return this.apple + this.cheese + this.bread + this.meat ;
     }
 
     public void setPopularity( int popularity ){

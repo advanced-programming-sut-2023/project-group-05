@@ -65,10 +65,10 @@ public class GameMenu {
                 System.out.println( gameController.repair(Commands.getMatchingMatcher(input,Commands.REPAIR)));
 
             else if (Commands.getMatchingMatcher(input,Commands.SELECT_UNIT)!=null)
-                System.out.println( gameController.selectUnit(Commands.getMatchingMatcher(input,Commands.SELECT_UNIT)));
+                gameController.selectUnit(Commands.getMatchingMatcher(input,Commands.SELECT_UNIT));
 
             else if (Commands.getMatchingMatcher(input,Commands.MOVE_UNIT)!=null)
-                System.out.println( gameController.moveUnit(Commands.getMatchingMatcher(input,Commands.MOVE_UNIT)));
+                gameController.moveUnit(Commands.getMatchingMatcher(input,Commands.MOVE_UNIT));
 
             else if (Commands.getMatchingMatcher(input,Commands.PATROL)!=null)
                 System.out.println( gameController.patrolUnit(Commands.getMatchingMatcher(input,Commands.PATROL)));

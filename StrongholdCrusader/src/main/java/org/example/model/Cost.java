@@ -2,7 +2,7 @@ package org.example.model;
 
 public class Cost {
 
-    private final int gold ;
+    private final double gold ;
     private final int wood ;
     private final int stone ;
     private final int bow ;
@@ -13,7 +13,7 @@ public class Cost {
     private final int armor ;
     private final int hop ;
 
-    Cost( int gold , int wood , int stone , int bow , int sword , int mace , int crossbow , int pitch , int armor , int hop ){
+    Cost( double gold , int wood , int stone , int bow , int sword , int mace , int crossbow , int pitch , int armor , int hop ){
 
         this.gold = gold ;
         this.wood = wood ;
@@ -28,7 +28,7 @@ public class Cost {
 
     }
 
-    public int getGold(){
+    public double getGold(){
         return this.gold ;
     }
 
