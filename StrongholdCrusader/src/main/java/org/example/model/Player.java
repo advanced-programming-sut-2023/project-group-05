@@ -63,7 +63,7 @@ public class Player {
         this.score = 0 ;
     }
 
-    public boolean decreaseCost( Cost cost ){
+    /*public boolean decreaseCost( Cost cost ){
         boolean ret = ( this.apple >= cost.getApple() ) && ( this.meat >= cost.getMeat() ) && ( this.cheese >= cost.getCheese() )
                 && ( this.bread >= cost.getBread() ) && ( this.bow >= cost.getBow() ) && ( this.crossbow >= cost.getCrossbow() )
                 && ( this.spear >= cost.getSpear() ) && ( this.pike >= cost.getPike() ) && ( this.mace >= cost.getMace() )
@@ -71,7 +71,7 @@ public class Player {
                 && ( this.metalArmor >= cost.getMetalArmor ) && ( this.wheat >= cost.getWheat() ) && ( this.flour >= cost.getFlour() )
                 && ( this.hop >= cost.getHop() ) && ( this.ale >= cost.getAle() ) && ( this. ) ;
         return true ;
-    }
+    }*/
 
     public void selectUnit( Unit unit ){
         this.selectedUnits.add( unit ) ;
@@ -79,6 +79,8 @@ public class Player {
 
     public void selectBuilding( Building building ){
         this.selectedBuilding = building ;
+        this.selectedBuilding = null;
+        this.selectedUnits = new ArrayList<>();
     }
 
     public Account getAccount(){
@@ -87,10 +89,6 @@ public class Player {
 
     public double getGold(){
         return this.gold ;
-    }
-
-    public void setFearRate( int rate ){
-        this.fearRate = rate ;
     }
 
     public double getTaxForEachUnit(){
@@ -127,6 +125,9 @@ public class Player {
 
     public int getFoodRate(){
         return this.foodRate ;
+    }
+    public void setFearRate( int rate ){
+        this.fearRate = rate ;
     }
 
     public int getFoodCount(){
@@ -171,5 +172,31 @@ public class Player {
 
     public long getScore(){
         return this.score;
+    }
+
+    public ArrayList<Unit> getSelectedUnits(){
+        return this.selectedUnits;
+    }
+
+    public Building getSelectedBuilding(){
+        return this.selectedBuilding;
+    }
+
+    //
+    public void setSelectedUnits(String unitType , Cell cell){
+        for (Unit unit : cell.units){
+            if (unit.getName().equals("type"))
+                this.selectedUnits.add(unit);
+        }
+    }
+
+    public void setSelectedBuilding (Building building){
+        this.selectedBuilding = building;
+    }
+
+    public void setState (String state ){
+        UnitModeEnum unitMode = UnitModeEnum.getUnitModeEnumByName(state);
+        for (Unit unit : this.selectedUnits)
+            unit.setUnitMode(unitMode);
     }
 }

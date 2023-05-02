@@ -23,7 +23,7 @@ public class MapMenuController {
         for (int i = row - 21; i < row + 21; ++i) {
             for (int j = column - 21; j < column + 21; ++j) {
                 Cell cell = gameMap.getCell(i, j);
-                System.out.print(getCellTypeByColor(cell) +
+                System.out.print("|"+getCellTypeByColor(cell) + ConsoleColors.BLACK_BOLD+
                         getCellContentByCharacter(cell) +
                         ConsoleColors.RESET);
             }
@@ -63,17 +63,17 @@ public class MapMenuController {
 
     public static String getCellContentByCharacter(Cell cell) {
         if (cell.units.size() > 0)
-            return "S";
+            return " S ";
         if (cell.buildings.size()>0) {
             for (Building building : cell.buildings) {
                 if (building instanceof AttackDefenceBuilding)
-                    return "W";
+                    return " W ";
                 if (building.getName().equals("Tree"))
-                    return "T";
+                    return " T ";
             }
-            return "B";
+            return " B ";
         }
-        return "#";
+        return " # ";
     }
 
     public static void showDetails(Matcher matcher, GameMap gameMap) {
@@ -84,7 +84,7 @@ public class MapMenuController {
             return;
         }
         Cell cell = gameMap.getCell(row,column);
-        System.out.println("Cell Type:\n"+CellType.getCellTypeName(cell.cellType));
+        System.out.println("Cell Type:\n"+CellType.getCellTypeNameByEnum(cell.cellType));
 
         //TODO : CELL RESOURCES AMOUNTS
 
@@ -114,12 +114,12 @@ public class MapMenuController {
             right += (matcher.group("rightNumber")==null)? 1 : Integer.parseInt(matcher.group("rightNumber"));
         if (matcher.group("leftNavigation")!=null)
             left += (matcher.group("leftNumber")==null)? 1 : Integer.parseInt(matcher.group("leftNumber"));
-        row += (up - down);
+        row -= (up - down);
         column +=(right - left);
         if (row > 400 || row < 0 || column > 400 || column <0){
             System.out.println("The Navigation Can't Be Applied : Numbers Exceed Map Size!");
-            row -=(up-down);
-            column -=(right - left);
+            row +=(up-down);
+            column +=(right - left);
             return;
         }
         showMap(row,column,gameMap);

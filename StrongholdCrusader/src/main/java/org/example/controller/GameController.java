@@ -397,8 +397,8 @@ public class GameController {
 
         if( player.equals(trade.getPlayer()) )
             return "YOU CAN NOT TRADE WITH YOURSELF MY LORD" ;
-        if( !player.decreaseCost( cost ) )
-            return "YOU DON'T HAVE ENOUGH RESOURCES TO TRADE WITH THIS KINGDOM." ;
+        //if( !player.decreaseCost( cost ) )
+        //    return "YOU DON'T HAVE ENOUGH RESOURCES TO TRADE WITH THIS KINGDOM." ;
         return "YOU HAVE TRADED WITH OTHER KINGDOMS SUCCESSFULLY , MY LORD." ;
     }
 

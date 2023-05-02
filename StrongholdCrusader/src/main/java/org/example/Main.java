@@ -8,8 +8,7 @@ import org.example.view.Menu;
 import org.example.view.SignupLoginMenu;
 import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main
 {

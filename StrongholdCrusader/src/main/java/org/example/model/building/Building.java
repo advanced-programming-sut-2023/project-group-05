@@ -150,7 +150,7 @@ public class Building {
         if (type.equals("tunnelerguild"))
             return new TradeBuilding(type,"",2,3,false,0,false,owner,row,column,0,getBuildingCost(type),0,BuildingEnum.TUNNELER_GUILD);//TODO : HOW MANY OPERATOS?
         if (type.equals("appleorchard"))
-                return new TradeBuilding(type,"",3,5,true,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.APPLE_ORCHARD);
+            return new TradeBuilding(type,"",3,5,true,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.APPLE_ORCHARD);
         if (type.equals("diaryfarmer"))
             return new TradeBuilding(type,"",3,5,true,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.DIARY_FARMER);
         if (type.equals("hopsfarmer"))
