@@ -16,12 +16,13 @@ public class Cell {
     private static HashMap<String , CellType> cellTypeEnumByName = new HashMap<>();
     public Cell(CellType cellType){
         this.cellType = cellType;
-        this.buildings = new ArrayList <Building>() ;
-        this.units = new ArrayList<Unit>() ;
-        this.units = new ArrayList<Unit>() ;
         this.buildings = new ArrayList<>(0);
         this.units = new ArrayList<>(0);
         this.objects = new ArrayList<>(0);
+    }
+
+    public ArrayList<Building> getBuildings(){
+        return this.buildings ;
     }
 
     public CellType getCellTypeName(){

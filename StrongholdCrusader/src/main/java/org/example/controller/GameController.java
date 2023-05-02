@@ -243,7 +243,38 @@ public class GameController {
     }
 
     public String dropTree(Matcher matcher){
-        return null;
+        String treeType = matcher.group("type") ;
+        int row = Integer.parseInt(matcher.group("row")) ;
+        int column = Integer.parseInt(matcher.group("column")) ;
+        String direction = matcher.group("direction") ;
+        if( !direction.equals("e") && !direction.equals("random") && !direction.equals("n") && !direction.equals("s")
+                && !direction.equals("w") )
+            return "INVALID DIRECTION." ;
+        if( row > 400 || row < 0 || column < 0 || column > 400 )
+            return "INVALID COORDINATES." ;
+        String[] treeTypesNames = { "datetree" , "coconuttree" , "olivetree" , "cherrytree" , "deserttree" } ;
+        boolean validType = false ;
+        for( String type : treeTypesNames ) if(treeType.equals(type)){
+            validType = true ;
+            break ;
+        }
+        if(!validType) return "INVALID TREE TYPE." ;
+
+        if( gameMap.getCell( row , column ).getBuildings().size() != 0 )
+            return "THERE IS A BUILDING IN THIS PLACE MY LORD!" ;
+
+        if( gameMap.getCell( row , column ).units.size() != 0 )
+            return "THERE IS A UNIT IN THIS PLACE MY LORD!" ;
+
+        if( gameMap.getCell( row , column ).cellType != CellType.GRASS && !treeType.equals("deserttree") )
+            return "THIS TREE CAN ONLY BE PLACED ON GRASS." ;
+
+        if( gameMap.getCell( row , column ).cellType != CellType.GROUND && treeType.equals("deserttree") )
+            return "DESERT TREES CAN ONLY BE PLACED ON GROUND." ;
+
+        Building.createBuildingByName( treeType , player , row , column ) ;
+
+        return "TREE DROPPED SUCCESSFULLY." ;
     }
 
     public String replaceBuilding (Matcher matcher){

@@ -106,7 +106,11 @@ public class Building {
     }
 
     public static Building createBuildingByName (String type , Player owner,int row , int column){
+        // TREES
 
+        // TODO : ADD TREES
+
+        // OTHER
         if (type.equals("smallstonewall"))
             return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),500,0,false,BuildingEnum.SMALL_STONE_WALL);
         if (type.equals("bigstonewall"))
