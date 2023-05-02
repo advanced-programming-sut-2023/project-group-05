@@ -5,6 +5,7 @@ import org.example.model.building.Building;
 import org.example.model.unit.Unit;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.regex.Matcher;
 
 public class GameController {
@@ -239,7 +240,41 @@ public class GameController {
     }
 
     public String dropRock(Matcher matcher){
-        return null;
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        String direction = matcher.group("direction") ;
+
+        if( row < 0 || row > 400 || column < 0 || column > 400 )
+            return "INVALID COORDINATES." ;
+
+        String[] validDirections = { "e" , "w" , "n" , "s" } ;
+        Random random = new Random() ;
+        if(direction.equals("random"))
+            direction = validDirections[ random.nextInt() % 4 ] ;
+
+        boolean validDirection = false ;
+        for(String dir : validDirections) if(direction.equals(dir)){
+            validDirection = true ;
+            break ;
+        }
+
+        if(!validDirection) return "DIRECTION IS NOT VALID." ;
+
+        Cell cell = gameMap.getCell( row , column ) ;
+
+        if( cell.units.size() != 0 )
+            return "THERE IS UNIT IN THIS PLACE." ;
+
+        if( cell.buildings.size() != 0 )
+            return "THERE IS BUILDING IN THIS PLACE." ;
+
+        if( cell.cellType == CellType.SEA || cell.cellType == CellType.RIVER || cell.cellType == CellType.BIG_POND
+                || cell.cellType == CellType.SMALL_POND )
+            return "CAN'T PLACE ROCK ON WATER!" ;
+
+        Building.createBuildingByName( "rock" , player , row , column  ) ;
+
+        return "ROCK DROPPED SUCCESSFULLY" ;
     }
 
     public String dropTree(Matcher matcher){
