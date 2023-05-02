@@ -26,6 +26,10 @@ public class Trade {
         return player.getGold() >= this.price ;
     }
 
+    public String getMessage(){
+        return this.message ;
+    }
+
     public int getAmount(){
         return this.amount ;
     }

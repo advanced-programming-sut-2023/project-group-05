@@ -44,7 +44,7 @@ public class Unit {
     }
 
     public static HashMap<String,UnitTypeEnum> getUnitTypeEnumMap(){
-        return getUnitTypeEnumMap();
+        return unitTypeEnumMap ;
     }
 
     public void setIsMoving( boolean isMoving ){

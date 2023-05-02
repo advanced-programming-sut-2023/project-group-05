@@ -6,7 +6,6 @@ import org.example.model.unit.Unit;
 import java.util.ArrayList;
 
 public class Player {
-    // TODO : some functions and constructor
     private Account account ;
     private ArrayList <Building> buildings ;
     private ArrayList<Unit> units ;
@@ -17,7 +16,6 @@ public class Player {
     private int taxRate ;
     private int foodRate ;
     private int religionRate ;
-    // TODO : private Account account ;
     private int pitchCapacity ;
     private int meatCapacity ;
     private int breadCapacity ;
@@ -63,6 +61,16 @@ public class Player {
         this.populationCapacity = 0 ;
         this.popularity = 0 ;
         this.score = 0 ;
+    }
+
+    public boolean decreaseCost( Cost cost ){
+        boolean ret = ( this.apple >= cost.getApple() ) && ( this.meat >= cost.getMeat() ) && ( this.cheese >= cost.getCheese() )
+                && ( this.bread >= cost.getBread() ) && ( this.bow >= cost.getBow() ) && ( this.crossbow >= cost.getCrossbow() )
+                && ( this.spear >= cost.getSpear() ) && ( this.pike >= cost.getPike() ) && ( this.mace >= cost.getMace() )
+                && ( this.sword >= cost.sword ) && ( this.leatherarmor >= cost.getLeatherArmor )
+                && ( this.metalArmor >= cost.getMetalArmor ) && ( this.wheat >= cost.getWheat() ) && ( this.flour >= cost.getFlour() )
+                && ( this.hop >= cost.getHop() ) && ( this.ale >= cost.getAle() ) && ( this. ) ;
+        return true ;
     }
 
     public void selectUnit( Unit unit ){

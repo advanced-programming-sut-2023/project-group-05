@@ -9,17 +9,14 @@ import java.util.Objects;
 public class Cell {
     public ArrayList<Objects> objects;
     public ArrayList<Unit> units;
-    public Building building;
+    public ArrayList<Building> buildings;
     public CellType cellType;
     public Cell(CellType cellType){
         this.cellType = cellType;
-        this.building = null ;
+        this.buildings = new ArrayList <Building>() ;
+        this.units = new ArrayList<Unit>() ;
         this.units = new ArrayList<Unit>() ;
         this.objects = new ArrayList<>(0);
-    }
-
-    public Building getBuilding(){
-        return this.building;
     }
 
     public CellType getCellTypeName(){

@@ -1,11 +1,8 @@
 package org.example.controller;
 
 import org.example.model.*;
-<<<<<<< HEAD
 import org.example.model.building.Building;
-=======
 import org.example.model.unit.Unit;
->>>>>>> origin/Mohammad-Amin
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -157,16 +154,12 @@ public class GameController {
     }
 
     public String setFearRate (Matcher matcher){
-<<<<<<< HEAD
         int rate = Integer.parseInt(matcher.group("rate")) ;
         if( rate < -5 || rate > 5 ){
             return "invalid rate" ;
         }
         player.setFearRate( rate ) ;
         return "FEAR RATE SET TO " + rate ;
-=======
-        return null;
->>>>>>> origin/Mohammad-Amin
     }
 
 
@@ -177,7 +170,7 @@ public class GameController {
     public String selectBuilding(Matcher matcher){
         int r = Integer.parseInt(matcher.group("row")) ;
         int c = Integer.parseInt(matcher.group("column")) ;
-        Building building = this.gameMap.getCell( r , c ).getBuilding() ;
+        Building building = this.gameMap.getCell( r , c ).buildings.get(0) ;
         if( building == null ){
             return "THERE IS NO BUILDING IN THIS PLACE" ;
         }
@@ -234,11 +227,11 @@ public class GameController {
     }
 
     public String setTextureCell (Matcher matcher){
-        return null;
+        return null ;
     }
 
     public String setTextureBlock(Matcher matcher){
-        return null;
+        return null ;
     }
 
     public String clear (Matcher matcher){
@@ -292,63 +285,121 @@ public class GameController {
         Cost cost ;
 
         if( resourceType.equals("apple") )
-            cost = new Cost(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0) ;
+            cost = new Cost(amount,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("cheese") )
-            cost = new Cost() ;
+            cost = new Cost(0,amount,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("bread") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,amount,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("meat") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,amount,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("bow") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    amount,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("crossbow") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,amount,0,0,0,0,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("spear") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,0,amount,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("pike") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,amount,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("mace") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,amount,0,0,0,0,0,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("sword") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,amount,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("leatherarmor") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,amount,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("metalarmor") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,amount,0,0,0
+                    ,0) ;
         else if( resourceType.equals("wheat") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,amount
+                    ,0) ;
         else if( resourceType.equals("flour") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,amount,0
+                    ,0) ;
         else if( resourceType.equals("hop") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,amount,0,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("ale") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,amount,0,0
+                    ,0) ;
         else if( resourceType.equals("stone") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,amount,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("iron") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,amount) ;
         else if( resourceType.equals("wood") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,amount,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
         else if( resourceType.equals("pitch") )
-            cost = new Cost() ;
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,amount,0,0,0,0,0,0,0
+                    ,0) ;
         else
             return "RESOURCE TYPE INVALID." ;
+
+        if( price < 0 )
+            return "PRICE CAN'T BE NEGATIVE MY LORD." ;
+        new Trade( player , message , cost , price , amount , resourceType ) ;
         return "TRADE SUCCESSFULLY HAS BEEN PUBLISHED" ;
     }
 
     public String tradeList(Matcher matcher){
         String ret = "TRADE LIST :" ;
+        int index = 1 ;
         for( Trade trade : Trade.getTrades() ){
+            ret += "\n----------------------------------------" ;
+            ret += " > INDEX : " + index + " < " ;
             ret += "\nPlayer : " + trade.getPlayer().getAccount().getNickName() ;
-            ret += "\n -> Price : " + trade.getPrice() ;
-            ret += "\n -> Amount : " + trade.getAmount() ;
-            ret += "\n -> Resource : " + trade.getResourceType() ;
+            ret += "\n  -> Price : " + trade.getPrice() ;
+            ret += "\n  -> Amount : " + trade.getAmount() ;
+            ret += "\n  -> Resource : " + trade.getResourceType() ;
+            ret += "\n  -> Message : " + trade.getMessage() ;
+            ret += "\n----------------------------------------" ;
+            index++ ;
         }
         return ret ;
     }
 
     public String tradeAccept(Matcher matcher){
-        return null;
+        int id = Integer.parseInt(matcher.group("id")) - 1 ;
+        String message = matcher.group("message") ;
+        Trade trade = Trade.getTrades().get(id);
+
+        if( player.equals(trade.getPlayer()) )
+            return "YOU CAN NOT TRADE WITH YOURSELF MY LORD" ;
+        if( !player.decreaseCost( cost ) )
+            return "YOU DON'T HAVE ENOUGH RESOURCES TO TRADE WITH THIS KINGDOM." ;
+        return "YOU HAVE TRADED WITH OTHER KINGDOMS SUCCESSFULLY , MY LORD." ;
     }
 
     public String tradeHistory(Matcher matcher){

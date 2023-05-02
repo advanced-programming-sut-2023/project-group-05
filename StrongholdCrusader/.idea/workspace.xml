@@ -4,74 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="c14427f6-ce77-4c89-a916-84c1125479d4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Trade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Cell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Cost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Cost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Player.java" afterDir="false" />
-=======
-    <list default="true" id="db69725f-ad79-44ab-af66-87cc35ba5895" name="Changes" comment="Building getter function added - primary version : need to get reviewed.">
+    <list default="true" id="74cc157b-47a4-48f2-9fdd-45a812507ab4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/UnitTypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/UnitTypeEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/building/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/building/Building.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Cost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Cost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Trade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Trade.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/unit/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/unit/Unit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/DataBase.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/GameController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/Hash.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/MapMenuController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/ProfileMenuController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/SecurityQuestions.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/SignupLoginMenuController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/Account.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/BuildingEnum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/Cell.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/CellType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/Commands.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/ConsoleColors.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/Cost.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/GameMap.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/Player.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/UnitModeEnum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/building/AttackDefenceBuilding.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/building/Building.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/building/StorageBuilding.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/building/TradeBuilding.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/unit/Engineer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/unit/Jobless.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/unit/LadderMan.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/unit/Operator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/unit/Tunneler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/unit/Unit.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/model/unit/Warrior.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/view/GameMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/view/MainMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/view/MapMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/view/Menu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/view/ProfileMenu.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/view/SignupLoginMenu.class" beforeDir="false" />
->>>>>>> origin/Mohammad-Amin
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-<<<<<<< HEAD
-        <option value="Class" />
-=======
-        <option value="Enum" />
->>>>>>> origin/Mohammad-Amin
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -79,44 +26,39 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2PBuGpO8cOib0YcLjG5y0RF3C7t" />
+  <component name="ProjectId" id="2OvGbxOaLNjMFilRLOUdH8PjdEW" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task id="LOCAL-00001" summary="DropUnit + UnitEnum added">
-      <created>1682932957826</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1682932957826</updated>
-    </task>
     <task active="true" id="Default" summary="Default task">
-      <changelist id="db69725f-ad79-44ab-af66-87cc35ba5895" name="Changes" comment="DropUnit + UnitEnum added" />
-      <created>1682942702901</created>
+      <changelist id="74cc157b-47a4-48f2-9fdd-45a812507ab4" name="Changes" comment="" />
+      <created>1682433718739</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1682942702901</updated>
+      <updated>1682433718739</updated>
+      <workItem from="1682433720387" duration="272000" />
+      <workItem from="1682434001390" duration="19845000" />
+      <workItem from="1683057975454" duration="141000" />
     </task>
-    <task id="LOCAL-00002" summary="Building getter function added - primary version : need to get reviewed.">
-      <created>1682947702361</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1682947702361</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
-<<<<<<< HEAD
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -127,11 +69,5 @@
         </entry>
       </map>
     </option>
-=======
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="DropUnit + UnitEnum added" />
-    <MESSAGE value="Building getter function added - primary version : need to get reviewed." />
-    <option name="LAST_COMMIT_MESSAGE" value="Building getter function added - primary version : need to get reviewed." />
->>>>>>> origin/Mohammad-Amin
   </component>
 </project>
