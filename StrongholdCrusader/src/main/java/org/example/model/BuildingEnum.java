@@ -53,6 +53,25 @@ public enum BuildingEnum {
     FLETCHER,
     POLE_TURNER,
     SIGNPOST,
-    TUNNEL_ENTRANCE
+    TUNNEL_ENTRANCE,
+
+
+    // TREES
+
+
+    DESERT_TREE,
+    OLIVE_TREE,
+    DATE_TREE,
+    CHERRY_TREE,
+    COCONUT_TREE,
+
+
+    // ROCKS
+
+
+    ROCK_NORTH,
+    ROCK_SOUTH,
+    ROCK_EAST,
+    ROCK_WEST
 
 }

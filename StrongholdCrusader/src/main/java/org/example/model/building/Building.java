@@ -108,7 +108,19 @@ public class Building {
     public static Building createBuildingByName (String type , Player owner,int row , int column){
         // TREES
 
-        // TODO : ADD TREES
+        if(type.equals("deserttree")) return new Building( "deserttree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.DESERT_TREE ) ;
+        if(type.equals("olivetree")) return new Building( "olivetree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.OLIVE_TREE ) ;
+        if(type.equals("coconuttree")) return new Building( "coconuttree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.COCONUT_TREE ) ;
+        if(type.equals("cherrytree")) return new Building( "cherrytree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.CHERRY_TREE ) ;
+        if(type.equals("datetree")) return new Building( "datetree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.DATE_TREE ) ;
+
+        // ROCKS
+
+        if(type.equals("rockwest")) return new Building( "rockwest" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_WEST ) ;
+        if(type.equals("rockeast")) return new Building( "rockeast" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_EAST ) ;
+        if(type.equals("rocknorth")) return new Building( "rocknorth" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_NORTH ) ;
+        if(type.equals("rocksouth")) return new Building( "rocksouth" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_SOUTH ) ;
+
 
         // OTHER
         if (type.equals("smallstonewall"))
@@ -217,7 +229,11 @@ public class Building {
             return new TradeBuilding(type,"",1,1,false,-3,false,owner,row,column,150,getBuildingCost(type),0,BuildingEnum.SIGNPOST);//TODO
         if (type.equals("tunnelentrance"))
             return new TradeBuilding(type,"",1,1,false,0,false,owner,row,column,100,getBuildingCost(type),0,BuildingEnum.TUNNEL_ENTRANCE);//TODO
-        return null;
+
+
+        // throw an exception if there is a mistyped name in code
+        throw new NullPointerException() ;
+
     }
 
     public static Cost getBuildingCost(String type){

@@ -272,7 +272,14 @@ public class GameController {
                 || cell.cellType == CellType.SMALL_POND )
             return "CAN'T PLACE ROCK ON WATER!" ;
 
-        Building.createBuildingByName( "rock" , player , row , column  ) ;
+        String[] fullDirections = { "east" , "west" , "north" , "south" } ;
+        String fullDirection = "" ;
+
+        for(int i = 0 ; i < 4 ; i++){
+            if(direction.equals(validDirections[i])) fullDirection = fullDirections[i] ;
+        }
+
+        Building.createBuildingByName( "rock" + fullDirection , player , row , column  ) ;
 
         return "ROCK DROPPED SUCCESSFULLY" ;
     }
