@@ -27,7 +27,7 @@ public class GameController {
         this.player = this.players.get(0) ;
         this.turn = 0 ;
         this.winner = null ;
-        gameMap = new GameMap(400,400);
+        gameMap = new GameMap(maxRow,maxColumn);
     }
 
     public void nextTurn(){
@@ -208,7 +208,7 @@ public class GameController {
     }
 
     public String handleSelectUnitError (int row , int column , String type){
-        if (row > 400 || column > 400 || row < 0 || column < 0)
+        if (row > maxRow || column > maxColumn || row < 0 || column < 0)
             return "SelectUnit Failed : Row Or Column Exceeded Map";
         Cell cell = gameMap.getCell(row,column);
         UnitTypeEnum unitType = UnitTypeEnum.getUnitTypeByName(type);
@@ -281,7 +281,7 @@ public class GameController {
     public String setTextureCell (Matcher matcher){
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
-        if (row > 400 || row <0 || column >400 || column < 0)
+        if (row > maxRow || row <0 || column >maxColumn || column < 0)
             return "SetTexture Failed : Row Or Column Exceeded Map";
         Cell cell = gameMap.getCell(row,column);
         if (cell.units.size()>0)
@@ -299,7 +299,7 @@ public class GameController {
         int endColumn = Integer.parseInt(matcher.group("endColumn"));
         if (beginRow > endRow || beginColumn > endColumn)
             return "SetTexture Failed : Invalid Row Or Column Order";
-        if (endRow > 400 || endRow < 0 || endColumn >400 || endColumn <0)
+        if (endRow > maxRow || endRow < 0 || endColumn >maxColumn || endColumn <0)
             return "SetTexture Failed : Row Or Column Exceeded Map";
         for (int i =beginRow-1;i<endRow;++i){
             for (int j = beginColumn -1 ; j<endColumn;++j){
@@ -318,7 +318,7 @@ public class GameController {
     public String clear (Matcher matcher){
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
-        if (row > 400 || row <0 || column > 400 || column < 0)
+        if (row > maxRow || row <0 || column > maxColumn || column < 0)
             return "Clear Failed : Row Or Column Exceeded Map!";
         gameMap.getCell(row,column).units.clear();
         gameMap.getCell(row,column).cellType = CellType.GROUND;
@@ -354,7 +354,7 @@ public class GameController {
     }
 
     public String dropUnitErrorChecker(String type , int count , int row , int column){
-        if (row > 400 || row <0 || column >400 || column < 0)
+        if (row > maxRow || row <0 || column >maxColumn || column < 0)
             return "DropUnit Failed : x or y exceeded map!";
         if (count <=0)
             return "DropUnit Failed : count is smaller than 1!";
