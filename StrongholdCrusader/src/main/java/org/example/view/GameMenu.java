@@ -65,7 +65,7 @@ public class GameMenu {
                 System.out.println( gameController.repair(Commands.getMatchingMatcher(input,Commands.REPAIR)));
 
             else if (Commands.getMatchingMatcher(input,Commands.SELECT_UNIT)!=null)
-                gameController.selectUnit(Commands.getMatchingMatcher(input,Commands.SELECT_UNIT));
+                System.out.println(gameController.selectUnit(Commands.getMatchingMatcher(input,Commands.SELECT_UNIT)));
 
             else if (Commands.getMatchingMatcher(input,Commands.MOVE_UNIT)!=null)
                 gameController.moveUnit(Commands.getMatchingMatcher(input,Commands.MOVE_UNIT));
