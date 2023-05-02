@@ -65,24 +65,12 @@ public class Player {
         this.score = 0 ;
     }
 
-    public void selectUnit( Unit unit ){
-        this.selectedUnits.add( unit ) ;
-    }
-
-    public void selectBuilding( Building building ){
-        this.selectedBuilding = building ;
-    }
-
     public Account getAccount(){
         return this.account ;
     }
 
     public double getGold(){
         return this.gold ;
-    }
-
-    public void setFearRate( int rate ){
-        this.fearRate = rate ;
     }
 
     public double getTaxForEachUnit(){

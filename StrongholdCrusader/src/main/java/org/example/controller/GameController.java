@@ -154,12 +154,7 @@ public class GameController {
     }
 
     public String setFearRate (Matcher matcher){
-        int rate = Integer.parseInt(matcher.group("rate")) ;
-        if( rate < -5 || rate > 5 ){
-            return "invalid rate" ;
-        }
-        player.setFearRate( rate ) ;
-        return "FEAR RATE SET TO " + rate ;
+        return null;
     }
 
     public String dropBuilding(Matcher matcher){

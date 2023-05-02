@@ -11,18 +11,14 @@ import java.util.Objects;
 public class Cell {
     public ArrayList<Objects> objects;
     public ArrayList<Unit> units;
-    public Building building;
+    public ArrayList<Building>buildings;
     public CellType cellType;
     private static HashMap<String , CellType> cellTypeEnumByName = new HashMap<>();
     public Cell(CellType cellType){
         this.cellType = cellType;
-        this.building = null ;
-        this.units = new ArrayList<Unit>() ;
+        this.buildings = new ArrayList<>(0);
+        this.units = new ArrayList<>(0);
         this.objects = new ArrayList<>(0);
-    }
-
-    public Building getBuilding(){
-        return this.building;
     }
 
     public CellType getCellTypeName(){
