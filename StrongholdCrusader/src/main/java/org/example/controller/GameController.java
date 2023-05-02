@@ -1,8 +1,8 @@
 package org.example.controller;
 
-import org.example.model.Account;
-import org.example.model.GameMap;
-import org.example.model.Player;
+import org.example.model.*;
+import org.example.model.building.Building;
+import org.example.model.unit.Unit;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -10,6 +10,8 @@ import java.util.regex.Matcher;
 public class GameController {
 
     ArrayList<Player> players ;
+    public static int maxRow = 400;
+    public static int maxColumn = 400;
     ArrayList <Account> accounts ;
     private int turn ;
     private Player winner ;
@@ -35,7 +37,7 @@ public class GameController {
 
     private void endGame(){
         System.out.println( "\nTHIS MATCH HAS ENDED AFTER " + this.turn / accounts.size() + " ROUNDS \n" +
-                            "THE WINNER IS " + winner.getAccount().getNickName() + "\n" ) ;
+                "THE WINNER IS " + winner.getAccount().getNickName() + "\n" ) ;
         for(Player player : this.players)
             player.getAccount().setHighScore((int)Math.max(player.getAccount().getHighScore(),player.getScore())) ;
         System.out.println( "the winner is " + winner.getAccount().getNickName() ) ;
@@ -157,11 +159,28 @@ public class GameController {
         return null;
     }
 
+
     public String dropBuilding(Matcher matcher){
         return null;
     }
 
     public String selectBuilding(Matcher matcher){
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        String error;
+        if ((error = handleSelectBuildingError(row,column))!=null)
+            return error;
+        Building building = gameMap.getCell(row,column).buildings.get(0);
+        player.setSelectedBuilding(building);
+        return "SelectBuilding Successful!";
+    }
+
+    public String handleSelectBuildingError (int row , int column){
+        if (row > maxRow || row < 0 || column > maxColumn || column <0 )
+            return "SelectBuilding Failed : Row Or Column Exceeded Map";
+        Cell cell = gameMap.getCell(row,column);
+        if (cell.buildings.size()==0)
+            return  "SelectBuilding Failed : Cell Does Not Contain Any Building";
         return null;
     }
 
@@ -173,8 +192,38 @@ public class GameController {
         return null;
     }
 
-    public void selectUnit(Matcher matcher){
+    public String selectUnit(Matcher matcher){
+        // we get select unit -x column -y row -t type?
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        String type = matcher.group("type");
+        String error;
+        if ((error= handleSelectUnitError(row,column,type))!= null)
+            return error;
+        Cell cell = gameMap.getCell(row,column);
+        //TODO : THIS PART CAN BE HANDLED MORE QUICKLY IF WE ADD UNITTYPE ENUM TO UNIT !
+        player.getSelectedUnits().clear();
+        player.setSelectedUnits(type,cell);
+        return "SelectUnit Successful!";
+    }
 
+    public String handleSelectUnitError (int row , int column , String type){
+        if (row > 400 || column > 400 || row < 0 || column < 0)
+            return "SelectUnit Failed : Row Or Column Exceeded Map";
+        Cell cell = gameMap.getCell(row,column);
+        UnitTypeEnum unitType = UnitTypeEnum.getUnitTypeByName(type);
+        if (unitType == null)
+            return "SelectUnit Failed : Unit Type Does Not Exists At All";
+        Boolean contain = false;
+        for (Unit unit : cell.units){
+            if (unit.getName().equals(type)){
+                contain = true;
+                break;
+            }
+        }
+        if (!contain)
+            return "SelectUnit Failed : Unit You Mentioned Is Not In The Cell";
+        return null;
     }
 
     public void moveUnit(Matcher matcher){
@@ -186,6 +235,22 @@ public class GameController {
     }
 
     public String setState(Matcher matcher){
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        String state = matcher.group("state");
+        String error;
+        if ((error = handleSetStateError(row,column))!=null)
+            return error;
+        Cell cell = gameMap.getCell(row,column);
+        player.setState(state);
+        return "SetState Successful!";
+    }
+
+    public String handleSetStateError(int row,int column){
+        if (row > maxRow || row <0 || column > maxColumn || column <0)
+            return "SetState Failed : Row Or Column Exceeded Map";
+        if (player.getSelectedUnits().isEmpty())
+            return "SetState Failed : No Selected Unit";
         return null;
     }
 
@@ -214,15 +279,50 @@ public class GameController {
     }
 
     public String setTextureCell (Matcher matcher){
-        return null;
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        if (row > 400 || row <0 || column >400 || column < 0)
+            return "SetTexture Failed : Row Or Column Exceeded Map";
+        Cell cell = gameMap.getCell(row,column);
+        if (cell.units.size()>0)
+            return "SetTexture Failed  : Cell Contains Units";
+        if (cell.buildings.size() > 0)
+            return "SetTexture Failed : Cell Contains Building";
+        cell.cellType = CellType.getCellTypeEnumByName(matcher.group("type"));
+        return "SetTexture Successful!";
     }
 
     public String setTextureBlock(Matcher matcher){
-        return null;
+        int beginRow = Integer.parseInt(matcher.group("beginRow"));
+        int endRow = Integer.parseInt(matcher.group("endRow"));
+        int beginColumn = Integer.parseInt(matcher.group("beginColumn"));
+        int endColumn = Integer.parseInt(matcher.group("endColumn"));
+        if (beginRow > endRow || beginColumn > endColumn)
+            return "SetTexture Failed : Invalid Row Or Column Order";
+        if (endRow > 400 || endRow < 0 || endColumn >400 || endColumn <0)
+            return "SetTexture Failed : Row Or Column Exceeded Map";
+        for (int i =beginRow-1;i<endRow;++i){
+            for (int j = beginColumn -1 ; j<endColumn;++j){
+                if (gameMap.getCell(i,j).buildings.size() > 0 || gameMap.getCell(i,j).units.size()>0)
+                    return "SetTexture Failed : Block Contains Unit Or Building";
+            }
+        }
+        CellType cellType = CellType.getCellTypeEnumByName(matcher.group("type"));
+        for (int i =beginRow-1;i<endRow;++i){
+            for (int j = beginColumn -1 ; j<endColumn;++j)
+                gameMap.getCell(i,j).cellType = cellType;
+        }
+        return "SetTexture Successful!";
     }
 
     public String clear (Matcher matcher){
-        return null;
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        if (row > 400 || row <0 || column > 400 || column < 0)
+            return "Clear Failed : Row Or Column Exceeded Map!";
+        gameMap.getCell(row,column).units.clear();
+        gameMap.getCell(row,column).cellType = CellType.GROUND;
+        return "Cell Cleared Successfully!";
     }
 
     public String dropRock(Matcher matcher){
@@ -234,10 +334,36 @@ public class GameController {
     }
 
     public String replaceBuilding (Matcher matcher){
+        //TODO : This Funtion Is Equal To DropBuilding In Beginning Of The Game
         return null;
     }
 
     public String dropUnit(Matcher matcher){
+        String type = matcher.group("type");
+        int count = Integer.parseInt(matcher.group("count"));
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        String error;
+        if ((error = dropUnitErrorChecker(type,count,row,column))!=null)
+            return error;
+        Unit unit = Unit.createUnitByName(type,player);
+        Cell cell = gameMap.getCell(row,column);
+        while (--count>0)
+            cell.addUnit(unit);
+        return "Unit Dropped Successfully!";
+    }
+
+    public String dropUnitErrorChecker(String type , int count , int row , int column){
+        if (row > 400 || row <0 || column >400 || column < 0)
+            return "DropUnit Failed : x or y exceeded map!";
+        if (count <=0)
+            return "DropUnit Failed : count is smaller than 1!";
+        Cell cell = gameMap.getCell(row,column);
+        UnitTypeEnum unitTypeEnum = UnitTypeEnum.getUnitTypeByName(type);
+        if (unitTypeEnum == null)
+            return "DropUnit Failed : Unit Type Does Not Exists!";
+        if (!cell.permeable(unitTypeEnum))
+            return "DropUnit Failed : Cell Is Not Permeable!";
         return null;
     }
 

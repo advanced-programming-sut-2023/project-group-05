@@ -19,7 +19,7 @@ public class Unit {
     private boolean isMoving ;
 
     private static HashMap<String , UnitTypeEnum> unitTypeEnumMap = new HashMap<>();
-
+    private static HashMap<String , UnitModeEnum> unitModeEnumMap = new HashMap<>();
     Unit( String name , Player owner , int movingSpeed , int range ){
         this.name = name ;
         this.owner = owner ;
@@ -54,6 +54,9 @@ public class Unit {
     public UnitModeEnum getUnitMode(){
         return this.unitMode ;
     }
+    public void setUnitMode (UnitModeEnum unitMode){
+        this.unitMode = unitMode;
+    }
 
     public Cost getCost(){
         return this.cost ;
@@ -77,6 +80,10 @@ public class Unit {
 
     public void moveUnit( int row , int column ){
         // TODO : move unit to ( row , column )
+    }
+
+    public static HashMap<String,UnitModeEnum> getUnitModeEnumMap() {
+        return unitModeEnumMap ;
     }
 
     public static Unit createUnitByName(String type,Player owner){

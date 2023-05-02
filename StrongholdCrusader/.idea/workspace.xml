@@ -8,10 +8,10 @@
       <change afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Trade.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Cell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Cost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Cost.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/UnitModeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/UnitModeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/unit/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/unit/Unit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controller/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/controller/GameController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +27,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />

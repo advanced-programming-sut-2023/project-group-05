@@ -63,6 +63,8 @@ public class Player {
         this.populationCapacity = 0 ;
         this.popularity = 0 ;
         this.score = 0 ;
+        this.selectedBuilding = null;
+        this.selectedUnits = new ArrayList<>();
     }
 
     public Account getAccount(){
@@ -151,5 +153,31 @@ public class Player {
 
     public long getScore(){
         return this.score;
+    }
+
+    public ArrayList<Unit> getSelectedUnits(){
+        return this.selectedUnits;
+    }
+
+    public Building getSelectedBuilding(){
+        return this.selectedBuilding;
+    }
+
+    //
+    public void setSelectedUnits(String unitType , Cell cell){
+        for (Unit unit : cell.units){
+            if (unit.getName().equals("type"))
+                this.selectedUnits.add(unit);
+        }
+    }
+
+    public void setSelectedBuilding (Building building){
+        this.selectedBuilding = building;
+    }
+
+    public void setState (String state ){
+        UnitModeEnum unitMode = UnitModeEnum.getUnitModeEnumByName(state);
+        for (Unit unit : this.selectedUnits)
+            unit.setUnitMode(unitMode);
     }
 }
