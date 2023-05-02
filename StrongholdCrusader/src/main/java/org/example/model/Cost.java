@@ -22,6 +22,23 @@ public class Cost {
     private int wheat ;
     private int flour ;
     private int iron ;
+
+    public int getLeatherArmor(){
+        return leatherArmor;
+    }
+
+    public int getWheat(){
+        return wheat;
+    }
+
+    public int getFlour(){
+        return flour;
+    }
+
+    public int getIron(){
+        return iron;
+    }
+
     private int ale ;
 
     private int metalArmor ;
@@ -92,6 +109,38 @@ public class Cost {
 
     public int getHop(){
         return this.hop ;
+    }
+
+    public int getMeat(){
+        return this.meat ;
+    }
+
+    public int getPike(){
+        return this.pike ;
+    }
+
+    public int getSpear(){
+        return this.spear ;
+    }
+
+    public int getBread(){
+        return this.bread ;
+    }
+
+    public int getApple(){
+        return this.apple ;
+    }
+
+    public int getCheese(){
+        return this.cheese ;
+    }
+
+    public int getAle(){
+        return this.ale ;
+    }
+
+    public int getMetalArmor(){
+        return this.metalArmor ;
     }
 
 }

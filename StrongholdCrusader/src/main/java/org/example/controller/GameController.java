@@ -376,14 +376,16 @@ public class GameController {
     public String tradeList(Matcher matcher){
         String ret = "TRADE LIST :" ;
         int index = 1 ;
+        ret += "----------------------------------------" ;
         for( Trade trade : Trade.getTrades() ){
-            ret += "\n----------------------------------------" ;
-            ret += " > INDEX : " + index + " < " ;
-            ret += "\nPlayer : " + trade.getPlayer().getAccount().getNickName() ;
+            ret += "\nINDEX : " + index + " < " ;
+            ret += "\nPlayer : " + trade.getPlayer1().getAccount().getNickName() ;
             ret += "\n  -> Price : " + trade.getPrice() ;
             ret += "\n  -> Amount : " + trade.getAmount() ;
             ret += "\n  -> Resource : " + trade.getResourceType() ;
-            ret += "\n  -> Message : " + trade.getMessage() ;
+            ret += "\n  -> Message : " + trade.getMessage1() ;
+            if( trade.getMessage2() == null ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
+            else ret += "\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
             ret += "\n----------------------------------------" ;
             index++ ;
         }
@@ -393,17 +395,53 @@ public class GameController {
     public String tradeAccept(Matcher matcher){
         int id = Integer.parseInt(matcher.group("id")) - 1 ;
         String message = matcher.group("message") ;
-        Trade trade = Trade.getTrades().get(id);
-
-        if( player.equals(trade.getPlayer()) )
+        if( id < 1 || id > Trade.getTrades().size() )
+            return "INVALID ID." ;
+        Trade trade = Trade.getTrades().get(--id) ;
+        Cost cost = trade.getCost() ;
+        if( player.equals(trade.getPlayer1()) )
             return "YOU CAN NOT TRADE WITH YOURSELF MY LORD" ;
-        //if( !player.decreaseCost( cost ) )
-        //    return "YOU DON'T HAVE ENOUGH RESOURCES TO TRADE WITH THIS KINGDOM." ;
+        if( !player.decreaseCost( cost ) )
+            return "YOU DON'T HAVE ENOUGH RESOURCES TO TRADE WITH THIS KINGDOM." ;
+        trade.setMessage2( message ) ;
+        trade.setPlayer2( player ) ;
         return "YOU HAVE TRADED WITH OTHER KINGDOMS SUCCESSFULLY , MY LORD." ;
     }
 
     public String tradeHistory(Matcher matcher){
-        return null;
+        String ret = "" ;
+        ret += "TRADES YOU STARTED : " ;
+        Trade trade ;
+        for(int i = 0 ; i < Trade.getTrades().size() ; i++){
+            trade = Trade.getTrades().get(i) ;
+            if( trade.getPlayer1() == player ){
+                ret += "\n----------------------------------------" ;
+                ret += "INDEX " + (i + 1) + "\n";
+                ret += "\nPrice : " + trade.getPrice() ;
+                ret += "\nAmount : " + trade.getAmount() ;
+                ret += "\nResource : " + trade.getResourceType() ;
+                ret += "\nMessage : " + trade.getMessage1() ;
+                if( trade.getMessage2() == null ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
+                else ret += "\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
+                ret += "\n----------------------------------------" ;
+            }
+        }
+        ret += "\nTRADES YOU ACCEPTED : " ;
+        for(int i = 0 ; i < Trade.getTrades().size() ; i++){
+            trade = Trade.getTrades().get(i) ;
+            if( trade.getPlayer2() == player ){
+                ret += "\n----------------------------------------" ;
+                ret += "INDEX " + (i + 1) + "\n";
+                ret += "\nPrice : " + trade.getPrice() ;
+                ret += "\nAmount : " + trade.getAmount() ;
+                ret += "\nResource : " + trade.getResourceType() ;
+                ret += "\nMessage : " + trade.getMessage1() ;
+                if( trade.getMessage2() == null ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
+                else ret += "\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
+                ret += "\n----------------------------------------" ;
+            }
+        }
+        return ret ;
     }
 
     public String showPriceList(Matcher matcher){

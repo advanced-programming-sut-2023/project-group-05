@@ -35,9 +35,29 @@ public class Player {
     private int populationCapacity ;
     private int popularity ;
     private double taxForEachUnit ;
+    private int sword ;
+    private int spear ;
+    private int wheat ;
+    private int mace ;
+    private int ale ;
+    private int bow ;
+    private int pike ;
+    private int metalArmor ;
+    private int flour ;
+    private int crossbow ;
+    private int leatherArmor ;
 
     public Player( Account account ){
         this.account = account ;
+        this.mace = 0 ;
+        this.spear = 0 ;
+        this.pike = 0 ;
+        this.bow = 0 ;
+        this.metalArmor = 0 ;
+        this.wheat = 0 ;
+        this.ale = 0 ;
+        this.flour = 0 ;
+        this.crossbow = 0 ;
         this.fearRate = 0 ;
         this.taxRate = 0 ;
         this.foodRate = 0 ;
@@ -49,12 +69,14 @@ public class Player {
         this.hop = 0 ;
         this.cheese = 0 ;
         this.bread = 0 ;
+        this.sword = 0 ;
         this.meat = 0 ;
         this.pitch = 0 ;
         this.apple = 0 ;
         this.wineUsage = 0 ;
         this.gold = 0 ;
         this.stone = 0 ;
+        this.leatherArmor = 0 ;
         this.wood = 0 ;
         this.iron = 0 ;
         this.population = 0 ;
@@ -63,15 +85,36 @@ public class Player {
         this.score = 0 ;
     }
 
-    /*public boolean decreaseCost( Cost cost ){
-        boolean ret = ( this.apple >= cost.getApple() ) && ( this.meat >= cost.getMeat() ) && ( this.cheese >= cost.getCheese() )
+    public boolean decreaseCost( Cost cost ){
+        boolean possible = ( this.apple >= cost.getApple() ) && ( this.meat >= cost.getMeat() ) && ( this.cheese >= cost.getCheese() )
                 && ( this.bread >= cost.getBread() ) && ( this.bow >= cost.getBow() ) && ( this.crossbow >= cost.getCrossbow() )
                 && ( this.spear >= cost.getSpear() ) && ( this.pike >= cost.getPike() ) && ( this.mace >= cost.getMace() )
-                && ( this.sword >= cost.sword ) && ( this.leatherarmor >= cost.getLeatherArmor )
-                && ( this.metalArmor >= cost.getMetalArmor ) && ( this.wheat >= cost.getWheat() ) && ( this.flour >= cost.getFlour() )
-                && ( this.hop >= cost.getHop() ) && ( this.ale >= cost.getAle() ) && ( this. ) ;
+                && ( this.sword >= cost.getSword() ) && ( this.leatherArmor >= cost.getLeatherArmor() )
+                && ( this.metalArmor >= cost.getMetalArmor() ) && ( this.wheat >= cost.getWheat() ) && ( this.flour >= cost.getFlour() )
+                && ( this.hop >= cost.getHop() ) && ( this.ale >= cost.getAle() ) && ( this.stone >= cost.getStone() )
+                && ( this.iron >= cost.getIron() ) && ( this.wood >= cost.getWood() ) && ( this.pitch >= cost.getPitch() ) ;
+        if(!possible) return false ;
+
+        this.apple-=cost.getApple() ;
+        this.meat-=cost.getMeat() ;
+        this.cheese -= cost.getCheese() ;
+        this.bread -= cost.getBread() ;
+        this.bow -= cost.getBow() ;
+        this.crossbow-= cost.getCrossbow() ;
+        this.spear -= cost.getSpear() ;
+        this.pike -= cost.getPike() ;
+        this.mace -= cost.getMace() ;
+        this.sword -= cost.getSword() ;
+        this.leatherArmor -= cost.getLeatherArmor() ;
+        this.hop -= cost.getHop() ;
+        this.ale -= cost.getAle() ;
+        this.stone -= cost.getStone() ;
+        this.iron -= cost.getIron() ;
+        this.wood -= cost.getWood() ;
+        this.pitch -= cost.getPitch() ;
+
         return true ;
-    }*/
+    }
 
     public void selectUnit( Unit unit ){
         this.selectedUnits.add( unit ) ;
@@ -182,7 +225,6 @@ public class Player {
         return this.selectedBuilding;
     }
 
-    //
     public void setSelectedUnits(String unitType , Cell cell){
         for (Unit unit : cell.units){
             if (unit.getName().equals("type"))
