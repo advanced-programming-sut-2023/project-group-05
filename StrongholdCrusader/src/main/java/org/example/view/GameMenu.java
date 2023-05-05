@@ -109,8 +109,8 @@ public class GameMenu {
             else if (Commands.getMatchingMatcher(input,Commands.DROPTREE)!=null)
                 System.out.println( gameController.dropTree(Commands.getMatchingMatcher(input,Commands.DROPTREE)));
 
-            else if (Commands.getMatchingMatcher(input,Commands.REPLACE_BUILDING)!=null)
-                System.out.println( gameController.replaceBuilding(Commands.getMatchingMatcher(input,Commands.REPLACE_BUILDING)));
+            else if (Commands.getMatchingMatcher(input,Commands.CREATE_BUILDING)!=null)
+                System.out.println( gameController.createBuilding(Commands.getMatchingMatcher(input,Commands.CREATE_BUILDING)));
 
             else if (Commands.getMatchingMatcher(input,Commands.DROP_UNIT)!=null)
                 System.out.println( gameController.dropUnit(Commands.getMatchingMatcher(input,Commands.DROP_UNIT)));

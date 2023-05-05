@@ -57,7 +57,7 @@ public enum Commands {
     CLEAR_CELL ("clear",new ArrayList<String>(Arrays.asList(" -x(?<row>\\d+)"," -y(?<column>\\d+)"))),
     DROP_ROCK("droprock",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y (?<column>\\d+)"," -d (?<direction>(n|e|w|s|r))"))),
     DROPTREE("droptree",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y (?<column>\\d+)"," -t (?<type>\\S+)"))),
-    REPLACE_BUILDING("dropbuilding",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y (?<column>\\d+)"," -t (?<type>\\S+)"))),
+    CREATE_BUILDING("dropbuilding",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y (?<column>\\d+)"," -t (?<type>\\S+)"))),
     DROP_UNIT("dropunit",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y (?<column>\\d+)"," -t (?<type>\\S+)"," -c (?<count>\\d+)"))),
     SHOW_TRADE_LIST("trade list",null),
     SHOW_TRADE_HISTORY("trade history",null),
