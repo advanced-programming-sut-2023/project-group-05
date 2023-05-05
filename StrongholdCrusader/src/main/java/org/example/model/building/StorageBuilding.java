@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class StorageBuilding extends Building {
 
+    public static int maxGranaryCapacityForEachFood = 200;
+    public static int maxStockpileCapacityForEachResource = 200;
     private final int upperBound ;
     private ArrayList<Object> objects ;
 

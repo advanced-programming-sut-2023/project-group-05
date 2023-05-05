@@ -23,9 +23,10 @@ public class MapMenuController {
         for (int i = row - 21; i < row + 21; ++i) {
             for (int j = column - 21; j < column + 21; ++j) {
                 Cell cell = gameMap.getCell(i, j);
-                System.out.print("|"+getCellTypeByColor(cell) + ConsoleColors.BLACK_BOLD+
-                        getCellContentByCharacter(cell) +
-                        ConsoleColors.RESET);
+                String background = getCellTypeByColor(cell);
+                String textColor = getTextColor(background);
+                String content = getCellContentByCharacter(cell);
+                System.out.print("|"+background+textColor+content+ConsoleColors.RESET);
             }
             System.out.println();
         }
@@ -59,6 +60,24 @@ public class MapMenuController {
         if (cellType == CellType.OIL_WELL)
             return ConsoleColors.PURPLE_BACKGROUND_BRIGHT;
         return null;
+    }
+
+    public static String getTextColor(String background){
+        if (background.equals(ConsoleColors.YELLOW_BACKGROUND_BRIGHT))
+            return ConsoleColors.BLACK_BOLD;
+        if (background.equals(ConsoleColors.GREEN_BACKGROUND))
+            return ConsoleColors.CYAN_BOLD;
+        if (background.equals(ConsoleColors.WHITE_BACKGROUND_BRIGHT))
+            return ConsoleColors.BLACK_BOLD;
+        if (background.equals(ConsoleColors.BLUE_BACKGROUND_BRIGHT))
+            return ConsoleColors.WHITE_BOLD;
+        if (background.equals(ConsoleColors.BLACK_BACKGROUND))
+            return ConsoleColors.WHITE_BOLD;
+        if (background.equals(ConsoleColors.RED_BACKGROUND))
+            return ConsoleColors.WHITE_BOLD;
+        if (background.equals(ConsoleColors.PURPLE_BACKGROUND_BRIGHT))
+            return ConsoleColors.WHITE_BOLD;
+        return ConsoleColors.BLACK_BOLD;
     }
 
     public static String getCellContentByCharacter(Cell cell) {

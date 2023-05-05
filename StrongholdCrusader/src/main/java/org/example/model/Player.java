@@ -1,6 +1,7 @@
 package org.example.model;
 
 import org.example.model.building.Building;
+import org.example.model.building.StorageBuilding;
 import org.example.model.unit.Unit;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class Player {
     private int meatCapacity ;
     private int breadCapacity ;
     private int cheeseCapacity ;
+    private boolean isStockPileCreated;
+    private boolean isGranaryCreated;
     private int hop ;
     private int cheese ;
     private int bread ;
@@ -49,6 +52,8 @@ public class Player {
 
     public Player( Account account ){
         this.account = account ;
+        this.isGranaryCreated = false;
+        this.isStockPileCreated = false;
         this.mace = 0 ;
         this.spear = 0 ;
         this.pike = 0 ;
@@ -83,6 +88,10 @@ public class Player {
         this.populationCapacity = 0 ;
         this.popularity = 0 ;
         this.score = 0 ;
+
+        //TODO : IS IT RIGHT ?
+        this.buildings = new ArrayList<>();
+        this.units = new ArrayList<>();
     }
 
     public String decreaseCost( Cost cost ){
@@ -107,7 +116,6 @@ public class Player {
         if( this.iron < cost.getIron() ) return "NOT ENOUGH IRON." ;
         if( this.wood < cost.getWood() ) return "NOT ENOUGH WOOD." ;
         if( this.pitch < cost.getPitch() ) return "NOT ENOUGH PITCH." ;
-
 
         this.apple-=cost.getApple() ;
         this.meat-=cost.getMeat() ;
@@ -134,10 +142,18 @@ public class Player {
         this.selectedUnits.add( unit ) ;
     }
 
+    public void addBuilding(Building building){
+        this.buildings.add(building);
+    }
+    public void addUnit(Unit unit){
+        this.units.add(unit);
+    }
+
     public void selectBuilding( Building building ){
         this.selectedBuilding = building ;
-        this.selectedBuilding = null;
-        this.selectedUnits = new ArrayList<>();
+        // WHAT ?!
+        /*this.selectedBuilding = null;
+        this.selectedUnits = new ArrayList<>();*/
     }
 
     public Account getAccount(){
@@ -158,6 +174,12 @@ public class Player {
 
     public int getMeat(){
         return this.meat ;
+    }
+    public void setFoodCapacity(int number){
+        this.breadCapacity +=number* StorageBuilding.maxGranaryCapacityForEachFood;
+        this.cheeseCapacity += number * StorageBuilding.maxGranaryCapacityForEachFood;
+        this.meatCapacity += number*StorageBuilding.maxGranaryCapacityForEachFood;
+        this.breadCapacity += number*StorageBuilding.maxGranaryCapacityForEachFood;
     }
 
     public int getCheese(){
@@ -254,5 +276,50 @@ public class Player {
         UnitModeEnum unitMode = UnitModeEnum.getUnitModeEnumByName(state);
         for (Unit unit : this.selectedUnits)
             unit.setUnitMode(unitMode);
+    }
+    public String canBuildingPlacedHere (String name,int row,int column ,GameMap gameMap){
+        boolean isNearSimilarBuilding = false;
+        if (name.equals("granary") && !isGranaryCreated)
+            isGranaryCreated = true;
+        else if (name.equals("stockpile") && !isStockPileCreated)
+                isStockPileCreated = true;
+        //TODO : IT IS ASSUMED THAT EACH GRANARY OR STOCKPILE IS 1*1
+        else if (name.equals("granary"))
+            return isSimilarBuildingNearMe(name,row,column,gameMap) ? null : "Granary Should Be Placed Near Another Granary";
+        else if (name.equals("stockpile"))
+            return isSimilarBuildingNearMe(name,row,column,gameMap) ? null : "Stockpile Should Be Placed Near Another Stockpile";
+        return null;
+    }
+
+    public boolean isSimilarBuildingNearMe(String name ,int row , int column,GameMap gameMap){
+        for (Building building : gameMap.getCell(row-1,column).buildings){
+            if (building.getName().equals(name))
+                return true;
+        }
+        for (Building building : gameMap.getCell(row+1,column).buildings){
+            if (building.getName().equals(name))
+                return true;
+        }
+        for (Building building : gameMap.getCell(row,column-1).buildings){
+            if (building.getName().equals(name))
+                return true;
+        }
+        for (Building building : gameMap.getCell(row,column+1).buildings){
+            if (building.getName().equals(name))
+                return true;
+        }
+        return false;
+    }
+
+    public void handleBuildingEffectsOnPlayer(String name){
+        //TODO : COMPLETE THIS PART
+        if (name.equals("granary"))
+            this.setFoodCapacity(1);
+        else if (name.equals("goodthings"))
+            this.popularity+=1;
+        else if (name.equals("badthings"))
+            this.popularity-=1;
+        else if (name.equals("hovel"))
+            this.setPopulationCapacity(8);
     }
 }

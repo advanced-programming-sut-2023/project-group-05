@@ -16,6 +16,8 @@ public class GameController {
     private Player winner ;
     Player player ;
     private GameMap gameMap;
+    public static int maxRow = 400;
+    public static int maxColumn = 400;
 
     public GameController( ArrayList<Account> accounts ){
         this.accounts = accounts ;
@@ -164,10 +166,6 @@ public class GameController {
     }
 
 
-    public String dropBuilding(Matcher matcher){
-        return null;
-    }
-
     public String selectBuilding(Matcher matcher){
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
@@ -188,6 +186,7 @@ public class GameController {
         return null;
     }
 
+    //TODO : MOHAMMAD AMIN
     public String repair(Matcher matcher){
         return null;
     }
@@ -226,10 +225,11 @@ public class GameController {
         return null;
     }
 
+    //TODO : ARIA
     public void moveUnit(Matcher matcher){
 
     }
-
+    //TODO : ARIA
     public String patrolUnit(Matcher matcher){
         return null;
     }
@@ -405,7 +405,48 @@ public class GameController {
         return "TREE DROPPED SUCCESSFULLY." ;
     }
 
-    public String replaceBuilding (Matcher matcher){
+    public String createBuilding (Matcher matcher){
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        String type = matcher.group("type");
+        String error = dropAndCreateBuildingErrorHandler(row,column,type);
+        if (error != null)
+            return error;
+        Cost cost = Building.getBuildingCost(type);
+        String enoughCost = player.decreaseCost(cost);
+        if (enoughCost!=null)
+            return enoughCost;
+        String canBePlacedHere = player.canBuildingPlacedHere(type,row,column,gameMap);
+        if (canBePlacedHere != null)
+            return canBePlacedHere;
+        Building building = Building.createBuildingByName(type,player,row,column);
+        gameMap.getCell(row,column).buildings.add(building);
+        player.addBuilding(building);
+        player.handleBuildingEffectsOnPlayer(type);
+        return "Create Building Successful!";
+    }
+    public String dropBuilding(Matcher matcher){
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        String type = matcher.group("type");
+        String error = dropAndCreateBuildingErrorHandler(row,column,type);
+        if (error != null)
+            return error;
+        String canBePlacedHere = player.canBuildingPlacedHere(type,row,column,gameMap);
+        if (canBePlacedHere != null)
+            return canBePlacedHere;
+        Building building = Building.createBuildingByName(type,player,row,column);
+        gameMap.getCell(row,column).buildings.add(building);
+        player.addBuilding(building);
+        player.handleBuildingEffectsOnPlayer(type);
+        return "Drop Building Successful!";
+    }
+
+    public String dropAndCreateBuildingErrorHandler (int row , int column , String type){
+        if (row > maxRow || row < 0 || column > maxColumn || column <0)
+            return "Drop/Create Building Failed : Row Or Column Exceeded Map";
+        if (BuildingEnum.getBuildingEnumByName(type)==null)
+            return "Drop/Create Building Failed : No Such Building Exists";
         return null;
     }
 
@@ -415,28 +456,43 @@ public class GameController {
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
         String error;
-        if ((error = dropUnitErrorChecker(type,count,row,column))!=null)
+        if ((error = dropCreateUnitErrorChecker(type,count,row,column))!=null)
             return error;
         Unit unit = Unit.createUnitByName(type,player);
         gameMap.getCell(row,column).addUnit(unit);
+        player.addUnit(unit);
         return "Unit Dropped Successfully!";
     }
 
     public String createUnit(Matcher matcher){
-        return null;
+        String type = matcher.group("type");
+        int count = Integer.parseInt(matcher.group("count"));
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        String error;
+        if ((error = dropCreateUnitErrorChecker(type,count,row,column))!=null)
+            return error;
+        Cost cost = Unit.getCostByName(type);
+        String enoughCost = player.decreaseCost(cost);
+        if (enoughCost!=null)
+            return enoughCost;
+        Unit unit = Unit.createUnitByName(type,player);
+        gameMap.getCell(row,column).addUnit(unit);
+        player.addUnit(unit);
+        return "Unit Created Successfully!";
     }
 
-    public String dropUnitErrorChecker(String type , int count , int row , int column){
+    public String dropCreateUnitErrorChecker(String type , int count , int row , int column){
         if (row > 400 || row <0 || column >400 || column < 0)
-            return "DropUnit Failed : x or y exceeded map!";
+            return "Drop/Create Unit Failed : x or y exceeded map!";
         if (count <=0)
-            return "DropUnit Failed : count is smaller than 1!";
+            return "Drop/Create Failed : count is smaller than 1!";
         Cell cell = gameMap.getCell(row,column);
         UnitTypeEnum unitTypeEnum = UnitTypeEnum.getUnitTypeByName(type);
         if (unitTypeEnum == null)
-            return "DropUnit Failed : Unit Type Does Not Exists!";
+            return "Drop/Create Failed : Unit Type Does Not Exists!";
         if (!cell.permeable(unitTypeEnum))
-            return "DropUnit Failed : Cell Is Not Permeable!";
+            return "Drop/Create Failed : Cell Is Not Permeable!";
         return null;
     }
 

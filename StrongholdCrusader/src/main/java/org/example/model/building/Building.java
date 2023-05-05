@@ -7,6 +7,7 @@ import org.example.model.Player ;
 
 import javax.print.DocFlavor;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Building {
     private final String name ;
@@ -23,6 +24,7 @@ public class Building {
     private final boolean holdsAnimal ;
     private boolean passable ;
     protected int hitPoint ;
+    private static HashMap<String , BuildingEnum> buildingEnumByName = new HashMap<>();
 
     Building( String name , int width , int height , boolean passable , String category , Player owner
             , int row , int column , Cost cost , int hitPoint , int popularityRate , boolean holdsAnimal ,
@@ -45,6 +47,9 @@ public class Building {
 
     }
 
+    public static HashMap<String, BuildingEnum> getBuildingEnumByName(){
+        return buildingEnumByName;
+    }
     public void setPassable( boolean passable ){
         this.passable = passable ;
     }
@@ -178,7 +183,7 @@ public class Building {
         if (type.equals("brewer"))
             return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.BREWER);
         if (type.equals("granary"))
-            return new StorageBuilding(type,2,2,false,"",owner,row,column,getBuildingCost(type),500,0,false,800,BuildingEnum.GRANARY);
+            return new StorageBuilding(type,1,1,false,"",owner,row,column,getBuildingCost(type),500,0,false,800,BuildingEnum.GRANARY);
         if (type.equals("inn"))
             return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.INN);
         if (type.equals("mill"))
@@ -194,7 +199,7 @@ public class Building {
         if (type.equals("quarry"))
             return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),3,BuildingEnum.QUARRY);//TODO
         if (type.equals("stockpile"))
-            return new StorageBuilding(type,3,3,false,"",owner,row,column,getBuildingCost(type),-1,0,false,1000,BuildingEnum.STOCKPILE);//TODO
+            return new StorageBuilding(type,1,1,false,"",owner,row,column,getBuildingCost(type),-1,0,false,1000,BuildingEnum.STOCKPILE);//TODO
         if (type.equals("woodcutter"))
             return new TradeBuilding(type,"",2,3,false,0,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.WOODCUTTER);//TODO
         if (type.equals("apothecary"))
@@ -467,8 +472,6 @@ public class Building {
         if (type.equals("tunnelentrance")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
                 0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
                 0,0,0,0,0) ;
-
-
 
         return null ;
     }
