@@ -37,7 +37,7 @@ public class GameController {
 
     private void endGame(){
         System.out.println( "\nTHIS MATCH HAS ENDED AFTER " + this.turn / accounts.size() + " ROUNDS \n" +
-                "THE WINNER IS " + winner.getAccount().getNickName() + "\n" ) ;
+                "THE WINNER IS " + winner.getAccount().getNickName() ) ;
         for(Player player : this.players)
             player.getAccount().setHighScore((int)Math.max(player.getAccount().getHighScore(),player.getScore())) ;
         System.out.println( "the winner is " + winner.getAccount().getNickName() ) ;
@@ -334,7 +334,7 @@ public class GameController {
     }
 
     public String replaceBuilding (Matcher matcher){
-        //TODO : This Funtion Is Equal To DropBuilding In Beginning Of The Game
+        //TODO : This Function Is Equal To DropBuilding In Beginning Of The Game
         return null;
     }
 
