@@ -564,8 +564,8 @@ public class GameController {
         Cost cost = trade.getCost() ;
         if( player.equals(trade.getPlayer1()) )
             return "YOU CAN NOT TRADE WITH YOURSELF MY LORD" ;
-        if( !player.decreaseCost( cost ) )
-            return "YOU DON'T HAVE ENOUGH RESOURCES TO TRADE WITH THIS KINGDOM." ;
+        String outputOfDecreaseCost = player.decreaseCost( cost ) ;
+        if( outputOfDecreaseCost != null ) return outputOfDecreaseCost ;
         trade.setMessage2( message ) ;
         trade.setPlayer2( player ) ;
         return "YOU HAVE TRADED WITH OTHER KINGDOMS SUCCESSFULLY , MY LORD." ;

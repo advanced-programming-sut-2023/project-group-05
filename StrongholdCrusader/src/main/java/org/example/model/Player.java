@@ -85,15 +85,29 @@ public class Player {
         this.score = 0 ;
     }
 
-    public boolean decreaseCost( Cost cost ){
-        boolean possible = ( this.apple >= cost.getApple() ) && ( this.meat >= cost.getMeat() ) && ( this.cheese >= cost.getCheese() )
-                && ( this.bread >= cost.getBread() ) && ( this.bow >= cost.getBow() ) && ( this.crossbow >= cost.getCrossbow() )
-                && ( this.spear >= cost.getSpear() ) && ( this.pike >= cost.getPike() ) && ( this.mace >= cost.getMace() )
-                && ( this.sword >= cost.getSword() ) && ( this.leatherArmor >= cost.getLeatherArmor() )
-                && ( this.metalArmor >= cost.getMetalArmor() ) && ( this.wheat >= cost.getWheat() ) && ( this.flour >= cost.getFlour() )
-                && ( this.hop >= cost.getHop() ) && ( this.ale >= cost.getAle() ) && ( this.stone >= cost.getStone() )
-                && ( this.iron >= cost.getIron() ) && ( this.wood >= cost.getWood() ) && ( this.pitch >= cost.getPitch() ) ;
-        if(!possible) return false ;
+    public String decreaseCost( Cost cost ){
+
+        if( this.apple < cost.getApple() ) return "NOT ENOUGH APPLE." ;
+        if( this.meat < cost.getMeat() ) return "NOT ENOUGH MEAT." ;
+        if( this.cheese < cost.getCheese() ) return "NOT ENOUGH CHEESE." ;
+        if( this.bread < cost.getBread() ) return "NOT ENOUGH BREAD." ;
+        if( this.bow < cost.getBow() ) return "NOT ENOUGH BOW." ;
+        if( this.crossbow < cost.getCrossbow() ) return "NOT ENOUGH CROSSBOW." ;
+        if( this.spear < cost.getSpear() ) return "NOT ENOUGH SPEAR." ;
+        if( this.pike < cost.getPike() ) return "NOT ENOUGH PIKE." ;
+        if( this.mace < cost.getMace() ) return "NOT ENOUGH MACE." ;
+        if( this.sword < cost.getSword() ) return "NOT ENOUGH SWORD." ;
+        if( this.leatherArmor < cost.getLeatherArmor() ) return "NOT ENOUGH LEATHER ARMOR." ;
+        if( this.hop < cost.getHop() ) return "NOT ENOUGH HOP" ;
+        if( this.metalArmor < cost.getMetalArmor() ) return "NOT ENOUGH ARMOR." ;
+        if( this.wheat < cost.getWheat() ) return "NOT ENOUGH WHEAT." ;
+        if( this.flour < cost.getFlour() ) return "NOT ENOUGH FLOUR." ;
+        if( this.ale < cost.getAle() ) return "NOT ENOUGH ALE." ;
+        if( this.stone < cost.getStone() ) return "NOT ENOUGH STONE." ;
+        if( this.iron < cost.getIron() ) return "NOT ENOUGH IRON." ;
+        if( this.wood < cost.getWood() ) return "NOT ENOUGH WOOD." ;
+        if( this.pitch < cost.getPitch() ) return "NOT ENOUGH PITCH." ;
+
 
         this.apple-=cost.getApple() ;
         this.meat-=cost.getMeat() ;
@@ -113,7 +127,7 @@ public class Player {
         this.wood -= cost.getWood() ;
         this.pitch -= cost.getPitch() ;
 
-        return true ;
+        return null ;
     }
 
     public void selectUnit( Unit unit ){
