@@ -5,13 +5,12 @@ import org.example.model.building.Building;
 import org.example.model.unit.Unit;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.regex.Matcher;
 
 public class GameController {
 
     ArrayList<Player> players ;
-    public static int maxRow = 400;
-    public static int maxColumn = 400;
     ArrayList <Account> accounts ;
     private int turn ;
     private Player winner ;
@@ -27,7 +26,7 @@ public class GameController {
         this.player = this.players.get(0) ;
         this.turn = 0 ;
         this.winner = null ;
-        gameMap = new GameMap(maxRow,maxColumn);
+        gameMap = new GameMap(400,400);
     }
 
     public void nextTurn(){
@@ -37,7 +36,7 @@ public class GameController {
 
     private void endGame(){
         System.out.println( "\nTHIS MATCH HAS ENDED AFTER " + this.turn / accounts.size() + " ROUNDS \n" +
-                "THE WINNER IS " + winner.getAccount().getNickName() ) ;
+                            "THE WINNER IS " + winner.getAccount().getNickName() + "\n" ) ;
         for(Player player : this.players)
             player.getAccount().setHighScore((int)Math.max(player.getAccount().getHighScore(),player.getScore())) ;
         System.out.println( "the winner is " + winner.getAccount().getNickName() ) ;
@@ -156,7 +155,12 @@ public class GameController {
     }
 
     public String setFearRate (Matcher matcher){
-        return null;
+        int rate = Integer.parseInt(matcher.group("rate")) ;
+        if( rate < -5 || rate > 5 ){
+            return "invalid rate" ;
+        }
+        player.setFearRate( rate ) ;
+        return "FEAR RATE SET TO " + rate ;
     }
 
 
@@ -176,15 +180,11 @@ public class GameController {
     }
 
     public String handleSelectBuildingError (int row , int column){
-        if (row > maxRow || row < 0 || column > maxColumn || column <0 )
+        if (row > 400 || row < 0 || column > 400 || column <0 )
             return "SelectBuilding Failed : Row Or Column Exceeded Map";
         Cell cell = gameMap.getCell(row,column);
         if (cell.buildings.size()==0)
             return  "SelectBuilding Failed : Cell Does Not Contain Any Building";
-        return null;
-    }
-
-    public String createUnit(Matcher matcher){
         return null;
     }
 
@@ -208,7 +208,7 @@ public class GameController {
     }
 
     public String handleSelectUnitError (int row , int column , String type){
-        if (row > maxRow || column > maxColumn || row < 0 || column < 0)
+        if (row > 400 || column > 400 || row < 0 || column < 0)
             return "SelectUnit Failed : Row Or Column Exceeded Map";
         Cell cell = gameMap.getCell(row,column);
         UnitTypeEnum unitType = UnitTypeEnum.getUnitTypeByName(type);
@@ -247,7 +247,7 @@ public class GameController {
     }
 
     public String handleSetStateError(int row,int column){
-        if (row > maxRow || row <0 || column > maxColumn || column <0)
+        if (row > 400 || row <0 || column > 400 || column <0)
             return "SetState Failed : Row Or Column Exceeded Map";
         if (player.getSelectedUnits().isEmpty())
             return "SetState Failed : No Selected Unit";
@@ -281,7 +281,7 @@ public class GameController {
     public String setTextureCell (Matcher matcher){
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
-        if (row > maxRow || row <0 || column >maxColumn || column < 0)
+        if (row > 400 || row <0 || column >400 || column < 0)
             return "SetTexture Failed : Row Or Column Exceeded Map";
         Cell cell = gameMap.getCell(row,column);
         if (cell.units.size()>0)
@@ -299,7 +299,7 @@ public class GameController {
         int endColumn = Integer.parseInt(matcher.group("endColumn"));
         if (beginRow > endRow || beginColumn > endColumn)
             return "SetTexture Failed : Invalid Row Or Column Order";
-        if (endRow > maxRow || endRow < 0 || endColumn >maxColumn || endColumn <0)
+        if (endRow > 400 || endRow < 0 || endColumn >400 || endColumn <0)
             return "SetTexture Failed : Row Or Column Exceeded Map";
         for (int i =beginRow-1;i<endRow;++i){
             for (int j = beginColumn -1 ; j<endColumn;++j){
@@ -318,7 +318,7 @@ public class GameController {
     public String clear (Matcher matcher){
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
-        if (row > maxRow || row <0 || column > maxColumn || column < 0)
+        if (row > 400 || row <0 || column > 400 || column < 0)
             return "Clear Failed : Row Or Column Exceeded Map!";
         gameMap.getCell(row,column).units.clear();
         gameMap.getCell(row,column).cellType = CellType.GROUND;
@@ -326,15 +326,86 @@ public class GameController {
     }
 
     public String dropRock(Matcher matcher){
-        return null;
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        String direction = matcher.group("direction") ;
+
+        if( row < 0 || row > 400 || column < 0 || column > 400 )
+            return "INVALID COORDINATES." ;
+
+        String[] validDirections = { "e" , "w" , "n" , "s" } ;
+        Random random = new Random() ;
+        if(direction.equals("random"))
+            direction = validDirections[ random.nextInt() % 4 ] ;
+
+        boolean validDirection = false ;
+        for(String dir : validDirections) if(direction.equals(dir)){
+            validDirection = true ;
+            break ;
+        }
+
+        if(!validDirection) return "DIRECTION IS NOT VALID." ;
+
+        Cell cell = gameMap.getCell( row , column ) ;
+
+        if( cell.units.size() != 0 )
+            return "THERE IS UNIT IN THIS PLACE." ;
+
+        if( cell.buildings.size() != 0 )
+            return "THERE IS BUILDING IN THIS PLACE." ;
+
+        if( cell.cellType == CellType.SEA || cell.cellType == CellType.RIVER || cell.cellType == CellType.BIG_POND
+                || cell.cellType == CellType.SMALL_POND )
+            return "CAN'T PLACE ROCK ON WATER!" ;
+
+        String[] fullDirections = { "east" , "west" , "north" , "south" } ;
+        String fullDirection = "" ;
+
+        for(int i = 0 ; i < 4 ; i++){
+            if(direction.equals(validDirections[i])) fullDirection = fullDirections[i] ;
+        }
+
+        Building.createBuildingByName( "rock" + fullDirection , player , row , column  ) ;
+
+        return "ROCK DROPPED SUCCESSFULLY" ;
     }
 
     public String dropTree(Matcher matcher){
-        return null;
+        String treeType = matcher.group("type") ;
+        int row = Integer.parseInt(matcher.group("row")) ;
+        int column = Integer.parseInt(matcher.group("column")) ;
+        String direction = matcher.group("direction") ;
+        if( !direction.equals("e") && !direction.equals("random") && !direction.equals("n") && !direction.equals("s")
+                && !direction.equals("w") )
+            return "INVALID DIRECTION." ;
+        if( row > 400 || row < 0 || column < 0 || column > 400 )
+            return "INVALID COORDINATES." ;
+        String[] treeTypesNames = { "datetree" , "coconuttree" , "olivetree" , "cherrytree" , "deserttree" } ;
+        boolean validType = false ;
+        for( String type : treeTypesNames ) if(treeType.equals(type)){
+            validType = true ;
+            break ;
+        }
+        if(!validType) return "INVALID TREE TYPE." ;
+
+        if( gameMap.getCell( row , column ).getBuildings().size() != 0 )
+            return "THERE IS A BUILDING IN THIS PLACE MY LORD!" ;
+
+        if( gameMap.getCell( row , column ).units.size() != 0 )
+            return "THERE IS A UNIT IN THIS PLACE MY LORD!" ;
+
+        if( gameMap.getCell( row , column ).cellType != CellType.GRASS && !treeType.equals("deserttree") )
+            return "THIS TREE CAN ONLY BE PLACED ON GRASS." ;
+
+        if( gameMap.getCell( row , column ).cellType != CellType.GROUND && treeType.equals("deserttree") )
+            return "DESERT TREES CAN ONLY BE PLACED ON GROUND." ;
+
+        Building.createBuildingByName( treeType , player , row , column ) ;
+
+        return "TREE DROPPED SUCCESSFULLY." ;
     }
 
     public String replaceBuilding (Matcher matcher){
-        //TODO : This Function Is Equal To DropBuilding In Beginning Of The Game
         return null;
     }
 
@@ -347,14 +418,16 @@ public class GameController {
         if ((error = dropUnitErrorChecker(type,count,row,column))!=null)
             return error;
         Unit unit = Unit.createUnitByName(type,player);
-        Cell cell = gameMap.getCell(row,column);
-        while (--count>0)
-            cell.addUnit(unit);
+        gameMap.getCell(row,column).addUnit(unit);
         return "Unit Dropped Successfully!";
     }
 
+    public String createUnit(Matcher matcher){
+        return null;
+    }
+
     public String dropUnitErrorChecker(String type , int count , int row , int column){
-        if (row > maxRow || row <0 || column >maxColumn || column < 0)
+        if (row > 400 || row <0 || column >400 || column < 0)
             return "DropUnit Failed : x or y exceeded map!";
         if (count <=0)
             return "DropUnit Failed : count is smaller than 1!";
@@ -368,19 +441,170 @@ public class GameController {
     }
 
     public String tradeRequest (Matcher matcher){
-        return null;
+        String resourceType = matcher.group("resourceType") ;
+        int amount = Integer.parseInt( matcher.group("amount") ) ;
+        String message = matcher.group("message") ;
+        int price = Integer.parseInt(matcher.group("price")) ;
+        Cost cost ;
+
+        if( resourceType.equals("apple") )
+            cost = new Cost(amount,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("cheese") )
+            cost = new Cost(0,amount,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("bread") )
+            cost = new Cost(0,0,amount,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("meat") )
+            cost = new Cost(0,0,0,amount,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("bow") )
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    amount,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("crossbow") )
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,amount,0,0,0,0,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("spear") )
+            cost = new Cost(0,0,0,0,0,0,0,0,amount,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("pike") )
+            cost = new Cost(0,0,0,0,0,0,0,amount,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("mace") )
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,amount,0,0,0,0,0,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("sword") )
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,amount,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("leatherarmor") )
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,amount,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("metalarmor") )
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,amount,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("wheat") )
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,amount
+                    ,0) ;
+        else if( resourceType.equals("flour") )
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,amount,0
+                    ,0) ;
+        else if( resourceType.equals("hop") )
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,amount,0,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("ale") )
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,amount,0,0
+                    ,0) ;
+        else if( resourceType.equals("stone") )
+            cost = new Cost(0,0,0,0,0,0,amount,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("iron") )
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,amount) ;
+        else if( resourceType.equals("wood") )
+            cost = new Cost(0,0,0,0,0,amount,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,0,0
+                    ,0) ;
+        else if( resourceType.equals("pitch") )
+            cost = new Cost(0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,amount,0,0,0,0,0,0,0
+                    ,0) ;
+        else
+            return "RESOURCE TYPE INVALID." ;
+
+        if( price < 0 )
+            return "PRICE CAN'T BE NEGATIVE MY LORD." ;
+        new Trade( player , message , cost , price , amount , resourceType ) ;
+        return "TRADE SUCCESSFULLY HAS BEEN PUBLISHED" ;
     }
 
     public String tradeList(Matcher matcher){
-        return null;
+        String ret = "TRADE LIST :" ;
+        int index = 1 ;
+        ret += "----------------------------------------" ;
+        for( Trade trade : Trade.getTrades() ){
+            ret += "\nINDEX : " + index + " < " ;
+            ret += "\nPlayer : " + trade.getPlayer1().getAccount().getNickName() ;
+            ret += "\n  -> Price : " + trade.getPrice() ;
+            ret += "\n  -> Amount : " + trade.getAmount() ;
+            ret += "\n  -> Resource : " + trade.getResourceType() ;
+            ret += "\n  -> Message : " + trade.getMessage1() ;
+            if( trade.getMessage2() == null ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
+            else ret += "\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
+            ret += "\n----------------------------------------" ;
+            index++ ;
+        }
+        return ret ;
     }
 
     public String tradeAccept(Matcher matcher){
-        return null;
+        int id = Integer.parseInt(matcher.group("id")) - 1 ;
+        String message = matcher.group("message") ;
+        if( id < 1 || id > Trade.getTrades().size() )
+            return "INVALID ID." ;
+        Trade trade = Trade.getTrades().get(--id) ;
+        Cost cost = trade.getCost() ;
+        if( player.equals(trade.getPlayer1()) )
+            return "YOU CAN NOT TRADE WITH YOURSELF MY LORD" ;
+        String outputOfDecreaseCost = player.decreaseCost( cost ) ;
+        if( outputOfDecreaseCost != null ) return outputOfDecreaseCost ;
+        trade.setMessage2( message ) ;
+        trade.setPlayer2( player ) ;
+        return "YOU HAVE TRADED WITH OTHER KINGDOMS SUCCESSFULLY , MY LORD." ;
     }
 
     public String tradeHistory(Matcher matcher){
-        return null;
+        String ret = "" ;
+        ret += "TRADES YOU STARTED : " ;
+        Trade trade ;
+        for(int i = 0 ; i < Trade.getTrades().size() ; i++){
+            trade = Trade.getTrades().get(i) ;
+            if( trade.getPlayer1() == player ){
+                ret += "\n----------------------------------------" ;
+                ret += "INDEX " + (i + 1) + "\n";
+                ret += "\nPrice : " + trade.getPrice() ;
+                ret += "\nAmount : " + trade.getAmount() ;
+                ret += "\nResource : " + trade.getResourceType() ;
+                ret += "\nMessage : " + trade.getMessage1() ;
+                if( trade.getMessage2() == null ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
+                else ret += "\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
+                ret += "\n----------------------------------------" ;
+            }
+        }
+        ret += "\nTRADES YOU ACCEPTED : " ;
+        for(int i = 0 ; i < Trade.getTrades().size() ; i++){
+            trade = Trade.getTrades().get(i) ;
+            if( trade.getPlayer2() == player ){
+                ret += "\n----------------------------------------" ;
+                ret += "INDEX " + (i + 1) + "\n";
+                ret += "\nPrice : " + trade.getPrice() ;
+                ret += "\nAmount : " + trade.getAmount() ;
+                ret += "\nResource : " + trade.getResourceType() ;
+                ret += "\nMessage : " + trade.getMessage1() ;
+                if( trade.getMessage2() == null ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
+                else ret += "\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
+                ret += "\n----------------------------------------" ;
+            }
+        }
+        return ret ;
     }
 
     public String showPriceList(Matcher matcher){

@@ -27,7 +27,7 @@ public enum UnitTypeEnum {
 
     private String type;
 
-    private UnitTypeEnum(String type){
+    UnitTypeEnum(String type){
         this.type = type;
         Unit.getUnitTypeEnumMap().put(type,this);
     }

@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Cell {
     public ArrayList<Objects> objects;
     public ArrayList<Unit> units;
-    public ArrayList<Building>buildings;
+    public ArrayList<Building> buildings;
     public CellType cellType;
     private static HashMap<String , CellType> cellTypeEnumByName = new HashMap<>();
     public Cell(CellType cellType){
@@ -19,6 +19,10 @@ public class Cell {
         this.buildings = new ArrayList<>(0);
         this.units = new ArrayList<>(0);
         this.objects = new ArrayList<>(0);
+    }
+
+    public ArrayList<Building> getBuildings(){
+        return this.buildings ;
     }
 
     public CellType getCellTypeName(){

@@ -6,7 +6,6 @@ import org.example.model.unit.Unit;
 import java.util.ArrayList;
 
 public class Player {
-    // TODO : some functions and constructor
     private Account account ;
     private ArrayList <Building> buildings ;
     private ArrayList<Unit> units ;
@@ -17,7 +16,6 @@ public class Player {
     private int taxRate ;
     private int foodRate ;
     private int religionRate ;
-    // TODO : private Account account ;
     private int pitchCapacity ;
     private int meatCapacity ;
     private int breadCapacity ;
@@ -37,9 +35,29 @@ public class Player {
     private int populationCapacity ;
     private int popularity ;
     private double taxForEachUnit ;
+    private int sword ;
+    private int spear ;
+    private int wheat ;
+    private int mace ;
+    private int ale ;
+    private int bow ;
+    private int pike ;
+    private int metalArmor ;
+    private int flour ;
+    private int crossbow ;
+    private int leatherArmor ;
 
     public Player( Account account ){
         this.account = account ;
+        this.mace = 0 ;
+        this.spear = 0 ;
+        this.pike = 0 ;
+        this.bow = 0 ;
+        this.metalArmor = 0 ;
+        this.wheat = 0 ;
+        this.ale = 0 ;
+        this.flour = 0 ;
+        this.crossbow = 0 ;
         this.fearRate = 0 ;
         this.taxRate = 0 ;
         this.foodRate = 0 ;
@@ -51,18 +69,73 @@ public class Player {
         this.hop = 0 ;
         this.cheese = 0 ;
         this.bread = 0 ;
+        this.sword = 0 ;
         this.meat = 0 ;
         this.pitch = 0 ;
         this.apple = 0 ;
         this.wineUsage = 0 ;
         this.gold = 0 ;
         this.stone = 0 ;
+        this.leatherArmor = 0 ;
         this.wood = 0 ;
         this.iron = 0 ;
         this.population = 0 ;
         this.populationCapacity = 0 ;
         this.popularity = 0 ;
         this.score = 0 ;
+    }
+
+    public String decreaseCost( Cost cost ){
+
+        if( this.apple < cost.getApple() ) return "NOT ENOUGH APPLE." ;
+        if( this.meat < cost.getMeat() ) return "NOT ENOUGH MEAT." ;
+        if( this.cheese < cost.getCheese() ) return "NOT ENOUGH CHEESE." ;
+        if( this.bread < cost.getBread() ) return "NOT ENOUGH BREAD." ;
+        if( this.bow < cost.getBow() ) return "NOT ENOUGH BOW." ;
+        if( this.crossbow < cost.getCrossbow() ) return "NOT ENOUGH CROSSBOW." ;
+        if( this.spear < cost.getSpear() ) return "NOT ENOUGH SPEAR." ;
+        if( this.pike < cost.getPike() ) return "NOT ENOUGH PIKE." ;
+        if( this.mace < cost.getMace() ) return "NOT ENOUGH MACE." ;
+        if( this.sword < cost.getSword() ) return "NOT ENOUGH SWORD." ;
+        if( this.leatherArmor < cost.getLeatherArmor() ) return "NOT ENOUGH LEATHER ARMOR." ;
+        if( this.hop < cost.getHop() ) return "NOT ENOUGH HOP" ;
+        if( this.metalArmor < cost.getMetalArmor() ) return "NOT ENOUGH ARMOR." ;
+        if( this.wheat < cost.getWheat() ) return "NOT ENOUGH WHEAT." ;
+        if( this.flour < cost.getFlour() ) return "NOT ENOUGH FLOUR." ;
+        if( this.ale < cost.getAle() ) return "NOT ENOUGH ALE." ;
+        if( this.stone < cost.getStone() ) return "NOT ENOUGH STONE." ;
+        if( this.iron < cost.getIron() ) return "NOT ENOUGH IRON." ;
+        if( this.wood < cost.getWood() ) return "NOT ENOUGH WOOD." ;
+        if( this.pitch < cost.getPitch() ) return "NOT ENOUGH PITCH." ;
+
+
+        this.apple-=cost.getApple() ;
+        this.meat-=cost.getMeat() ;
+        this.cheese -= cost.getCheese() ;
+        this.bread -= cost.getBread() ;
+        this.bow -= cost.getBow() ;
+        this.crossbow-= cost.getCrossbow() ;
+        this.spear -= cost.getSpear() ;
+        this.pike -= cost.getPike() ;
+        this.mace -= cost.getMace() ;
+        this.sword -= cost.getSword() ;
+        this.leatherArmor -= cost.getLeatherArmor() ;
+        this.hop -= cost.getHop() ;
+        this.ale -= cost.getAle() ;
+        this.stone -= cost.getStone() ;
+        this.iron -= cost.getIron() ;
+        this.wood -= cost.getWood() ;
+        this.pitch -= cost.getPitch() ;
+
+        return null ;
+    }
+
+    public void selectUnit( Unit unit ){
+        this.selectedUnits.add( unit ) ;
+    }
+
+    public void selectBuilding( Building building ){
+        this.selectedBuilding = building ;
         this.selectedBuilding = null;
         this.selectedUnits = new ArrayList<>();
     }
@@ -109,6 +182,9 @@ public class Player {
 
     public int getFoodRate(){
         return this.foodRate ;
+    }
+    public void setFearRate( int rate ){
+        this.fearRate = rate ;
     }
 
     public int getFoodCount(){
@@ -163,7 +239,6 @@ public class Player {
         return this.selectedBuilding;
     }
 
-    //
     public void setSelectedUnits(String unitType , Cell cell){
         for (Unit unit : cell.units){
             if (unit.getName().equals("type"))

@@ -44,7 +44,7 @@ public class Unit {
     }
 
     public static HashMap<String,UnitTypeEnum> getUnitTypeEnumMap(){
-        return unitTypeEnumMap;
+        return unitTypeEnumMap ;
     }
 
     public void setIsMoving( boolean isMoving ){
@@ -89,21 +89,21 @@ public class Unit {
     public static Unit createUnitByName(String type,Player owner){
         if (type.equals("archer"))
             return new Warrior(type,owner,10,20,10,10,10,true,false,false,false,false,false,false);
-        if (type.equals("crossbowmen"))
+        if (type.equals("crossbowman"))
             return new Warrior(type,owner,7,7,15,15,7,false,false,false,false,false,false,false);
-        if (type.equals("spearmen"))
+        if (type.equals("spearman"))
             return new Warrior(type,owner,15,10,0,3,10,false,true,false,true,false,false,true);
-        if (type.equals("pikemen"))
+        if (type.equals("pikeman"))
             return new Warrior(type,owner,7,10,15,20,10,false,false,false,false,false,false,true);
-        if (type.equals("macemen"))
+        if (type.equals("maceman"))
             return new Warrior(type,owner,15,10,20,13,5,false,false,false,false,false,false,true);
-        if (type.equals("swordsmen"))
+        if (type.equals("swordsman"))
             return new Warrior(type,owner,7,10,25,10,5,false,false,false,false,false,false,true);
         if (type.equals("knight"))
             return new Warrior(type,owner,20,10,25,20,5,false,false,true,false,false,false,true);
         if (type.equals("tunneler"))
             return new Tunneler(owner);
-        if (type.equals("laddermen"))
+        if (type.equals("ladderman"))
             return new LadderMan(owner);
         if (type.equals("engineer"))
             return new Engineer(owner);
@@ -111,22 +111,82 @@ public class Unit {
             return new Warrior(type,owner,7,5,10,10,5,false,false,false,false,false,false,true);
         if (type.equals("archerbow"))
             return new Warrior(type,owner,15,15,10,10,10,false,false,false,false,false,false,true);
-        if (type.equals("slaves"))
+        if (type.equals("slave"))
             return new Warrior(type,owner,15,10,5,5,5,true,false,false,false,false,false,true);
-        if (type.equals("slingers"))
+        if (type.equals("slinger"))
             return new Warrior(type,owner,15,5,7,5,5,false,false,false,false,false,false,true);
-        if (type.equals("assasins"))
+        if (type.equals("assasin"))
             return new Warrior(type,owner,10,10,10,10,10,false,false,false,false,true,true,true);
-        if (type.equals("horsearchers"))
+        if (type.equals("horsearcher"))
             return new Warrior(type,owner,25,12,10,15,10,false,false,true,false,false, false,false);
-        if (type.equals("arabianswordsmen"))
+        if (type.equals("arabianswordsman"))
             return new Warrior(type,owner,20,5,20,20,5,false,false,false,false,false,false,true);
-        if (type.equals("firethrowers"))
+        if (type.equals("firethrower"))
             return new Warrior(type,owner,20,5,15,7,5,true,false,false,false,false,false,true);
         if (type.equals("jobless"))
             return new Jobless(owner);
         //TODO : HANDLE OPERATOR IN-PLACE
         return null;
+    }
+
+    public static Cost getCostByName(String name){
+
+        if(name.equals("archer")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
+                0 , 0 , 1 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("crossbowman")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
+                0 , 0 , 0 , 0 , 0 , 1 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("spearman")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
+                0 , 1 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("pikeman")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
+                1 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("maceman")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
+                0 , 0 , 0 , 0 , 1 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("swordsmen")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
+                0 , 0 , 0 , 1 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("knight")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
+                0 , 0 , 0 , 1 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("tunneler")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
+                0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("ladderman")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
+                0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("engineer")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
+                0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("blackmonk")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
+                0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("archerbow")) return new Cost( 0 , 0 , 0 , 0 , 100,  0, 0 ,
+                0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("slave")) return new Cost( 0 , 0 , 0 , 0 , 100,  0, 0 ,
+                0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("slinger")) return new Cost( 0 , 0 , 0 , 0 , 100,  0, 0 ,
+                0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("assassin")) return new Cost( 0 , 0 , 0 , 0 , 100,  0, 0 ,
+                0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("horsearcher")) return new Cost( 0 , 0 , 0 , 0 , 100,  0, 0 ,
+                0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("arabianswordsman")) return new Cost( 0 , 0 , 0 , 100 , 0,  0, 0 ,
+                0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+        if(name.equals("firethrower")) return new Cost( 0 , 0 , 0 , 0 , 100,  0, 0 ,
+                0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
+                0 , 0 , 0 , 0 , 0) ;
+
+        return null ;
     }
 
 }

@@ -4,7 +4,7 @@ public enum BuildingEnum {
     SMALL_STONE_WALL,
     BIG_STONE_WALL,
     SMALL_STONE_GATEHOUSE,
-    LARGE_STONE_GATEHOUSE,
+    BIG_STONE_GATEHOUSE,
     DRAW_BRIDGE,
     LOOKOUT_TOWER,
     PERIMETER_TOWER,
@@ -53,6 +53,25 @@ public enum BuildingEnum {
     FLETCHER,
     POLE_TURNER,
     SIGNPOST,
-    TUNNEL_ENTRANCE
+    TUNNEL_ENTRANCE,
+
+
+    // TREES
+
+
+    DESERT_TREE,
+    OLIVE_TREE,
+    DATE_TREE,
+    CHERRY_TREE,
+    COCONUT_TREE,
+
+
+    // ROCKS
+
+
+    ROCK_NORTH,
+    ROCK_SOUTH,
+    ROCK_EAST,
+    ROCK_WEST
 
 }
