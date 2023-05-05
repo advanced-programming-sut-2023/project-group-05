@@ -139,22 +139,20 @@ public class Building {
             return  new AttackDefenceBuilding(type,3,3,false,"",owner,row,column,getBuildingCost(type),4000,0,false,50,20,false,20,BuildingEnum.ROUND_TOWER);
         if (type.equals("defenceturret"))
             return new AttackDefenceBuilding(type,3,3,false,"",owner,row,column,getBuildingCost(type),2000,0,false,50,20,false,20,BuildingEnum.DEFENCE_TURRET);
-        if (type.equals("smallstonegateway"))
+        if (type.equals("smallstonegatehouse"))
             return new AttackDefenceBuilding(type,2,2,true,"",owner,row,column,getBuildingCost(type),500,0,false,30,20,false,20,BuildingEnum.SMALL_STONE_GATEHOUSE);
-        if (type.equals("bigstonegateway"))
-            return new AttackDefenceBuilding(type,4,4,true,"",owner,row,column,getBuildingCost(type),1000,0,false,40,20,false,20,BuildingEnum.BIG_STONE_WALL);
+        if (type.equals("bigstonegatehouse"))
+            return new AttackDefenceBuilding(type,4,4,true,"",owner,row,column,getBuildingCost(type),1000,0,false,40,20,false,20,BuildingEnum.BIG_STONE_GATEHOUSE);
         if (type.equals("armoury"))
             return  new StorageBuilding(type,4,5,false,"",owner,row,column,getBuildingCost(type),2000,0,false,200,BuildingEnum.ARMOURY);
         if (type.equals("barracks"))
             return new TradeBuilding(type,"",4,4,false,0,false,owner,row,column,2000,getBuildingCost(type),0,BuildingEnum.BARRACKS);
-        if (type.equals("barracks"))
+        if (type.equals("mercenarypost"))
             return new TradeBuilding(type,"",4,4,false,0,false,owner,row,column,2000,getBuildingCost(type),0,BuildingEnum.MERCENARY_POST);
         if (type.equals("engineerguild"))
             return new TradeBuilding(type,"",2,3,false,0,false,owner,row,column,400,getBuildingCost(type),0,BuildingEnum.ENGINEER_GUILD);
         if (type.equals("killingpit"))
             return new TradeBuilding(type,"",1,1,true,0,false,owner,row,column,0,getBuildingCost(type),0,BuildingEnum.KILLING_PIT);
-        if (type.equals("oilsmelter"))
-            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,200,getBuildingCost(type),1,BuildingEnum.OIL_SMELTER);//TODO : HOW MANY OPERATORS?
         if (type.equals("pitchditch"))
             return new TradeBuilding(type,"",1,1,true,0,false,owner,row,column,0,getBuildingCost(type),0,BuildingEnum.PITCH_DITCH);
         if (type.equals("cagedwardog"))
@@ -203,8 +201,6 @@ public class Building {
             return new TradeBuilding(type,"",2,3,false,+1,false,owner,row,column,300,getBuildingCost(type),1,BuildingEnum.APOTHECARY);//TODO
         if (type.equals("hovel"))
             return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,200,getBuildingCost(type),0,BuildingEnum.HOVEL);//TODO
-        if (type.equals("chapel"))
-            return new TradeBuilding(type,"",2,3,false,+1,false,owner,row,column,350,getBuildingCost(type),0,BuildingEnum.CHAPEL);//TODO
         if (type.equals("church"))
             return new TradeBuilding(type,"",2,4,false,+1,false,owner,row,column,400,getBuildingCost(type),0,BuildingEnum.CHURCH);//TODO
         if (type.equals("cathedral"))
@@ -230,14 +226,251 @@ public class Building {
         if (type.equals("tunnelentrance"))
             return new TradeBuilding(type,"",1,1,false,0,false,owner,row,column,100,getBuildingCost(type),0,BuildingEnum.TUNNEL_ENTRANCE);//TODO
 
-
-        // throw an exception if there is a mistyped name in code
-        throw new NullPointerException() ;
+        return null ;
 
     }
 
     public static Cost getBuildingCost(String type){
-        return null;
+
+        // TREES : ZERO COST
+
+        if(type.equals("deserttree")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+        if(type.equals("olivetree")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+        if(type.equals("coconuttree")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+        if(type.equals("cherrytree")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+        if(type.equals("datetree")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        // ROCKS : ZERO COST
+
+        if(type.equals("rockwest")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+        if(type.equals("rockeast")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+        if(type.equals("rocknorth")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+        if(type.equals("rocksouth")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+
+        // WALLS :
+
+        if (type.equals("smallstonewall")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                1 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("bigstonewall")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                2 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+
+        // OTHER
+        if (type.equals("drawbridge")) return new Cost( 0 , 0 , 0 , 0 , 0 , 10 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("lookouttower")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                10 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("perimetertower")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                10 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("squaretower")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                35 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("roundtower")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                40 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("defenceturret")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                15 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("smallstonegatehouse")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("bigstonegatehouse")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                20 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("armoury")) return new Cost( 0 , 0 , 0 , 0 , 0 , 5 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("barracks")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                15 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("mercenarypost")) return new Cost( 0 , 0 , 0 , 0 , 0 , 10 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("engineerguild")) return new Cost( 0 , 0 , 0 , 0 , 100 , 10 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("killingpit")) return new Cost( 0 , 0 , 0 , 0 , 0 , 6 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        // TODO : THIS ONE SHOULD BE HANDLED AT GAMEMENUCONTROLLER , NEEDS 2 PITCH IN EVERY 5 SQUARES
+        if (type.equals("pitchditch")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("cagedwardog")) return new Cost( 0 , 0 , 0 , 0 , 100 , 10 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("siegetent")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("stable")) return new Cost( 0 , 0 , 0 , 0 , 400 , 20 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("tunnelerguild")) return new Cost( 0 , 0 , 0 , 0 , 100 , 10 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("appleorchard")) return new Cost( 0 , 0 , 0 , 0 , 0 , 5 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("diaryfarmer")) return new Cost( 0 , 0 , 0 , 0 , 0 , 10 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("hopsfarmer")) return new Cost( 0 , 0 , 0 , 0 , 0 , 15 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("hunterpost")) return new Cost( 0 , 0 , 0 , 0 , 0 , 5 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("wheatfarmer")) return new Cost( 0 , 0 , 0 , 0 , 0 , 15 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("bakery")) return new Cost( 0 , 0 , 0 , 0 , 0 , 10 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("brewer")) return new Cost( 0 , 0 , 0 , 0 , 0 , 10 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("granary")) return new Cost( 0 , 0 , 0 , 0 , 0 , 5 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("inn")) return new Cost( 0 , 0 , 0 , 0 , 100 , 20 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("mill")) return new Cost( 0 , 0 , 0 , 0 , 0 , 20 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("ironmine")) return new Cost( 0 , 0 , 0 , 0 , 0 , 20 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("market")) return new Cost( 0 , 0 , 0 , 0 , 0 , 5 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("oxtether")) return new Cost( 0 , 0 , 0 , 0 , 0 , 5 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("pitchrig")) return new Cost( 0 , 0 , 0 , 0 , 0 , 20 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("quarry")) return new Cost( 0 , 0 , 0 , 0 , 0 , 20 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("stockpile")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("woodcutter")) return new Cost( 0 , 0 , 0 , 0 , 0 , 3 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        // TODO : THIS IS REMOVED OR NOT ?
+        if (type.equals("apothecary")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("hovel")) return new Cost( 0 , 0 , 0 , 0 , 0 , 6 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("church")) return new Cost( 0 , 0 , 0 , 0 , 250 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("cathedral")) return new Cost( 0 , 0 , 0 , 0 , 1000 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("well")) return new Cost( 0 , 0 , 0 , 0 , 30 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("goodthings")) return new Cost( 0 , 0 , 0 , 0 , 25 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("badthings")) return new Cost( 0 , 0 , 0 , 0 , 45 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("armourer")) return new Cost( 0 , 0 , 0 , 0 , 100 , 20 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("blacksmith")) return new Cost( 0 , 0 , 0 , 0 , 100 , 20 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("fletcher")) return new Cost( 0 , 0 , 0 , 0 , 100 , 20 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("poleturner")) return new Cost( 0 , 0 , 0 , 0 , 100 , 20 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+        if (type.equals("tunnelentrance")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0) ;
+
+
+
+        return null ;
     }
 
 }
