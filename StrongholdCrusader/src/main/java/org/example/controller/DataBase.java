@@ -10,28 +10,97 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class DataBase
 {
 
-    public static void deleteAccount( String username ){
-        /*
-        *   TODO : delete this user from the database
-        *       don't change anything in Account.getAccounts()
-        * */
+    public static void deleteAccount( String type, String S )
+    {
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader(location))
+        {
+            Object obj = jsonParser.parse(reader);
+            JSONArray data = (JSONArray) obj;
+            JSONArray newData = new JSONArray();
+            int yetDeleted = 0;
+            for (Object datum : data)
+            {
+                JSONObject currentObject = (JSONObject) datum;
+                String thisObjectUserName = (String) currentObject.get(type);
+                if(yetDeleted > 0 || !thisObjectUserName.equals(S))
+                {
+                    newData.add(currentObject);
+                }
+                else
+                {
+                    yetDeleted = 1;
+                }
+            }
+            reader.close() ;
+            try (FileWriter file = new FileWriter(location))
+            {
+                file.write(newData.toJSONString());
+                file.flush();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
     }
 
-    public static void setStayLoggedIn( Account account ){
-        // TODO : put this account in stay logged-in mode
+    public static void setStayLoggedIn( Account account )
+    {
+        deleteAccount("userName", account.getUserName());
+        account.setPassword(0);
+        addNewAccount(account);
     }
 
-    public static Account getStayLoggedInAccount(){
-        /*
-        TODO :  check if there is an account in stay logged-in mode
-                if there is return this account
-                if not return null
-        */
-        return null ;
+    public static ArrayList< Account > getStayLoggedInAccount()
+    {
+        ArrayList < Account > ret = new ArrayList< Account >();
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader(location))
+        {
+            Object obj = jsonParser.parse(reader);
+            JSONArray data = (JSONArray) obj;
+            for (Object datum : data)
+            {
+                JSONObject currentObject = (JSONObject) datum;
+                long thisObjectPassword = (long) currentObject.get("password");
+                String thisObjectString = (String) currentObject.get("userName");
+                if(thisObjectPassword == 0)
+                {
+                    ret.add(Account.getAccountsMap().get(thisObjectString));
+                }
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
     public static String location = "src/main/java/org/example/data.json";
