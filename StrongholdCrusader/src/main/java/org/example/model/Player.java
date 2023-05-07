@@ -10,6 +10,8 @@ public class Player {
     private Account account ;
     private ArrayList <Building> buildings ;
     private ArrayList<Unit> units ;
+    //TODO : Handle Castle
+    private Building castle;
     private int fearRate ;
     private Building selectedBuilding ;
     private ArrayList<Unit> selectedUnits ;
@@ -92,6 +94,10 @@ public class Player {
         //TODO : IS IT RIGHT ?
         this.buildings = new ArrayList<>();
         this.units = new ArrayList<>();
+    }
+
+    public Building getCastle(){
+        return this.castle;
     }
 
     public String decreaseCost( Cost cost ){
@@ -263,7 +269,7 @@ public class Player {
 
     public void setSelectedUnits(String unitType , Cell cell){
         for (Unit unit : cell.units){
-            if (unit.getName().equals("type"))
+            if (unit.getName().equals("type") && unit.getOwner().equals(this))
                 this.selectedUnits.add(unit);
         }
     }
