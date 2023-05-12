@@ -323,7 +323,6 @@ public class Player {
         if (gameMap.getCell(row+1,column).getBuilding().getName().equals(name))
             return true;
 
-
         if (gameMap.getCell(row,column+1).getBuilding().getName().equals(name))
             return true;
 

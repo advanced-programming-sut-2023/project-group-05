@@ -6,10 +6,10 @@ import org.example.model.Commands;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 public class SignupLoginMenu {
-
+    public static int wrongPassCounter = 0;
     public static void run ( Scanner scanner ) {
         Matcher matcher ;
-        Integer wrongPassCounter = 0;
+
         while (true){
             String input = Menu.getScanner().nextLine();
             if ((matcher =Commands.getMatchingMatcher(input,Commands.CREATE_USER))!=null) {
@@ -17,7 +17,7 @@ public class SignupLoginMenu {
                 wrongPassCounter = 0;
             }
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.USER_LOGIN))!=null)
-                System.out.print(SignupLoginMenuController.loginUser(scanner , matcher,true,wrongPassCounter));
+                System.out.print(SignupLoginMenuController.loginUser(scanner , matcher,true));
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.FORGET_PASSWORD))!=null) {
                 System.out.println(SignupLoginMenuController.forgetPassword(matcher));
                 wrongPassCounter = 0;

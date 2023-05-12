@@ -221,4 +221,10 @@ public class Cost {
         return this.metalArmor ;
     }
 
+    public static Cost ArrayListToCost(ArrayList<Integer> arr){
+        return new Cost(arr.get(0),arr.get(1),arr.get(2),arr.get(3),arr.get(4),arr.get(5),arr.get(6),arr.get(7),
+                arr.get(8),arr.get(9),arr.get(10),arr.get(11),arr.get(12),arr.get(13),arr.get(14),arr.get(15),
+                arr.get(16),arr.get(17),arr.get(18),arr.get(19),arr.get(20),arr.get(21)) ;
+    }
+
 }

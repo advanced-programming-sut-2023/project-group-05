@@ -1,5 +1,6 @@
 package org.example.model.unit;
 
+import org.example.controller.PathFinder;
 import org.example.model.GameMap;
 import org.example.model.Player;
 import org.example.model.building.Building;
@@ -7,6 +8,12 @@ import org.example.model.building.Building;
 public class Warrior extends Unit {
     private boolean isAttacking ;
     private final int attackPower ;
+    private int patrolTurn ;
+    private int patrolEndRow ;
+    private int patrolEndColumn ;
+    private int patrolBeginColumn ;
+    private int patrolBeginRow ;
+    private boolean isPatrolling ;
     private final int defendPower ;
     private final int reloadSpeed ;
     private int damage ;
@@ -27,6 +34,7 @@ public class Warrior extends Unit {
         this.attackPower = attackPower ;
         this.defendPower = defendPower ;
         this.reloadSpeed = reloadSpeed ;
+        this.isPatrolling = false ;
         this.hasFire = hasFire ;
         this.canPushLadder = canPushLadder ;
         this.hasHorse = hasHorse ;
@@ -35,6 +43,60 @@ public class Warrior extends Unit {
         this.canClimb = canClimb ;
         this.damage = damage ;
         this.canDamageCastle = canDamageCastle ;
+    }
+
+    @Override
+    public void setTarget( int row , int column , GameMap gameMap ){
+
+        if(this.row == row && this.column == column && !this.isPatrolling){
+            this.isMoving = false ;
+            return ;
+        }
+
+        if( this.isPatrolling && (this.row == row) && (column == this.column) ){
+            this.patrolTurn++ ;
+            if(patrolTurn % 2 == 0){
+                column = this.patrolEndColumn ;
+                row = this.patrolEndRow ;
+            }
+            else{
+                column = this.patrolBeginColumn ;
+                row = this.patrolBeginRow ;
+            }
+        }
+
+        super.targetRow = row ;
+        super.targetColumn = column ;
+        super.pathFinder = new PathFinder() ;
+        super.pathFinder.setGameMap( gameMap.getMaskedMap() , 400 ) ;
+        super.pathFinder.Run( row , column ) ;
+        super.isMoving = true;
+
+    }
+
+    public void startPatrol(int beginRow , int beginColumn , int endRow , int endColumn , GameMap gameMap){
+        // turn 0 : go to end
+        // turn 1 : go to begin
+        // turn 2 : go to end
+        // ...
+        this.patrolBeginColumn = beginColumn ;
+        this.patrolBeginRow = beginRow ;
+        this.patrolEndRow = endRow ;
+        this.patrolEndColumn = endColumn ;
+        this.patrolTurn = 0 ;
+        setTarget( endRow , endColumn , gameMap ) ;
+        this.setIsMoving(true) ;
+        this.isPatrolling = true ;
+    }
+
+    public boolean getIsPatrolling(){
+        return this.isPatrolling ;
+    }
+
+    public void stopPatrol(){
+        this.isPatrolling = false ;
+        this.patrolTurn = 0 ;
+        this.setIsMoving(false) ;
     }
 
     public int getDamage(){

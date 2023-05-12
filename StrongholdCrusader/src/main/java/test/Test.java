@@ -75,27 +75,27 @@ public class Test {
     public void testLogin(){
         String invalidUsername = "user login -u sa@am -p APkimoam03$";
         Matcher matcher = Commands.getMatchingMatcher(invalidUsername,Commands.USER_LOGIN);
-        String result = SignupLoginMenuController.loginUser(Menu.getScanner(),matcher,false,0);
+        String result = SignupLoginMenuController.loginUser(Menu.getScanner(),matcher,false);
         Assert.assertEquals("login failed : Invalid username / password\n",result);
 
         String invalidPassword = "user login -u username -p kimo";
         matcher = Commands.getMatchingMatcher(invalidUsername,Commands.USER_LOGIN);
-        result = SignupLoginMenuController.loginUser(Menu.getScanner(),matcher,false,0);
+        result = SignupLoginMenuController.loginUser(Menu.getScanner(),matcher,false);
         Assert.assertEquals("login failed : Invalid username / password\n",result);
 
         String usernameNotExist = "user login -u fake -p APkimoam03$";
         matcher = Commands.getMatchingMatcher(usernameNotExist,Commands.USER_LOGIN);
-        result = SignupLoginMenuController.loginUser(Menu.getScanner(),matcher,false,0);
+        result = SignupLoginMenuController.loginUser(Menu.getScanner(),matcher,false);
         Assert.assertEquals("This username does not exist\n",result);
 
         String wrongPassword = "user login -u username -p APkimoam03$wrong";
         matcher = Commands.getMatchingMatcher(wrongPassword,Commands.USER_LOGIN);
-        result = SignupLoginMenuController.loginUser(Menu.getScanner(),matcher,false,0);
+        result = SignupLoginMenuController.loginUser(Menu.getScanner(),matcher,false);
         Assert.assertEquals("Wrong Password!\n",result);
 
         String success = "user login -u username -p APkimoam03$";
         matcher = Commands.getMatchingMatcher(success,Commands.USER_LOGIN);
-        result = SignupLoginMenuController.loginUser(Menu.getScanner(),matcher,false,0);
+        result = SignupLoginMenuController.loginUser(Menu.getScanner(),matcher,false);
         Assert.assertEquals("User Logged In! hooray !",result);
 
         String logout = "logout";
