@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public enum Commands {
     FIND_USER("find user (?<nickname>(\\S+)|(\".+\"))",null),
-    CREATE_USER("user create",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)?"," -p (((?<password>\\S+) (?<passwordConfirmation>\\S+))|random)"," -email (?<email>\\S+)?"," -n (?<nickname>(\".+\")|(\\S+))?","( -s (?<slogan>(\\S+)|(\".+\"))|random)?"))),
+    CREATE_USER("user create",new ArrayList<String>(Arrays.asList(" -u( (?<username>\\S+))?"," -p( (((?<password>\\S+) (?<passwordConfirmation>\\S+))|random))?"," -email( (?<email>\\S+))?"," -n( (?<nickname>(\".+\")|(\\S+)))?","((?<sloganchecker> -s)( (?<slogan>(\\S+)|(\".+\")|random))?)?"))),
     ANSWER_QUESTION("question pick", new ArrayList<String>(Arrays.asList(" -q (?<questionNumber>\\d+)"," -a (?<answer>\\S+)"," -c (?<answerConfirm>\\S+)"))),
     USER_LOGIN("user login",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"," -p (?<password>\\S+)","( --stay-logged-in)?"))),
     FORGET_PASSWORD("forgot my password",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"))),
