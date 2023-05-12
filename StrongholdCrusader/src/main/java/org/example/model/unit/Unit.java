@@ -1,30 +1,81 @@
 package org.example.model.unit;
 
-import org.example.model.Cost;
-import org.example.model.Player;
-import org.example.model.UnitModeEnum;
-import org.example.model.UnitTypeEnum;
+import org.example.controller.PathFinder;
+import org.example.model.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Unit {
 
+    private PathFinder pathFinder ;
     private final String name ;
     private final int movingSpeed ;
     private final Player owner ;
     private final int range ;
     private Cost cost ;
+    public static ArrayList <Unit> units = new ArrayList<Unit>() ;
     private UnitModeEnum unitMode ;
     // TODO : private Building building ;
     private boolean isMoving ;
 
+    private int row ;
+    private int column ;
+
     private static HashMap<String , UnitTypeEnum> unitTypeEnumMap = new HashMap<>();
     private static HashMap<String , UnitModeEnum> unitModeEnumMap = new HashMap<>();
-    Unit( String name , Player owner , int movingSpeed , int range ){
+
+    private int targetRow = -1 ;
+    private int targetColumn = -1 ;
+    Unit( String name , Player owner , int movingSpeed , int range , int row , int column ){
         this.name = name ;
         this.owner = owner ;
+        this.row = row ;
+        this.column = column ;
         this.movingSpeed = movingSpeed ;
         this.range = range ;
+        units.add(this) ;
+    }
+
+
+    public static ArrayList<Unit> getUnits(){
+        return units ;
+    }
+
+    public void setTarget( int row , int column , GameMap gameMap ){
+        this.targetRow = row ;
+        this.targetColumn = column ;
+        this.pathFinder = new PathFinder() ;
+        pathFinder.setGameMap( gameMap.getMaskedMap() , 400 ) ;
+        pathFinder.Run( row , column ) ;
+    }
+
+    public void getNextMove(Integer row , Integer column){
+        int[] rc = { 0 , 0 } ;
+        int nextMoveMask = pathFinder.goInDirectionFrom(this.row , this.column)  ;
+        /// up, down, left, right (0, 1, 2, 3) and -1 if it is fucked!
+        switch(nextMoveMask){
+            case 0 :
+                rc[0] = -1 ;
+                break ;
+            case 1 :
+                rc[0] = 1  ;
+                break ;
+            case 2 :
+                rc[1] = -1 ;
+                break ;
+            case 3 :
+                rc[1] = 1 ;
+                break ;
+        }
+    }
+
+    public int getTargetColumn(){
+        return this.targetColumn ;
+    }
+
+    public int getTargetRow(){
+        return this.targetRow ;
     }
 
     /*
@@ -86,45 +137,45 @@ public class Unit {
         return unitModeEnumMap ;
     }
 
-    public static Unit createUnitByName(String type,Player owner){
+    public static Unit createUnitByName(String type,Player owner,int row , int column){
         if (type.equals("archer"))
-            return new Warrior(type,owner,10,20,10,10,10,true,false,false,false,false,false,false);
+            return new Warrior(type,owner,10,20,10,10,10,true,false,false,false,false,false,false,row , column);
         if (type.equals("crossbowman"))
-            return new Warrior(type,owner,7,7,15,15,7,false,false,false,false,false,false,false);
+            return new Warrior(type,owner,7,7,15,15,7,false,false,false,false,false,false,false,row,column);
         if (type.equals("spearman"))
-            return new Warrior(type,owner,15,10,0,3,10,false,true,false,true,false,false,true);
+            return new Warrior(type,owner,15,10,0,3,10,false,true,false,true,false,false,true,row,column);
         if (type.equals("pikeman"))
-            return new Warrior(type,owner,7,10,15,20,10,false,false,false,false,false,false,true);
+            return new Warrior(type,owner,7,10,15,20,10,false,false,false,false,false,false,true,row,column);
         if (type.equals("maceman"))
-            return new Warrior(type,owner,15,10,20,13,5,false,false,false,false,false,false,true);
+            return new Warrior(type,owner,15,10,20,13,5,false,false,false,false,false,false,true,row,column);
         if (type.equals("swordsman"))
-            return new Warrior(type,owner,7,10,25,10,5,false,false,false,false,false,false,true);
+            return new Warrior(type,owner,7,10,25,10,5,false,false,false,false,false,false,true,row,column);
         if (type.equals("knight"))
-            return new Warrior(type,owner,20,10,25,20,5,false,false,true,false,false,false,true);
+            return new Warrior(type,owner,20,10,25,20,5,false,false,true,false,false,false,true,row,column);
         if (type.equals("tunneler"))
-            return new Tunneler(owner);
+            return new Tunneler(owner,row,column);
         if (type.equals("ladderman"))
-            return new LadderMan(owner);
+            return new LadderMan(owner,row,column);
         if (type.equals("engineer"))
-            return new Engineer(owner);
+            return new Engineer(owner,row,column);
         if (type.equals("blackmonk"))
-            return new Warrior(type,owner,7,5,10,10,5,false,false,false,false,false,false,true);
+            return new Warrior(type,owner,7,5,10,10,5,false,false,false,false,false,false,true,row,column);
         if (type.equals("archerbow"))
-            return new Warrior(type,owner,15,15,10,10,10,false,false,false,false,false,false,true);
+            return new Warrior(type,owner,15,15,10,10,10,false,false,false,false,false,false,true,row,column);
         if (type.equals("slave"))
-            return new Warrior(type,owner,15,10,5,5,5,true,false,false,false,false,false,true);
+            return new Warrior(type,owner,15,10,5,5,5,true,false,false,false,false,false,true,row,column);
         if (type.equals("slinger"))
-            return new Warrior(type,owner,15,5,7,5,5,false,false,false,false,false,false,true);
+            return new Warrior(type,owner,15,5,7,5,5,false,false,false,false,false,false,true,row,column);
         if (type.equals("assasin"))
-            return new Warrior(type,owner,10,10,10,10,10,false,false,false,false,true,true,true);
+            return new Warrior(type,owner,10,10,10,10,10,false,false,false,false,true,true,true,row,column);
         if (type.equals("horsearcher"))
-            return new Warrior(type,owner,25,12,10,15,10,false,false,true,false,false, false,false);
+            return new Warrior(type,owner,25,12,10,15,10,false,false,true,false,false, false,false,row,column);
         if (type.equals("arabianswordsman"))
-            return new Warrior(type,owner,20,5,20,20,5,false,false,false,false,false,false,true);
+            return new Warrior(type,owner,20,5,20,20,5,false,false,false,false,false,false,true,row,column);
         if (type.equals("firethrower"))
-            return new Warrior(type,owner,20,5,15,7,5,true,false,false,false,false,false,true);
+            return new Warrior(type,owner,20,5,15,7,5,true,false,false,false,false,false,true,row,column);
         if (type.equals("jobless"))
-            return new Jobless(owner);
+            return new Jobless(owner , row , column);
         //TODO : HANDLE OPERATOR IN-PLACE
         return null;
     }
@@ -187,6 +238,22 @@ public class Unit {
                 0 , 0 , 0 , 0 , 0) ;
 
         return null ;
+    }
+
+    public int getRow(){
+        return this.row ;
+    }
+
+    public int getColumn(){
+        return this.column ;
+    }
+
+    public void setColumn(int column){
+        this.column = column ;
+    }
+
+    public void setRow(int row){
+        this.row = row ;
     }
 
 }

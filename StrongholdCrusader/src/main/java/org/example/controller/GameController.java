@@ -34,6 +34,22 @@ public class GameController {
     public void nextTurn(){
         this.turn++ ;
         this.player = this.players.get( this.turn % this.players.size() ) ;
+
+        // MOVING HAPPENS IN HERE
+        // first we need a map of 0 and 1 to give to run
+        // this happens in set target in unit
+        Integer nextColumn = -1 ;
+        Integer nextRow = -1 ;
+        for(Unit unit : Unit.getUnits()){
+            if(unit.getTargetRow() == -1) continue ;
+            unit.getNextMove( nextRow , nextColumn ) ;
+            if(gameMap.canGo(nextRow,nextColumn)){
+                // TODO : MOVE THERE
+            }
+            else{
+                unit.setTarget( unit.getTargetRow() , unit.getTargetColumn() , gameMap ) ;
+            }
+        }
     }
 
     private void endGame(){
@@ -192,7 +208,6 @@ public class GameController {
     }
 
     public String selectUnit(Matcher matcher){
-        // we get select unit -x column -y row -t type?
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
         String type = matcher.group("type");
@@ -200,8 +215,8 @@ public class GameController {
         if ((error= handleSelectUnitError(row,column,type))!= null)
             return error;
         Cell cell = gameMap.getCell(row,column);
-        //TODO : THIS PART CAN BE HANDLED MORE QUICKLY IF WE ADD UNITTYPE ENUM TO UNIT !
-        player.getSelectedUnits().clear();
+        // player.getSelectedUnits().clear();
+        // TODO : selected units get cleared ?
         player.setSelectedUnits(type,cell);
         return "SelectUnit Successful!";
     }
@@ -458,7 +473,7 @@ public class GameController {
         String error;
         if ((error = dropCreateUnitErrorChecker(type,count,row,column))!=null)
             return error;
-        Unit unit = Unit.createUnitByName(type,player);
+        Unit unit = Unit.createUnitByName(type,player,row,column);
         gameMap.getCell(row,column).addUnit(unit);
         player.addUnit(unit);
         return "Unit Dropped Successfully!";
@@ -476,7 +491,7 @@ public class GameController {
         String enoughCost = player.decreaseCost(cost);
         if (enoughCost!=null)
             return enoughCost;
-        Unit unit = Unit.createUnitByName(type,player);
+        Unit unit = Unit.createUnitByName(type,player,row,column);
         gameMap.getCell(row,column).addUnit(unit);
         player.addUnit(unit);
         return "Unit Created Successfully!";

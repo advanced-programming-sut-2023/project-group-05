@@ -17,8 +17,8 @@ public class Warrior extends Unit {
 
     public Warrior( String name , Player owner , int movingSpeed , int range , int attackPower , int defendPower ,
                     int reloadSpeed , boolean hasFire , boolean canPushLadder , boolean hasHorse , boolean canDigMoat ,
-                    boolean isHidden , boolean canClimb , boolean canDamageCastle ){
-        super( name , owner , movingSpeed , range ) ;
+                    boolean isHidden , boolean canClimb , boolean canDamageCastle , int row , int column ){
+        super( name , owner , movingSpeed , range , row , column ) ;
         this.attackPower = attackPower ;
         this.defendPower = defendPower ;
         this.reloadSpeed = reloadSpeed ;
