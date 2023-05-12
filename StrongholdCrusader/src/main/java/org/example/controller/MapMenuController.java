@@ -83,15 +83,16 @@ public class MapMenuController {
     public static String getCellContentByCharacter(Cell cell) {
         if (cell.units.size() > 0)
             return " S ";
-        if (cell.buildings.size()>0) {
-            for (Building building : cell.buildings) {
+        Building building = cell.getBuilding() ;
+        if (building != null) {
+
                 if (building instanceof AttackDefenceBuilding)
                     return " W ";
                 if (building.getName().equals("deserttree") || building.getName().equals("cherrytree") || building.getName().equals("datetree") || building.getName().equals("olivetree") || building.getName().equals("coconuttree"))
                     return " T ";
                 if (building.getName().equals("rockeast") || building.getName().equals("rocknorth") || building.getName().equals("rocksouth") || building.getName().equals("rockwest"))
                     return " R ";
-            }
+
             return " B ";
         }
         return " # ";
@@ -118,8 +119,7 @@ public class MapMenuController {
             System.out.println(unit.getName()+":"+cell.getUnitNumbers(unit));
         }
         System.out.println("Buildings:");
-        for(Building building : cell.buildings)
-            System.out.println(building.getName());
+        System.out.println(cell.getBuilding().getName());
     }
 
     public static void mapNavigation(Matcher matcher, GameMap gameMap,int row,int column) {
