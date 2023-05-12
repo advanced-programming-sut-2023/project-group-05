@@ -5,7 +5,7 @@ import org.example.model.Player;
 import org.example.model.building.Building;
 
 public class Warrior extends Unit {
-
+    private boolean isAttacking ;
     private final int attackPower ;
     private final int defendPower ;
     private final int reloadSpeed ;
@@ -16,8 +16,8 @@ public class Warrior extends Unit {
     private final boolean isHidden ;
     private final boolean canClimb ;
     private final boolean canDamageCastle ;
-    private Unit attackingUnit ;
-    private Building attackingBuilding ;
+    private Unit attackingUnit = null ;
+    private Building attackingBuilding = null ;
 
     public Warrior( String name , Player owner , int movingSpeed , int range , int attackPower , int defendPower ,
                     int reloadSpeed , boolean hasFire , boolean canPushLadder , boolean hasHorse , boolean canDigMoat ,
@@ -52,6 +52,16 @@ public class Warrior extends Unit {
         // TODO : dig moat
     }
 
+    public boolean getIsAttacking(){
+        return this.isAttacking ;
+    }
 
+    public Building getAttackingBuilding(){
+        return this.attackingBuilding ;
+    }
+
+    public Unit getAttackingUnit(){
+        return this.attackingUnit ;
+    }
 
 }

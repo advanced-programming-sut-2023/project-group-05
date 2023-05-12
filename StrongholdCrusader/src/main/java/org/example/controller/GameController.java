@@ -64,8 +64,26 @@ public class GameController {
 
         // ATTACKING UNITS
 
-        for(Unit unit : ){
-
+        for(Unit unit : Unit.getUnits()){
+            if(!(unit instanceof Warrior)) continue ;
+            Warrior warrior = (Warrior)unit ;
+            if(!warrior.getIsAttacking()) continue ;
+            Building attackingBuilding = warrior.getAttackingBuilding();
+            Unit attackingUnit = warrior.getAttackingUnit() ;
+            if( attackingUnit != null ){
+                int distance2 = (attackingUnit.getRow() - warrior.getRow())*(attackingUnit.getRow() - warrior.getRow()) +
+                        (attackingUnit.getColumn() - warrior.getColumn()) * (attackingUnit.getColumn() - warrior.getColumn());
+                if( distance2 <= warrior.getRange() ){
+                    // TODO : ACTUAL ATTACK TO UNIT
+                }
+            }
+            else if( attackingBuilding != null ){
+                int distance2 = (attackingBuilding.getRow() - warrior.getRow())*(attackingBuilding.getRow() - warrior.getRow()) +
+                        (attackingBuilding.getColumn() - warrior.getColumn()) * (attackingBuilding.getColumn() - warrior.getColumn());
+                if( distance2 <= warrior.getRange(){
+                    // TODO : ACTUAL ATTACK TO BUILDING
+                }
+            }
         }
 
         // ACTIONS IN THE END OF EACH N TURNS ( N = players.size() )
