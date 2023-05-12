@@ -56,7 +56,7 @@ public class Test {
 
         String createExistingEmail = "user create -u username -p APkimoam03$ APkimoam03$ -email moaminkiani1@gmail.com -n bakeri -s \"let's conquer\"";
         matcher = Commands.getMatchingMatcher(createExistingEmail,Commands.CREATE_USER);
-        result = SignupLoginMenuController.createUser(Menu.getScanner(),matcher,true);
+        result = SignupLoginMenuController.createUser(Menu.getScanner(),matcher,false);
         Assert.assertEquals("Email already exists",result);
 
         String createExistingUsername = "user create -u username -p APkimoam03$ APkimoam03$ -email test@gmail.com -n bakeri -s slogan";
@@ -66,7 +66,7 @@ public class Test {
 
         String passwordConfirmationIncorrect = "user create -u newuser -p APkimoam03$ APkimoam$ -email test@gmail.com -n bakeri -s \"let's conquer\"";
         matcher = Commands.getMatchingMatcher(passwordConfirmationIncorrect,Commands.CREATE_USER);
-        result = SignupLoginMenuController.createUser(Menu.getScanner(),matcher,true);
+        result = SignupLoginMenuController.createUser(Menu.getScanner(),matcher,false);
         Assert.assertEquals("password confirmation does not match.",result);
 
     }
