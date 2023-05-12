@@ -1,7 +1,20 @@
 package org.example.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Cost {
 
+    private static ArrayList<String> itemNames = new ArrayList<String>( Arrays.asList(
+            "Apple" , "Cheese" , "Bread" , "Meat", "Ale" , "Wheat" , "flour" ,
+            "Stone" , "Wood" , "Iron" , "Pitch" ,
+            "Pike" , "Spear" , "Bow" , "Sword" , "Crossbow" , "Metal Armour" , "Leather Armour"
+    ) );
+    private static ArrayList<Integer> itemPrices = new ArrayList<Integer>( Arrays.asList(
+            50 , 40 , 60 , 30 , 30 , 40 , 50 ,
+            70 , 80 , 90 , 100 ,
+            20 , 25 , 30 , 20 , 30 , 40 , 20
+    ) ) ;
     private final double gold ;
     private final int apple ;
     private final int cheese ;
@@ -68,7 +81,14 @@ public class Cost {
         this.pitch = pitch ;
         this.armor = armor ;
         this.hop = hop ;
+    }
 
+    public static ArrayList<Integer> getItemPrices(){
+        return itemPrices ;
+    }
+
+    public static ArrayList<String> getItemNames(){
+        return itemNames ;
     }
 
     public double getGold(){

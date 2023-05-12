@@ -64,6 +64,7 @@ public enum Commands {
     TRADE_REQUEST("trade",new ArrayList<String>(Arrays.asList(" -t (?<resourceType>\\S+) -a (?<resourceAmount>\\d+) -p (?<price>\\d+) -m (?<message>\\S+)"))),
     TRADE_ACCEPT("trade accept",new ArrayList<String>(Arrays.asList(" -i (?<id>\\d+) -m (?<message>\\S+)"))),
     SHOW_PRICE_LIST("show price list",null),
+    //TODO : fix these regexes
     BUY("buy",new ArrayList<String>(Arrays.asList(" -i (?<itemName>\\S+) -a (?<amount>\\d+)"))),
     SELL("sell",new ArrayList<String>(Arrays.asList(" -i (?<itemName>\\S+) -a (?<amount>\\d+)")));
     private String commandName;

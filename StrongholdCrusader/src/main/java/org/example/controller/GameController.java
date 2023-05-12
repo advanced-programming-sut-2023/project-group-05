@@ -664,11 +664,30 @@ public class GameController {
     }
 
     public String showPriceList(Matcher matcher){
-        return null;
+        String ret = "------END_OF_PRICE_LIST------" ;
+        for(int i = 0 ; i < Cost.getItemNames().size() ; i++){
+            System.out.print(Cost.getItemNames().get(i)) ;
+            System.out.println(" : ");
+            System.out.print(Cost.getItemPrices().get(i)) ;
+            System.out.println() ;
+        }
+        return ret ;
     }
 
     public String buy(Matcher matcher){
-        return null;
+        String itemName = matcher.group("itemName") ;
+        int amount = Integer.parseInt(matcher.group("amount")) ;
+        int index = -1 ;
+        for(int i = 0 ; i < Cost.getItemNames().size() ; i++){
+            if( itemName.equals(Cost.getItemNames().get(i)) ){
+                index = i;
+                break ;
+            }
+        }
+        if( Cost.getItemPrices().get(index) * amount > player.getGold() )
+            return "YOU DON'T HAVE ENOUGH GOLD" ;
+
+        return "SUCCESSFULLY BOUGHT." ;
     }
 
     public String sell(Matcher matcher){
