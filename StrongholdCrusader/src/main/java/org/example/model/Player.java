@@ -4,12 +4,15 @@ import org.example.model.building.Building;
 import org.example.model.building.StorageBuilding;
 import org.example.model.unit.Unit;
 
+import java.sql.Array;
 import java.util.ArrayList;
 
 public class Player {
     private Account account ;
     private ArrayList <Building> buildings ;
     private ArrayList<Unit> units ;
+    //TODO : Handle Castle
+    private Building castle;
     private int fearRate ;
     private Building selectedBuilding ;
     private ArrayList<Unit> selectedUnits ;
@@ -23,32 +26,32 @@ public class Player {
     private int cheeseCapacity ;
     private boolean isStockPileCreated;
     private boolean isGranaryCreated;
-    private int hop ;
-    private int cheese ;
-    private int bread ;
-    private int meat ;
-    private int pitch ;
-    private int apple ;
-    private int wineUsage ;
-    private double gold ;
-    private int stone ;
-    private int wood ;
-    private int iron ;
-    private int population ;
-    private int populationCapacity ;
-    private int popularity ;
-    private double taxForEachUnit ;
-    private int sword ;
-    private int spear ;
-    private int wheat ;
-    private int mace ;
-    private int ale ;
-    private int bow ;
-    private int pike ;
-    private int metalArmor ;
-    private int flour ;
-    private int crossbow ;
-    private int leatherArmor ;
+    public int hop ;
+    public int cheese ;
+    public int bread ;
+    public int meat ;
+    public int pitch ;
+    public int apple ;
+    public int wineUsage ;
+    public double gold ;
+    public int stone ;
+    public int wood ;
+    public int iron ;
+    public int population ;
+    public int populationCapacity ;
+    public int popularity ;
+    public double taxForEachUnit ;
+    public int sword ;
+    public int spear ;
+    public int wheat ;
+    public int mace ;
+    public int ale ;
+    public int bow ;
+    public int pike ;
+    public int metalArmour ;
+    public int flour ;
+    public int crossbow ;
+    public int leatherArmour ;
 
     public Player( Account account ){
         this.account = account ;
@@ -58,7 +61,7 @@ public class Player {
         this.spear = 0 ;
         this.pike = 0 ;
         this.bow = 0 ;
-        this.metalArmor = 0 ;
+        this.metalArmour = 0 ;
         this.wheat = 0 ;
         this.ale = 0 ;
         this.flour = 0 ;
@@ -81,7 +84,7 @@ public class Player {
         this.wineUsage = 0 ;
         this.gold = 0 ;
         this.stone = 0 ;
-        this.leatherArmor = 0 ;
+        this.leatherArmour = 0 ;
         this.wood = 0 ;
         this.iron = 0 ;
         this.population = 0 ;
@@ -92,6 +95,11 @@ public class Player {
         //TODO : IS IT RIGHT ?
         this.buildings = new ArrayList<>();
         this.units = new ArrayList<>();
+        this.selectedUnits = new ArrayList<>() ;
+    }
+
+    public Building getCastle(){
+        return this.castle;
     }
 
     public String decreaseCost( Cost cost ){
@@ -106,9 +114,9 @@ public class Player {
         if( this.pike < cost.getPike() ) return "NOT ENOUGH PIKE." ;
         if( this.mace < cost.getMace() ) return "NOT ENOUGH MACE." ;
         if( this.sword < cost.getSword() ) return "NOT ENOUGH SWORD." ;
-        if( this.leatherArmor < cost.getLeatherArmor() ) return "NOT ENOUGH LEATHER ARMOR." ;
+        if( this.leatherArmour < cost.getLeatherArmor() ) return "NOT ENOUGH LEATHER ARMOR." ;
         if( this.hop < cost.getHop() ) return "NOT ENOUGH HOP" ;
-        if( this.metalArmor < cost.getMetalArmor() ) return "NOT ENOUGH ARMOR." ;
+        if( this.metalArmour < cost.getMetalArmor() ) return "NOT ENOUGH ARMOR." ;
         if( this.wheat < cost.getWheat() ) return "NOT ENOUGH WHEAT." ;
         if( this.flour < cost.getFlour() ) return "NOT ENOUGH FLOUR." ;
         if( this.ale < cost.getAle() ) return "NOT ENOUGH ALE." ;
@@ -127,7 +135,7 @@ public class Player {
         this.pike -= cost.getPike() ;
         this.mace -= cost.getMace() ;
         this.sword -= cost.getSword() ;
-        this.leatherArmor -= cost.getLeatherArmor() ;
+        this.leatherArmour -= cost.getLeatherArmor() ;
         this.hop -= cost.getHop() ;
         this.ale -= cost.getAle() ;
         this.stone -= cost.getStone() ;
@@ -136,6 +144,14 @@ public class Player {
         this.pitch -= cost.getPitch() ;
 
         return null ;
+    }
+
+    public void decreaseGold(int gold){
+        this.gold -= gold ;
+    }
+
+    public void increaseGold(int gold){
+        this.gold += gold ;
     }
 
     public void selectUnit( Unit unit ){
@@ -261,9 +277,9 @@ public class Player {
         return this.selectedBuilding;
     }
 
-    public void setSelectedUnits(String unitType , Cell cell){
+    public void setSelectedUnits(Cell cell){
         for (Unit unit : cell.units){
-            if (unit.getName().equals("type"))
+            if (unit.getOwner().equals(this))
                 this.selectedUnits.add(unit);
         }
     }

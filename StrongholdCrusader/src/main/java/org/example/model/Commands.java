@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public enum Commands {
     FIND_USER("find user (?<nickname>(\\S+)|(\".+\"))",null),
-    CREATE_USER("user create",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)?"," -p (((?<password>\\S+) (?<passwordConfirmation>\\S+))|random)"," -email (?<email>\\S+)?"," -n (?<nickname>(\".+\")|(\\S+))?","( -s (?<slogan>(\\S+)|(\".+\"))|random)?"))),
+    CREATE_USER("user create",new ArrayList<String>(Arrays.asList(" -u( (?<username>\\S+))?"," -p( (((?<password>\\S+) (?<passwordConfirmation>\\S+))|random))?"," -email( (?<email>\\S+))?"," -n( (?<nickname>(\".+\")|(\\S+)))?","((?<sloganchecker> -s)( (?<slogan>(\\S+)|(\".+\")|random))?)?"))),
     ANSWER_QUESTION("question pick", new ArrayList<String>(Arrays.asList(" -q (?<questionNumber>\\d+)"," -a (?<answer>\\S+)"," -c (?<answerConfirm>\\S+)"))),
     USER_LOGIN("user login",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"," -p (?<password>\\S+)","( --stay-logged-in)?"))),
     FORGET_PASSWORD("forgot my password",new ArrayList<String>(Arrays.asList(" -u (?<username>\\S+)"))),
@@ -42,8 +42,8 @@ public enum Commands {
     SELECT_BUILDING("select building",new ArrayList<String>(Arrays.asList(" -x(?<row>\\d+)"," -y(?<column>\\d+)"))),
     CREATE_UNIT("createunit",new ArrayList<String>(Arrays.asList(" -t(?<type>\\S+)"," -c(?<count>\\d+)"))),
     REPAIR("repair",null),
-    SELECT_UNIT("select unit",new ArrayList<String>(Arrays.asList(" -x(?<row>\\d+)"," -y(?<column>\\d+)"))),
-    MOVE_UNIT("move unit to",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y(?<column>\\d+)"))),
+    SELECT_UNIT("select unit",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y (?<column>\\d+)"))),
+    MOVE_UNIT("move unit to",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y (?<column>\\d+)"))),
     PATROL("patrol unit",new ArrayList<String>(Arrays.asList(" -x1 (?<beginRow>\\d+)"," -y1 (?<beginColumn>\\d+)"," -x2 (?<endRow>\\d+)"," -y2 (?<endColumn>\\d+)"))),
     SET_UNIT_STATE("set",new ArrayList<String>(Arrays.asList(" -x (?<row>\\d+)"," -y (?<column>\\d+)"," -s (?<state>(standing)|(defensive)|(offensive))"))),
     ATTACK ("attack",new ArrayList<String>(Arrays.asList(" -e (?<row>\\d+) (?<column>\\d+)"))),

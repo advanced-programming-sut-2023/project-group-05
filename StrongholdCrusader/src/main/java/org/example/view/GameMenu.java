@@ -68,7 +68,7 @@ public class GameMenu {
                 System.out.println(gameController.selectUnit(Commands.getMatchingMatcher(input,Commands.SELECT_UNIT)));
 
             else if (Commands.getMatchingMatcher(input,Commands.MOVE_UNIT)!=null)
-                gameController.moveUnit(Commands.getMatchingMatcher(input,Commands.MOVE_UNIT));
+                System.out.println(gameController.moveUnit(Commands.getMatchingMatcher(input,Commands.MOVE_UNIT)));
 
             else if (Commands.getMatchingMatcher(input,Commands.PATROL)!=null)
                 System.out.println( gameController.patrolUnit(Commands.getMatchingMatcher(input,Commands.PATROL)));
@@ -136,6 +136,10 @@ public class GameMenu {
 
             else if (Commands.getMatchingMatcher(input,Commands.SELL)!=null)
                 System.out.println( gameController.sell(Commands.getMatchingMatcher(input,Commands.SELL)));
+
+            else if( input.equals("debug") ){
+                gameController.debug() ;
+            }
 
             else
                 System.out.println("Invalid Command");

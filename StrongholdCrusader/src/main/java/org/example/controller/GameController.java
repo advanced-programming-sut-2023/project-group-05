@@ -3,13 +3,16 @@ package org.example.controller;
 import org.example.model.*;
 import org.example.model.building.Building;
 import org.example.model.unit.Unit;
+import org.example.model.unit.Warrior;
+import org.example.view.Menu;
 
+import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.regex.Matcher;
 
 public class GameController {
-
+    //TODO : DANIAL & MOHAMMAD AMIN : ATTACK - AIR ATTACK - POUR OIL - DIG TUNNEL - BUILD EQUIPMENT - PATROL UNIT
     ArrayList<Player> players ;
     ArrayList <Account> accounts ;
     private int turn ;
@@ -18,6 +21,7 @@ public class GameController {
     private GameMap gameMap;
     public static int maxRow = 400;
     public static int maxColumn = 400;
+
 
     public GameController( ArrayList<Account> accounts ){
         this.accounts = accounts ;
@@ -29,11 +33,153 @@ public class GameController {
         this.turn = 0 ;
         this.winner = null ;
         gameMap = new GameMap(400,400);
+        putYourCastle( this.player );
+    }
+
+    public void debug(){
+        for(Unit unit : Unit.getUnits()){
+            System.out.println("UNIT : " + unit.getName() + " hitpoint : " + unit.getHitPoint() + " x = " + unit.getColumn() + " y = " + unit.getRow() ) ;
+        }
+        for(Building building : Building.getBuildings()){
+            System.out.println("UNIT : " + building.getName() + " hitpoint : " + building.getHitPoint() + " x = " + building.getColumn() + " y = " + building.getRow() ) ;
+        }
     }
 
     public void nextTurn(){
         this.turn++ ;
         this.player = this.players.get( this.turn % this.players.size() ) ;
+
+        if(this.turn == this.turn % this.players.size())
+            putYourCastle( this.player );
+
+        // MOVING UNITS HAPPENS IN THIS PART
+
+        Integer nextColumn = -1 ;
+        Integer nextRow = -1 ;
+        for(Unit unit : Unit.getUnits()){
+            if(unit.getTargetRow() == -1) continue ;
+            nextRow = unit.getNextMoveRow() ;
+            nextColumn = unit.getNextMoveColumn() ;
+            if(nextRow == unit.getRow() && nextColumn == unit.getColumn()){
+                unit.setIsMoving(false) ;
+                continue ;
+            }
+            if(nextRow == -1 && nextColumn == -1){
+                unit.setTarget(unit.getTargetRow(),unit.getTargetColumn(),gameMap) ;
+                if(unit.getNextMoveColumn()==-1){
+                    unit.setIsMoving(false) ;
+                    continue ;
+                }
+                else{
+                    nextRow = unit.getNextMoveRow() ;
+                    nextColumn = unit.getNextMoveColumn() ;
+                }
+            }
+            if(gameMap.getMaskedMap()[nextRow][nextColumn]==0){
+                Cell cell = gameMap.getCell(unit.getRow() , unit.getColumn()) ;
+                Cell nextCell = gameMap.getCell(nextRow , nextColumn) ;
+                cell.getUnits().remove(unit) ;
+                nextCell.getUnits().add(unit) ;
+                unit.setRow( nextRow );
+                unit.setColumn( nextColumn ) ;
+            }
+            else{
+                unit.setTarget( unit.getTargetRow() , unit.getTargetColumn() , gameMap ) ;
+                if(gameMap.getMaskedMap()[nextRow][nextColumn]==0){
+                    Cell cell = gameMap.getCell(unit.getRow() , unit.getColumn()) ;
+                    Cell nextCell = gameMap.getCell(nextRow , nextColumn) ;
+                    cell.getUnits().remove(unit) ;
+                    nextCell.getUnits().add(unit) ;
+                    unit.setRow( nextRow );
+                    unit.setColumn( nextColumn ) ;
+                }
+                else{
+                    unit.setIsMoving(false) ;
+                }
+            }
+        }
+
+        // ATTACKING UNITS
+
+        for(Unit unit : Unit.getUnits()){
+            if(!(unit instanceof Warrior)) continue ;
+            Warrior warrior = (Warrior)unit ;
+            if(!warrior.getIsAttacking()) continue ;
+            Building attackingBuilding = warrior.getAttackingBuilding();
+            Unit attackingUnit = warrior.getAttackingUnit() ;
+            if( attackingUnit != null ){
+                int distance2 = (attackingUnit.getRow() - warrior.getRow())*(attackingUnit.getRow() - warrior.getRow()) +
+                        (attackingUnit.getColumn() - warrior.getColumn()) * (attackingUnit.getColumn() - warrior.getColumn());
+                if( Math.abs(Math.sqrt(distance2)) <= warrior.getRange() ){
+                    attackingUnit.getDamaged(warrior.getDamage()) ;
+                }
+            }
+            else if( attackingBuilding != null ){
+                int distance2 = (attackingBuilding.getRow() - warrior.getRow())*(attackingBuilding.getRow() - warrior.getRow()) +
+                        (attackingBuilding.getColumn() - warrior.getColumn()) * (attackingBuilding.getColumn() - warrior.getColumn());
+                if( distance2 <= warrior.getRange()){
+                    // TODO : ACTUAL ATTACK TO BUILDING
+                }
+            }
+        }
+        // ACTIONS IN THE END OF EACH N TURNS ( N = players.size() )
+        // LIKE : TAX
+
+
+    }
+
+    public void putYourCastle(Player owner){
+        System.out.println("----WELCOME TO THE GAME OF KINGS MY LORD----\n" +
+                ">>> Take A Location And Put Your Castle <<<\n" +
+                "-> YOUR CASTLE IS THE HEART OF YOUR KINGDOM\n" +
+                "-> CHOOSE A LOCATION FOR IT.");
+        Integer row =0;Integer column = 0;
+        getCastleCoordinates(row,column);
+        String name = "castle";
+        Building castle = new Building (name,1,1,true,"",owner,row,column,Building.getBuildingCost(name),
+                -1,0,false,BuildingEnum.CASTLE);
+        gameMap.getCell(row,column).setBuilding(castle) ;
+        name = "king";
+        Warrior king = new Warrior(name,owner, 50 , 500,5,1,30,30,0,
+                false,false,false,false,false,false,true,row.intValue(),column.intValue());
+        gameMap.getCell(row,column).units.add(king);
+        player.addBuilding(castle);
+        player.addUnit(king);
+    }
+
+    public void getCastleCoordinates (Integer row , Integer column) {
+        String buffer;
+        while (true) {
+            System.out.print("Please Enter Row Number : ");
+            try {
+                buffer = Menu.getScanner().nextLine();
+                Integer.parseInt(buffer);
+                row = Integer.parseInt(buffer);
+                if (row >0 && row <400)
+                    break;
+                System.out.println("Row Number Is Outside The Map,Re-enter it");
+            } catch (Exception e) {
+                continue;
+            }
+        }
+        while (true) {
+            System.out.println("Please Enter Column Number");
+            try {
+                buffer = Menu.getScanner().nextLine();
+                Integer.parseInt(buffer);
+                column = Integer.parseInt(buffer);
+                if (column >0 && column <400)
+                    break;
+                System.out.println("Column Number Is Outside The Map,Re-enter it");
+            } catch (Exception e) {
+                continue;
+            }
+        }
+        Cell cell = gameMap.getCell(row.intValue(),column.intValue());
+        if (cell.cellType!=CellType.GROUND || !cell.units.isEmpty() || cell.getBuilding() == null ) {
+            System.out.println("Sorry , Can't Place The Castle Here, Please Re-Enter The Location");
+            getCastleCoordinates(row, column);
+        }
     }
 
     private void endGame(){
@@ -172,7 +318,7 @@ public class GameController {
         String error;
         if ((error = handleSelectBuildingError(row,column))!=null)
             return error;
-        Building building = gameMap.getCell(row,column).buildings.get(0);
+        Building building = gameMap.getCell(row,column).getBuilding() ;
         player.setSelectedBuilding(building);
         return "SelectBuilding Successful!";
     }
@@ -181,7 +327,7 @@ public class GameController {
         if (row > 400 || row < 0 || column > 400 || column <0 )
             return "SelectBuilding Failed : Row Or Column Exceeded Map";
         Cell cell = gameMap.getCell(row,column);
-        if (cell.buildings.size()==0)
+        if (cell.getBuilding() == null)
             return  "SelectBuilding Failed : Cell Does Not Contain Any Building";
         return null;
     }
@@ -192,44 +338,62 @@ public class GameController {
     }
 
     public String selectUnit(Matcher matcher){
-        // we get select unit -x column -y row -t type?
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
-        String type = matcher.group("type");
         String error;
-        if ((error= handleSelectUnitError(row,column,type))!= null)
+        if ((error= handleSelectUnitError(row,column))!= null)
             return error;
         Cell cell = gameMap.getCell(row,column);
-        //TODO : THIS PART CAN BE HANDLED MORE QUICKLY IF WE ADD UNITTYPE ENUM TO UNIT !
-        player.getSelectedUnits().clear();
-        player.setSelectedUnits(type,cell);
+        // player.getSelectedUnits().clear();
+        // TODO : selected units get cleared ?
+        player.setSelectedUnits(cell);
         return "SelectUnit Successful!";
     }
 
-    public String handleSelectUnitError (int row , int column , String type){
+    public String handleSelectUnitError (int row , int column){
         if (row > 400 || column > 400 || row < 0 || column < 0)
             return "SelectUnit Failed : Row Or Column Exceeded Map";
         Cell cell = gameMap.getCell(row,column);
-        UnitTypeEnum unitType = UnitTypeEnum.getUnitTypeByName(type);
-        if (unitType == null)
-            return "SelectUnit Failed : Unit Type Does Not Exists At All";
-        Boolean contain = false;
-        for (Unit unit : cell.units){
-            if (unit.getName().equals(type)){
-                contain = true;
-                break;
-            }
+        //TODO : HANDLE THAT ONLY NON JOBLESS AND NON OPERATOR UNITS CAN BE SELECTED
+        boolean ok = false ;
+        for(Unit unit : cell.getUnits()){
+            if(unit.getOwner()==player)
+                ok = true ;
         }
-        if (!contain)
-            return "SelectUnit Failed : Unit You Mentioned Is Not In The Cell";
+        if(!ok)
+            return "YOU HAVE NO UNITS HERE MY LORD." ;
         return null;
     }
 
-    //TODO : ARIA
-    public void moveUnit(Matcher matcher){
-
+    public String disbandUnit(Matcher matcher){
+        if (player.getSelectedUnits().isEmpty())
+            return "No Unit Selected";
+        PathFinder pathFinder = new PathFinder();
+        pathFinder.Run(player.getCastle().getRow(),player.getCastle().getColumn());
+        int currentUnitRow = player.getSelectedUnits().get(0).currentRow;
+        int currentUnitColumn = player.getSelectedUnits().get(0).currentColumn;
+        if (pathFinder.goInDirectionFrom(currentUnitRow,currentUnitColumn)==-1)
+            return "Disband Unit Failed : No Path To Castle Or Unit Is Already In Castle";
+        for (Unit unit : player.getSelectedUnits())
+            unit.setTarget(player.getCastle().getRow(),player.getCastle().getColumn(),gameMap);
+        return "Unit Disbanded!";
     }
-    //TODO : ARIA
+
+    public String moveUnit(Matcher matcher){
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        if (player.getSelectedUnits().isEmpty())
+            return "No Unit Selected";
+        if (row > 400 || row <0 || column >400 || column < 0)
+            return "Move Unit Failed : Row Or Column Exceeded Map";
+        if (gameMap.getMaskedMap()[row][column] == 1)
+            return "Move Unit Failed : Destination Is Not Permeable";
+        // TODO : EXPLANATION --> IT IS ASSUMED THAT ALL SELECTED UNITS ARE FROM A SINGLE CELL AND THEY ARE GOING TO A SINGLE DESTINATION
+        for (Unit unit : player.getSelectedUnits())
+            unit.setTarget(row,column,gameMap);
+        return "Unit Set For Move!";
+    }
+
     public String patrolUnit(Matcher matcher){
         return null;
     }
@@ -241,8 +405,9 @@ public class GameController {
         String error;
         if ((error = handleSetStateError(row,column))!=null)
             return error;
-        Cell cell = gameMap.getCell(row,column);
-        player.setState(state);
+        //TODO : EXPLANATION --> IN THE SELECTED UNIT , WE ONLY SELECT APPROPRIATE UNITS
+        for (Unit unit : player.getSelectedUnits())
+            unit.setUnitMode(UnitModeEnum.getUnitModeEnumByName(state));
         return "SetState Successful!";
     }
 
@@ -250,12 +415,49 @@ public class GameController {
         if (row > 400 || row <0 || column > 400 || column <0)
             return "SetState Failed : Row Or Column Exceeded Map";
         if (player.getSelectedUnits().isEmpty())
-            return "SetState Failed : No Selected Unit";
+            return "SetState Failed : No Unit Selected";
         return null;
     }
 
+
     public String attack(Matcher matcher){
-        return null;
+        int row = Integer.parseInt(matcher.group("row")) ;
+        int column = Integer.parseInt(matcher.group("column")) ;
+        Unit enemyUnit = null ;
+        Building enemyBuilding = null ;
+        boolean isEnemyUnit = false ;
+        for(Unit unit : gameMap.getCell( row,column ).getUnits()){
+            if(unit.getOwner() != player){
+                isEnemyUnit = true ;
+                enemyUnit = unit ;
+                break ;
+            }
+        }
+        boolean isEnemyBuilding = false ;
+        Building building = gameMap.getCell(row , column).getBuilding();
+        if(building != null && building.getOwner() != player ){
+            isEnemyBuilding = true ;
+            enemyBuilding = building ;
+        }
+        if(!isEnemyUnit && !isEnemyBuilding)
+            return "THERE IS NO ENEMY UNITS OR BUILDINGS THERE , MY LORD" ;
+
+        if(enemyUnit != null){
+            for(Unit unit : player.getSelectedUnits()){
+                if(unit instanceof Warrior ){
+                    ((Warrior)unit).attackUnit(enemyUnit,gameMap) ;
+                }
+            }
+        }
+        else{
+            for(Unit unit : player.getSelectedUnits()){
+                if(unit instanceof Warrior ){
+                    ((Warrior)unit).attackBuilding(enemyBuilding) ;
+                }
+            }
+        }
+
+        return "ATTACKING THE ENEMY" ;
     }
 
     public String airAttack(Matcher matcher){
@@ -274,9 +476,6 @@ public class GameController {
         return null;
     }
 
-    public String disbandUnit(Matcher matcher){
-        return null;
-    }
 
     public String setTextureCell (Matcher matcher){
         int row = Integer.parseInt(matcher.group("row"));
@@ -286,9 +485,13 @@ public class GameController {
         Cell cell = gameMap.getCell(row,column);
         if (cell.units.size()>0)
             return "SetTexture Failed  : Cell Contains Units";
-        if (cell.buildings.size() > 0)
+        if (cell.getBuilding() != null)
             return "SetTexture Failed : Cell Contains Building";
         cell.cellType = CellType.getCellTypeEnumByName(matcher.group("type"));
+        if (cell.cellType == CellType.BOULDER || cell.cellType == CellType.RIVER ||
+                cell.cellType == CellType.SMALL_POND || cell.cellType == CellType.BIG_POND ||
+                cell.cellType == CellType.SEA)
+            gameMap.getMaskedMap()[row][column] = 1 ;
         return "SetTexture Successful!";
     }
 
@@ -303,7 +506,7 @@ public class GameController {
             return "SetTexture Failed : Row Or Column Exceeded Map";
         for (int i =beginRow-1;i<endRow;++i){
             for (int j = beginColumn -1 ; j<endColumn;++j){
-                if (gameMap.getCell(i,j).buildings.size() > 0 || gameMap.getCell(i,j).units.size()>0)
+                if (gameMap.getCell(i,j).getBuilding() == null || gameMap.getCell(i,j).units.size()>0)
                     return "SetTexture Failed : Block Contains Unit Or Building";
             }
         }
@@ -351,7 +554,7 @@ public class GameController {
         if( cell.units.size() != 0 )
             return "THERE IS UNIT IN THIS PLACE." ;
 
-        if( cell.buildings.size() != 0 )
+        if( cell.getBuilding() != null )
             return "THERE IS BUILDING IN THIS PLACE." ;
 
         if( cell.cellType == CellType.SEA || cell.cellType == CellType.RIVER || cell.cellType == CellType.BIG_POND
@@ -388,7 +591,7 @@ public class GameController {
         }
         if(!validType) return "INVALID TREE TYPE." ;
 
-        if( gameMap.getCell( row , column ).getBuildings().size() != 0 )
+        if( gameMap.getCell( row , column ).getBuilding() != null )
             return "THERE IS A BUILDING IN THIS PLACE MY LORD!" ;
 
         if( gameMap.getCell( row , column ).units.size() != 0 )
@@ -409,44 +612,72 @@ public class GameController {
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
         String type = matcher.group("type");
-        String error = dropAndCreateBuildingErrorHandler(row,column,type);
+        String error = dropCreateBuildingErrorHandler(row,column,type,true);
+        if(gameMap.getCell(row , column).getBuilding() != null){
+            return "A BUILDING IS ALREADY HERE MY LORD." ;
+        }
         if (error != null)
             return error;
-        Cost cost = Building.getBuildingCost(type);
-        String enoughCost = player.decreaseCost(cost);
-        if (enoughCost!=null)
-            return enoughCost;
-        String canBePlacedHere = player.canBuildingPlacedHere(type,row,column,gameMap);
-        if (canBePlacedHere != null)
-            return canBePlacedHere;
         Building building = Building.createBuildingByName(type,player,row,column);
-        gameMap.getCell(row,column).buildings.add(building);
+        for (int i = row ; i<row+building.getHeight();++i){
+            for (int j = column ; j < column + building.getWidth();++j)
+                gameMap.getCell(i,j).setBuilding(building);
+        }
         player.addBuilding(building);
         player.handleBuildingEffectsOnPlayer(type);
         return "Create Building Successful!";
     }
+
     public String dropBuilding(Matcher matcher){
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
         String type = matcher.group("type");
-        String error = dropAndCreateBuildingErrorHandler(row,column,type);
+        String error = dropCreateBuildingErrorHandler(row,column,type,false);
         if (error != null)
             return error;
-        String canBePlacedHere = player.canBuildingPlacedHere(type,row,column,gameMap);
-        if (canBePlacedHere != null)
-            return canBePlacedHere;
         Building building = Building.createBuildingByName(type,player,row,column);
-        gameMap.getCell(row,column).buildings.add(building);
+        for (int i = row ; i<row+building.getHeight();++i){
+            for (int j = column ; j < column + building.getWidth();++j)
+                gameMap.getCell(i,j).setBuilding(building) ;
+        }
         player.addBuilding(building);
         player.handleBuildingEffectsOnPlayer(type);
         return "Drop Building Successful!";
     }
 
-    public String dropAndCreateBuildingErrorHandler (int row , int column , String type){
+    public String dropCreateBuildingErrorHandler (int row , int column , String type,boolean createBuilding){
         if (row > maxRow || row < 0 || column > maxColumn || column <0)
             return "Drop/Create Building Failed : Row Or Column Exceeded Map";
         if (BuildingEnum.getBuildingEnumByName(type)==null)
-            return "Drop/Create Building Failed : No Such Building Exists";
+            return "Drop/Create Building Failed : No Such Building Name Exists";
+        // Is There Enough Resources
+        if (createBuilding) {
+            Cost cost = Building.getBuildingCost(type);
+            String enoughCost = player.decreaseCost(cost);
+            if (enoughCost != null)
+                return enoughCost;
+        }
+        // If This Is StocKpile Or Granary : Is There Another stockpile/granary near it
+        String canBePlacedHere = player.canBuildingPlacedHere(type,row,column,gameMap);
+        if (canBePlacedHere != null)
+            return canBePlacedHere;
+        // is there enough space here to place this building
+        String isHereEmpty = isThereBuildingConflict(type,row,column);
+        if (isHereEmpty!= null)
+            return isHereEmpty;
+        return null;
+    }
+    public String isThereBuildingConflict (String buildingName,int row , int column){
+        int height = BuildingEnum.getBuildingHeightByName(buildingName);
+        int width = BuildingEnum.getBuildingWidthByName(buildingName);
+        for (int i = row ; i<row+height;++i){
+            for (int j = column ; j < column + width;++j){
+                if (gameMap.getCell(row,column).getBuilding() != null)
+                    return "Building Can't Be Placed Here : Another Building Is Here";
+                if (!gameMap.getCell(row,column).units.isEmpty())
+                    return "Building Can't Be Placed Here : Some Units Are Here";
+            }
+        }
         return null;
     }
 
@@ -458,7 +689,7 @@ public class GameController {
         String error;
         if ((error = dropCreateUnitErrorChecker(type,count,row,column))!=null)
             return error;
-        Unit unit = Unit.createUnitByName(type,player);
+        Unit unit = Unit.createUnitByName(type,player,row,column);
         gameMap.getCell(row,column).addUnit(unit);
         player.addUnit(unit);
         return "Unit Dropped Successfully!";
@@ -476,7 +707,7 @@ public class GameController {
         String enoughCost = player.decreaseCost(cost);
         if (enoughCost!=null)
             return enoughCost;
-        Unit unit = Unit.createUnitByName(type,player);
+        Unit unit = Unit.createUnitByName(type,player,row,column);
         gameMap.getCell(row,column).addUnit(unit);
         player.addUnit(unit);
         return "Unit Created Successfully!";
@@ -684,14 +915,152 @@ public class GameController {
                 break ;
             }
         }
+
+        if( index == -1 )
+            return "INVALID NAME" ;
+
+
         if( Cost.getItemPrices().get(index) * amount > player.getGold() )
             return "YOU DON'T HAVE ENOUGH GOLD" ;
+
+        player.decreaseGold( Cost.getItemPrices().get(index) * amount ) ;
+
+        switch(index){
+            case 0 :
+                player.apple += amount ;
+                break ;
+            case 1 :
+                player.cheese += amount ;
+                break ;
+            case 2 :
+                player.bread += amount ;
+                break ;
+            case 3 :
+                player.meat += amount ;
+                break ;
+            case 4 :
+                player.ale += amount ;
+                break ;
+            case 5 :
+                player.wheat += amount ;
+                break ;
+            case 6 :
+                player.flour += amount ;
+                break ;
+            case 7 :
+                player.stone += amount ;
+                break ;
+            case 8 :
+                player.wood += amount ;
+                break ;
+            case 9 :
+                player.iron += amount ;
+                break ;
+            case 10 :
+                player.pitch += amount ;
+                break ;
+            case 11 :
+                player.pike += amount ;
+                break ;
+            case 12 :
+                player.spear += amount ;
+                break ;
+            case 13 :
+                player.bow += amount ;
+                break ;
+            case 14 :
+                player.sword += amount ;
+                break ;
+            case 15 :
+                player.crossbow += amount ;
+                break ;
+            case 16 :
+                player.metalArmour += amount ;
+                break ;
+            case 17 :
+                player.leatherArmour += amount ;
+                break ;
+        }
 
         return "SUCCESSFULLY BOUGHT." ;
     }
 
     public String sell(Matcher matcher){
-        return null;
+        int amount = Integer.parseInt(matcher.group("amount")) ;
+        String itemName = matcher.group("itemName") ;
+
+        int index = -1 ;
+
+        for(int i = 0 ; i < Cost.getItemNames().size() ; i++){
+            if( itemName.equals(Cost.getItemNames().get(i)) ){
+                index = i;
+                break ;
+            }
+        }
+
+        if( index == -1 )
+            return "INVALID NAME" ;
+
+        player.increaseGold(Cost.getItemPrices().get(index)*amount) ;
+
+        switch(index){
+            case 0 :
+                player.apple -= amount ;
+                break ;
+            case 1 :
+                player.cheese -= amount ;
+                break ;
+            case 2 :
+                player.bread -= amount ;
+                break ;
+            case 3 :
+                player.meat -= amount ;
+                break ;
+            case 4 :
+                player.ale -= amount ;
+                break ;
+            case 5 :
+                player.wheat -= amount ;
+                break ;
+            case 6 :
+                player.flour -= amount ;
+                break ;
+            case 7 :
+                player.stone -= amount ;
+                break ;
+            case 8 :
+                player.wood -= amount ;
+                break ;
+            case 9 :
+                player.iron -= amount ;
+                break ;
+            case 10 :
+                player.pitch -= amount ;
+                break ;
+            case 11 :
+                player.pike -= amount ;
+                break ;
+            case 12 :
+                player.spear -= amount ;
+                break ;
+            case 13 :
+                player.bow -= amount ;
+                break ;
+            case 14 :
+                player.sword -= amount ;
+                break ;
+            case 15 :
+                player.crossbow -= amount ;
+                break ;
+            case 16 :
+                player.metalArmour -= amount ;
+                break ;
+            case 17 :
+                player.leatherArmour -= amount ;
+                break ;
+        }
+
+        return "SUCCESSFULLY SOLD." ;
     }
 
 }

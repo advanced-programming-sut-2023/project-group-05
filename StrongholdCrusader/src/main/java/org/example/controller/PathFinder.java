@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class PathFinder
 {
     public static int SZ = 400;
-    public int [][] gameMap = new int[SZ][SZ]; /// this should be entered manually, I do not understand the map :( 0 -> empty, 1 -> wall
+    private int [][] gameMap = new int[SZ][SZ]; /// this should be entered manually, I do not understand the map :( 0 -> empty, 1 -> wall
 
     public int [][] distance = new int [SZ][SZ];
 
@@ -15,6 +15,12 @@ public class PathFinder
     public boolean validPos(int x, int y)
     {
         return x >= 0 && x < SZ && y >= 0 && y < SZ;
+    }
+
+    public void setGameMap( int[][] maskedMap , int size ){
+        for(int i = 0 ; i < size ; i++)
+            for(int j = 0 ; j < size ; j++)
+                gameMap[i][j] = maskedMap[i][j] ;
     }
 
     public void Run(Integer x, Integer y)

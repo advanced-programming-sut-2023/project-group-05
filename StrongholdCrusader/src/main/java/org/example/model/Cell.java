@@ -11,18 +11,22 @@ import java.util.Objects;
 public class Cell {
     public ArrayList<Objects> objects;
     public ArrayList<Unit> units;
-    public ArrayList<Building> buildings;
+
+    private Building building = null ;
     public CellType cellType;
     private static HashMap<String , CellType> cellTypeEnumByName = new HashMap<>();
     public Cell(CellType cellType){
         this.cellType = cellType;
-        this.buildings = new ArrayList<>(0);
         this.units = new ArrayList<>(0);
         this.objects = new ArrayList<>(0);
     }
 
-    public ArrayList<Building> getBuildings(){
-        return this.buildings ;
+    public Building getBuilding(){
+        return this.building ;
+    }
+
+    public void setBuilding(Building building){
+        this.building = building ;
     }
 
     public CellType getCellTypeName(){
@@ -52,16 +56,17 @@ public class Cell {
         return count;
     }
 
-    public void addUnit(Unit unit){
-        units.add(unit);
+    public ArrayList<Unit> getUnits(){
+        return this.units ;
     }
 
-    public void addBuilding(Building building){
-        buildings.add(building);
+    public void addUnit(Unit unit){
+        units.add(unit);
     }
 
     public static HashMap<String, CellType> getCellTypeEnumByName (){
         return cellTypeEnumByName;
     }
+
 
 }
