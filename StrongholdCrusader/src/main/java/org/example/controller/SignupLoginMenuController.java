@@ -147,7 +147,7 @@ public class SignupLoginMenuController {
         return "account created successfully" ;
     }
 
-    public static String loginUser( Scanner scanner , Matcher matcher,boolean mode , Integer passWrongCounter){
+    public static String loginUser( Scanner scanner , Matcher matcher,boolean mode ){
         //mode true is for real game --- mode false is for unit test
         String password = matcher.group("password") ;
         String userName = matcher.group( "username" ) ;
@@ -160,20 +160,20 @@ public class SignupLoginMenuController {
         JSONObject cur = DataBase.getFromDataBase("userName", userName);
         long pass = (long) cur.get("password");
         if (pass != Hash.encode(password)) {
-            ++passWrongCounter;
+            ++SignupLoginMenu.wrongPassCounter;
             if(!mode)
                 return "Wrong Password!\n";
             System.out.println("Wrong Password");
-            int deley = 5000 * passWrongCounter.intValue();
-            Sleep.handleSleep(deley,passWrongCounter.intValue());
-            return "You Can Try It Again Now";
+            for(int j = 0 ; j < SignupLoginMenu.wrongPassCounter ; j++)
+                Sleep.handleSleep(); ;
+            return "You Can Try It Again Now\n";
         }
         if (!mode)
             return "User Logged In! hooray !";
         System.out.println("User Logged In! hooray !");
         Account account = Account.getAccountsMap().get(userName);
         MainMenu.run(scanner, account);
-        return null;
+        return "";
     }
 
 
@@ -195,7 +195,7 @@ public class SignupLoginMenuController {
         Account.removeAccount(account) ;
         account.setPassword( newPasswordHash );
         Account.addAccount(account) ;
-        return null;
+        return "password recovered successfully";
     }
 
     public static String logout(Matcher matcher){

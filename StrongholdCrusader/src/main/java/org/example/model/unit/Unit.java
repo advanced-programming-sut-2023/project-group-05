@@ -8,11 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Unit {
-    private PathFinder pathFinder ;
+    protected PathFinder pathFinder ;
     private final String name ;
     private int hitPoint;
-    public int currentRow;
-    public int currentColumn;
     private final int movingSpeed ;
     private final Player owner ;
     private final int range ;
@@ -20,16 +18,16 @@ public class Unit {
     public static ArrayList <Unit> units = new ArrayList<Unit>() ;
     private UnitModeEnum unitMode ;
     // TODO : private Building building ;
-    private boolean isMoving ;
+    protected boolean isMoving ;
 
-    private int row ;
-    private int column ;
+    protected int row ;
+    protected int column ;
 
     private static HashMap<String , UnitTypeEnum> unitTypeEnumMap = new HashMap<>();
     private static HashMap<String , UnitModeEnum> unitModeEnumMap = new HashMap<>();
 
-    private int targetRow = -1 ;
-    private int targetColumn = -1 ;
+    protected int targetRow = -1 ;
+    protected int targetColumn = -1 ;
     public Unit( String name , Player owner , int hitPoint,int movingSpeed , int range , int row , int column ){
         this.name = name ;
         this.hitPoint = hitPoint;
@@ -39,6 +37,7 @@ public class Unit {
         this.movingSpeed = movingSpeed ;
         this.range = range ;
         units.add(this) ;
+        owner.addUnit(this) ;
     }
 
     public void getDamaged(int x){

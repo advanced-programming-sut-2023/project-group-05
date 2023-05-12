@@ -13,7 +13,7 @@ public class Building {
     private final String name ;
     private final String category ;
     private ArrayList <Unit> units ;
-    private static ArrayList<Building> buildings ;
+    private static ArrayList<Building> buildings = new ArrayList<Building>() ;
     private final Player owner ;
     private final int height ;
     private final int width ;

@@ -176,7 +176,7 @@ public class GameController {
             }
         }
         Cell cell = gameMap.getCell(row.intValue(),column.intValue());
-        if (cell.cellType!=CellType.GROUND || !cell.units.isEmpty() || cell.getBuilding() == null ) {
+        if (cell.cellType!=CellType.GROUND || !cell.units.isEmpty() || cell.getBuilding() != null ) {
             System.out.println("Sorry , Can't Place The Castle Here, Please Re-Enter The Location");
             getCastleCoordinates(row, column);
         }
@@ -370,8 +370,8 @@ public class GameController {
             return "No Unit Selected";
         PathFinder pathFinder = new PathFinder();
         pathFinder.Run(player.getCastle().getRow(),player.getCastle().getColumn());
-        int currentUnitRow = player.getSelectedUnits().get(0).currentRow;
-        int currentUnitColumn = player.getSelectedUnits().get(0).currentColumn;
+        int currentUnitRow = player.getSelectedUnits().get(0).getRow();
+        int currentUnitColumn = player.getSelectedUnits().get(0).getColumn();
         if (pathFinder.goInDirectionFrom(currentUnitRow,currentUnitColumn)==-1)
             return "Disband Unit Failed : No Path To Castle Or Unit Is Already In Castle";
         for (Unit unit : player.getSelectedUnits())
@@ -414,7 +414,7 @@ public class GameController {
         for(Unit unit : player.getSelectedUnits()){
             if(!(unit instanceof Warrior)) continue ;
             Warrior warrior = (Warrior)unit ;
-            //warrior.startPatrol( beginRow , beginColumn , endRow , endColumn ) ;
+            warrior.startPatrol( beginRow , beginColumn , endRow , endColumn , gameMap ) ;
         }
 
         return "SOLDIERS WHO COULD STARTED PATROLLING AROUND MY LOoOo0oRD" ;
