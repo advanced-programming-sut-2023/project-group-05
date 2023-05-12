@@ -46,6 +46,7 @@ public class Building {
         this.popularityRate = popularityRate ;
         owner.setPopularity( owner.getPopularity() + popularityRate );
         buildings.add(this) ;
+        owner.getBuildings().add(this) ;
     }
 
     public static ArrayList<Building> getBuildings(){

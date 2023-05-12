@@ -39,6 +39,7 @@ public class Unit {
         this.movingSpeed = movingSpeed ;
         this.range = range ;
         units.add(this) ;
+        owner.getUnits().add(this) ;
     }
 
     public void getDamaged(int x){

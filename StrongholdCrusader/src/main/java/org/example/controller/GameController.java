@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.model.*;
 import org.example.model.building.Building;
+import org.example.model.unit.Engineer;
 import org.example.model.unit.Unit;
 import org.example.model.unit.Warrior;
 import org.example.view.Menu;
@@ -12,7 +13,17 @@ import java.util.Random;
 import java.util.regex.Matcher;
 
 public class GameController {
-    //TODO : DANIAL & MOHAMMAD AMIN : ATTACK - AIR ATTACK - POUR OIL - DIG TUNNEL - BUILD EQUIPMENT - PATROL UNIT
+    //TODO : DANIAL & MOHAMMAD AMIN : ATTACK - AIR ATTACK - Fill oil - DIG TUNNEL - BUILD EQUIPMENT
+    /*TODO: Dear my friend Mohammad amin :
+    *       now that I'm writing this comment for you it is 3:00 AM in the morning.
+    *       deadline was passed 3 hours ago , why don't you code ?
+    *       Are you afraid of coding ?
+    *       If you are not interested in coding I strongly recommend you to get to a psychiatrist because you
+    *       must be a maniac to select this major ...
+    *       your sincerely , Danial
+    *
+    * */
+
     ArrayList<Player> players ;
     ArrayList <Account> accounts ;
     private int turn ;
@@ -488,7 +499,25 @@ public class GameController {
     }
 
     public String pourOil(Matcher matcher){
-        return null;
+        String directionString = matcher.group("direction") ;
+        int directionNum = 0 ;
+        switch(directionString){
+            case "right" :
+                directionNum = 1 ;
+                break ;
+            case "down" :
+                directionNum = 2 ;
+                break ;
+            case "left" :
+                directionNum = 3 ;
+                break ;
+        }
+        boolean selectedEngineer = false ;
+        for(Unit unit : player.getSelectedUnits()){
+            if(unit instanceof Engineer )
+                ((Engineer)unit).pourOil(directionNum,gameMap) ;
+        }
+        return "AS YOU WISH MY LORD." ;
     }
 
     public String digTunnel(Matcher matcher){

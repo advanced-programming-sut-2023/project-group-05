@@ -102,6 +102,14 @@ public class Player {
         return this.castle;
     }
 
+    public ArrayList<Building> getBuildings(){
+        return this.buildings ;
+    }
+
+    public ArrayList<Unit> getUnits(){
+        return this.units ;
+    }
+
     public String decreaseCost( Cost cost ){
 
         if( this.apple < cost.getApple() ) return "NOT ENOUGH APPLE." ;
