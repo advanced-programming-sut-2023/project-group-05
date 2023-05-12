@@ -4,12 +4,13 @@ import org.example.model.*;
 import org.example.model.building.Building;
 import org.example.model.unit.Unit;
 
+import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.regex.Matcher;
 
 public class GameController {
-
+    //TODO : DANIAL & MOHAMMAD AMIN : ATTACK - AIR ATTACK - POUR OIL - DIG TUNNEL - BUILD EQUIPMENT - PATROL UNIT
     ArrayList<Player> players ;
     ArrayList <Account> accounts ;
     private int turn ;
@@ -18,6 +19,7 @@ public class GameController {
     private GameMap gameMap;
     public static int maxRow = 400;
     public static int maxColumn = 400;
+
 
     public GameController( ArrayList<Account> accounts ){
         this.accounts = accounts ;
@@ -225,6 +227,7 @@ public class GameController {
         if (row > 400 || column > 400 || row < 0 || column < 0)
             return "SelectUnit Failed : Row Or Column Exceeded Map";
         Cell cell = gameMap.getCell(row,column);
+        //TODO : HANDLE THAT ONLY NON JOBLESS AND NON OPERATOR UNITS CAN BE SELECTED
         UnitTypeEnum unitType = UnitTypeEnum.getUnitTypeByName(type);
         if (unitType == null)
             return "SelectUnit Failed : Unit Type Does Not Exists At All";
@@ -240,11 +243,39 @@ public class GameController {
         return null;
     }
 
-    //TODO : ARIA
-    public void moveUnit(Matcher matcher){
-
+    public String disbandUnit(Matcher matcher){
+        if (player.getSelectedUnits().isEmpty())
+            return "No Unit Selected";
+        PathFinder pathFinder = new PathFinder();
+        pathFinder.Run(player.getCastle().getRow(),player.getCastle().getColumn());
+        int currentUnitRow = player.getSelectedUnits().get(0).currentRow;
+        int currentUnitColumn = player.getSelectedUnits().get(0).currentColumn;
+        if (pathFinder.goInDirectionFrom(currentUnitRow,currentUnitColumn)==-1)
+            return "Disband Unit Failed : No Path To Castle Or Unit Is Already In Castle";
+        for (Unit unit : player.getSelectedUnits())
+            unit.setTarget(player.getCastle().getRow(),player.getCastle().getColumn());
+        return "Unit Disbanded!";
     }
-    //TODO : ARIA
+
+    public String moveUnit(Matcher matcher){
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column"));
+        if (player.getSelectedUnits().isEmpty())
+            return "No Unit Selected";
+        if (row > 400 || row <0 || column >400 || column < 0)
+            return "Move Unit Failed : Row Or Column Exceeded Map";
+        if (!gameMap.getCell(row,column).permeable(null))
+            return "Move Unit Failed : Destination Is Not Permeable";
+        // TODO : EXPLANATION --> IT IS ASSUMED THAT ALL SELECTED UNITS ARE FROM A SINGLE CELL AND THEY ARE GOING TO A SINGLE DESTINATION
+        PathFinder pathFinder = new PathFinder();
+        pathFinder.Run(row,column);
+        if (pathFinder.goInDirectionFrom(player.getSelectedUnits().get(0).currentRow,player.getSelectedUnits().get(0).currentColumn) == -1 )
+            return "Move Unit Failed : No Path Found Or Unit Is Already There";
+        for (Unit unit : player.getSelectedUnits())
+            unit.setTarget(row,column);
+        return "Unit Set For Move!";
+    }
+
     public String patrolUnit(Matcher matcher){
         return null;
     }
@@ -256,8 +287,9 @@ public class GameController {
         String error;
         if ((error = handleSetStateError(row,column))!=null)
             return error;
-        Cell cell = gameMap.getCell(row,column);
-        player.setState(state);
+        //TODO : EXPLANATION --> IN THE SELECTED UNIT , WE ONLY SELECT APPROPRIATE UNITS
+        for (Unit unit : player.getSelectedUnits())
+            unit.setUnitMode(UnitModeEnum.getUnitModeEnumByName(state));
         return "SetState Successful!";
     }
 
@@ -265,9 +297,10 @@ public class GameController {
         if (row > 400 || row <0 || column > 400 || column <0)
             return "SetState Failed : Row Or Column Exceeded Map";
         if (player.getSelectedUnits().isEmpty())
-            return "SetState Failed : No Selected Unit";
+            return "SetState Failed : No Unit Selected";
         return null;
     }
+
 
     public String attack(Matcher matcher){
         return null;
@@ -289,9 +322,6 @@ public class GameController {
         return null;
     }
 
-    public String disbandUnit(Matcher matcher){
-        return null;
-    }
 
     public String setTextureCell (Matcher matcher){
         int row = Integer.parseInt(matcher.group("row"));
@@ -424,44 +454,69 @@ public class GameController {
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
         String type = matcher.group("type");
-        String error = dropAndCreateBuildingErrorHandler(row,column,type);
+        String error = dropCreateBuildingErrorHandler(row,column,type,true);
         if (error != null)
             return error;
-        Cost cost = Building.getBuildingCost(type);
-        String enoughCost = player.decreaseCost(cost);
-        if (enoughCost!=null)
-            return enoughCost;
-        String canBePlacedHere = player.canBuildingPlacedHere(type,row,column,gameMap);
-        if (canBePlacedHere != null)
-            return canBePlacedHere;
         Building building = Building.createBuildingByName(type,player,row,column);
-        gameMap.getCell(row,column).buildings.add(building);
+        for (int i = row ; i<row+building.getHeight();++i){
+            for (int j = column ; j < column + building.getWidth();++j)
+                gameMap.getCell(i,j).buildings.add(building);
+        }
         player.addBuilding(building);
         player.handleBuildingEffectsOnPlayer(type);
         return "Create Building Successful!";
     }
+
     public String dropBuilding(Matcher matcher){
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
         String type = matcher.group("type");
-        String error = dropAndCreateBuildingErrorHandler(row,column,type);
+        String error = dropCreateBuildingErrorHandler(row,column,type,false);
         if (error != null)
             return error;
-        String canBePlacedHere = player.canBuildingPlacedHere(type,row,column,gameMap);
-        if (canBePlacedHere != null)
-            return canBePlacedHere;
         Building building = Building.createBuildingByName(type,player,row,column);
-        gameMap.getCell(row,column).buildings.add(building);
+        for (int i = row ; i<row+building.getHeight();++i){
+            for (int j = column ; j < column + building.getWidth();++j)
+                gameMap.getCell(i,j).buildings.add(building);
+        }
         player.addBuilding(building);
         player.handleBuildingEffectsOnPlayer(type);
         return "Drop Building Successful!";
     }
 
-    public String dropAndCreateBuildingErrorHandler (int row , int column , String type){
+    public String dropCreateBuildingErrorHandler (int row , int column , String type,boolean createBuilding){
         if (row > maxRow || row < 0 || column > maxColumn || column <0)
             return "Drop/Create Building Failed : Row Or Column Exceeded Map";
         if (BuildingEnum.getBuildingEnumByName(type)==null)
-            return "Drop/Create Building Failed : No Such Building Exists";
+            return "Drop/Create Building Failed : No Such Building Name Exists";
+        // Is There Enough Resources
+        if (createBuilding) {
+            Cost cost = Building.getBuildingCost(type);
+            String enoughCost = player.decreaseCost(cost);
+            if (enoughCost != null)
+                return enoughCost;
+        }
+        // If This Is StocKpile Or Granary : Is There Another stockpile/granary near it
+        String canBePlacedHere = player.canBuildingPlacedHere(type,row,column,gameMap);
+        if (canBePlacedHere != null)
+            return canBePlacedHere;
+        // is there enough space here to place this building
+        String isHereEmpty = isThereBuildingConflict(type,row,column);
+        if (isHereEmpty!= null)
+            return isHereEmpty;
+        return null;
+    }
+    public String isThereBuildingConflict (String buildingName,int row , int column){
+        int height = BuildingEnum.getBuildingHeightByName(buildingName);
+        int width = BuildingEnum.getBuildingWidthByName(buildingName);
+        for (int i = row ; i<row+height;++i){
+            for (int j = column ; j < column + width;++j){
+                if (!gameMap.getCell(row,column).buildings.isEmpty())
+                    return "Building Can't Be Placed Here : Another Building Is Here";
+                if (!gameMap.getCell(row,column).units.isEmpty())
+                    return "Building Can't Be Placed Here : Some Units Are Here";
+            }
+        }
         return null;
     }
 

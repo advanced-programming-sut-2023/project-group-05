@@ -1,15 +1,20 @@
 package org.example.model.unit;
 
 import org.example.controller.PathFinder;
-import org.example.model.*;
+
+import org.example.model.Cost;
+import org.example.model.Player;
+import org.example.model.UnitModeEnum;
+import org.example.model.UnitTypeEnum;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Unit {
-
     private PathFinder pathFinder ;
     private final String name ;
+    public int currentRow;
+    public int currentColumn;
     private final int movingSpeed ;
     private final Player owner ;
     private final int range ;
@@ -129,8 +134,15 @@ public class Unit {
         return this.name ;
     }
 
-    public void moveUnit( int row , int column ){
+    public void move( int row , int column ){
         // TODO : move unit to ( row , column )
+
+    }
+
+    public void setTarget(int row , int column){
+        this.targetRow = row;
+        this.targetColumn = column;
+        this.isMoving = true;
     }
 
     public static HashMap<String,UnitModeEnum> getUnitModeEnumMap() {
