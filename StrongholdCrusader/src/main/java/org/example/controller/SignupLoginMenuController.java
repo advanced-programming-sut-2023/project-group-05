@@ -192,9 +192,9 @@ public class SignupLoginMenuController {
         System.out.print("OK , this time choose a simpler password that your brain is able to carry it around : ") ;
         String newPass = Menu.getScanner().nextLine() ;
         long newPasswordHash = (new Hash(newPass)).getHsh() ;
+        Account.removeAccount(account) ;
         account.setPassword( newPasswordHash );
-        // TODO : update the database ariyaaaaaaaaaaaaaaaaaaaaaa !!
-        // TODO : ARIYAAAAAAAAAAAAAA !!!!
+        Account.addAccount(account) ;
         return null;
     }
 
