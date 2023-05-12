@@ -86,7 +86,6 @@ public class GameController {
                 }
             }
         }
-
         // ACTIONS IN THE END OF EACH N TURNS ( N = players.size() )
 
 
@@ -104,6 +103,8 @@ public class GameController {
         Warrior king = new Warrior(name,owner,150,5,1,30,30,0,
                 false,false,false,false,false,false,true,row.intValue(),column.intValue());
         gameMap.getCell(row,column).units.add(king);
+        player.addBuilding(castle);
+        player.addUnit(king);
     }
 
     public void getCastleCoordinates (Integer row , Integer column) {
