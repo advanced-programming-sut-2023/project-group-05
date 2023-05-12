@@ -19,6 +19,16 @@ public class Account
     {
         return accountsMap;
     }
+    static public void removeAccount(Account account)
+    {
+        accountsMap.remove(account.userName, account);
+        DataBase.deleteAccount("userName", account.getUserName());
+    }
+    static public void addAccount( Account account )
+    {
+        accountsMap.put(account.userName, account);
+        DataBase.addNewAccount(account);
+    }
     public String getUserName()
     {
         return this.userName;
@@ -80,7 +90,7 @@ public class Account
         this.question = _question;
         this.answer = _answer;
         accountsMap.put(this.userName, this);
-        if(! DataBase.isAccountInData(this)) DataBase.addNewAccount(this);
+        if(! DataBase.isAccountInData(this) ) DataBase.addNewAccount(this);
     }
 
 }

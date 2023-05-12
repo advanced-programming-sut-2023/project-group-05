@@ -18,7 +18,9 @@ public class ProfileMenuController {
             System.out.println( "your username is not valid" ) ;
             return ;
         }
+        Account.removeAccount(account);
         account.setUserName( username );
+        Account.addAccount(account);
         System.out.println("your username successfully changed."); ;
     }
 
@@ -28,7 +30,9 @@ public class ProfileMenuController {
             System.out.println( "nickname is not valid" ) ;
             return ;
         }
+        Account.removeAccount(account);
         account.setNickname( nickname ) ;
+        Account.addAccount(account);
         System.out.println("your nickname successfully changed.");
     }
 
@@ -39,7 +43,9 @@ public class ProfileMenuController {
             return ;
         }
         long passwordHash = Hash.encode( password ) ;
+        Account.removeAccount(account);
         account.setPassword( passwordHash ) ;
+        Account.addAccount(account);
         System.out.println("your password successfully changed.") ;
     }
 
@@ -49,27 +55,38 @@ public class ProfileMenuController {
             System.out.println("Email is not valid.");
             return ;
         }
+        Account.removeAccount(account);
         account.setEmail( email ) ;
+        Account.addAccount(account);
         System.out.println("your email successfully changed.") ;
     }
 
-    public void changeSlogan(Matcher matcher){
+    public void changeSlogan(Matcher matcher)
+    {
+        Account.removeAccount(account);
         account.setSlogan( matcher.group("slogan") ) ;
+        Account.addAccount(account);
         System.out.println("your slogan successfully changed.") ;
     }
 
-    public void removeSlogan(Matcher matcher){
+    public void removeSlogan(Matcher matcher)
+    {
+        Account.removeAccount(account);
         System.out.println("your slogan was successfully removed.") ;
+        Account.addAccount(account);
         account.setSlogan( SecurityQuestions.getRandomSlogan() ) ;
     }
 
-    public void displayHighScore(Matcher matcher){
+    public void displayHighScore(Matcher matcher)
+    {
         System.out.println("your high score is " + account.getHighScore()) ;
     }
 
-    public void displayRank(Matcher matcher){
+    public void displayRank(Matcher matcher)
+    {
         int rank = 1 ;
-        for( Account acc : Account.getAccountsMap().values() ){
+        for( Account acc : Account.getAccountsMap().values() )
+        {
             if( acc.getHighScore() > account.getHighScore() ) rank++ ;
         }
         System.out.println( "your rank based on high score is : " ) ;
@@ -79,7 +96,8 @@ public class ProfileMenuController {
         System.out.println( "your slogan is : " + account.getSlogan() ) ;
     }
 
-    public void displayProfile(Matcher matcher){
+    public void displayProfile(Matcher matcher)
+    {
         System.out.println( "username : " + account.getUserName() ) ;
         System.out.println( "nickname : " + account.getNickName() ) ;
         System.out.println( "slogan : " + account.getSlogan() ) ;
