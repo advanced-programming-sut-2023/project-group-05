@@ -48,7 +48,7 @@ public class GameController {
         Building castle = new Building (name,1,1,true,"",owner,row,column,Building.getBuildingCost(name),-1,0,false,BuildingEnum.CASTLE);
         gameMap.getCell(row,column).buildings.add(castle);
         name = "king";
-        Warrior king = new Warrior(name,owner,5,1,30,30,0,false,false,false,false,false,false,true);
+        Warrior king = new Warrior(name,owner,150,5,1,30,30,0,false,false,false,false,false,false,true);
         gameMap.getCell(row,column).units.add(king);
     }
 
