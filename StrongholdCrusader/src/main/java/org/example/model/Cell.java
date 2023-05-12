@@ -52,6 +52,10 @@ public class Cell {
         return count;
     }
 
+    public ArrayList<Unit> getUnits(){
+        return this.units ;
+    }
+
     public void addUnit(Unit unit){
         units.add(unit);
     }

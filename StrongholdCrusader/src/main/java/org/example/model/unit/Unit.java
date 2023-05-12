@@ -2,10 +2,7 @@ package org.example.model.unit;
 
 import org.example.controller.PathFinder;
 
-import org.example.model.Cost;
-import org.example.model.Player;
-import org.example.model.UnitModeEnum;
-import org.example.model.UnitTypeEnum;
+import org.example.model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,12 +134,6 @@ public class Unit {
     public void move( int row , int column ){
         // TODO : move unit to ( row , column )
 
-    }
-
-    public void setTarget(int row , int column){
-        this.targetRow = row;
-        this.targetColumn = column;
-        this.isMoving = true;
     }
 
     public static HashMap<String,UnitModeEnum> getUnitModeEnumMap() {

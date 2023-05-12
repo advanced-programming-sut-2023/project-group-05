@@ -37,21 +37,29 @@ public class GameController {
         this.turn++ ;
         this.player = this.players.get( this.turn % this.players.size() ) ;
 
-        // MOVING HAPPENS IN HERE
-        // first we need a map of 0 and 1 to give to run
-        // this happens in set target in unit
+        // MOVING UNITS HAPPENS IN THIS PART
+
         Integer nextColumn = -1 ;
         Integer nextRow = -1 ;
         for(Unit unit : Unit.getUnits()){
             if(unit.getTargetRow() == -1) continue ;
             unit.getNextMove( nextRow , nextColumn ) ;
-            if(gameMap.canGo(nextRow,nextColumn)){
-                // TODO : MOVE THERE
+            if(gameMap.getMaskedMap()[nextRow][nextColumn]==0){
+                Cell cell = gameMap.getCell(unit.getRow() , unit.getColumn()) ;
+                Cell nextCell = gameMap.getCell(nextRow , nextColumn) ;
+                cell.getUnits().remove(unit) ;
+                nextCell.getUnits().add(unit) ;
+                unit.setRow( nextRow );
+                unit.setColumn( nextColumn ) ;
             }
             else{
                 unit.setTarget( unit.getTargetRow() , unit.getTargetColumn() , gameMap ) ;
             }
         }
+
+        // ACTIONS IN THE END OF EACH N TURNS ( N = players.size() )
+
+
     }
 
     private void endGame(){
@@ -253,7 +261,7 @@ public class GameController {
         if (pathFinder.goInDirectionFrom(currentUnitRow,currentUnitColumn)==-1)
             return "Disband Unit Failed : No Path To Castle Or Unit Is Already In Castle";
         for (Unit unit : player.getSelectedUnits())
-            unit.setTarget(player.getCastle().getRow(),player.getCastle().getColumn());
+            unit.setTarget(player.getCastle().getRow(),player.getCastle().getColumn(),gameMap);
         return "Unit Disbanded!";
     }
 
@@ -264,15 +272,11 @@ public class GameController {
             return "No Unit Selected";
         if (row > 400 || row <0 || column >400 || column < 0)
             return "Move Unit Failed : Row Or Column Exceeded Map";
-        if (!gameMap.getCell(row,column).permeable(null))
+        if (gameMap.getMaskedMap()[row][column] == 1)
             return "Move Unit Failed : Destination Is Not Permeable";
         // TODO : EXPLANATION --> IT IS ASSUMED THAT ALL SELECTED UNITS ARE FROM A SINGLE CELL AND THEY ARE GOING TO A SINGLE DESTINATION
-        PathFinder pathFinder = new PathFinder();
-        pathFinder.Run(row,column);
-        if (pathFinder.goInDirectionFrom(player.getSelectedUnits().get(0).currentRow,player.getSelectedUnits().get(0).currentColumn) == -1 )
-            return "Move Unit Failed : No Path Found Or Unit Is Already There";
         for (Unit unit : player.getSelectedUnits())
-            unit.setTarget(row,column);
+            unit.setTarget(row,column,gameMap);
         return "Unit Set For Move!";
     }
 
