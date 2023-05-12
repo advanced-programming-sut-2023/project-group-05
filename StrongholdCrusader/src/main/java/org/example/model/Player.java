@@ -58,7 +58,7 @@ public class Player {
         this.spear = 0 ;
         this.pike = 0 ;
         this.bow = 0 ;
-        this.metalArmor = 0 ;
+        this.metalArmour = 0 ;
         this.wheat = 0 ;
         this.ale = 0 ;
         this.flour = 0 ;
@@ -81,7 +81,7 @@ public class Player {
         this.wineUsage = 0 ;
         this.gold = 0 ;
         this.stone = 0 ;
-        this.leatherArmor = 0 ;
+        this.leatherArmour = 0 ;
         this.wood = 0 ;
         this.iron = 0 ;
         this.population = 0 ;
@@ -106,9 +106,9 @@ public class Player {
         if( this.pike < cost.getPike() ) return "NOT ENOUGH PIKE." ;
         if( this.mace < cost.getMace() ) return "NOT ENOUGH MACE." ;
         if( this.sword < cost.getSword() ) return "NOT ENOUGH SWORD." ;
-        if( this.leatherArmor < cost.getLeatherArmor() ) return "NOT ENOUGH LEATHER ARMOR." ;
+        if( this.leatherArmour < cost.getLeatherArmor() ) return "NOT ENOUGH LEATHER ARMOR." ;
         if( this.hop < cost.getHop() ) return "NOT ENOUGH HOP" ;
-        if( this.metalArmor < cost.getMetalArmor() ) return "NOT ENOUGH ARMOR." ;
+        if( this.metalArmour < cost.getMetalArmor() ) return "NOT ENOUGH ARMOR." ;
         if( this.wheat < cost.getWheat() ) return "NOT ENOUGH WHEAT." ;
         if( this.flour < cost.getFlour() ) return "NOT ENOUGH FLOUR." ;
         if( this.ale < cost.getAle() ) return "NOT ENOUGH ALE." ;
@@ -127,7 +127,7 @@ public class Player {
         this.pike -= cost.getPike() ;
         this.mace -= cost.getMace() ;
         this.sword -= cost.getSword() ;
-        this.leatherArmor -= cost.getLeatherArmor() ;
+        this.leatherArmour -= cost.getLeatherArmor() ;
         this.hop -= cost.getHop() ;
         this.ale -= cost.getAle() ;
         this.stone -= cost.getStone() ;
@@ -140,6 +140,10 @@ public class Player {
 
     public void decreaseGold(int gold){
         this.gold -= gold ;
+    }
+
+    public void increaseGold(int gold){
+        this.gold += gold ;
     }
 
     public void selectUnit( Unit unit ){

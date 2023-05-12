@@ -750,12 +750,86 @@ public class GameController {
                 player.leatherArmour += amount ;
                 break ;
         }
-        
+
         return "SUCCESSFULLY BOUGHT." ;
     }
 
     public String sell(Matcher matcher){
-        return null;
+        int amount = Integer.parseInt(matcher.group("amount")) ;
+        String itemName = matcher.group("itemName") ;
+
+        int index = -1 ;
+
+        for(int i = 0 ; i < Cost.getItemNames().size() ; i++){
+            if( itemName.equals(Cost.getItemNames().get(i)) ){
+                index = i;
+                break ;
+            }
+        }
+
+        if( index == -1 )
+            return "INVALID NAME" ;
+
+        player.increaseGold(Cost.getItemPrices().get(index)*amount) ;
+
+        switch(index){
+            case 0 :
+                player.apple -= amount ;
+                break ;
+            case 1 :
+                player.cheese -= amount ;
+                break ;
+            case 2 :
+                player.bread -= amount ;
+                break ;
+            case 3 :
+                player.meat -= amount ;
+                break ;
+            case 4 :
+                player.ale -= amount ;
+                break ;
+            case 5 :
+                player.wheat -= amount ;
+                break ;
+            case 6 :
+                player.flour -= amount ;
+                break ;
+            case 7 :
+                player.stone -= amount ;
+                break ;
+            case 8 :
+                player.wood -= amount ;
+                break ;
+            case 9 :
+                player.iron -= amount ;
+                break ;
+            case 10 :
+                player.pitch -= amount ;
+                break ;
+            case 11 :
+                player.pike -= amount ;
+                break ;
+            case 12 :
+                player.spear -= amount ;
+                break ;
+            case 13 :
+                player.bow -= amount ;
+                break ;
+            case 14 :
+                player.sword -= amount ;
+                break ;
+            case 15 :
+                player.crossbow -= amount ;
+                break ;
+            case 16 :
+                player.metalArmour -= amount ;
+                break ;
+            case 17 :
+                player.leatherArmour -= amount ;
+                break ;
+        }
+
+        return "SUCCESSFULLY SOLD." ;
     }
 
 }
