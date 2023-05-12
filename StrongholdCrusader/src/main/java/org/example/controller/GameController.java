@@ -60,43 +60,28 @@ public class GameController {
             if(unit.getTargetRow() == -1) continue ;
             nextRow = unit.getNextMoveRow() ;
             nextColumn = unit.getNextMoveColumn() ;
-            if(nextRow == unit.getRow() && nextColumn == unit.getColumn()){
+            if(nextRow == unit.getRow() && nextColumn == unit.getColumn()&& !(unit instanceof Warrior)){
                 unit.setIsMoving(false) ;
                 continue ;
             }
-            if(nextRow == -1 && nextColumn == -1){
-                unit.setTarget(unit.getTargetRow(),unit.getTargetColumn(),gameMap) ;
-                if(unit.getNextMoveColumn()==-1){
-                    unit.setIsMoving(false) ;
-                    continue ;
-                }
-                else{
-                    nextRow = unit.getNextMoveRow() ;
-                    nextColumn = unit.getNextMoveColumn() ;
-                }
+            if(nextRow == unit.getRow() && nextColumn == unit.getColumn()&& unit instanceof Warrior && !((Warrior)unit).getIsPatrolling() ){
+                unit.setIsMoving(false) ;
+                continue ;
             }
-            if(gameMap.getMaskedMap()[nextRow][nextColumn]==0){
-                Cell cell = gameMap.getCell(unit.getRow() , unit.getColumn()) ;
-                Cell nextCell = gameMap.getCell(nextRow , nextColumn) ;
-                cell.getUnits().remove(unit) ;
-                nextCell.getUnits().add(unit) ;
-                unit.setRow( nextRow );
-                unit.setColumn( nextColumn ) ;
+            if(nextRow == unit.getRow() && nextColumn == unit.getColumn()){
+                Warrior warrior = (Warrior)unit ;
+                warrior.setTarget(warrior.getRow(),warrior.getColumn(),gameMap) ;
+                nextRow = warrior.getNextMoveRow() ;
+                nextColumn = warrior.getNextMoveColumn() ;
             }
-            else{
-                unit.setTarget( unit.getTargetRow() , unit.getTargetColumn() , gameMap ) ;
-                if(gameMap.getMaskedMap()[nextRow][nextColumn]==0){
-                    Cell cell = gameMap.getCell(unit.getRow() , unit.getColumn()) ;
-                    Cell nextCell = gameMap.getCell(nextRow , nextColumn) ;
-                    cell.getUnits().remove(unit) ;
-                    nextCell.getUnits().add(unit) ;
-                    unit.setRow( nextRow );
-                    unit.setColumn( nextColumn ) ;
-                }
-                else{
-                    unit.setIsMoving(false) ;
-                }
-            }
+
+            Cell cell = gameMap.getCell(unit.getRow() , unit.getColumn()) ;
+            Cell nextCell = gameMap.getCell(nextRow , nextColumn) ;
+            cell.getUnits().remove(unit) ;
+            nextCell.getUnits().add(unit) ;
+            unit.setRow( nextRow );
+            unit.setColumn( nextColumn ) ;
+
         }
 
         // ATTACKING UNITS
@@ -389,8 +374,11 @@ public class GameController {
         if (gameMap.getMaskedMap()[row][column] == 1)
             return "Move Unit Failed : Destination Is Not Permeable";
         // TODO : EXPLANATION --> IT IS ASSUMED THAT ALL SELECTED UNITS ARE FROM A SINGLE CELL AND THEY ARE GOING TO A SINGLE DESTINATION
-        for (Unit unit : player.getSelectedUnits())
+        for (Unit unit : player.getSelectedUnits()){
             unit.setTarget(row,column,gameMap);
+            if(unit instanceof Warrior)
+                ((Warrior)unit).stopPatrol() ;
+        }
         return "Unit Set For Move!";
     }
 

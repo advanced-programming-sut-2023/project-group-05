@@ -69,7 +69,7 @@ public class Unit {
             case 3 :
                 return this.row ;
         }
-        return -1 ;
+        return this.row ;
     }
 
     public int getNextMoveColumn(){
@@ -84,7 +84,7 @@ public class Unit {
             case 3 :
                 return this.column + 1 ;
         }
-        return -1 ;
+        return this.column ;
     }
 
     public int getHitPoint(){

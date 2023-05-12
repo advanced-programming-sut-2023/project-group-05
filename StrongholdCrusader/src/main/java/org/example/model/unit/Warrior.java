@@ -54,6 +54,7 @@ public class Warrior extends Unit {
         }
 
         if( this.isPatrolling && (this.row == row) && (column == this.column) ){
+            this.patrolTurn++ ;
             if(patrolTurn % 2 == 0){
                 column = this.patrolEndColumn ;
                 row = this.patrolEndRow ;
@@ -62,7 +63,6 @@ public class Warrior extends Unit {
                 column = this.patrolBeginColumn ;
                 row = this.patrolBeginRow ;
             }
-            this.patrolTurn++ ;
         }
 
         super.targetRow = row ;
@@ -87,6 +87,10 @@ public class Warrior extends Unit {
         setTarget( endRow , endColumn , gameMap ) ;
         this.setIsMoving(true) ;
         this.isPatrolling = true ;
+    }
+
+    public boolean getIsPatrolling(){
+        return this.isPatrolling ;
     }
 
     public void stopPatrol(){
