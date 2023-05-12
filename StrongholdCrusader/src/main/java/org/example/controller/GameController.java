@@ -394,8 +394,31 @@ public class GameController {
         return "Unit Set For Move!";
     }
 
+    private boolean validRowColumn(int x){
+        return ( x < 400 && x >= 0 ) ;
+    }
+
     public String patrolUnit(Matcher matcher){
-        return null;
+
+        int beginRow = Integer.parseInt( matcher.group("beginRow") ) ;
+        int beginColumn = Integer.parseInt( matcher.group("beginColumn") ) ;
+        int endRow = Integer.parseInt( matcher.group("endRow") ) ;
+        int endColumn = Integer.parseInt( matcher.group("endColumn") ) ;
+
+        if(!(validRowColumn( beginRow ) && validRowColumn( beginColumn ) && validRowColumn( endRow ) && validRowColumn( endColumn )))
+            return "INVALID COORDINATES" ;
+
+        if(player.getSelectedUnits().size()==0)
+            return "YOU HAVE NOT CHOSEN ANY SOLDIERS MY LORD." ;
+
+        for(Unit unit : player.getSelectedUnits()){
+            if(!(unit instanceof Warrior)) continue ;
+            Warrior warrior = (Warrior)unit ;
+            //warrior.startPatrol( beginRow , beginColumn , endRow , endColumn ) ;
+        }
+
+        return "SOLDIERS WHO COULD STARTED PATROLLING AROUND MY LOoOo0oRD" ;
+
     }
 
     public String setState(Matcher matcher){

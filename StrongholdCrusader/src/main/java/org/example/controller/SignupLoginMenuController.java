@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.model.Account;
 import org.example.model.Sleep;
 import org.example.view.MainMenu;
+import org.example.view.Menu;
 import org.example.view.SignupLoginMenu;
 import org.json.simple.JSONObject;
 
@@ -177,6 +178,23 @@ public class SignupLoginMenuController {
 
 
     public static String forgetPassword (Matcher matcher){
+        String username = matcher.group("username") ;
+        if( DataBase.getFromDataBase("userName", username) == null)
+            return "This username does not exist\n";
+        System.out.println("Oh thats really bad , unfortunately you can't recover it") ;
+        System.out.println("... JK dude :) , yeah just answer this question and then bob's your uncle") ;
+        Account account = Account.getAccountsMap().get(username);
+        System.out.println( SecurityQuestions.questions.get((int)account.getQuestion()) );
+        String answer = Menu.getScanner().nextLine() ;
+        Integer ans = (int) account.getAnswer() ;
+        if(!ans.toString().equals(answer))
+            return "that was wrong , sorry , goodbye." ;
+        System.out.print("OK , this time choose a simpler password that your brain is able to carry it around : ") ;
+        String newPass = Menu.getScanner().nextLine() ;
+        long newPasswordHash = (new Hash(newPass)).getHsh() ;
+        account.setPassword( newPasswordHash );
+        // TODO : update the database ariyaaaaaaaaaaaaaaaaaaaaaa !!
+        // TODO : ARIYAAAAAAAAAAAAAA !!!!
         return null;
     }
 
