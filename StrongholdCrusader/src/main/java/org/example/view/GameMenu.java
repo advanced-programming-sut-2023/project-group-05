@@ -130,7 +130,6 @@ public class GameMenu {
             else if (Commands.getMatchingMatcher(input,Commands.SHOW_PRICE_LIST)!=null)
                 System.out.println( gameController.showPriceList(Commands.getMatchingMatcher(input,Commands.SHOW_PRICE_LIST)));
 
-
             else if (Commands.getMatchingMatcher(input,Commands.BUY)!=null)
                 System.out.println( gameController.buy(Commands.getMatchingMatcher(input,Commands.BUY)));
 
