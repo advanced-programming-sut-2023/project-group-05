@@ -1,6 +1,8 @@
 package org.example.model.unit;
 
+import org.example.model.GameMap;
 import org.example.model.Player;
+import org.example.model.building.Building;
 
 public class Warrior extends Unit {
 
@@ -14,6 +16,8 @@ public class Warrior extends Unit {
     private final boolean isHidden ;
     private final boolean canClimb ;
     private final boolean canDamageCastle ;
+    private Unit attackingUnit ;
+    private Building attackingBuilding ;
 
     public Warrior( String name , Player owner , int movingSpeed , int range , int attackPower , int defendPower ,
                     int reloadSpeed , boolean hasFire , boolean canPushLadder , boolean hasHorse , boolean canDigMoat ,
@@ -31,8 +35,16 @@ public class Warrior extends Unit {
         this.canDamageCastle = canDamageCastle ;
     }
 
-    public void attack( int row , int column , int rowChange , int columnChange  ){
-        // TODO : attack
+    public void attackUnit( Unit unit , GameMap gameMap ){
+        this.attackingUnit = unit ;
+        this.attackingBuilding = null ;
+        this.setTarget(unit.getRow() , unit.getColumn() , gameMap) ;
+    }
+
+    public void attackBuilding( Building building ){
+        this.attackingBuilding = building ;
+        this.attackingUnit = null ;
+        // TODO : ATTACK BULIDING
     }
 
     public void startDiggingMoat( int row , int column , int rowChange , int columnChange ){

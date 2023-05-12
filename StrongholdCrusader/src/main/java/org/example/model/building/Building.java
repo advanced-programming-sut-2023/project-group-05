@@ -26,7 +26,7 @@ public class Building {
     protected int hitPoint ;
     private static HashMap<String , BuildingEnum> buildingEnumByName = new HashMap<>();
 
-    Building( String name , int width , int height , boolean passable , String category , Player owner
+    public Building( String name , int width , int height , boolean passable , String category , Player owner
             , int row , int column , Cost cost , int hitPoint , int popularityRate , boolean holdsAnimal ,
               BuildingEnum buildingEnum ){
 

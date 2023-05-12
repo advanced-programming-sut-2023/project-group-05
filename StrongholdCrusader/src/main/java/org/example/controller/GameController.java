@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.model.*;
 import org.example.model.building.Building;
 import org.example.model.unit.Unit;
+import org.example.model.unit.Warrior;
 
 import javax.print.DocFlavor;
 import java.util.ArrayList;
@@ -44,6 +45,10 @@ public class GameController {
         for(Unit unit : Unit.getUnits()){
             if(unit.getTargetRow() == -1) continue ;
             unit.getNextMove( nextRow , nextColumn ) ;
+            if(nextRow == unit.getRow() && nextColumn == unit.getColumn()){
+                unit.setIsMoving(false) ;
+                continue ;
+            }
             if(gameMap.getMaskedMap()[nextRow][nextColumn]==0){
                 Cell cell = gameMap.getCell(unit.getRow() , unit.getColumn()) ;
                 Cell nextCell = gameMap.getCell(nextRow , nextColumn) ;
@@ -55,6 +60,12 @@ public class GameController {
             else{
                 unit.setTarget( unit.getTargetRow() , unit.getTargetColumn() , gameMap ) ;
             }
+        }
+
+        // ATTACKING UNITS
+
+        for(Unit unit : ){
+
         }
 
         // ACTIONS IN THE END OF EACH N TURNS ( N = players.size() )
@@ -307,7 +318,45 @@ public class GameController {
 
 
     public String attack(Matcher matcher){
-        return null;
+        int row = Integer.parseInt(matcher.group("row")) ;
+        int column = Integer.parseInt(matcher.group("column")) ;
+        Unit enemyUnit = null ;
+        Building enemyBuilding = null ;
+        boolean isEnemyUnit = false ;
+        for(Unit unit : gameMap.getCell( row,column ).getUnits()){
+            if(unit.getOwner() != player){
+                isEnemyUnit = true ;
+                enemyUnit = unit ;
+                break ;
+            }
+        }
+        boolean isEnemyBuilding = false ;
+        for(Building building : gameMap.getCell( row,column ).getBuildings()){
+            if(building.getOwner() != player){
+                isEnemyBuilding = true ;
+                enemyBuilding = building ;
+                break ;
+            }
+        }
+        if(!isEnemyUnit && !isEnemyBuilding)
+            return "THERE IS NO ENEMY UNITS OR BUILDINGS THERE , MY LORD" ;
+
+        if(enemyUnit != null){
+            for(Unit unit : player.getSelectedUnits()){
+                if(unit instanceof Warrior ){
+                    ((Warrior)unit).attackUnit(enemyUnit,gameMap) ;
+                }
+            }
+        }
+        else{
+            for(Unit unit : player.getSelectedUnits()){
+                if(unit instanceof Warrior ){
+                    ((Warrior)unit).attackBuilding(enemyBuilding) ;
+                }
+            }
+        }
+
+        return "ATTACKING THE ENEMY" ;
     }
 
     public String airAttack(Matcher matcher){

@@ -50,24 +50,24 @@ public class Unit {
         this.pathFinder = new PathFinder() ;
         pathFinder.setGameMap( gameMap.getMaskedMap() , 400 ) ;
         pathFinder.Run( row , column ) ;
+        this.isMoving = true;
     }
 
     public void getNextMove(Integer row , Integer column){
-        int[] rc = { 0 , 0 } ;
         int nextMoveMask = pathFinder.goInDirectionFrom(this.row , this.column)  ;
         /// up, down, left, right (0, 1, 2, 3) and -1 if it is fucked!
         switch(nextMoveMask){
             case 0 :
-                rc[0] = -1 ;
+                row += -1 ;
                 break ;
             case 1 :
-                rc[0] = 1  ;
+                row += 1  ;
                 break ;
             case 2 :
-                rc[1] = -1 ;
+                column += -1 ;
                 break ;
             case 3 :
-                rc[1] = 1 ;
+                column += 1 ;
                 break ;
         }
     }
