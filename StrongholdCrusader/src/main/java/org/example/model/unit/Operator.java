@@ -7,8 +7,8 @@ public class Operator extends Unit {
 
     private Building building ;
 
-    public Operator( String name , Player owner ){
-        super( name ,owner , 0 , 0 ) ;
+    public Operator( String name , Player owner,int hitPoint ){
+        super( name ,owner , hitPoint,0 , 0 ) ;
     }
 
 }

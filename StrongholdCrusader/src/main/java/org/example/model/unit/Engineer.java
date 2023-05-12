@@ -4,8 +4,8 @@ import org.example.model.Player;
 
 public class Engineer extends Unit {
 
-    public Engineer( Player owner ){
-        super( "Engineer" , owner , 0 , 0 ) ;
+    public Engineer(Player owner,int hitPoint){
+        super( "Engineer" , owner , hitPoint,0 , 0 ) ;
     }
 
     public void pourOil(){

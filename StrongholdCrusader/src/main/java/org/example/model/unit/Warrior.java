@@ -15,10 +15,10 @@ public class Warrior extends Unit {
     private final boolean canClimb ;
     private final boolean canDamageCastle ;
 
-    public Warrior( String name , Player owner , int movingSpeed , int range , int attackPower , int defendPower ,
+    public Warrior( String name , Player owner ,int hitPoint, int movingSpeed , int range , int attackPower , int defendPower ,
                     int reloadSpeed , boolean hasFire , boolean canPushLadder , boolean hasHorse , boolean canDigMoat ,
                     boolean isHidden , boolean canClimb , boolean canDamageCastle ){
-        super( name , owner , movingSpeed , range ) ;
+        super( name , owner ,hitPoint, movingSpeed , range ) ;
         this.attackPower = attackPower ;
         this.defendPower = defendPower ;
         this.reloadSpeed = reloadSpeed ;

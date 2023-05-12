@@ -78,7 +78,11 @@ public enum BuildingEnum {
     ROCK_NORTH(null,new ArrayList<Integer>(Arrays.asList())),
     ROCK_SOUTH(null,new ArrayList<Integer>(Arrays.asList())),
     ROCK_EAST(null,new ArrayList<Integer>(Arrays.asList())),
-    ROCK_WEST(null,new ArrayList<Integer>(Arrays.asList()));
+    ROCK_WEST(null,new ArrayList<Integer>(Arrays.asList())),
+
+    //Castle
+
+    CASTLE("castle",new ArrayList<Integer>(Arrays.asList()));
     String name;
     ArrayList<Integer> shape;
     BuildingEnum(String name,ArrayList<Integer> shape){

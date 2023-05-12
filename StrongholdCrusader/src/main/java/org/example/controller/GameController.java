@@ -3,6 +3,8 @@ package org.example.controller;
 import org.example.model.*;
 import org.example.model.building.Building;
 import org.example.model.unit.Unit;
+import org.example.model.unit.Warrior;
+import org.example.view.Menu;
 
 import javax.print.DocFlavor;
 import java.util.ArrayList;
@@ -36,6 +38,53 @@ public class GameController {
     public void nextTurn(){
         this.turn++ ;
         this.player = this.players.get( this.turn % this.players.size() ) ;
+    }
+
+    public void putYourCastle(Player owner){
+        System.out.println("Take A Location And Put Your Castle");
+        Integer row =0;Integer column = 0;
+        getCastleCoordinates(row,column);
+        String name = "castle";
+        Building castle = new Building (name,1,1,true,"",owner,row,column,Building.getBuildingCost(name),-1,0,false,BuildingEnum.CASTLE);
+        gameMap.getCell(row,column).buildings.add(castle);
+        name = "king";
+        Warrior king = new Warrior(name,owner,5,1,30,30,0,false,false,false,false,false,false,true);
+        gameMap.getCell(row,column).units.add(king);
+    }
+
+    public void getCastleCoordinates (Integer row , Integer column) {
+        String buffer;
+        while (true) {
+            System.out.println("Please Enter Row Number");
+            try {
+                buffer = Menu.getScanner().nextLine();
+                Integer.parseInt(buffer);
+                row = Integer.parseInt(buffer);
+                if (row >0 && row <400)
+                    break;
+                System.out.println("Row Number Is Outside The Map,Re enter it");
+            } catch (Exception e) {
+                continue;
+            }
+        }
+        while (true) {
+            System.out.println("Please Enter Column Number");
+            try {
+                buffer = Menu.getScanner().nextLine();
+                Integer.parseInt(buffer);
+                column = Integer.parseInt(buffer);
+                if (column >0 && column <400)
+                    break;
+                System.out.println("Column Number Is Outside The Map,Re enter it");
+            } catch (Exception e) {
+                continue;
+            }
+        }
+        Cell cell = gameMap.getCell(row.intValue(),column.intValue());
+        if (cell.cellType!=CellType.GROUND || !cell.units.isEmpty() || cell.buildings.isEmpty()) {
+            System.out.println("Sorry , Can't Place The Castle Here, Please Re-Enter The Location");
+            getCastleCoordinates(row, column);
+        }
     }
 
     private void endGame(){

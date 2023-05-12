@@ -154,7 +154,7 @@ public class SignupLoginMenuController {
                 return "Wrong Password!\n";
             System.out.println("Wrong Password");
             int deley = 5000 * passWrongCounter.intValue();
-            Sleep.handleSleep(deley);
+            Sleep.handleSleep(deley,passWrongCounter.intValue());
             return "You Can Try It Again Now";
         }
         if (!mode)

@@ -15,11 +15,11 @@ public class GameMenu {
         System.out.println("WELCOME TO YOUR KINGDOM MY LORD.") ;
         ArrayList<Account> accounts = new ArrayList<Account>() ;
         Pattern patternUsername = Pattern.compile("(?<username>\\S+)") ;
-        Matcher matcherUsername = patternUsername.matcher( playersMatcher.group("usernames") );
+        Matcher matcherUsername = patternUsername.matcher(playersMatcher.group("usernames"));
         while( matcherUsername.find() ){
             accounts.add( Account.getAccountsMap().get(matcherUsername.group("username")) ) ;
         }
-        GameController gameController = new GameController( accounts ) ;
+        GameController gameController = new GameController(accounts);
         String input;
         while (true){
             input = Menu.getScanner().nextLine();
