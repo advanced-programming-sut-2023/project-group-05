@@ -308,22 +308,20 @@ public class Player {
     }
 
     public boolean isSimilarBuildingNearMe(String name ,int row , int column,GameMap gameMap){
-        for (Building building : gameMap.getCell(row-1,column).buildings){
-            if (building.getName().equals(name))
-                return true;
-        }
-        for (Building building : gameMap.getCell(row+1,column).buildings){
-            if (building.getName().equals(name))
-                return true;
-        }
-        for (Building building : gameMap.getCell(row,column-1).buildings){
-            if (building.getName().equals(name))
-                return true;
-        }
-        for (Building building : gameMap.getCell(row,column+1).buildings){
-            if (building.getName().equals(name))
-                return true;
-        }
+
+        if (gameMap.getCell(row-1,column).getBuilding().getName().equals(name))
+            return true;
+
+        if (gameMap.getCell(row+1,column).getBuilding().getName().equals(name))
+            return true;
+
+
+        if (gameMap.getCell(row,column+1).getBuilding().getName().equals(name))
+            return true;
+
+        if (gameMap.getCell(row,column-1).getBuilding().getName().equals(name))
+            return true;
+
         return false;
     }
 
