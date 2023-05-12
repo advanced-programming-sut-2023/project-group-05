@@ -4,6 +4,7 @@ import org.example.model.building.Building;
 import org.example.model.building.StorageBuilding;
 import org.example.model.unit.Unit;
 
+import java.sql.Array;
 import java.util.ArrayList;
 
 public class Player {
@@ -94,6 +95,7 @@ public class Player {
         //TODO : IS IT RIGHT ?
         this.buildings = new ArrayList<>();
         this.units = new ArrayList<>();
+        this.selectedUnits = new ArrayList<>() ;
     }
 
     public Building getCastle(){
@@ -275,9 +277,9 @@ public class Player {
         return this.selectedBuilding;
     }
 
-    public void setSelectedUnits(String unitType , Cell cell){
+    public void setSelectedUnits(Cell cell){
         for (Unit unit : cell.units){
-            if (unit.getName().equals("type") && unit.getOwner().equals(this))
+            if (unit.getOwner().equals(this))
                 this.selectedUnits.add(unit);
         }
     }

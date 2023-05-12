@@ -45,10 +45,22 @@ public class GameController {
         Integer nextRow = -1 ;
         for(Unit unit : Unit.getUnits()){
             if(unit.getTargetRow() == -1) continue ;
-            unit.getNextMove( nextRow , nextColumn ) ;
+            nextRow = unit.getNextMoveRow() ;
+            nextColumn = unit.getNextMoveColumn() ;
             if(nextRow == unit.getRow() && nextColumn == unit.getColumn()){
                 unit.setIsMoving(false) ;
                 continue ;
+            }
+            if(nextRow == -1 && nextColumn == -1){
+                unit.setTarget(unit.getTargetRow(),unit.getTargetColumn(),gameMap) ;
+                if(unit.getNextMoveColumn()==-1){
+                    unit.setIsMoving(false) ;
+                    continue ;
+                }
+                else{
+                    nextRow = unit.getNextMoveRow() ;
+                    nextColumn = unit.getNextMoveColumn() ;
+                }
             }
             if(gameMap.getMaskedMap()[nextRow][nextColumn]==0){
                 Cell cell = gameMap.getCell(unit.getRow() , unit.getColumn()) ;
@@ -60,6 +72,17 @@ public class GameController {
             }
             else{
                 unit.setTarget( unit.getTargetRow() , unit.getTargetColumn() , gameMap ) ;
+                if(gameMap.getMaskedMap()[nextRow][nextColumn]==0){
+                    Cell cell = gameMap.getCell(unit.getRow() , unit.getColumn()) ;
+                    Cell nextCell = gameMap.getCell(nextRow , nextColumn) ;
+                    cell.getUnits().remove(unit) ;
+                    nextCell.getUnits().add(unit) ;
+                    unit.setRow( nextRow );
+                    unit.setColumn( nextColumn ) ;
+                }
+                else{
+                    unit.setIsMoving(false) ;
+                }
             }
         }
 
@@ -74,19 +97,20 @@ public class GameController {
             if( attackingUnit != null ){
                 int distance2 = (attackingUnit.getRow() - warrior.getRow())*(attackingUnit.getRow() - warrior.getRow()) +
                         (attackingUnit.getColumn() - warrior.getColumn()) * (attackingUnit.getColumn() - warrior.getColumn());
-                if( distance2 <= warrior.getRange() ){
-                    // TODO : ACTUAL ATTACK TO UNIT
+                if( Math.abs(Math.sqrt(distance2)) <= warrior.getRange() ){
+                    //attackingUnit.getDamaged(warrior.getDamage()) ;
                 }
             }
             else if( attackingBuilding != null ){
                 int distance2 = (attackingBuilding.getRow() - warrior.getRow())*(attackingBuilding.getRow() - warrior.getRow()) +
                         (attackingBuilding.getColumn() - warrior.getColumn()) * (attackingBuilding.getColumn() - warrior.getColumn());
-                if( distance2 <= warrior.getRange(){
+                if( distance2 <= warrior.getRange()){
                     // TODO : ACTUAL ATTACK TO BUILDING
                 }
             }
         }
         // ACTIONS IN THE END OF EACH N TURNS ( N = players.size() )
+        // LIKE : TAX
 
 
     }
@@ -300,34 +324,28 @@ public class GameController {
     public String selectUnit(Matcher matcher){
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
-        String type = matcher.group("type");
         String error;
-        if ((error= handleSelectUnitError(row,column,type))!= null)
+        if ((error= handleSelectUnitError(row,column))!= null)
             return error;
         Cell cell = gameMap.getCell(row,column);
         // player.getSelectedUnits().clear();
         // TODO : selected units get cleared ?
-        player.setSelectedUnits(type,cell);
+        player.setSelectedUnits(cell);
         return "SelectUnit Successful!";
     }
 
-    public String handleSelectUnitError (int row , int column , String type){
+    public String handleSelectUnitError (int row , int column){
         if (row > 400 || column > 400 || row < 0 || column < 0)
             return "SelectUnit Failed : Row Or Column Exceeded Map";
         Cell cell = gameMap.getCell(row,column);
         //TODO : HANDLE THAT ONLY NON JOBLESS AND NON OPERATOR UNITS CAN BE SELECTED
-        UnitTypeEnum unitType = UnitTypeEnum.getUnitTypeByName(type);
-        if (unitType == null)
-            return "SelectUnit Failed : Unit Type Does Not Exists At All";
-        Boolean contain = false;
-        for (Unit unit : cell.units){
-            if (unit.getName().equals(type)){
-                contain = true;
-                break;
-            }
+        boolean ok = false ;
+        for(Unit unit : cell.getUnits()){
+            if(unit.getOwner()==player)
+                ok = true ;
         }
-        if (!contain)
-            return "SelectUnit Failed : Unit You Mentioned Is Not In The Cell";
+        if(!ok)
+            return "YOU HAVE NO UNITS HERE MY LORD." ;
         return null;
     }
 
@@ -456,6 +474,10 @@ public class GameController {
         if (cell.buildings.size() > 0)
             return "SetTexture Failed : Cell Contains Building";
         cell.cellType = CellType.getCellTypeEnumByName(matcher.group("type"));
+        if (cell.cellType == CellType.BOULDER || cell.cellType == CellType.RIVER ||
+                cell.cellType == CellType.SMALL_POND || cell.cellType == CellType.BIG_POND ||
+                cell.cellType == CellType.SEA)
+            gameMap.getMaskedMap()[row][column] = 1 ;
         return "SetTexture Successful!";
     }
 

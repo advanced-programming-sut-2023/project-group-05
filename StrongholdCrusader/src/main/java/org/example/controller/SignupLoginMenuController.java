@@ -128,9 +128,19 @@ public class SignupLoginMenuController {
             System.out.print(i);
             System.out.println( " - " + SecurityQuestions.questions.get(i - 1));
         }
-        long questionNum = scanner.nextInt() ;
+        long questionNum ;
+        try{questionNum = Integer.parseInt(scanner.nextLine()) ;}
+        catch(Exception e){
+            return "Create Account failed : You did not enter a number." ;
+        }
+        if(questionNum > SecurityQuestions.questions.size() || questionNum < 1 )
+            return "INVALID NUMBER : out of range" ;
         System.out.print( "Insert your answer : " ) ;
-        long answer = scanner.nextInt() ;
+        long answer ;
+        try{answer = Integer.parseInt( scanner.nextLine() ) ;}
+        catch(Exception e) {
+            return "ERROR : enter a number as your answer!";
+        }
         Account account = new Account( userName , nickName , email , (new Hash(password)).getHsh() , 0 ,
                 slogan , questionNum - 1 , answer ) ;
         return "account created successfully" ;

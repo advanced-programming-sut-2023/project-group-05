@@ -55,23 +55,34 @@ public class Unit {
         this.isMoving = true;
     }
 
-    public void getNextMove(Integer row , Integer column){
+    public int getNextMoveRow(){
         int nextMoveMask = pathFinder.goInDirectionFrom(this.row , this.column)  ;
         /// up, down, left, right (0, 1, 2, 3) and -1 if it is fucked!
         switch(nextMoveMask){
             case 0 :
-                row += -1 ;
-                break ;
+                return this.row - 1 ;
             case 1 :
-                row += 1  ;
-                break ;
+                return this.row + 1  ;
             case 2 :
-                column += -1 ;
-                break ;
             case 3 :
-                column += 1 ;
-                break ;
+                return this.row ;
         }
+        return -1 ;
+    }
+
+    public int getNextMoveColumn(){
+        int nextMoveMask = pathFinder.goInDirectionFrom(this.row , this.column)  ;
+        /// up, down, left, right (0, 1, 2, 3) and -1 if it is fucked!
+        switch(nextMoveMask){
+            case 0 :
+            case 1 :
+                return this.column ;
+            case 2 :
+                return this.column -1 ;
+            case 3 :
+                return this.column + 1 ;
+        }
+        return -1 ;
     }
 
     public int getTargetColumn(){
