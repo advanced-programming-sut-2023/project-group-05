@@ -97,6 +97,11 @@ public class Test {
         matcher = Commands.getMatchingMatcher(success,Commands.USER_LOGIN);
         result = SignupLoginMenuController.loginUser(Menu.getScanner(),matcher,false);
         Assert.assertEquals("User Logged In! hooray !",result);
+
+        String logout = "logout";
+        matcher = Commands.getMatchingMatcher(logout,Commands.LOGOUT);
+        result = SignupLoginMenuController.logout(matcher);
+        Assert.assertEquals("logged out",result);
     }
 
     @org.junit.Test
