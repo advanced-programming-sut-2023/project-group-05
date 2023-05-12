@@ -23,32 +23,32 @@ public class Player {
     private int cheeseCapacity ;
     private boolean isStockPileCreated;
     private boolean isGranaryCreated;
-    private int hop ;
-    private int cheese ;
-    private int bread ;
-    private int meat ;
-    private int pitch ;
-    private int apple ;
-    private int wineUsage ;
-    private double gold ;
-    private int stone ;
-    private int wood ;
-    private int iron ;
-    private int population ;
-    private int populationCapacity ;
-    private int popularity ;
-    private double taxForEachUnit ;
-    private int sword ;
-    private int spear ;
-    private int wheat ;
-    private int mace ;
-    private int ale ;
-    private int bow ;
-    private int pike ;
-    private int metalArmor ;
-    private int flour ;
-    private int crossbow ;
-    private int leatherArmor ;
+    public int hop ;
+    public int cheese ;
+    public int bread ;
+    public int meat ;
+    public int pitch ;
+    public int apple ;
+    public int wineUsage ;
+    public double gold ;
+    public int stone ;
+    public int wood ;
+    public int iron ;
+    public int population ;
+    public int populationCapacity ;
+    public int popularity ;
+    public double taxForEachUnit ;
+    public int sword ;
+    public int spear ;
+    public int wheat ;
+    public int mace ;
+    public int ale ;
+    public int bow ;
+    public int pike ;
+    public int metalArmour ;
+    public int flour ;
+    public int crossbow ;
+    public int leatherArmour ;
 
     public Player( Account account ){
         this.account = account ;
@@ -136,6 +136,10 @@ public class Player {
         this.pitch -= cost.getPitch() ;
 
         return null ;
+    }
+
+    public void decreaseGold(int gold){
+        this.gold -= gold ;
     }
 
     public void selectUnit( Unit unit ){
