@@ -33,11 +33,24 @@ public class GameController {
         this.turn = 0 ;
         this.winner = null ;
         gameMap = new GameMap(400,400);
+        putYourCastle( this.player );
+    }
+
+    public void debug(){
+        for(Unit unit : Unit.getUnits()){
+            System.out.println("UNIT : " + unit.getName() + " hitpoint : " + unit.getHitPoint() + " x = " + unit.getColumn() + " y = " + unit.getRow() ) ;
+        }
+        for(Building building : Building.getBuildings()){
+            System.out.println("UNIT : " + building.getName() + " hitpoint : " + building.getHitPoint() + " x = " + building.getColumn() + " y = " + building.getRow() ) ;
+        }
     }
 
     public void nextTurn(){
         this.turn++ ;
         this.player = this.players.get( this.turn % this.players.size() ) ;
+
+        if(this.turn == this.turn % this.players.size())
+            putYourCastle( this.player );
 
         // MOVING UNITS HAPPENS IN THIS PART
 
@@ -98,7 +111,7 @@ public class GameController {
                 int distance2 = (attackingUnit.getRow() - warrior.getRow())*(attackingUnit.getRow() - warrior.getRow()) +
                         (attackingUnit.getColumn() - warrior.getColumn()) * (attackingUnit.getColumn() - warrior.getColumn());
                 if( Math.abs(Math.sqrt(distance2)) <= warrior.getRange() ){
-                    //attackingUnit.getDamaged(warrior.getDamage()) ;
+                    attackingUnit.getDamaged(warrior.getDamage()) ;
                 }
             }
             else if( attackingBuilding != null ){
@@ -116,15 +129,18 @@ public class GameController {
     }
 
     public void putYourCastle(Player owner){
-        System.out.println("Take A Location And Put Your Castle");
+        System.out.println("----WELCOME TO THE GAME OF KINGS MY LORD----\n" +
+                ">>> Take A Location And Put Your Castle <<<\n" +
+                "-> YOUR CASTLE IS THE HEART OF YOUR KINGDOM\n" +
+                "-> CHOOSE A LOCATION FOR IT.");
         Integer row =0;Integer column = 0;
         getCastleCoordinates(row,column);
         String name = "castle";
         Building castle = new Building (name,1,1,true,"",owner,row,column,Building.getBuildingCost(name),
                 -1,0,false,BuildingEnum.CASTLE);
-        gameMap.getCell(row,column).buildings.add(castle);
+        gameMap.getCell(row,column).setBuilding(castle) ;
         name = "king";
-        Warrior king = new Warrior(name,owner,150,5,1,30,30,0,
+        Warrior king = new Warrior(name,owner, 50 , 500,5,1,30,30,0,
                 false,false,false,false,false,false,true,row.intValue(),column.intValue());
         gameMap.getCell(row,column).units.add(king);
         player.addBuilding(castle);
@@ -134,14 +150,14 @@ public class GameController {
     public void getCastleCoordinates (Integer row , Integer column) {
         String buffer;
         while (true) {
-            System.out.println("Please Enter Row Number");
+            System.out.print("Please Enter Row Number : ");
             try {
                 buffer = Menu.getScanner().nextLine();
                 Integer.parseInt(buffer);
                 row = Integer.parseInt(buffer);
                 if (row >0 && row <400)
                     break;
-                System.out.println("Row Number Is Outside The Map,Re enter it");
+                System.out.println("Row Number Is Outside The Map,Re-enter it");
             } catch (Exception e) {
                 continue;
             }
@@ -154,13 +170,13 @@ public class GameController {
                 column = Integer.parseInt(buffer);
                 if (column >0 && column <400)
                     break;
-                System.out.println("Column Number Is Outside The Map,Re enter it");
+                System.out.println("Column Number Is Outside The Map,Re-enter it");
             } catch (Exception e) {
                 continue;
             }
         }
         Cell cell = gameMap.getCell(row.intValue(),column.intValue());
-        if (cell.cellType!=CellType.GROUND || !cell.units.isEmpty() || cell.buildings.isEmpty()) {
+        if (cell.cellType!=CellType.GROUND || !cell.units.isEmpty() || cell.getBuilding() == null ) {
             System.out.println("Sorry , Can't Place The Castle Here, Please Re-Enter The Location");
             getCastleCoordinates(row, column);
         }
@@ -302,7 +318,7 @@ public class GameController {
         String error;
         if ((error = handleSelectBuildingError(row,column))!=null)
             return error;
-        Building building = gameMap.getCell(row,column).buildings.get(0);
+        Building building = gameMap.getCell(row,column).getBuilding() ;
         player.setSelectedBuilding(building);
         return "SelectBuilding Successful!";
     }
@@ -311,7 +327,7 @@ public class GameController {
         if (row > 400 || row < 0 || column > 400 || column <0 )
             return "SelectBuilding Failed : Row Or Column Exceeded Map";
         Cell cell = gameMap.getCell(row,column);
-        if (cell.buildings.size()==0)
+        if (cell.getBuilding() == null)
             return  "SelectBuilding Failed : Cell Does Not Contain Any Building";
         return null;
     }
@@ -418,12 +434,10 @@ public class GameController {
             }
         }
         boolean isEnemyBuilding = false ;
-        for(Building building : gameMap.getCell( row,column ).getBuildings()){
-            if(building.getOwner() != player){
-                isEnemyBuilding = true ;
-                enemyBuilding = building ;
-                break ;
-            }
+        Building building = gameMap.getCell(row , column).getBuilding();
+        if(building != null && building.getOwner() != player ){
+            isEnemyBuilding = true ;
+            enemyBuilding = building ;
         }
         if(!isEnemyUnit && !isEnemyBuilding)
             return "THERE IS NO ENEMY UNITS OR BUILDINGS THERE , MY LORD" ;
@@ -471,7 +485,7 @@ public class GameController {
         Cell cell = gameMap.getCell(row,column);
         if (cell.units.size()>0)
             return "SetTexture Failed  : Cell Contains Units";
-        if (cell.buildings.size() > 0)
+        if (cell.getBuilding() != null)
             return "SetTexture Failed : Cell Contains Building";
         cell.cellType = CellType.getCellTypeEnumByName(matcher.group("type"));
         if (cell.cellType == CellType.BOULDER || cell.cellType == CellType.RIVER ||
@@ -492,7 +506,7 @@ public class GameController {
             return "SetTexture Failed : Row Or Column Exceeded Map";
         for (int i =beginRow-1;i<endRow;++i){
             for (int j = beginColumn -1 ; j<endColumn;++j){
-                if (gameMap.getCell(i,j).buildings.size() > 0 || gameMap.getCell(i,j).units.size()>0)
+                if (gameMap.getCell(i,j).getBuilding() == null || gameMap.getCell(i,j).units.size()>0)
                     return "SetTexture Failed : Block Contains Unit Or Building";
             }
         }
@@ -540,7 +554,7 @@ public class GameController {
         if( cell.units.size() != 0 )
             return "THERE IS UNIT IN THIS PLACE." ;
 
-        if( cell.buildings.size() != 0 )
+        if( cell.getBuilding() != null )
             return "THERE IS BUILDING IN THIS PLACE." ;
 
         if( cell.cellType == CellType.SEA || cell.cellType == CellType.RIVER || cell.cellType == CellType.BIG_POND
@@ -577,7 +591,7 @@ public class GameController {
         }
         if(!validType) return "INVALID TREE TYPE." ;
 
-        if( gameMap.getCell( row , column ).getBuildings().size() != 0 )
+        if( gameMap.getCell( row , column ).getBuilding() != null )
             return "THERE IS A BUILDING IN THIS PLACE MY LORD!" ;
 
         if( gameMap.getCell( row , column ).units.size() != 0 )
@@ -599,12 +613,15 @@ public class GameController {
         int column = Integer.parseInt(matcher.group("column"));
         String type = matcher.group("type");
         String error = dropCreateBuildingErrorHandler(row,column,type,true);
+        if(gameMap.getCell(row , column).getBuilding() != null){
+            return "A BUILDING IS ALREADY HERE MY LORD." ;
+        }
         if (error != null)
             return error;
         Building building = Building.createBuildingByName(type,player,row,column);
         for (int i = row ; i<row+building.getHeight();++i){
             for (int j = column ; j < column + building.getWidth();++j)
-                gameMap.getCell(i,j).buildings.add(building);
+                gameMap.getCell(i,j).setBuilding(building);
         }
         player.addBuilding(building);
         player.handleBuildingEffectsOnPlayer(type);
@@ -621,7 +638,7 @@ public class GameController {
         Building building = Building.createBuildingByName(type,player,row,column);
         for (int i = row ; i<row+building.getHeight();++i){
             for (int j = column ; j < column + building.getWidth();++j)
-                gameMap.getCell(i,j).buildings.add(building);
+                gameMap.getCell(i,j).setBuilding(building) ;
         }
         player.addBuilding(building);
         player.handleBuildingEffectsOnPlayer(type);
@@ -655,7 +672,7 @@ public class GameController {
         int width = BuildingEnum.getBuildingWidthByName(buildingName);
         for (int i = row ; i<row+height;++i){
             for (int j = column ; j < column + width;++j){
-                if (!gameMap.getCell(row,column).buildings.isEmpty())
+                if (gameMap.getCell(row,column).getBuilding() != null)
                     return "Building Can't Be Placed Here : Another Building Is Here";
                 if (!gameMap.getCell(row,column).units.isEmpty())
                     return "Building Can't Be Placed Here : Some Units Are Here";

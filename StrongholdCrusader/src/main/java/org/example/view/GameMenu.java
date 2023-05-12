@@ -137,6 +137,10 @@ public class GameMenu {
             else if (Commands.getMatchingMatcher(input,Commands.SELL)!=null)
                 System.out.println( gameController.sell(Commands.getMatchingMatcher(input,Commands.SELL)));
 
+            else if( input.equals("debug") ){
+                gameController.debug() ;
+            }
+
             else
                 System.out.println("Invalid Command");
 

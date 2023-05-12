@@ -13,6 +13,7 @@ public class Building {
     private final String name ;
     private final String category ;
     private ArrayList <Unit> units ;
+    private static ArrayList<Building> buildings ;
     private final Player owner ;
     private final int height ;
     private final int width ;
@@ -44,7 +45,11 @@ public class Building {
         this.hitPoint = hitPoint ;
         this.popularityRate = popularityRate ;
         owner.setPopularity( owner.getPopularity() + popularityRate );
+        buildings.add(this) ;
+    }
 
+    public static ArrayList<Building> getBuildings(){
+        return buildings ;
     }
 
     public static HashMap<String, BuildingEnum> getBuildingEnumByName(){

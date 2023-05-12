@@ -87,8 +87,10 @@ public class MapMenuController {
             for (Building building : cell.buildings) {
                 if (building instanceof AttackDefenceBuilding)
                     return " W ";
-                if (building.getName().equals("Tree"))
+                if (building.getName().equals("deserttree") || building.getName().equals("cherrytree") || building.getName().equals("datetree") || building.getName().equals("olivetree") || building.getName().equals("coconuttree"))
                     return " T ";
+                if (building.getName().equals("rockeast") || building.getName().equals("rocknorth") || building.getName().equals("rocksouth") || building.getName().equals("rockwest"))
+                    return " R ";
             }
             return " B ";
         }

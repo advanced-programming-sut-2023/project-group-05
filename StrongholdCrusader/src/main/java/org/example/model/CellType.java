@@ -21,7 +21,7 @@ public enum CellType {
     COAST("coast"),
     SEA("sea");
     private String name;
-    private CellType(String name){
+    CellType(String name){
         this.name = name;
         Cell.getCellTypeEnumByName().put(name,this);
     }

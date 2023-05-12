@@ -9,6 +9,7 @@ public class Warrior extends Unit {
     private final int attackPower ;
     private final int defendPower ;
     private final int reloadSpeed ;
+    private int damage ;
     private final boolean hasFire ;
     private final boolean canPushLadder ;
     private final boolean hasHorse ;
@@ -19,7 +20,7 @@ public class Warrior extends Unit {
     private Unit attackingUnit = null ;
     private Building attackingBuilding = null ;
 
-    public Warrior( String name , Player owner , int hitPoint ,int movingSpeed , int range , int attackPower , int defendPower ,
+    public Warrior( String name , Player owner , int damage , int hitPoint ,int movingSpeed , int range , int attackPower , int defendPower ,
                     int reloadSpeed , boolean hasFire , boolean canPushLadder , boolean hasHorse , boolean canDigMoat ,
                     boolean isHidden , boolean canClimb , boolean canDamageCastle , int row , int column ){
         super( name , owner , hitPoint,movingSpeed , range , row , column ) ;
@@ -32,7 +33,12 @@ public class Warrior extends Unit {
         this.canDigMoat = canDigMoat ;
         this.isHidden = isHidden ;
         this.canClimb = canClimb ;
+        this.damage = damage ;
         this.canDamageCastle = canDamageCastle ;
+    }
+
+    public int getDamage(){
+        return this.damage ;
     }
 
     public void attackUnit( Unit unit , GameMap gameMap ){
