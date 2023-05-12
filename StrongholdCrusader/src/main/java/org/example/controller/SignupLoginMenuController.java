@@ -1,10 +1,12 @@
 package org.example.controller;
 
 import org.example.model.Account;
+import org.example.model.Sleep;
 import org.example.view.MainMenu;
 import org.example.view.SignupLoginMenu;
 import org.json.simple.JSONObject;
 
+import java.net.Inet4Address;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -94,7 +96,7 @@ public class SignupLoginMenuController {
         if(password.equals("random"))
         {
             String[] character = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
-                "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"} ;
+                    "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"} ;
             password = "" ;
             Random random = new Random() ;
             password += "#$%" ;
@@ -134,7 +136,7 @@ public class SignupLoginMenuController {
         return "account created successfully" ;
     }
 
-    public static String loginUser( Scanner scanner , Matcher matcher,boolean mode ){
+    public static String loginUser( Scanner scanner , Matcher matcher,boolean mode , Integer passWrongCounter){
         //mode true is for real game --- mode false is for unit test
         String password = matcher.group("password") ;
         String userName = matcher.group( "username" ) ;
@@ -146,8 +148,15 @@ public class SignupLoginMenuController {
             return "This username does not exist\n";
         JSONObject cur = DataBase.getFromDataBase("userName", userName);
         long pass = (long) cur.get("password");
-        if (pass != Hash.encode(password))
-            return "Wrong Password!\n";
+        if (pass != Hash.encode(password)) {
+            ++passWrongCounter;
+            if(!mode)
+                return "Wrong Password!\n";
+            System.out.println("Wrong Password");
+            int deley = 5000 * passWrongCounter.intValue();
+            Sleep.handleSleep(deley,passWrongCounter.intValue());
+            return "You Can Try It Again Now";
+        }
         if (!mode)
             return "User Logged In! hooray !";
         System.out.println("User Logged In! hooray !");

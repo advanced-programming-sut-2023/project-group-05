@@ -6,8 +6,8 @@ public class Tunneler extends Unit {
 
     private boolean underGround ;
 
-    public Tunneler( Player owner , int row , int column ){
-        super( "Tunneler" , owner , 0 , 0 , row , column ) ;
+    public Tunneler( Player owner , int hitPoint,int row , int column ){
+        super( "Tunneler" , owner , 0 ,0, 0 , row , column ) ;
         this.underGround = false ;
     }
 
