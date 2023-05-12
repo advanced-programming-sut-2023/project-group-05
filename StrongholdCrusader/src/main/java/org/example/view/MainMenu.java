@@ -16,7 +16,6 @@ public class MainMenu {
 
             if( input.equals("logout") )
                 return ;
-
             else if( input.equals("enter profile menu") )
                 ProfileMenu.run( account ) ;
 

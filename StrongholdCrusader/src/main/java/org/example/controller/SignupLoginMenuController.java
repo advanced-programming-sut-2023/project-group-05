@@ -156,9 +156,6 @@ public class SignupLoginMenuController {
         return null;
     }
 
-    public static String questionPick(Matcher matcher){
-        return null;
-    }
 
     public static String forgetPassword (Matcher matcher){
         return null;

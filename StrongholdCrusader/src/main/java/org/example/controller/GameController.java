@@ -249,6 +249,8 @@ public class GameController {
             return "No Unit Selected";
         if (row > 400 || row <0 || column >400 || column < 0)
             return "Move Unit Failed : Row Or Column Exceeded Map";
+        if (!gameMap.getCell(row,column).permeable(null))
+            return "Move Unit Failed : Destination Is Not Permeable";
         // TODO : EXPLANATION --> IT IS ASSUMED THAT ALL SELECTED UNITS ARE FROM A SINGLE CELL AND THEY ARE GOING TO A SINGLE DESTINATION
         PathFinder pathFinder = new PathFinder();
         pathFinder.Run(row,column);

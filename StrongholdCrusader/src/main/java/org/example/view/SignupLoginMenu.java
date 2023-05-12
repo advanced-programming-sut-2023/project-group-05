@@ -13,8 +13,6 @@ public class SignupLoginMenu {
             String input = Menu.getScanner().nextLine();
             if ((matcher =Commands.getMatchingMatcher(input,Commands.CREATE_USER))!=null)
                 System.out.println(SignupLoginMenuController.createUser( scanner , matcher , true));
-            else if ((matcher =Commands.getMatchingMatcher(input,Commands.ANSWER_QUESTION))!=null)
-                System.out.println(SignupLoginMenuController.questionPick(matcher));
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.USER_LOGIN))!=null)
                 System.out.print(SignupLoginMenuController.loginUser(scanner , matcher,true));
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.FORGET_PASSWORD))!=null)
