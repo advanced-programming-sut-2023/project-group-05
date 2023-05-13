@@ -15,7 +15,7 @@ public class AttackDefenceBuilding extends Building {
                                   int popularityRate , boolean holdsAnimal , int defendRange , int damage ,
                                   boolean functional , int attackDamage , BuildingEnum buildingEnum ){
         super( name , width , height , passable , category , owner , row , column , cost , hitPoint, popularityRate
-                , holdsAnimal , buildingEnum) ;
+                , holdsAnimal , buildingEnum , 0 ) ;
         this.defendRange = defendRange ;
         this.damage = damage ;
         this.functional = functional ;

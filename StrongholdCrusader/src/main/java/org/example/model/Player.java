@@ -93,6 +93,7 @@ public class Player {
         this.score = 0 ;
 
         //TODO : IS IT RIGHT ?
+        this.selectedBuilding = null ;
         this.buildings = new ArrayList<>();
         this.units = new ArrayList<>();
         this.selectedUnits = new ArrayList<>() ;

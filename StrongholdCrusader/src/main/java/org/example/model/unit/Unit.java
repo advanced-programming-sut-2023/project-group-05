@@ -40,8 +40,17 @@ public class Unit {
         owner.getUnits().add(this) ;
     }
 
-    public void getDamaged(int x){
+    public void die(GameMap gameMap){
+        this.owner.getSelectedUnits().remove(this) ;
+        this.owner.getUnits().remove(this) ;
+        this.owner.setPopulation( this.owner.getPopulation() - 1 );
+        gameMap.getCell(this.getRow() , this.getColumn()).getUnits().remove(this) ;
+    }
+
+    public void getDamaged(int x , GameMap gameMap){
         this.hitPoint -= x ;
+        if(this.hitPoint <= 0)
+            this.die(gameMap) ;
     }
 
     public static ArrayList<Unit> getUnits(){

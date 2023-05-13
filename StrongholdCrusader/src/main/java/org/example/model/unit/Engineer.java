@@ -25,7 +25,7 @@ public class Engineer extends Unit {
             if(!(row < 400 && column < 400 && column >= 0 && row >= 0)) break ;
             for(Unit unit : gameMap.getCell(row,column).getUnits() ){
                 if(unit.getOwner()!=this.getOwner())
-                    unit.getDamaged(50) ;
+                    unit.getDamaged(50,gameMap) ;
             }
 
         }

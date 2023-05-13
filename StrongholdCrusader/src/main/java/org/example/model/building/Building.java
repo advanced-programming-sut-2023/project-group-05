@@ -2,6 +2,7 @@ package org.example.model.building;
 
 import org.example.model.BuildingEnum;
 import org.example.model.Cost;
+import org.example.model.GameMap;
 import org.example.model.unit.Unit ;
 import org.example.model.Player ;
 
@@ -27,14 +28,17 @@ public class Building {
     protected int hitPoint ;
     private static HashMap<String , BuildingEnum> buildingEnumByName = new HashMap<>();
 
+    private int fearRate ;
+
     public Building( String name , int width , int height , boolean passable , String category , Player owner
             , int row , int column , Cost cost , int hitPoint , int popularityRate , boolean holdsAnimal ,
-              BuildingEnum buildingEnum ){
+              BuildingEnum buildingEnum , int fearRate ){
 
         this.name = name ;
         this.category = category ;
         this.owner = owner ;
         this.height = height ;
+        this.fearRate = fearRate ;
         this.width = width ;
         this.cost = cost ;
         this.row = row ;
@@ -64,8 +68,24 @@ public class Building {
         this.units.add( unit ) ;
     }
 
-    public void getDamaged( int damage ){
+    public void collapse( GameMap gameMap ){
+        // removing this building from everywhere
+        this.owner.getBuildings().remove(this) ;
+        if( this == this.owner.getSelectedBuilding() ){
+            this.owner.setSelectedBuilding(null) ;
+        }
+        for(int i = this.row ; i < this.row + this.height ; i++)
+            for(int j = this.column ; j < this.column + this.width ; j++ )
+                gameMap.getCell(i,j).setBuilding( null );
+        // TODO : removing it's effects like : popularity , fearrate
+        this.owner.setPopularity( this.owner.getPopularity() - this.popularityRate );
+        this.owner.setFearRate( this.owner.getFearRate() ) ;
+    }
+
+    public void getDamaged( int damage , GameMap gameMap ){
         this.hitPoint -= damage ;
+        if(this.hitPoint <= 0)
+            this.collapse(gameMap) ;
     }
 
     public int getHitPoint(){
@@ -119,27 +139,27 @@ public class Building {
     public static Building createBuildingByName (String type , Player owner,int row , int column){
         // TREES
 
-        if(type.equals("deserttree")) return new Building( "deserttree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.DESERT_TREE ) ;
-        if(type.equals("olivetree")) return new Building( "olivetree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.OLIVE_TREE ) ;
-        if(type.equals("coconuttree")) return new Building( "coconuttree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.COCONUT_TREE ) ;
-        if(type.equals("cherrytree")) return new Building( "cherrytree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.CHERRY_TREE ) ;
-        if(type.equals("datetree")) return new Building( "datetree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.DATE_TREE ) ;
+        if(type.equals("deserttree")) return new Building( "deserttree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.DESERT_TREE , 0 ) ;
+        if(type.equals("olivetree")) return new Building( "olivetree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.OLIVE_TREE , 0 ) ;
+        if(type.equals("coconuttree")) return new Building( "coconuttree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.COCONUT_TREE , 0 ) ;
+        if(type.equals("cherrytree")) return new Building( "cherrytree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.CHERRY_TREE , 0 ) ;
+        if(type.equals("datetree")) return new Building( "datetree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.DATE_TREE , 0 ) ;
 
         // ROCKS
 
-        if(type.equals("rockwest")) return new Building( "rockwest" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_WEST ) ;
-        if(type.equals("rockeast")) return new Building( "rockeast" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_EAST ) ;
-        if(type.equals("rocknorth")) return new Building( "rocknorth" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_NORTH ) ;
-        if(type.equals("rocksouth")) return new Building( "rocksouth" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_SOUTH ) ;
+        if(type.equals("rockwest")) return new Building( "rockwest" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_WEST ,  0 ) ;
+        if(type.equals("rockeast")) return new Building( "rockeast" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_EAST , 0 ) ;
+        if(type.equals("rocknorth")) return new Building( "rocknorth" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_NORTH , 0 ) ;
+        if(type.equals("rocksouth")) return new Building( "rocksouth" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_SOUTH , 0 ) ;
 
 
         // OTHER
         if (type.equals("smallstonewall"))
-            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),500,0,false,BuildingEnum.SMALL_STONE_WALL);
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),500,0,false,BuildingEnum.SMALL_STONE_WALL,0);
         if (type.equals("bigstonewall"))
-            return new Building(type,2,2,false,"",owner,row,column,getBuildingCost(type),2000,0,false,BuildingEnum.BIG_STONE_WALL);
+            return new Building(type,2,2,false,"",owner,row,column,getBuildingCost(type),2000,0,false,BuildingEnum.BIG_STONE_WALL,0);
         if (type.equals("drawbridge"))
-            return new Building(type,1,3,true,"",owner,row,column,getBuildingCost(type),200,0,false,BuildingEnum.DRAW_BRIDGE);
+            return new Building(type,1,3,true,"",owner,row,column,getBuildingCost(type),200,0,false,BuildingEnum.DRAW_BRIDGE,0);
         if (type.equals("lookouttower"))
             return new AttackDefenceBuilding(type,3,3,false,"",owner,row,column,getBuildingCost(type),5000,0,false,70,20,false,20,BuildingEnum.LOOKOUT_TOWER);
         if (type.equals("perimetertower"))

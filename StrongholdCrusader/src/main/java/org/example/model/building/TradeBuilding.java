@@ -19,7 +19,7 @@ public class TradeBuilding extends Building {
                           int popularityRate , boolean holdsAnimal , Player owner , int row , int column , int hitPoint , Cost cost ,
                           int requiredNumberOfOperators , BuildingEnum buildingEnum ){
             super( name , height , width , passable , category , owner , row , column , cost , hitPoint ,
-                    popularityRate , holdsAnimal , buildingEnum ) ;
+                    popularityRate , holdsAnimal , buildingEnum , 0 ) ;
         this.requiredNumberOfOperators = requiredNumberOfOperators ;
     }
 

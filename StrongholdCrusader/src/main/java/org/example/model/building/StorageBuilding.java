@@ -18,7 +18,7 @@ public class StorageBuilding extends Building {
                             int upperBound, BuildingEnum buildingEnum){
 
         super( name , width , height , passable , category , owner, row , column , cost , hitPoint ,
-               popularityRate , holdsAnimal , buildingEnum) ;
+               popularityRate , holdsAnimal , buildingEnum , 0 ) ;
 
         this.upperBound = upperBound;
 

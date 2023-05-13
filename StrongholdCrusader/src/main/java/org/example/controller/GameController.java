@@ -108,14 +108,14 @@ public class GameController {
                 int distance2 = (attackingUnit.getRow() - warrior.getRow())*(attackingUnit.getRow() - warrior.getRow()) +
                         (attackingUnit.getColumn() - warrior.getColumn()) * (attackingUnit.getColumn() - warrior.getColumn());
                 if( Math.abs(Math.sqrt(distance2)) <= warrior.getRange() ){
-                    attackingUnit.getDamaged(warrior.getDamage()) ;
+                    attackingUnit.getDamaged(warrior.getDamage(),gameMap) ;
                 }
             }
             else if( attackingBuilding != null ){
                 int distance2 = (attackingBuilding.getRow() - warrior.getRow())*(attackingBuilding.getRow() - warrior.getRow()) +
                         (attackingBuilding.getColumn() - warrior.getColumn()) * (attackingBuilding.getColumn() - warrior.getColumn());
                 if( distance2 <= warrior.getRange()){
-                    // TODO : ACTUAL ATTACK TO BUILDING
+                    attackingBuilding.getDamaged(warrior.getDamage() , gameMap) ;
                 }
             }
         }
