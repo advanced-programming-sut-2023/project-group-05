@@ -20,7 +20,7 @@ public class MainMenu {
                 ProfileMenu.run( account ) ;
 
             else if( Commands.getMatchingMatcher( input , Commands.START_GAME ) != null ){
-                GameMenu.run( Commands.getMatchingMatcher( input , Commands.START_GAME ) ) ;
+                GameMenu.run( Commands.getMatchingMatcher( input , Commands.START_GAME ) , account ) ;
             }
 
             else System.out.println( "invalid command" ) ;

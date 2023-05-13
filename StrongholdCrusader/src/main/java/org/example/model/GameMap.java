@@ -16,6 +16,7 @@ public class GameMap {
         //width = number of columns
         this.map = new Cell[height][width] ;
         this.maskedMap = new int[height][width] ;
+        this.maskedMapUnderGround = new int[height][width] ;
         for(int i = 0 ; i < height ; i++)
             for(int j = 0 ; j < width ; j++) {
                 map[i][j] = new Cell( CellType.GROUND );

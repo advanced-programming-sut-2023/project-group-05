@@ -11,11 +11,12 @@ import java.util.regex.Pattern;
 
 public class GameMenu {
 
-    public static void run ( Matcher playersMatcher ){
+    public static void run ( Matcher playersMatcher , Account currentAccount ){
         System.out.println("WELCOME TO YOUR KINGDOM MY LORD.") ;
         ArrayList<Account> accounts = new ArrayList<Account>() ;
         Pattern patternUsername = Pattern.compile("(?<username>\\S+)") ;
         Matcher matcherUsername = patternUsername.matcher( playersMatcher.group("usernames") );
+        accounts.add(currentAccount) ;
         while( matcherUsername.find() ){
             accounts.add( Account.getAccountsMap().get(matcherUsername.group("username")) ) ;
         }

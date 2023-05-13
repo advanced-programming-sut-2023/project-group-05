@@ -10,6 +10,7 @@ import org.example.view.Menu;
 
 import javax.print.DocFlavor;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.regex.Matcher;
 
@@ -50,10 +51,10 @@ public class GameController {
 
     public void debug(){
         for(Unit unit : Unit.getUnits()){
-            System.out.println("UNIT : " + unit.getName() + " hitpoint : " + unit.getHitPoint() + " x = " + unit.getColumn() + " y = " + unit.getRow() ) ;
+            System.out.println("UNIT : " + unit.getName() + " hitpoint : " + unit.getHitPoint() + " x = " + unit.getColumn() + " y = " + unit.getRow() + ( unit instanceof Warrior ? " mode = " + ((Warrior)unit).getUnitMode().name() : "" ) ) ;
         }
         for(Building building : Building.getBuildings()){
-            System.out.println("UNIT : " + building.getName() + " hitpoint : " + building.getHitPoint() + " x = " + building.getColumn() + " y = " + building.getRow() ) ;
+            System.out.println("BUILDING : " + building.getName() + " hitpoint : " + building.getHitPoint() + " x = " + building.getColumn() + " y = " + building.getRow() ) ;
         }
     }
 
@@ -63,6 +64,8 @@ public class GameController {
 
         if(this.turn == this.turn % this.players.size())
             putYourCastle( this.player );
+
+        System.out.println("turn : " + this.turn + "playersize : " + this.players.size() ) ;
 
         // MOVING UNITS HAPPENS IN THIS PART
 
@@ -102,17 +105,42 @@ public class GameController {
         for(Unit unit : Unit.getUnits()){
             if( !(unit instanceof Warrior) ) continue ;
             Warrior warrior = (Warrior) unit ;
+
+            // AGGRESSIVE GUYS
+
             if(warrior.getUnitMode()==UnitModeEnum.AGGRESSIVE){
                 // TODO : USE A BETTER ALGORITHM FOR THIS
-                for(Unit unit : Unit.getUnits()){
-                    if(unit.getOwner()==this.player) continue ;
-                    int dr = unit.getRow() - warrior.getRow() ;
-                    int dc = unit.getColumn() - warrior.getColumn() ;
+                for(Unit nearbyUnit : Unit.getUnits()){
+                    if(nearbyUnit.getOwner()==this.player) continue ;
+                    int dr = nearbyUnit.getRow() - warrior.getRow() ;
+                    int dc = nearbyUnit.getColumn() - warrior.getColumn() ;
                     if( dr * dr + dc * dc <= warrior.getRange() ){
-                        warrior.attackUnit( unit , gameMap ) ;
+                        warrior.attackUnit( nearbyUnit , gameMap ) ;
+                        break ;
                     }
                 }
             }
+
+            // DEFENSIVE GUYS
+
+            if(warrior.getUnitMode()==UnitModeEnum.DEFENSIVE){
+                int num = 0 ;
+                Unit attackedUnit = null ;
+                for(Unit nearbyUnit : Unit.getUnits()){
+                    if(nearbyUnit.getOwner()==this.player) continue ;
+                    int dr = nearbyUnit.getRow() - warrior.getRow() ;
+                    int dc = nearbyUnit.getColumn() - warrior.getColumn() ;
+                    if( dr * dr + dc * dc <= warrior.getRange() ){
+                        attackedUnit = nearbyUnit ;
+                        num++ ;
+                    }
+                }
+                if(num>=3)
+                    warrior.attackUnit( attackedUnit , gameMap ) ;
+
+            }
+
+
         }
 
         // ALL WARRIORS WHICH ARE ATTACKING WILL DEAL DAMAGE IF THE ENEMY IS IN THEIR RANGE.
@@ -154,7 +182,9 @@ public class GameController {
                 "-> YOUR CASTLE IS THE HEART OF YOUR KINGDOM\n" +
                 "-> CHOOSE A LOCATION FOR IT.");
         Integer row =0;Integer column = 0;
-        getCastleCoordinates(row,column);
+        ArrayList<Integer> castleCoordinates = getCastleCoordinates();
+        row = castleCoordinates.get(0) ;
+        column = castleCoordinates.get(1) ;
         String name = "castle";
         Building castle = new Building (name,1,1,true,"",owner,row,column,Building.getBuildingCost(name),
                 -1,0,false,BuildingEnum.CASTLE , 0);
@@ -167,8 +197,9 @@ public class GameController {
         player.addUnit(king);
     }
 
-    public void getCastleCoordinates (Integer row , Integer column) {
+    public ArrayList<Integer> getCastleCoordinates () {
         String buffer;
+        int row , column ;
         while (true) {
             System.out.print("Please Enter Row Number : ");
             try {
@@ -195,11 +226,13 @@ public class GameController {
                 continue;
             }
         }
-        Cell cell = gameMap.getCell(row.intValue(),column.intValue());
+        Cell cell = gameMap.getCell(row , column);
         if (cell.cellType!=CellType.GROUND || !cell.units.isEmpty() || cell.getBuilding() != null ) {
             System.out.println("Sorry , Can't Place The Castle Here, Please Re-Enter The Location");
-            getCastleCoordinates(row, column);
+            return getCastleCoordinates();
         }
+        ArrayList<Integer> ret = new ArrayList<Integer>( Arrays.asList(row , column) ) ;
+        return ret ;
     }
 
     private void endGame(){
