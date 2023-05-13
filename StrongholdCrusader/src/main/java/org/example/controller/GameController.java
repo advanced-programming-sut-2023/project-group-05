@@ -539,8 +539,10 @@ public class GameController {
         cell.cellType = CellType.getCellTypeEnumByName(matcher.group("type"));
         if (cell.cellType == CellType.BOULDER || cell.cellType == CellType.RIVER ||
                 cell.cellType == CellType.SMALL_POND || cell.cellType == CellType.BIG_POND ||
-                cell.cellType == CellType.SEA)
+                cell.cellType == CellType.SEA){
             gameMap.getMaskedMap()[row][column] = 1 ;
+            gameMap.getMaskedMapUnderGround()[row][column] = 1 ;
+        }
         return "SetTexture Successful!";
     }
 
@@ -686,8 +688,10 @@ public class GameController {
             return error;
         Building building = Building.createBuildingByName(type,player,row,column);
         for (int i = row ; i<row+building.getHeight();++i){
-            for (int j = column ; j < column + building.getWidth();++j)
+            for (int j = column ; j < column + building.getWidth();++j){
                 gameMap.getCell(i,j).setBuilding(building) ;
+                if(building.getPassable()) gameMap.getMaskedMap()[i][j] = 1 ;
+            }
         }
         player.addBuilding(building);
         gameMap.getMaskedMap()[row][column] = 1 ;
