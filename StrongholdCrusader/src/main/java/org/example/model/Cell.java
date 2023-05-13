@@ -68,5 +68,9 @@ public class Cell {
         return cellTypeEnumByName;
     }
 
+    public CellType getCellType(){
+        return this.cellType ;
+    }
+
 
 }

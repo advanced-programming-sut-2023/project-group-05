@@ -9,6 +9,7 @@ import java.util.Objects;
 public class GameMap {
     private Cell[][] map ;
     private int[][] maskedMap ;
+    private int[][] maskedMapUnderGround ;
 
     public GameMap(int height , int width){
         //height = number of rows
@@ -19,7 +20,12 @@ public class GameMap {
             for(int j = 0 ; j < width ; j++) {
                 map[i][j] = new Cell( CellType.GROUND );
                 maskedMap[i][j] = 0 ;
+                maskedMapUnderGround[i][j] = 0 ;
             }
+    }
+
+    public int[][] getMaskedMapUnderGround(){
+        return this.maskedMapUnderGround ;
     }
 
     public int[][] getMaskedMap(){

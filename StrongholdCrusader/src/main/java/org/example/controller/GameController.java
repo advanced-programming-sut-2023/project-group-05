@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.model.*;
 import org.example.model.building.Building;
 import org.example.model.unit.Engineer;
+import org.example.model.unit.Tunneler;
 import org.example.model.unit.Unit;
 import org.example.model.unit.Warrior;
 import org.example.view.Menu;
@@ -79,7 +80,7 @@ public class GameController {
                 unit.setIsMoving(false) ;
                 continue ;
             }
-            if(nextRow == unit.getRow() && nextColumn == unit.getColumn()){
+            if(nextRow == unit.getRow() && nextColumn == unit.getColumn() && unit instanceof Warrior){
                 Warrior warrior = (Warrior)unit ;
                 warrior.setTarget(warrior.getRow(),warrior.getColumn(),gameMap) ;
                 nextRow = warrior.getNextMoveRow() ;
@@ -508,7 +509,16 @@ public class GameController {
     }
 
     public String digTunnel(Matcher matcher){
-        return null;
+        boolean hasTunneler = false ;
+        for(Unit unit : player.getSelectedUnits()){
+            if(unit instanceof Tunneler){
+                hasTunneler = true ;
+                ((Tunneler)unit).dig(gameMap);
+            }
+        }
+        if(!hasTunneler) return "YOU HAVE NO TUNNELERS SIRE." ;
+
+        return "TUNNELERS GONE UNDER GROUND MY LORD.";
     }
 
     public String buildEquipment(Matcher matcher){
@@ -680,6 +690,7 @@ public class GameController {
                 gameMap.getCell(i,j).setBuilding(building) ;
         }
         player.addBuilding(building);
+        gameMap.getMaskedMap()[row][column] = 1 ;
         player.handleBuildingEffectsOnPlayer(type);
         return "Drop Building Successful!";
     }
