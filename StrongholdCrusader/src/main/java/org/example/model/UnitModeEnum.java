@@ -4,11 +4,11 @@ import org.example.model.unit.Unit;
 
 public enum UnitModeEnum {
     // TODO : write details of each mode
-    MODE1("name1") , MODE2("name2") , MODE3("name3") ;
+    DEFENSIVE("defensive") , OFFENSIVE("offensive") , STANDING("standing") ;
 
-    private String unitModeName ;
+    private final String unitModeName ;
 
-    private UnitModeEnum( String unitModeName ){
+    UnitModeEnum( String unitModeName ){
         this.unitModeName = unitModeName ;
         Unit.getUnitModeEnumMap().put(unitModeName,this);
     }

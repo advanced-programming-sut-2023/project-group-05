@@ -305,7 +305,8 @@ public class GameController {
             return "invalid rate" ;
         }
         player.setFearRate( rate ) ;
-        return "FEAR RATE SET TO " + rate ;
+        return "FEAR RATE SET TO " + rate + ( rate > 0 ? " , PEOPLE ARE FEARING YOU MY LOooOrddd... sorry." :
+                " , THANKS FOR BEING NICE MY LORD." ) ;
     }
 
 
@@ -317,7 +318,7 @@ public class GameController {
             return error;
         Building building = gameMap.getCell(row,column).getBuilding() ;
         player.setSelectedBuilding(building);
-        return "SelectBuilding Successful!";
+        return "SELECTED THE BUILDING MY KING.";
     }
 
     public String handleSelectBuildingError (int row , int column){
