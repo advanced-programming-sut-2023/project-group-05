@@ -3,10 +3,14 @@ package org.example.model.building;
 import org.example.model.BuildingEnum;
 import org.example.model.Cost;
 import org.example.model.Player;
+import org.example.model.unit.Unit;
 
+import java.awt.desktop.SystemEventListener;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Objects;
+
+import static org.example.model.Cost.manfi;
 
 public class TradeBuilding extends Building {
 
@@ -20,7 +24,8 @@ public class TradeBuilding extends Building {
 
     public TradeBuilding( String name , String category , int width , int height , boolean passable ,
                           int popularityRate , boolean holdsAnimal , Player owner , int row , int column , int hitPoint , Cost cost ,
-                          int requiredNumberOfOperators , BuildingEnum buildingEnum ){
+                          int requiredNumberOfOperators , BuildingEnum buildingEnum )
+    {
             super( name , height , width , passable , category , owner , row , column , cost , hitPoint ,
                     popularityRate , holdsAnimal , buildingEnum ) ;
         this.requiredNumberOfOperators = requiredNumberOfOperators ;
@@ -34,15 +39,20 @@ public class TradeBuilding extends Building {
         {
             return false;
         }
-        Cost input = new new Cost(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ,0 0, 0, 0, 0, 0, 0, 0);
+        Cost input = new Cost(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-        Cost output = new Cost(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ,0 0, 0, 0, 0, 0, 0, 0);
+        Cost output = new Cost(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-        ArrayList < String > objectsInput;
-        ArrayList < String > objectsOutput;
+        ArrayList < String > objectsInput = new ArrayList< String >();
+        ArrayList < String > objectsOutput = new ArrayList< String >();
         if(super.getName().equals("barracks"))
         {
             //TODO in here you have to specificy change the
+            if(this.tradeType == 0) /// jobless to archer?
+            {
+
+            }
+
         }
         if(super.getName().equals("mercenarypost"))
         {
@@ -200,8 +210,38 @@ public class TradeBuilding extends Building {
         {
 
         }
-        boolean is_OK = 1;
-
+        Player owner = super.getOwner();
+        boolean validTrade = true;
+        for(String cur : objectsInput)
+        {
+            if(owner.getUnitByType(cur) == null)
+            {
+                validTrade = false;
+            }
+        }
+        if(!validTrade)
+        {
+            return false;
+        }
+        String ret = owner.decreaseCost(input);
+        if(ret != null)  { return false; }
+        for(String cur : objectsInput)
+        {
+            Unit current = owner.getUnitByType(cur);
+            owner.removeUnit(current);
+        }
+        String assertString = owner.decreaseCost(manfi(output));
+        if(assertString != null)
+        {
+            System.out.println("Something is fuckedUp HEAVY!!");
+            System.out.println(assertString);
+            return false;
+        }
+        for(String cur : objectsOutput)
+        {
+            Unit.createUnitByName(cur, owner, super.getRow(), super.getColumn());
+        }
+        return true;
     }
 
     public void changeTradeType(int x)

@@ -104,17 +104,16 @@ public class Player {
         return this.units;
     }
 
-    public ArrayList < Unit > getJoblessUnit()
+    public Unit getUnitByType(String type)
     {
-        ArrayList < Unit > ret = new ArrayList< Unit >();
         for(Unit now : this.units)
         {
-            if(now instanceof Jobless)
+            if(now.getName().equals(type))
             {
-                ret.add(now);
+                return now;
             }
         }
-        return ret;
+        return null;
     }
 
     public void removeUnit(Unit inp)
@@ -135,7 +134,8 @@ public class Player {
         return this.castle;
     }
 
-    public String decreaseCost( Cost cost ){
+    public String decreaseCost( Cost cost )
+    {
 
         if( this.apple < cost.getApple() ) return "NOT ENOUGH APPLE." ;
         if( this.meat < cost.getMeat() ) return "NOT ENOUGH MEAT." ;
