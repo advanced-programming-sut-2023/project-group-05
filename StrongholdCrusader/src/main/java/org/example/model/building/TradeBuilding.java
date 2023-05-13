@@ -38,11 +38,11 @@ public class TradeBuilding extends Building {
 
         Cost output = new Cost(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ,0 0, 0, 0, 0, 0, 0, 0);
 
-        ArrayList < Objects > objectsInput;
-        ArrayList < Objects > objectsOutput;
+        ArrayList < String > objectsInput;
+        ArrayList < String > objectsOutput;
         if(super.getName().equals("barracks"))
         {
-            //TODO in here you have to specificly change the
+            //TODO in here you have to specificy change the
         }
         if(super.getName().equals("mercenarypost"))
         {
