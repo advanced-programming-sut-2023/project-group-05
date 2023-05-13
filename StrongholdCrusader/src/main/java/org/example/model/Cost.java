@@ -49,30 +49,35 @@ public class Cost {
         return true;
     }
 
-    private final int gold ;
-    private final int apple ;
-    private final int cheese ;
-    private final int bread ;
-    private final int meat ;
-    private final int crossbow ;
-    private final int wood ;
-    private final int stone ;
-    private final int bow ;
-    private final int sword ;
-    private final int mace ;
-    private final int pitch ;
-    private final int pike ;
-    private final int spear ;
-    private final int armor ;
-    private final int hop ;
-    private int leatherArmor ;
-    private int wheat ;
-    private int flour ;
-    private int iron ;
+    public int gold ;
+    public int apple ;
+    public int cheese ;
+    public int bread ;
+    public int meat ;
+    public int crossbow ;
+    public int wood ;
+    public int stone ;
+    public int bow ;
+    public int sword ;
+    public int mace ;
+    public int pitch ;
+    public int pike ;
+    public int spear ;
+    public int armor ;
+    public int hop ;
+    public int leatherArmor ;
+    public int wheat ;
+    public int flour ;
+    public int iron ;
     public ArrayList < Integer > resource;
     public int getLeatherArmor()
     {
         return leatherArmor;
+    }
+
+    public void changeLeatherArmor( int x )
+    {
+        this.leatherArmor = x;
     }
 
     public int getWheat()
@@ -80,14 +85,29 @@ public class Cost {
         return wheat;
     }
 
+    public void changeWheat( int x )
+    {
+        wheat = x;
+    }
     public int getFlour()
     {
         return flour;
     }
 
+    public void changeFlour( int x )
+    {
+        this.flour = x;
+    }
+
     public int getIron()
     {
         return iron;
+    }
+
+    public void changeIron(int x)
+    {
+        this.iron = x;
+        this.resource.set(17, x);
     }
 
     private int ale ;

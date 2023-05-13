@@ -2,6 +2,7 @@ package org.example.model;
 
 import org.example.model.building.Building;
 import org.example.model.building.StorageBuilding;
+import org.example.model.unit.Jobless;
 import org.example.model.unit.Unit;
 
 import java.sql.Array;
@@ -98,6 +99,38 @@ public class Player {
         this.selectedUnits = new ArrayList<>() ;
     }
 
+    public ArrayList < Unit > getUnits()
+    {
+        return this.units;
+    }
+
+    public ArrayList < Unit > getJoblessUnit()
+    {
+        ArrayList < Unit > ret = new ArrayList< Unit >();
+        for(Unit now : this.units)
+        {
+            if(now instanceof Jobless)
+            {
+                ret.add(now);
+            }
+        }
+        return ret;
+    }
+
+    public void removeUnit(Unit inp)
+    {
+        if(this.units.contains(inp))
+        {
+            this.units.remove(inp);
+        }
+        if(this.selectedUnits.contains(inp))
+        {
+            this.selectedUnits.remove(inp);
+        }
+        //TODO remove this unit from the cell and the map, elsewhere it's removed already
+
+    }
+
     public Building getCastle(){
         return this.castle;
     }
@@ -176,7 +209,8 @@ public class Player {
         return this.account ;
     }
 
-    public double getGold(){
+    public double getGold()
+    {
         return this.gold ;
     }
 
@@ -191,7 +225,8 @@ public class Player {
     public int getMeat(){
         return this.meat ;
     }
-    public void setFoodCapacity(int number){
+    public void setFoodCapacity(int number)
+    {
         this.breadCapacity +=number* StorageBuilding.maxGranaryCapacityForEachFood;
         this.cheeseCapacity += number * StorageBuilding.maxGranaryCapacityForEachFood;
         this.meatCapacity += number*StorageBuilding.maxGranaryCapacityForEachFood;
@@ -277,8 +312,10 @@ public class Player {
         return this.selectedBuilding;
     }
 
-    public void setSelectedUnits(Cell cell){
-        for (Unit unit : cell.units){
+    public void setSelectedUnits(Cell cell)
+    {
+        for (Unit unit : cell.units)
+        {
             if (unit.getOwner().equals(this))
                 this.selectedUnits.add(unit);
         }

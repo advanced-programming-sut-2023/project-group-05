@@ -15,10 +15,19 @@ public class Cell {
     private Building building = null ;
     public CellType cellType;
     private static HashMap<String , CellType> cellTypeEnumByName = new HashMap<>();
-    public Cell(CellType cellType){
+    public Cell(CellType cellType)
+    {
         this.cellType = cellType;
         this.units = new ArrayList<>(0);
         this.objects = new ArrayList<>(0);
+    }
+
+    public void removeUnit(Unit inp)
+    {
+        if(this.units.contains(inp))
+        {
+            this.units.remove(inp);
+        }
     }
 
     public Building getBuilding(){

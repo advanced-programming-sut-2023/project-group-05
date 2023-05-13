@@ -155,6 +155,8 @@ public class Building {
             return new AttackDefenceBuilding(type,4,4,true,"",owner,row,column,getBuildingCost(type),1000,0,false,40,20,false,20,BuildingEnum.BIG_STONE_GATEHOUSE);
         if (type.equals("armoury"))
             return  new StorageBuilding(type,4,5,false,"",owner,row,column,getBuildingCost(type),2000,0,false,200,BuildingEnum.ARMOURY);
+
+
         if (type.equals("barracks"))
             return new TradeBuilding(type,"",4,4,false,0,false,owner,row,column,2000,getBuildingCost(type),0,BuildingEnum.BARRACKS);
         if (type.equals("mercenarypost"))
