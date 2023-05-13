@@ -49,6 +49,9 @@ public class Unit {
     }
 
     public void setTarget( int row , int column , GameMap gameMap ){
+        if(this.row == row && this.column == column){
+            this.isMoving = false ;
+        }
         this.targetRow = row ;
         this.targetColumn = column ;
         this.pathFinder = new PathFinder() ;
