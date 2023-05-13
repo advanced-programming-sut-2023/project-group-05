@@ -16,7 +16,7 @@ public class Engineer extends Unit {
     }
 
     public boolean pourOil(int direction , GameMap gameMap){
-        if(!hasOil) return false ;
+        if(!hasOil && !this.findYourBuilding(gameMap) ) return false ;
         int row = this.getRow() ;
         int column = this.getColumn() ;
         for(int i = 0 ; i < 5 ; i++){
