@@ -1,10 +1,7 @@
 package org.example.model;
 
-import java.awt.image.AreaAveragingScaleFilter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 public class Cost {
 
@@ -39,9 +36,9 @@ public class Cost {
         return ret;
     }
 
-    public static Cost manfi(Cost A)
+    public static Cost negative(Cost A)
     {
-        Cost zero = new Cost(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        Cost zero = new Cost(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         return ArrayListToCost(minusTwoCost(zero, A));
     }
 
@@ -85,6 +82,7 @@ public class Cost {
     public int iron ;
     public int ale ;
     public int metalArmor ;
+    public int horse ;
     public ArrayList < Integer > resource;
 
 
@@ -221,6 +219,11 @@ public class Cost {
         this.resource.set(21, iron);
     }
 
+    public void setHorse(int horse)
+    {
+        this.horse = horse;
+        resource.set(22, horse);
+    }
 
     public int getLeatherArmor()
     {
@@ -321,13 +324,15 @@ public class Cost {
         return this.ale ;
     }
 
+    public int getHorse()  { return this.horse; }
+
     public int getMetalArmor()
     {
         return this.metalArmor ;
     }
     public Cost( int apple , int cheese , int bread , int meat , int gold , int wood , int stone , int pike , int spear ,
                  int bow , int sword , int mace , int crossbow , int pitch , int armor , int hop , int leatherArmor ,
-                 int metalArmor , int ale , int flour , int wheat , int iron )
+                 int metalArmor , int ale , int flour , int wheat , int iron , int horse)
     {
         /// Ignore this fucking sort just focus on the input and the ArrayList
         this.apple = apple ;
@@ -352,15 +357,16 @@ public class Cost {
         this.pitch = pitch ;
         this.armor = armor ;
         this.hop = hop ;
+        this.horse = horse;
         this.resource = new ArrayList<>(Arrays.asList(apple, cheese, bread, meat, gold, wood, stone, pike, spear, bow, sword, mace, crossbow,
-                pitch, armor, hop, leatherArmor, metalArmor, ale, flour, wheat, iron));
+                pitch, armor, hop, leatherArmor, metalArmor, ale, flour, wheat, iron, horse));
     }
 
     public static Cost ArrayListToCost(ArrayList<Integer> arr)
     {
         return new Cost(arr.get(0), arr.get(1), arr.get(2), arr.get(3), arr.get(4), arr.get(5), arr.get(6), arr.get(7),
                 arr.get(8), arr.get(9), arr.get(10), arr.get(11), arr.get(12), arr.get(13), arr.get(14), arr.get(15),
-                arr.get(16), arr.get(17), arr.get(18), arr.get(19), arr.get(20), arr.get(21)) ;
+                arr.get(16), arr.get(17), arr.get(18), arr.get(19), arr.get(20), arr.get(21), arr.get(22)) ;
     }
 
 }

@@ -760,83 +760,83 @@ public class GameController {
         if( resourceType.equals("apple") )
             cost = new Cost(amount,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("cheese") )
             cost = new Cost(0,amount,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("bread") )
             cost = new Cost(0,0,amount,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("meat") )
             cost = new Cost(0,0,0,amount,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("bow") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     amount,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("crossbow") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,amount,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("spear") )
             cost = new Cost(0,0,0,0,0,0,0,0,amount,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("pike") )
             cost = new Cost(0,0,0,0,0,0,0,amount,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("mace") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,amount,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("sword") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,amount,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("leatherarmor") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,amount,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("metalarmor") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,amount,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("wheat") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,amount
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("flour") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,amount,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("hop") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,amount,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("ale") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,amount,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("stone") )
             cost = new Cost(0,0,0,0,0,0,amount,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("iron") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,amount) ;
+                    ,amount, 0) ;
         else if( resourceType.equals("wood") )
             cost = new Cost(0,0,0,0,0,amount,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("pitch") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,amount,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else
             return "RESOURCE TYPE INVALID." ;
 

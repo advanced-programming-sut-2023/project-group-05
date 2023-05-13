@@ -207,58 +207,58 @@ public class Unit {
 
         if(name.equals("archer")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
                 0 , 0 , 1 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("crossbowman")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
                 0 , 0 , 0 , 0 , 0 , 1 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("spearman")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
                 0 , 1 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("pikeman")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
                 1 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("maceman")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
                 0 , 0 , 0 , 0 , 1 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("swordsmen")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
                 0 , 0 , 0 , 1 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("knight")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
                 0 , 0 , 0 , 1 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("tunneler")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
                 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("ladderman")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
                 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("engineer")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
                 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("blackmonk")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
                 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("archerbow")) return new Cost( 0 , 0 , 0 , 0 , 100,  0, 0 ,
                 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("slave")) return new Cost( 0 , 0 , 0 , 0 , 100,  0, 0 ,
                 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("slinger")) return new Cost( 0 , 0 , 0 , 0 , 100,  0, 0 ,
                 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("assassin")) return new Cost( 0 , 0 , 0 , 0 , 100,  0, 0 ,
                 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("horsearcher")) return new Cost( 0 , 0 , 0 , 0 , 100,  0, 0 ,
                 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("arabianswordsman")) return new Cost( 0 , 0 , 0 , 100 , 0,  0, 0 ,
                 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("firethrower")) return new Cost( 0 , 0 , 0 , 0 , 100,  0, 0 ,
                 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0, 0 , 0,
-                0 , 0 , 0 , 0 , 0) ;
+                0 , 0 , 0 , 0 , 0, 0) ;
 
         return null ;
     }
