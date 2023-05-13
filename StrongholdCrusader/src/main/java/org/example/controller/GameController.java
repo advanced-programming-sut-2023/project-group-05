@@ -96,19 +96,25 @@ public class GameController {
 
         }
 
-        // ATTACKING UNITS
+        // EACH WARRIOR IS SOME STATE : standing , defensive , aggressive ... based on that
 
-        for(Unit unit : Unit.getUnits()){
-            if(!(unit instanceof Warrior)) continue ;
-            Warrior warrior = (Warrior)unit ;
+
+        // ALL WARRIORS WHICH ARE ATTACKING WILL DEAL DAMAGE IF THE ENEMY IS IN THEIR RANGE.
+
+        for(Unit attackerUnit : Unit.getUnits()){
+            if(!(attackerUnit instanceof Warrior)) continue ;
+            Warrior warrior = (Warrior)attackerUnit ;
             if(!warrior.getIsAttacking()) continue ;
             Building attackingBuilding = warrior.getAttackingBuilding();
-            Unit attackingUnit = warrior.getAttackingUnit() ;
-            if( attackingUnit != null ){
-                int distance2 = (attackingUnit.getRow() - warrior.getRow())*(attackingUnit.getRow() - warrior.getRow()) +
-                        (attackingUnit.getColumn() - warrior.getColumn()) * (attackingUnit.getColumn() - warrior.getColumn());
+            Unit attackedUnit = warrior.getAttackingUnit() ;
+            if( attackedUnit != null ){
+                int distance2 = (attackedUnit.getRow() - warrior.getRow())*(attackedUnit.getRow() - warrior.getRow()) +
+                        (attackedUnit.getColumn() - warrior.getColumn()) * (attackedUnit.getColumn() - warrior.getColumn());
                 if( Math.abs(Math.sqrt(distance2)) <= warrior.getRange() ){
-                    attackingUnit.getDamaged(warrior.getDamage(),gameMap) ;
+                    attackedUnit.getDamaged(warrior.getDamage(),gameMap) ;
+                    if(attackedUnit instanceof Warrior){
+                        ((Warrior)attackedUnit).attackUnit(attackerUnit,gameMap) ;
+                    }
                 }
             }
             else if( attackingBuilding != null ){
@@ -134,7 +140,7 @@ public class GameController {
         getCastleCoordinates(row,column);
         String name = "castle";
         Building castle = new Building (name,1,1,true,"",owner,row,column,Building.getBuildingCost(name),
-                -1,0,false,BuildingEnum.CASTLE);
+                -1,0,false,BuildingEnum.CASTLE , 0);
         gameMap.getCell(row,column).setBuilding(castle) ;
         name = "king";
         Warrior king = new Warrior(name,owner, 50 , 500,5,1,30,30,0,

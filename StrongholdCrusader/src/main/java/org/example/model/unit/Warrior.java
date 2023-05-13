@@ -3,6 +3,7 @@ package org.example.model.unit;
 import org.example.controller.PathFinder;
 import org.example.model.GameMap;
 import org.example.model.Player;
+import org.example.model.UnitModeEnum;
 import org.example.model.building.Building;
 
 public class Warrior extends Unit {
@@ -16,6 +17,8 @@ public class Warrior extends Unit {
     private boolean isPatrolling ;
     private final int defendPower ;
     private final int reloadSpeed ;
+
+    private UnitModeEnum unitMode ;
     private int damage ;
     private final boolean hasFire ;
     private final boolean canPushLadder ;
@@ -42,7 +45,12 @@ public class Warrior extends Unit {
         this.isHidden = isHidden ;
         this.canClimb = canClimb ;
         this.damage = damage ;
+        this.unitMode = UnitModeEnum.STANDING ;
         this.canDamageCastle = canDamageCastle ;
+    }
+
+    public void setUnitMode(UnitModeEnum unitMode){
+        this.unitMode = unitMode ;
     }
 
     @Override
@@ -113,6 +121,12 @@ public class Warrior extends Unit {
         this.attackingBuilding = building ;
         this.attackingUnit = null ;
         // TODO : ATTACK BULIDING
+    }
+
+    public void stopAttacking(){
+        this.attackingUnit = null ;
+        this.attackingBuilding = null ;
+        this.isAttacking = false ;
     }
 
     public void startDiggingMoat( int row , int column , int rowChange , int columnChange ){
