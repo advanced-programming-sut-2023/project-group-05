@@ -111,6 +111,8 @@ public class Warrior extends Unit {
         return this.damage ;
     }
 
+
+
     public void attackUnit( Unit unit , GameMap gameMap ){
         this.attackingUnit = unit ;
         this.attackingBuilding = null ;

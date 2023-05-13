@@ -172,41 +172,42 @@ public class Unit {
     }
 
     public static Unit createUnitByName(String type,Player owner,int row , int column){
-        if (type.equals("archer"))
+        UnitTypeEnum unitType = UnitTypeEnum.getUnitTypeByName(type);
+        if (unitType == UnitTypeEnum.ARCHER)
             return new Warrior(type,owner,10,100,10,20,10,10,10,true,false,false,false,false,false,false,row , column);
-        if (type.equals("crossbowman"))
+        if (unitType == UnitTypeEnum.CROSSBOWMEN)
             return new Warrior(type,owner,10,150,7,7,15,15,7,false,false,false,false,false,false,false,row,column);
-        if (type.equals("spearman"))
+        if (unitType == UnitTypeEnum.SPEARMEN)
             return new Warrior(type,owner,10,50,15,10,0,3,10,false,true,false,true,false,false,true,row,column);
-        if (type.equals("pikeman"))
+        if (unitType == UnitTypeEnum.PIKEMEN)
             return new Warrior(type,owner,10,50,7,10,15,20,10,false,false,false,false,false,false,true,row,column);
-        if (type.equals("maceman"))
+        if (unitType == UnitTypeEnum.MACEMEN)
             return new Warrior(type,owner,10,150,15,10,20,13,5,false,false,false,false,false,false,true,row,column);
-        if (type.equals("swordsman"))
+        if (unitType == UnitTypeEnum.SWORDSMEN)
             return new Warrior(type,owner,10,250,7,10,25,10,5,false,false,false,false,false,false,true,row,column);
-        if (type.equals("knight"))
+        if (unitType == UnitTypeEnum.KNIGHT)
             return new Warrior(type,owner,10,250,20,10,25,20,5,false,false,true,false,false,false,true,row,column);
-        if (type.equals("tunneler"))
+        if (unitType == UnitTypeEnum.TUNNELER)
             return new Tunneler(owner,5,row,column);
-        if (type.equals("ladderman"))
+        if (unitType == UnitTypeEnum.LADDERMEN)
             return new LadderMan(owner,5,row,column);
-        if (type.equals("engineer"))
+        if (unitType == UnitTypeEnum.ENGINEER)
             return new Engineer(owner,5,row,column);
-        if (type.equals("blackmonk"))
+        if (unitType == UnitTypeEnum.BLACKMONK)
             return new Warrior(type,owner,10,50,7,5,10,10,5,false,false,false,false,false,false,true,row,column);
-        if (type.equals("archerbow"))
+        if (unitType == UnitTypeEnum.ARCHERBOW)
             return new Warrior(type,owner,10,100,15,15,10,10,10,false,false,false,false,false,false,true,row,column);
-        if (type.equals("slave"))
+        if (unitType == UnitTypeEnum.SLAVES)
             return new Warrior(type,owner,10,50,15,10,5,5,5,true,false,false,false,false,false,true,row,column);
-        if (type.equals("slinger"))
+        if (unitType == UnitTypeEnum.SLINGERS)
             return new Warrior(type,owner,10,50,15,5,7,5,5,false,false,false,false,false,false,true,row,column);
-        if (type.equals("assasin"))
+        if (unitType == UnitTypeEnum.ASSASSINS)
             return new Warrior(type,owner,10,150,10,10,10,10,10,false,false,false,false,true,true,true,row,column);
-        if (type.equals("horsearcher"))
+        if (unitType == UnitTypeEnum.HORSE_ARCHERS)
             return new Warrior(type,owner,10,100,25,12,10,15,10,false,false,true,false,false, false,false,row,column);
-        if (type.equals("arabianswordsman"))
+        if (unitType == UnitTypeEnum.ARABIAN_SWORDSMEN)
             return new Warrior(type,owner,10,200,20,5,20,20,5,false,false,false,false,false,false,true,row,column);
-        if (type.equals("firethrower"))
+        if (unitType == UnitTypeEnum.FIRE_THROWERS)
             return new Warrior(type,owner,10,50,20,5,15,7,5,true,false,false,false,false,false,true,row,column);
         if (type.equals("jobless"))
             return new Jobless(owner , 2,row , column);

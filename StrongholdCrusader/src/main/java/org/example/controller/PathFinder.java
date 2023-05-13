@@ -5,14 +5,14 @@ import java.util.ArrayList;
 public class PathFinder
 {
     public static int SZ = 400;
-    private int [][] gameMap = new int[SZ][SZ]; /// this should be entered manually, I do not understand the map :( 0 -> empty, 1 -> wall
+    private int [][] gameMap =  new int[SZ][SZ]; /// this should be entered manually, I do not understand the map :( 0 -> empty, 1 -> wall
 
     public int [][] distance = new int [SZ][SZ];
 
     public int [] dx = new int[] {-1, 1, 0, 0};
     public int [] dy = new int[] {0, 0, -1, 1};
 
-    public boolean validPos(int x, int y)
+    public static boolean validPos(int x, int y)
     {
         return x >= 0 && x < SZ && y >= 0 && y < SZ;
     }
@@ -75,5 +75,9 @@ public class PathFinder
             }
         }
         return -1;
+    }
+
+    public static boolean isConnected (int row1, int column1, int row2,int column2){
+        return true;
     }
 }

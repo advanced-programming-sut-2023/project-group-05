@@ -24,8 +24,8 @@ public class Player {
     private int meatCapacity ;
     private int breadCapacity ;
     private int cheeseCapacity ;
-    private boolean isStockPileCreated;
-    private boolean isGranaryCreated;
+    public boolean isStockPileCreated;
+    public boolean isGranaryCreated;
     public int hop ;
     public int cheese ;
     public int bread ;
@@ -111,6 +111,66 @@ public class Player {
         return this.units ;
     }
 
+    public static int getPopularityEffectOfTaxRate(int taxRate){
+        if (taxRate == -3)
+            return 7;
+        if (taxRate == -2)
+            return 5;
+        if (taxRate == -1)
+            return 3;
+        if (taxRate == 0)
+            return 1;
+        if (taxRate == 1)
+            return -2;
+        if (taxRate == 2)
+            return -4;
+        if (taxRate == 3)
+            return -6;
+        if (taxRate == 4)
+            return -8;
+        if (taxRate == 5)
+            return -12;
+        if (taxRate == 6)
+            return -16;
+        if (taxRate == 7)
+            return -20;
+        if (taxRate == 8)
+            return -24;
+        return 0;
+    }
+
+    public static double getMoneyOfTaxRate(int taxRate){
+        if (taxRate == -3)
+            return -1;
+        if (taxRate == -2)
+            return -0.8;
+        if (taxRate == -1)
+            return -0.6;
+        if (taxRate == 0)
+            return 0;
+        if (taxRate == 1)
+            return 0.6;
+        if (taxRate == 2)
+            return 0.8;
+        if (taxRate == 3)
+            return 1;
+        if (taxRate == 4)
+            return 1.2;
+        if (taxRate == 5)
+            return 1.4;
+        if (taxRate == 6)
+            return 1.6;
+        if (taxRate == 7)
+            return 1.8;
+        if (taxRate == 8)
+            return 2;
+        return 0;
+    }
+
+    public void setGold(double gold){
+        this.gold = gold;
+    }
+
     public String decreaseCost( Cost cost ){
 
         if( this.apple < cost.getApple() ) return "NOT ENOUGH APPLE." ;
@@ -155,12 +215,24 @@ public class Player {
         return null ;
     }
 
+    public void changePopulation(int number){
+        this.population +=number;
+    }
+
+    public void setCastle(Building castle){
+        this.castle = castle;
+    }
+
     public void decreaseGold(int gold){
         this.gold -= gold ;
     }
 
     public void increaseGold(int gold){
         this.gold += gold ;
+    }
+
+    public void changeGold(double gold){
+        this.gold +=gold;
     }
 
     public void selectUnit( Unit unit ){
@@ -238,8 +310,12 @@ public class Player {
         return this.apple + this.cheese + this.bread + this.meat ;
     }
 
-    public void setPopularity( int popularity ){
-        this.popularity = popularity ;
+    public void changePopularity( int popularity ){
+        this.popularity = Math.max(this.popularity+popularity,0);
+    }
+
+    public void setPopularity(int popularity){
+        this.popularity = popularity;
     }
 
     public int getPopularity(){
@@ -333,15 +409,26 @@ public class Player {
         return false;
     }
 
+
     public void handleBuildingEffectsOnPlayer(String name){
         //TODO : COMPLETE THIS PART
         if (name.equals("granary"))
             this.setFoodCapacity(1);
-        else if (name.equals("goodthings"))
-            this.popularity+=1;
-        else if (name.equals("badthings"))
-            this.popularity-=1;
         else if (name.equals("hovel"))
-            this.setPopulationCapacity(8);
+            this.populationCapacity+=8;
     }
+
+    public int getFoodDiversity () {
+        int diversity = 0;
+        if (this.apple>0)
+            diversity++;
+        if (this.cheese>0)
+            diversity++;
+        if (this.meat > 0)
+            diversity++;
+        if (this.bread > 0)
+            diversity++;
+        return diversity;
+    }
+
 }

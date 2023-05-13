@@ -14,6 +14,7 @@ public class TradeBuilding extends Building {
     private int turnBuilt ;
     private int capacity ;
     private int objectsCount ;
+    private int numberOfTurnsToGenerateProduct;
 
     public TradeBuilding( String name , String category , int width , int height , boolean passable ,
                           int popularityRate , boolean holdsAnimal , Player owner , int row , int column , int hitPoint , Cost cost ,
@@ -21,6 +22,8 @@ public class TradeBuilding extends Building {
             super( name , height , width , passable , category , owner , row , column , cost , hitPoint ,
                     popularityRate , holdsAnimal , buildingEnum , 0 ) ;
         this.requiredNumberOfOperators = requiredNumberOfOperators ;
+        this.numberOfTurnsToGenerateProduct = 1;
+        this.rate = 1;
     }
 
     public void trade( Cost costGive , ArrayList <Object> objectsGive , Object objectGet , Cost costGet ){
@@ -53,5 +56,11 @@ public class TradeBuilding extends Building {
 
     public int getRequiredNumberOfOperators(){
         return this.requiredNumberOfOperators ;
+    }
+    public int getNumberOfTurnsToGenerateProduct(){
+        return this.numberOfTurnsToGenerateProduct;
+    }
+    public void setNumberOfTurnsToGenerateProduct(){
+        this.numberOfTurnsToGenerateProduct = this.rate;
     }
 }
