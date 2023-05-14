@@ -6,6 +6,7 @@ import org.example.model.GameMap;
 import org.example.model.Player;
 import org.example.model.unit.Unit;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -32,6 +33,7 @@ public class TradeBuilding extends Building {
         tradeType = 0;
         this.rate = rate;
         this.numberOfTurnsToGenerateProduct = rate;
+        this.functional = true;
     }
 
     public boolean trade( GameMap gameMap)
@@ -40,6 +42,7 @@ public class TradeBuilding extends Building {
         {
             return false;
         }
+        System.out.println("I'm Alive!");
         Cost input = new Cost(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
         Cost output = new Cost(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -50,7 +53,6 @@ public class TradeBuilding extends Building {
         ArrayList < Integer > Iarr;
         if(super.getName().equals("barracks"))
         {
-            //TODO in here you have to specificy change the
             objectsInput.add("jobless");
             Sarr = new ArrayList< String >(Arrays.asList("archer", "crossbowman", "spearman", "pikeman",
                     "maceman", "swordsman", "knight"));
@@ -304,6 +306,10 @@ public class TradeBuilding extends Building {
             owner.removeUnit(current , gameMap);
         }
         String assertString = owner.decreaseCost(negative(output));
+        System.out.println(output.resource);
+        System.out.println(negative(output).resource);
+        System.out.println(input.resource);
+        System.out.println(negative(output).getApple());
         if(assertString != null)
         {
             System.out.println("Something is fuckedUp HEAVY!!");

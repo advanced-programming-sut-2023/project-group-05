@@ -8,6 +8,8 @@ import org.example.view.SignupLoginMenu;
 import org.json.simple.JSONObject;
 
 import java.net.Inet4Address;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -19,7 +21,8 @@ public class SignupLoginMenuController {
         this.signupLoginMenu = signupMenu;
     }
 
-    public static boolean validNickname( String nickname ){
+    public static boolean validNickname( String nickname )
+    {
         Pattern pattern = Pattern.compile("^[ A-Za-z]+$") ;
         Matcher matcher = pattern.matcher( nickname ) ;
         return matcher.find() ;
@@ -147,10 +150,25 @@ public class SignupLoginMenuController {
         return "account created successfully" ;
     }
 
-    public static String loginUser( Scanner scanner , Matcher matcher,boolean mode ){
+    public static String loginUserStayLoggedIn( Scanner scanner, Matcher matcher)
+    {
+        ArrayList < Account > myList = DataBase.getStayLoggedInAccount();
+        for(Account cur : myList)
+        {
+            System.out.println("User Logged In ;)");
+            MainMenu.run(scanner, cur);
+            return "success";
+        }
+        return "there are not any stayed logged in account :(";
+    }
+
+    public static String loginUser( Scanner scanner , Matcher matcher, boolean mode )
+    {
         //mode true is for real game --- mode false is for unit test
         String password = matcher.group("password") ;
         String userName = matcher.group( "username" ) ;
+
+        boolean stay_in = (matcher.group("stayloggedin") != null);
         if(!validUserName(userName) || ! validPassword(password))
             return "login failed : Invalid username / password\n";
         if(mode && !SecurityQuestions.runCaptcha(scanner))
@@ -172,6 +190,7 @@ public class SignupLoginMenuController {
             return "User Logged In! hooray !";
         System.out.println("User Logged In! hooray !");
         Account account = Account.getAccountsMap().get(userName);
+        if(stay_in) DataBase.setStayLoggedIn(account);
         MainMenu.run(scanner, account);
         return "";
     }

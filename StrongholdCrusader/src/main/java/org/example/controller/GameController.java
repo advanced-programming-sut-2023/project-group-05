@@ -6,6 +6,7 @@ import org.example.model.building.TradeBuilding;
 import org.example.model.unit.*;
 import org.example.view.Menu;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -1048,9 +1049,14 @@ public class GameController {
     public void putBuildingInThePlace(Building building){
         int row = building.getRow();
         int column = building.getColumn();
+        System.out.println(row + " " + column);
         building.getOwner().addBuilding(building);
-        for (int i = row ; i<row+building.getHeight();++i){
-            for (int j = column ; j < column + building.getWidth();++j){
+        System.out.println("just checking : " + building.getHeight() + building.getWidth());
+        for (int i = row ; i < row + building.getHeight(); i ++)
+        {
+            for (int j = column ; j < column + building.getWidth(); j ++)
+            {
+                System.out.println("i = " + i + " j = " + j);
                 gameMap.getCell(i,j).setBuilding(building);
                 if(!building.getPassable()) gameMap.getMaskedMap()[i][j] = 1 ;
                 if(building.getName().contains( "gate" ) || building.getName().contains( "wall" ) || building.getName().contains( "tower" ) )
