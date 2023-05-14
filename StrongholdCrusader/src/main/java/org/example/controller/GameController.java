@@ -420,6 +420,30 @@ public class GameController {
         return "SELECTED THE BUILDING MY KING.";
     }
 
+    public String changeGateState(Matcher matcher){
+        String newState = "CLOSED" ;
+        int row = Integer.parseInt(matcher.group("row")) ;
+        int column = Integer.parseInt(matcher.group("column")) ;
+        Building building = gameMap.getCell(row,column).getBuilding() ;
+        if(building == null || !building.getName().contains( "gate" ))
+            return "THERE NO GATE HERE SIR" ;
+        if(!building.getPassable())
+            newState = "OPENED" ;
+        building.setPassable(!building.getPassable()) ;
+        return "THE GATE YOU SELECTED IS NOW " + newState ;
+    }
+
+    public String showGateState(Matcher matcher){
+        int row = Integer.parseInt(matcher.group("row")) ;
+        int column = Integer.parseInt(matcher.group("column")) ;
+        Building building = gameMap.getCell(row,column).getBuilding() ;
+        if(building == null || !building.getName().contains( "gate" ))
+            return "THERE NO GATE HERE SIR" ;
+        String state = "CLOSED" ;
+        if(building.getPassable()) state = "OPENED" ;
+        return "THIS GATE IS " + state ;
+    }
+
     public String handleSelectBuildingError (int row , int column){
         if (row > 400 || row < 0 || column > 400 || column <0 )
             return "SelectBuilding Failed : Row Or Column Exceeded Map";
