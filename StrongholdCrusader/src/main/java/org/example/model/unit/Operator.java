@@ -18,6 +18,10 @@ public class Operator extends Unit {
         this.turn++ ;
     }
 
+    public Building getBuilding(){
+        return this.building ;
+    }
+
     public int getTurn(){
         return this.turn;
     }

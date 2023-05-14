@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.model.*;
 import org.example.model.building.Building;
+import org.example.model.building.TradeBuilding;
 import org.example.model.unit.*;
 import org.example.view.Menu;
 
@@ -55,6 +56,9 @@ public class GameController {
     }
 
     public void nextTurn(){
+
+        // TODO : the for each on all units is kinda bad can't you just save each class's instances ?
+
         this.turn++ ;
         this.player = this.players.get( this.turn % this.players.size() ) ;
 
@@ -95,7 +99,7 @@ public class GameController {
 
         }
 
-        // EACH WARRIOR IS SOME STATE : standing , defensive , aggressive ... based on that
+        // EACH WARRIOR IS SOME STATE : standing , defensive , aggressive based on that
         // the warrior will decide to attack someone or not.
 
         for(Unit unit : Unit.getUnits()){
@@ -136,7 +140,6 @@ public class GameController {
 
             }
 
-
         }
 
         // ALL WARRIORS WHICH ARE ATTACKING WILL DEAL DAMAGE IF THE ENEMY IS IN THEIR RANGE.
@@ -166,9 +169,54 @@ public class GameController {
                 }
             }
         }
-        // ACTIONS IN THE END OF EACH N TURNS ( N = players.size() )
-        // LIKE : TAX
 
+        // OPERATORS : units working in some buildings ( workers )
+
+        for(Unit unit : Unit.getUnits()){
+            if(!(unit instanceof Operator)) continue ;
+            Operator  operator = (Operator)unit ;
+            // Oxes are going to say : moo moo ( or otherwise )
+            if(operator.getName().equals("ox")){
+                // if the ox is not moving :
+                if(operator.getIsMoving()) continue ;
+                // if ox is arrived to quarry or stockpile ? ( wait a minute we have no stock pile! mission canceled )
+                try{
+                        if(operator.getAdjacantBuildings(gameMap).contains(
+                                gameMap.getCell(operator.getTargetRow(),operator.getTargetColumn()).getBuilding()
+                        )){
+                            // TODO : DO THE JOB YOU LITTLE COW
+                        }
+                } catch ( Exception e ){
+                    // Exception handling go brrrrrrrr
+                }
+                Building oxTether = operator.getBuilding() ;
+                Building closestQuarry = null ;
+                for(Building building : Building.getBuildings()) if(building.getName().equals("quarry")){
+                    if(closestQuarry==null){
+                        closestQuarry = building ;
+                        continue ;
+                    }
+                    int distance = (building.getColumn() - oxTether.getColumn()) * (building.getColumn() - oxTether.getColumn()) ;
+                    if ( distance < (closestQuarry.getRow() - oxTether.getRow())*(closestQuarry.getRow() - oxTether.getRow()) + (closestQuarry.getColumn() - oxTether.getColumn()) * (closestQuarry.getColumn() - oxTether.getColumn()) ) {
+                        closestQuarry = building ;
+                    }
+                }
+                if( (this.turn - ((TradeBuilding)closestQuarry).getTurnBuilt()) % ((TradeBuilding)closestQuarry).getRate() == 0 ){
+                    operator.setTarget(closestQuarry.getRow() , closestQuarry.getColumn() , gameMap) ;
+                }
+
+            }
+
+            // Other operators
+
+        }
+
+
+        // ACTIONS IN THE END OF EACH N TURNS ( N = players.size() )
+        // INCLUDING : TAX , POPULATION CHANGE , POPULARITY CHANGE , FOOD GETTING EATE
+
+
+        // CHECK FOR WINNER AND IF THERE IS ONE , END THE GAME , GIVE POINTS , DELETE ALL INSTANCES FROM WHERE EVER THEY ARE NEEDED TO BE DELETED.
 
     }
 

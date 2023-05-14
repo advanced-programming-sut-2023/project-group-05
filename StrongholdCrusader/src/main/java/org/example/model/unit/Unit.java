@@ -3,6 +3,7 @@ package org.example.model.unit;
 import org.example.controller.PathFinder;
 
 import org.example.model.*;
+import org.example.model.building.Building;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,6 +104,18 @@ public class Unit {
                 return this.column + 1 ;
         }
         return this.column ;
+    }
+
+
+    public ArrayList<Building> getAdjacantBuildings(GameMap gameMap){
+        ArrayList<Building> ret = new ArrayList<Building>() ;
+        int[][] adj = { {0,1} , {0,-1} , {1,0} , {-1,0} } ;
+        for(int i = 0 ; i < 4 ; i++){
+            Building building = gameMap.getCell(this.row+adj[i][0] , this.column+adj[i][1]).getBuilding() ;
+            if(null != building)
+                ret.add(building) ;
+        }
+        return ret ;
     }
 
     public int getHitPoint(){
