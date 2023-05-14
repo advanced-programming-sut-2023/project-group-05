@@ -369,4 +369,28 @@ public class Cost {
                 arr.get(16), arr.get(17), arr.get(18), arr.get(19), arr.get(20), arr.get(21), arr.get(22)) ;
     }
 
+    public void alterCost (double proportion){
+        this.apple =(int)(this.apple * proportion);
+        this.ale =(int)(this.ale * proportion);
+        this.bow =(int)(this.bow * proportion);
+        this.gold =(int)(this.gold * proportion);
+        this.cheese =(int)(this.cheese * proportion);
+        this.bread =(int)(this.bread * proportion);
+        this.meat =(int)(this.meat * proportion);
+        this.crossbow =(int)(this.crossbow * proportion);
+        this.wood =(int)(this.wood * proportion);
+        this.stone =(int)(this.stone * proportion);
+        this.sword =(int)(this.sword * proportion);
+        this.mace =(int)(this.mace * proportion);
+        this.pitch =(int)(this.pitch * proportion);
+        this.pike =(int)(this.pike * proportion);
+        this.spear =(int)(this.spear * proportion);
+        this.armor =(int)(this.armor * proportion);
+        this.hop =(int)(this.hop * proportion);
+        this.leatherArmor =(int)(this.leatherArmor * proportion);
+        this.wheat =(int)(this.wheat * proportion);
+        this.flour =(int)(this.flour * proportion);
+        this.iron =(int)(this.iron * proportion);
+    }
+
 }

@@ -27,6 +27,7 @@ public class Building {
     private boolean passable ;
     protected int hitPoint ;
     private static HashMap<String , BuildingEnum> buildingEnumByName = new HashMap<>();
+    private static HashMap<String , Integer> buildingHitPointByName = new HashMap<>();
 
     private int fearRate ;
 
@@ -89,6 +90,14 @@ public class Building {
         this.hitPoint -= damage ;
         if(this.hitPoint <= 0)
             this.collapse(gameMap) ;
+    }
+
+    public static HashMap<String , Integer> getBuildingHitPointByName (){
+        return buildingHitPointByName;
+    }
+
+    public void setHitPoint(int initialHitPoint){
+        this.hitPoint = initialHitPoint;
     }
 
     public int getHitPoint(){
@@ -270,7 +279,7 @@ public class Building {
         if (type.equals("tunnelentrance"))
             return new Building(type , 1 , 1 , true , "", owner , row , column , getBuildingCost( type ) , 100 , 0 , false , BuildingEnum.TUNNEL_ENTRANCE , 0 );//TODO
         if (type.equals("staircase"))
-            return new Building(type,1,1,true,"",owner,row,column,getBuildingCost(type),20,0,false,BuildingEnum.STAIR,0);
+            return new Building(type,1,1,true,"",owner,row,column,getBuildingCost(type),20,0,false,BuildingEnum.,0);
 
         return null ;
 

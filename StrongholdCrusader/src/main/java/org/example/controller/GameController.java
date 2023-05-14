@@ -911,6 +911,40 @@ public class GameController {
         return "Create Building Successful!";
     }
 
+    public String repair(Matcher matcher){
+        if (player.getSelectedBuilding() == null )
+            return "Repair Failed : No Building Selected";
+        String name = player.getSelectedBuilding().getName();
+        Building building = player.getSelectedBuilding();
+        int currentHitPoint = building.getHitPoint();
+        int initialHitPoint = BuildingEnum.getHitpointByName(name);
+        if (currentHitPoint == initialHitPoint || initialHitPoint == 0)
+            return "Repair Failed : Building Hit Point Is Max";
+        int row = building.getRow();
+        int column = building.getColumn();
+        for (int i =row-3;i<row+3;++i){
+            for (int j = column -3;j<column +3 ;j++){
+                if (isOpponentInTheCell(gameMap.getCell(row,column),player))
+                    return "Repair Failed : Opponent Is Near The Building";
+            }
+        }
+        Cost cost = Building.getBuildingCost(name);
+        double proportion = currentHitPoint/initialHitPoint;
+        cost.alterCost(proportion);
+        if (player.decreaseCost(cost) != null)
+            return "Repair Failed : " + player.decreaseCost(cost);
+        building.setHitPoint(initialHitPoint);
+        return "Repaired Successful!";
+    }
+
+    public boolean isOpponentInTheCell(Cell cell , Player owner){
+        for (Unit unit : cell.units){
+            if (unit.getOwner().equals(owner))
+                return true;
+        }
+        return false;
+    }
+
     public String dropBuilding(Matcher matcher){
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
