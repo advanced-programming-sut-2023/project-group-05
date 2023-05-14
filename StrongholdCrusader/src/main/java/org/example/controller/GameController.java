@@ -796,10 +796,19 @@ public class GameController {
         }
         if (error != null)
             return error;
+        if(type.equals("oxtether")){
+            Building oxtether = Building.createBuildingByName("oxtether",player,row,column) ;
+            Operator ox = new Operator("ox" , player , 5 , row , column , oxtether ) ;
+            return "Ox tether dropped successfully" ;
+        }
         Building building = Building.createBuildingByName(type,player,row,column);
         for (int i = row ; i<row+building.getHeight();++i){
-            for (int j = column ; j < column + building.getWidth();++j)
+            for (int j = column ; j < column + building.getWidth();++j){
                 gameMap.getCell(i,j).setBuilding(building);
+                if(building.getPassable()) gameMap.getMaskedMap()[i][j] = 1 ;
+                if(building.getName().contains( "gate" ) || building.getName().contains( "wall" ) )
+                    gameMap.getMaskedMapUpperGround()[i][j] = 0 ;
+            }
         }
         player.addBuilding(building);
         player.handleBuildingEffectsOnPlayer(type);
@@ -823,6 +832,8 @@ public class GameController {
             for (int j = column ; j < column + building.getWidth();++j){
                 gameMap.getCell(i,j).setBuilding(building) ;
                 if(building.getPassable()) gameMap.getMaskedMap()[i][j] = 1 ;
+                if(building.getName().contains( "gate" ) || building.getName().contains( "wall" ) )
+                    gameMap.getMaskedMapUpperGround()[i][j] = 0 ;
             }
         }
         player.addBuilding(building);

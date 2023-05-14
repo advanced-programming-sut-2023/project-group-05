@@ -40,6 +40,14 @@ public class GameMap {
         return this.height ;
     }
 
+    /*private int[][] ok = new int[400][400] ;
+    public ArrayList<int[]> getStairsFrom(int x , int y){
+        for(int i = 0 ; i < 400 ; i++)
+            for(int j = 0 ; j < 400 ; j++)
+                ok[i][j] = 0 ;
+        return search(x,y) ;
+    }*/
+
     public int[][] getMaskedMapUnderGround(){
         return this.maskedMapUnderGround ;
     }

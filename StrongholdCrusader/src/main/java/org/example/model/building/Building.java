@@ -62,7 +62,8 @@ public class Building {
     }
     public void setPassable( boolean passable , GameMap gameMap ){
         this.passable = passable ;
-        gameMap.getMaskedMap()[this.row][this.column] = ( passable ? 1 : 0 ) ;
+        for(int i = 0 ; i < this.height ; i++) for(int j = 0 ; j < this.width ; j++)
+            gameMap.getMaskedMap()[this.row+i][this.column+j] = ( passable ? 1 : 0 ) ;
     }
 
     public void addUnit( Unit unit ){
@@ -309,6 +310,12 @@ public class Building {
                 2 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
                 0,0,0,0,0, 0) ;
 
+        // STAIRCASE :
+
+        if(type.equals("staircase")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                5 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+
 
         // OTHER
         if (type.equals("drawbridge")) return new Cost( 0 , 0 , 0 , 0 , 0 , 10 ,
@@ -336,7 +343,7 @@ public class Building {
                 0,0,0,0,0, 0) ;
 
         if (type.equals("smallstonegatehouse")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
-                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                10 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
                 0,0,0,0,0, 0) ;
 
         if (type.equals("bigstonegatehouse")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,

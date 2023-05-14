@@ -47,6 +47,12 @@ public class GameMenu {
             else if (Commands.getMatchingMatcher(input,Commands.SET_TAX_RATE)!=null)
                 System.out.println( gameController.setTaxRate(Commands.getMatchingMatcher(input,Commands.SET_TAX_RATE)));
 
+            else if ( Commands.getMatchingMatcher(input,Commands.SHOW_GATE_STATE)!=null )
+                System.out.println( gameController.showGateState(Commands.getMatchingMatcher(input,Commands.SHOW_GATE_STATE)) ) ;
+
+            else if ( Commands.getMatchingMatcher(input,Commands.CHANGE_GATE_STATE)!=null )
+                System.out.println( gameController.changeGateState(Commands.getMatchingMatcher(input,Commands.CHANGE_GATE_STATE)) ) ;
+
             else if (Commands.getMatchingMatcher(input,Commands.SHOW_TAX_RATE)!=null)
                 System.out.println( gameController.showTaxRate(Commands.getMatchingMatcher(input,Commands.SHOW_TAX_RATE)));
 

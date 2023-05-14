@@ -65,7 +65,9 @@ public enum Commands {
     TRADE_ACCEPT("trade accept",new ArrayList<String>(Arrays.asList(" -i (?<id>\\d+) -m (?<message>\\S+)"))),
     SHOW_PRICE_LIST("show price list",null),
     //TODO : fix these regexes
-    BUY("buy",new ArrayList<String>(Arrays.asList(" -i (?<itemName>\\S+) -a (?<amount>\\d+)"))),
+    BUY("buy",new ArrayList<String>(Arrays.asList(" -i (?<itemName>\\S+)" , " -a (?<amount>\\d+)"))),
+    SHOW_GATE_STATE("show gate state" , new ArrayList <>(Arrays.asList(" -x (?<column>\\d+)" , " -y (?<row>\\d+)")) ) ,
+    CHANGE_GATE_STATE("change gate state" , new ArrayList <>(Arrays.asList(" -x (?<column>\\d+)" , " -y (?<row>\\d+)")) ) ,
     SELL("sell",new ArrayList<String>(Arrays.asList(" -i (?<itemName>\\S+) -a (?<amount>\\d+)")));
     private String commandName;
     private ArrayList <String> options;
