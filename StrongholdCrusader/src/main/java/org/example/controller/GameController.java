@@ -73,6 +73,7 @@ public class GameController {
         Integer nextRow = -1 ;
         for(Unit unit : Unit.getUnits()){
             if(unit.getTargetRow() == -1) continue ;
+            unit.setTarget(unit.getTargetRow() , unit.getTargetColumn() , gameMap) ; // for always choosing minimum path
             nextRow = unit.getNextMoveRow() ;
             nextColumn = unit.getNextMoveColumn() ;
             if(nextRow == unit.getRow() && nextColumn == unit.getColumn()&& !(unit instanceof Warrior)){
