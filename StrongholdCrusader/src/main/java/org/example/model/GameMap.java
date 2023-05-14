@@ -20,7 +20,7 @@ public class GameMap {
         //width = number of columns
         this.height = height ;
         this.width = width ;
-        this.map = new Cell[height][width] ;
+        this.map = new Cell[height][width];
         this.maskedMap = new int[height][width] ;
         this.maskedMapUpperGround = new int[height][width] ;
         this.maskedMapUnderGround = new int[height][width] ;

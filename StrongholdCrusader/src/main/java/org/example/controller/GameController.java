@@ -6,6 +6,7 @@ import org.example.model.building.TradeBuilding;
 import org.example.model.unit.*;
 import org.example.view.Menu;
 
+import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -337,6 +338,11 @@ public class GameController {
         gameMap.getCell(row,column).units.add(king);
         player.addUnit(king);
         player.setCastle(castle);
+        player.setPopulationCapacity(8);
+        for (int i =0;i<8;++i){
+            Jobless jobless = new Jobless(player,2,row,column);
+            gameMap.getCell(row,column).addUnit(jobless);
+        }
     }
 
     public void putYourStockPile(Player owner){
@@ -352,7 +358,6 @@ public class GameController {
 
         //TODO : CHECK IF ANY CAPACITY SHOULD GET UPDATED HERE
     }
-
 
     public ArrayList<Integer> getCoordinates () {
 
@@ -392,6 +397,28 @@ public class GameController {
         }
         ArrayList<Integer> ret = new ArrayList<Integer>( Arrays.asList(row , column) ) ;
         return ret ;
+    }
+
+    public void updateBuildingFunctionalities(Player player){
+        int castleRow = player.getCastle().getRow();
+        int castleColumn = player.getCastle().getColumn();
+        for (Building building : player.getBuildings()){
+            if (building instanceof TradeBuilding && !((TradeBuilding) building).getFunctional()
+                && player.getNumberOfJobless()>=((TradeBuilding) building).getRequiredNumberOfOperators()){
+                    for (Unit unit : gameMap.getCell(castleRow,castleRow).units){
+                        if (unit instanceof Jobless) {
+                            Operator operator = new Operator(building.getName(),player,5,castleRow,castleColumn,building);
+                            gameMap.getCell(castleRow,castleColumn).units.remove(unit);
+                            gameMap.getCell(castleRow,castleColumn).units.add(operator);
+                            player.getUnits().remove(unit);
+                            player.getUnits().add(operator);
+                            operator.setTarget(building.getRow(), building.getColumn(), gameMap);
+                        }
+                    }
+                    ((TradeBuilding) building).setObjectsCount(((TradeBuilding) building).getRequiredNumberOfOperators());
+                    ((TradeBuilding) building).updateFunctionality();
+            }
+        }
     }
 
     private void endGame(){
@@ -756,6 +783,10 @@ public class GameController {
     }
 
     public String buildEquipment(Matcher matcher){
+        String equipment = matcher.group("equipment");
+        if (player.getSelectedBuilding().getBuildingEnum() != BuildingEnum.SIEGE_TENT)
+            return "You Should Choose A Siege Tent First";
+
         return null;
     }
 
@@ -958,10 +989,8 @@ public class GameController {
             return "Ox tether dropped successfully" ;
         }
         Building building = Building.createBuildingByName(type,player,row,column);
-
         putBuildingInThePlace(building);
         player.handleBuildingEffectsOnPlayer(type);
-
         return "Drop Building Successful!";
     }
 
@@ -985,6 +1014,12 @@ public class GameController {
         String isHereEmpty = isThereBuildingConflict(type,row,column);
         if (isHereEmpty!= null)
             return isHereEmpty;
+        //Is Cell Texture Appropriate
+        if (createBuilding) {
+            String result = isPlaceAppropriateForBuilding(row, column, type);
+            if (result != null)
+                return result;
+        }
         return null;
     }
 
@@ -995,14 +1030,59 @@ public class GameController {
             return "Building Can't Be Placed Here : It Exceeds The Map";
         for (int i = row ; i<row+height;++i){
             for (int j = column ; j < column + width;++j){
-                if (gameMap.getCell(row,column).getBuilding() != null)
+                if (gameMap.getCell(i,j).getBuilding() != null)
                     return "Building Can't Be Placed Here : Another Building Is Here";
-                if (!gameMap.getCell(row,column).units.isEmpty())
+                if (!gameMap.getCell(i,j).units.isEmpty())
                     return "Building Can't Be Placed Here : Some Units Are Here";
             }
         }
         return null;
     }
+
+    public String isPlaceAppropriateForBuilding(int row , int column , String type){
+        BuildingEnum buildingEnum = BuildingEnum.getBuildingEnumByName(type);
+        ArrayList<CellType> array = getAppropriateCellTypeForABuilding(buildingEnum);
+        for (int i = row ; i <row + BuildingEnum.getBuildingHeightByName(type);++i){
+            for (int j = column; j < column+BuildingEnum.getBuildingWidthByName(type);++j){
+                if (!array.contains(gameMap.getCell(i,j).getCellType()))
+                    return "This Cell Texture Isn't Appropriate For Placing Building";
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<CellType> getAppropriateCellTypeForABuilding(BuildingEnum buildingEnum){
+        ArrayList<CellType> array = new ArrayList<>();
+        if (buildingEnum == BuildingEnum.APPLE_ORCHARD
+            ||buildingEnum == BuildingEnum.WHEAT_FARM
+            || buildingEnum == BuildingEnum.HOPS_FARMER
+            || buildingEnum == BuildingEnum.DIARY_FARMER
+            || buildingEnum == BuildingEnum.HUNTER_POST)
+        {
+            array.add(CellType.GRASS);
+            array.add(CellType.GRASSLAND);
+            array.add(CellType.MEADOW);
+            return array;
+        }
+        if (buildingEnum == BuildingEnum.QUARRY){
+            array.add(CellType.ROCK_MINE);
+            return array;
+        }
+        if (buildingEnum == BuildingEnum.IRON_MINE){
+            array.add(CellType.IRON_MINE);
+            return array;
+        }
+        if (buildingEnum == BuildingEnum.PITCH_RIG){
+            array.add(CellType.OIL_WELL);
+            return array;
+        }
+        array.add(CellType.GROUND);
+        array.add(CellType.GRASS);
+        array.add(CellType.GRASSLAND);
+        array.add(CellType.MEADOW);
+        return array;
+    }
+
 
     public void putBuildingInThePlace(Building building){
         int row = building.getRow();

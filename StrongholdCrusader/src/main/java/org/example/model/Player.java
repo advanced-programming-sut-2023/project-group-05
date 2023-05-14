@@ -331,6 +331,15 @@ public class Player {
     public int getFoodRate(){
         return this.foodRate ;
     }
+
+    public int getNumberOfJobless(){
+        int k  = 0;
+        for (Unit unit : this.units){
+            if (unit instanceof Jobless)
+                ++k;
+        }
+        return k;
+    }
     public void setFearRate( int rate ){
         this.fearRate = rate ;
     }
@@ -420,24 +429,53 @@ public class Player {
             return isSimilarBuildingNearMe(name,row,column,gameMap) ? null : "Granary Should Be Placed Near Another Granary";
         else if (name.equals("stockpile"))
             return isSimilarBuildingNearMe(name,row,column,gameMap) ? null : "Stockpile Should Be Placed Near Another Stockpile";
+        else if (name.equals("staircase"))
+            return isWallOrGateHouseNearMe(name, row, column, gameMap);
         return null;
     }
 
     public boolean isSimilarBuildingNearMe(String name ,int row , int column,GameMap gameMap){
 
-        if (gameMap.getCell(row-1,column).getBuilding().getName().equals(name))
+        if (row > 0 && gameMap.getCell(row-1,column).getBuilding().getName().equals(name))
             return true;
 
-        if (gameMap.getCell(row+1,column).getBuilding().getName().equals(name))
+        if (row < 400 && gameMap.getCell(row+1,column).getBuilding().getName().equals(name))
             return true;
 
-        if (gameMap.getCell(row,column+1).getBuilding().getName().equals(name))
+        if (column < 400 && gameMap.getCell(row,column+1).getBuilding().getName().equals(name))
             return true;
 
-        if (gameMap.getCell(row,column-1).getBuilding().getName().equals(name))
+        if (column > 0 && gameMap.getCell(row,column-1).getBuilding().getName().equals(name))
             return true;
 
         return false;
+    }
+
+    public String isWallOrGateHouseNearMe(String name , int row , int column , GameMap gameMap){
+        if (row > 0 && gameMap.getCell(row-1,column).getBuilding().getBuildingEnum()==BuildingEnum.BIG_STONE_WALL
+                || gameMap.getCell(row-1,column).getBuilding().getBuildingEnum() == BuildingEnum.BIG_STONE_GATEHOUSE
+                || gameMap.getCell(row-1,column).getBuilding().getBuildingEnum() == BuildingEnum.SMALL_STONE_GATEHOUSE
+                || gameMap.getCell(row-1,column).getBuilding().getBuildingEnum() == BuildingEnum.SMALL_STONE_GATEHOUSE)
+            return null;
+
+        if (row < 400 && gameMap.getCell(row+1,column).getBuilding().getBuildingEnum()==BuildingEnum.BIG_STONE_WALL
+                || gameMap.getCell(row+1,column).getBuilding().getBuildingEnum() == BuildingEnum.BIG_STONE_GATEHOUSE
+                || gameMap.getCell(row+1,column).getBuilding().getBuildingEnum() == BuildingEnum.SMALL_STONE_GATEHOUSE
+                || gameMap.getCell(row+1,column).getBuilding().getBuildingEnum() == BuildingEnum.SMALL_STONE_GATEHOUSE)
+            return null;
+
+        if (column > 0 && gameMap.getCell(row,column-1).getBuilding().getBuildingEnum()==BuildingEnum.BIG_STONE_WALL
+                || gameMap.getCell(row,column-1).getBuilding().getBuildingEnum() == BuildingEnum.BIG_STONE_GATEHOUSE
+                || gameMap.getCell(row,column-1).getBuilding().getBuildingEnum() == BuildingEnum.SMALL_STONE_GATEHOUSE
+                || gameMap.getCell(row,column-1).getBuilding().getBuildingEnum() == BuildingEnum.SMALL_STONE_GATEHOUSE)
+            return null;
+
+        if (column < 400 && gameMap.getCell(row,column+1).getBuilding().getBuildingEnum()==BuildingEnum.BIG_STONE_WALL
+                || gameMap.getCell(row,column+1).getBuilding().getBuildingEnum() == BuildingEnum.BIG_STONE_GATEHOUSE
+                || gameMap.getCell(row,column+1).getBuilding().getBuildingEnum() == BuildingEnum.SMALL_STONE_GATEHOUSE
+                || gameMap.getCell(row,column+1).getBuilding().getBuildingEnum() == BuildingEnum.SMALL_STONE_GATEHOUSE)
+            return null;
+        return "You Should Place Staircase Near Some Wall Or GateHouse";
     }
 
 
@@ -461,5 +499,4 @@ public class Player {
             diversity++;
         return diversity;
     }
-
 }

@@ -239,6 +239,12 @@ public class Unit {
             return new Warrior(type,owner,10,50,20,5,15,7,5,true,false,false,false,false,false,true,row,column);
         if (type.equals("jobless"))
             return new Jobless(owner , 2,row , column);
+        if (type.equals("manjenigh"))
+            return new Warrior(type,owner,20,50,2,40,20,0,0,false,false,false,false,false,false,true,row,column);
+        if (type.equals("dejkub"))
+            return new Warrior(type,owner,20,50,4,1,20,0,0,false,false,false,false,false,false,true,row,column);
+        if (type.equals("sangandazatashin"))
+            return new Warrior(type,owner,20,50,2,10,20,0,0,false,false,false,false,false,false,true,row,column);
         //TODO : HANDLE OPERATOR IN-PLACE
         return null;
     }
