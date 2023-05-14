@@ -27,6 +27,7 @@ public class Building {
     private boolean passable ;
     protected int hitPoint ;
     private static HashMap<String , BuildingEnum> buildingEnumByName = new HashMap<>();
+    private static HashMap<String , Integer> buildingHitPointByName = new HashMap<>();
 
     private int fearRate ;
 
@@ -89,6 +90,14 @@ public class Building {
         this.hitPoint -= damage ;
         if(this.hitPoint <= 0)
             this.collapse(gameMap) ;
+    }
+
+    public static HashMap<String , Integer> getBuildingHitPointByName (){
+        return buildingHitPointByName;
+    }
+
+    public void setHitPoint(int initialHitPoint){
+        this.hitPoint = initialHitPoint;
     }
 
     public int getHitPoint(){

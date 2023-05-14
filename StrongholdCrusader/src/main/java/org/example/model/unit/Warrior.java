@@ -69,14 +69,12 @@ public class Warrior extends Unit {
         boolean upWalking = false ;
         boolean needStair = false ;
 
-        if( upPassable && gameMap.getMaskedMapUpperGround()[this.row][this.column] == 0 ){
+        if( this.isOnHighGround && !upPassable ){
             upWalking = true ;
+            needStair = true ;
         }
-        else if( downPassable && gameMap.getMaskedMap()[this.row][this.column] == 0 ){
+        else if( !this.isOnHighGround && !downPassable ){
             upWalking = false ;
-        }
-        else{
-            upWalking = this.isOnHighGround ;
             needStair = true ;
         }
 

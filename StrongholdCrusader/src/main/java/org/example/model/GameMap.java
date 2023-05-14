@@ -53,7 +53,7 @@ public class GameMap {
     }
     private int[][] adj = { {0,1} , {0,-1} , {1,0} , {-1,0} } ;
     private void search(int x , int y , int map[][]){
-        if(ok[x][y] || map[x][y] == 1 ) return ;
+        if( x > 400 || x < 0 || y > 400 || y < 0 || ok[x][y] || map[x][y] == 1 ) return ;
         if(maskedMapUpperGround[x][y] == 0 && maskedMap[x][y] == 0) stairs.add( new int[]{ x , y } ) ;
         ok[x][y] = true ;
         for(int i = 0 ; i < 4 ; i++)
