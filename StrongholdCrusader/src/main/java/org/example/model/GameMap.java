@@ -4,6 +4,7 @@ import org.example.model.building.Building;
 import org.example.model.unit.Unit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class GameMap {
@@ -40,13 +41,24 @@ public class GameMap {
         return this.height ;
     }
 
-    /*private int[][] ok = new int[400][400] ;
-    public ArrayList<int[]> getStairsFrom(int x , int y){
+    private ArrayList<int[]> stairs ;
+    private boolean[][] ok = new boolean[400][400] ;
+    public ArrayList<int[]> getStairsFrom(int x , int y , boolean ground){
         for(int i = 0 ; i < 400 ; i++)
             for(int j = 0 ; j < 400 ; j++)
-                ok[i][j] = 0 ;
-        return search(x,y) ;
-    }*/
+                ok[i][j] = false ;
+        this.stairs = new ArrayList<int[]>() ;
+        search(x,y,(ground ? maskedMap : maskedMapUpperGround)) ;
+        return stairs ;
+    }
+    private int[][] adj = { {0,1} , {0,-1} , {1,0} , {-1,0} } ;
+    private void search(int x , int y , int map[][]){
+        if(ok[x][y] || map[x][y] == 1 ) return ;
+        if(maskedMapUpperGround[x][y] == 0 && maskedMap[x][y] == 0) stairs.add( new int[]{ x , y } ) ;
+        ok[x][y] = true ;
+        for(int i = 0 ; i < 4 ; i++)
+            search( x + adj[i][0] , y + adj[i][1] , map ) ;
+    }
 
     public int[][] getMaskedMapUnderGround(){
         return this.maskedMapUnderGround ;

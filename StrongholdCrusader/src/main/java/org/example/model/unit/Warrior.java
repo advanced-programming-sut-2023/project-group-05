@@ -6,10 +6,14 @@ import org.example.model.Player;
 import org.example.model.UnitModeEnum;
 import org.example.model.building.Building;
 
+import java.util.ArrayList;
+
 public class Warrior extends Unit {
     private boolean isAttacking ;
     private final int attackPower ;
     private int patrolTurn ;
+    private int stairRow ;
+    private int stairColumn ;
     private int patrolEndRow ;
     private int patrolEndColumn ;
     private int patrolBeginColumn ;
@@ -53,8 +57,28 @@ public class Warrior extends Unit {
         this.unitMode = unitMode ;
     }
 
+    // THE STAIR YOU PASS THROUGH GOING TO SOMEWHERE
+    private int middleStairRow ;
+    private int middleStairColumn ;
+
     @Override
     public void setTarget( int row , int column , GameMap gameMap ){
+
+        boolean upPassable = gameMap.getMaskedMap()[row][column] == 0 ;
+        boolean downPassable = gameMap.getMaskedMapUpperGround()[row][column] == 0 ;
+        boolean upWalking = false ;
+        boolean needStair = false ;
+
+        if( upPassable && gameMap.getMaskedMapUpperGround()[this.row][this.column] == 0 ){
+            upWalking = true ;
+        }
+        else if( downPassable && gameMap.getMaskedMap()[this.row][this.column] == 0 ){
+            upWalking = false ;
+        }
+        else{
+            upWalking = this.isOnHighGround ;
+            needStair = true ;
+        }
 
         if(this.row == row && this.column == column && !this.isPatrolling){
             this.isMoving = false ;
@@ -72,11 +96,24 @@ public class Warrior extends Unit {
                 row = this.patrolBeginRow ;
             }
         }
+        ArrayList <int[]> stairs ;
+
+        if(needStair){
+            PathFinder pf = new PathFinder() ;
+            stairs = gameMap.getStairsFrom( this.row , this.column , !this.isOnHighGround ) ;
+            for( int[] stair : stairs ){
+                pf.Run( stair[0] , stair[1] ) ;
+                if(pf.goInDirectionFrom( this.row , this.column ) != -1){
+                    row = stair[0] ;
+                    column = stair[1] ;
+                    break ;
+                }
+            }
+        }
 
         super.targetRow = row ;
         super.targetColumn = column ;
-        super.pathFinder = new PathFinder() ;
-        super.pathFinder.setGameMap( gameMap.getMaskedMap() , 400 ) ;
+        super.pathFinder.setGameMap( (upWalking ? gameMap.getMaskedMapUpperGround() : gameMap.getMaskedMap()) , 400 ) ;
         super.pathFinder.Run( row , column ) ;
         super.isMoving = true;
 

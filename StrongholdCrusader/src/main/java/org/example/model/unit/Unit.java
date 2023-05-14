@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Unit {
-    protected PathFinder pathFinder ;
-    private boolean isOnHighGround ;
+    protected PathFinder pathFinder = new PathFinder() ;
+    protected boolean isOnHighGround ;
     private final String name ;
     private int hitPoint;
     private final int movingSpeed ;
@@ -80,13 +80,12 @@ public class Unit {
         }
         this.targetRow = row ;
         this.targetColumn = column ;
-        this.pathFinder = new PathFinder() ;
         pathFinder.setGameMap( gameMap.getMaskedMap() , 400 ) ;
         pathFinder.Run( row , column ) ;
         this.isMoving = true;
     }
 
-    public int getNextMoveRow(){
+    public int getNextRow(){
         int nextMoveMask = pathFinder.goInDirectionFrom(this.row , this.column)  ;
         /// up, down, left, right (0, 1, 2, 3) and -1 if it is fucked!
         switch(nextMoveMask){
@@ -101,7 +100,7 @@ public class Unit {
         return this.row ;
     }
 
-    public int getNextMoveColumn(){
+    public int getNextColumn(){
         int nextMoveMask = pathFinder.goInDirectionFrom(this.row , this.column)  ;
         /// up, down, left, right (0, 1, 2, 3) and -1 if it is fucked!
         switch(nextMoveMask){

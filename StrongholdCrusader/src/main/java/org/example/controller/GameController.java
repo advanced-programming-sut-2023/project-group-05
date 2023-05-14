@@ -6,7 +6,6 @@ import org.example.model.building.TradeBuilding;
 import org.example.model.unit.*;
 import org.example.view.Menu;
 
-import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -199,8 +198,8 @@ public class GameController {
 
             if(unit.getTargetRow() == -1) continue ;
             unit.setTarget(unit.getTargetRow() , unit.getTargetColumn() , gameMap) ; // for always choosing minimum path
-            nextRow = unit.getNextMoveRow() ;
-            nextColumn = unit.getNextMoveColumn() ;
+            nextRow = unit.getNextRow() ;
+            nextColumn = unit.getNextColumn() ;
             if(nextRow == unit.getRow() && nextColumn == unit.getColumn()&& !(unit instanceof Warrior)){
                 unit.setIsMoving(false) ;
                 continue ;
@@ -212,8 +211,8 @@ public class GameController {
             if(nextRow == unit.getRow() && nextColumn == unit.getColumn() && unit instanceof Warrior){
                 Warrior warrior = (Warrior)unit ;
                 warrior.setTarget(warrior.getRow(),warrior.getColumn(),gameMap) ;
-                nextRow = warrior.getNextMoveRow() ;
-                nextColumn = warrior.getNextMoveColumn() ;
+                nextRow = warrior.getNextRow() ;
+                nextColumn = warrior.getNextColumn() ;
             }
 
             Cell cell = gameMap.getCell(unit.getRow() , unit.getColumn()) ;
@@ -805,7 +804,7 @@ public class GameController {
         for (int i = row ; i<row+building.getHeight();++i){
             for (int j = column ; j < column + building.getWidth();++j){
                 gameMap.getCell(i,j).setBuilding(building);
-                if(building.getPassable()) gameMap.getMaskedMap()[i][j] = 1 ;
+                if(!building.getPassable()) gameMap.getMaskedMap()[i][j] = 1 ;
                 if(building.getName().contains( "gate" ) || building.getName().contains( "wall" ) )
                     gameMap.getMaskedMapUpperGround()[i][j] = 0 ;
             }
@@ -831,8 +830,8 @@ public class GameController {
         for (int i = row ; i<row+building.getHeight();++i){
             for (int j = column ; j < column + building.getWidth();++j){
                 gameMap.getCell(i,j).setBuilding(building) ;
-                if(building.getPassable()) gameMap.getMaskedMap()[i][j] = 1 ;
-                if(building.getName().contains( "gate" ) || building.getName().contains( "wall" ) )
+                if(!building.getPassable()) gameMap.getMaskedMap()[i][j] = 1 ;
+                if(building.getName().contains( "gate" ) || building.getName().contains( "wall" ) || building.getName().equals("staircase") )
                     gameMap.getMaskedMapUpperGround()[i][j] = 0 ;
             }
         }
