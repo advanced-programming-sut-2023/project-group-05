@@ -56,12 +56,13 @@ public class GameController {
         }
         for(Player p : this.players){
             System.out.println(
-                    "Player : " + p.getAccount().getNickName() + " " + " apple : " + player.getApple() + " sword : " + player.getSword()
+                    "Player : " + p.getAccount().getNickName() + " " + " apple : " + p.getApple() + " sword : " + p.getSword()
             ) ;
         }
-        for(int i = 0 ; i < 20 ; i++)
-            for(int j = 0 ; j < 20 ; j++)
-                System.out.print("" + gameMap.getMaskedMap()[i][j] + (j == 19 ? "\n" : " ")) ;
+        this.player.decreaseCost(Cost.negative(new Cost( 1000 , 1000 , 1000 , 1000 , 1000, 1000 , 1000 , 1000 , 1000 , 1000 , 1000, 1000 , 1000 , 1000 , 1000 , 1000, 1000 , 1000, 1000 , 1000 , 1000 , 1000 , 1000 ))) ;
+//        for(int i = 0 ; i < 20 ; i++)
+//            for(int j = 0 ; j < 20 ; j++)
+//                System.out.print("" + gameMap.getMaskedMap()[i][j] + (j == 19 ? "\n" : " ")) ;
 
     }
 
@@ -84,73 +85,12 @@ public class GameController {
         // EACH WARRIOR IS SOME STATE : standing , defensive , aggressive based on that
         // the warrior will decide to attack someone or not.
 
-        for(Unit unit : Unit.getUnits()){
-            if( !(unit instanceof Warrior) ) continue ;
-            Warrior warrior = (Warrior) unit ;
-
-            // AGGRESSIVE GUYS
-
-            if(warrior.getUnitMode()==UnitModeEnum.AGGRESSIVE){
-                // TODO : USE A BETTER ALGORITHM FOR THIS
-                for(Unit nearbyUnit : Unit.getUnits()){
-                    if(nearbyUnit.getOwner()==this.player) continue ;
-                    int dr = nearbyUnit.getRow() - warrior.getRow() ;
-                    int dc = nearbyUnit.getColumn() - warrior.getColumn() ;
-                    if( dr * dr + dc * dc <= warrior.getRange() ){
-                        warrior.attackUnit( nearbyUnit , gameMap ) ;
-                        break ;
-                    }
-                }
-            }
-
-            // DEFENSIVE GUYS
-
-            if(warrior.getUnitMode()==UnitModeEnum.DEFENSIVE){
-                int num = 0 ;
-                Unit attackedUnit = null ;
-                for(Unit nearbyUnit : Unit.getUnits()){
-                    if(nearbyUnit.getOwner()==this.player) continue ;
-                    int dr = nearbyUnit.getRow() - warrior.getRow() ;
-                    int dc = nearbyUnit.getColumn() - warrior.getColumn() ;
-                    if( dr * dr + dc * dc <= warrior.getRange() ){
-                        attackedUnit = nearbyUnit ;
-                        num++ ;
-                    }
-                }
-                if(num>=3)
-                    warrior.attackUnit( attackedUnit , gameMap ) ;
-
-            }
-
-        }
+        setWarriorsEnemies() ;
 
         // ALL WARRIORS WHICH ARE ATTACKING WILL DEAL DAMAGE IF THE ENEMY IS IN THEIR RANGE.
         // if x is damaged by y and y is warrior then whatever state y is in , it will start attacking x
 
-        for(Unit attackerUnit : Unit.getUnits()){
-            if(!(attackerUnit instanceof Warrior)) continue ;
-            Warrior warrior = (Warrior)attackerUnit ;
-            if(!warrior.getIsAttacking()) continue ;
-            Building attackedBuilding = warrior.getAttackingBuilding();
-            Unit attackedUnit = warrior.getAttackingUnit() ;
-            if( attackedUnit != null ){
-                int distance2 = (attackedUnit.getRow() - warrior.getRow())*(attackedUnit.getRow() - warrior.getRow()) +
-                        (attackedUnit.getColumn() - warrior.getColumn()) * (attackedUnit.getColumn() - warrior.getColumn());
-                if( Math.abs(Math.sqrt(distance2)) <= warrior.getRange() ){
-                    attackedUnit.getDamaged(warrior.getDamage(),gameMap) ;
-                    if(attackedUnit instanceof Warrior){
-                        ((Warrior)attackedUnit).attackUnit(attackerUnit,gameMap) ;
-                    }
-                }
-            }
-            else if( attackedBuilding != null ){
-                int distance2 = (attackedBuilding.getRow() - warrior.getRow())*(attackedBuilding.getRow() - warrior.getRow()) +
-                        (attackedBuilding.getColumn() - warrior.getColumn()) * (attackedBuilding.getColumn() - warrior.getColumn());
-                if( distance2 <= warrior.getRange()){
-                    attackedBuilding.getDamaged(warrior.getDamage() , gameMap) ;
-                }
-            }
-        }
+        dealAllDamages() ;
 
         // OPERATORS : units working in some buildings ( workers )
 
@@ -224,14 +164,85 @@ public class GameController {
         player.changePopulation(increased);
     }
 
-    public void tradeBuildingsWork(){
+    public void dealAllDamages(){
+        for(Unit attackerUnit : Unit.getUnits()){
+            if(!(attackerUnit instanceof Warrior)) continue ;
+            Warrior warrior = (Warrior)attackerUnit ;
+            if(!warrior.getIsAttacking()) continue ;
+            Building attackedBuilding = warrior.getAttackingBuilding();
+            Unit attackedUnit = warrior.getAttackingUnit() ;
+            if( attackedUnit != null ){
+                int distance2 = (attackedUnit.getRow() - warrior.getRow())*(attackedUnit.getRow() - warrior.getRow()) +
+                        (attackedUnit.getColumn() - warrior.getColumn()) * (attackedUnit.getColumn() - warrior.getColumn());
+                if( Math.abs(Math.sqrt(distance2)) <= warrior.getRange() ){
+                    attackedUnit.getDamaged(warrior.getDamage(),gameMap) ;
+                    if(attackedUnit instanceof Warrior){
+                        ((Warrior)attackedUnit).attackUnit(attackerUnit,gameMap) ;
+                    }
+                }
+            }
+            else if( attackedBuilding != null ){
+                int distance2 = (attackedBuilding.getRow() - warrior.getRow())*(attackedBuilding.getRow() - warrior.getRow()) +
+                        (attackedBuilding.getColumn() - warrior.getColumn()) * (attackedBuilding.getColumn() - warrior.getColumn());
+                if( distance2 <= warrior.getRange()){
+                    attackedBuilding.getDamaged(warrior.getDamage() , gameMap) ;
+                }
+            }
+        }
+    }
+
+    public void tradeBuildingsWork(){ // TODO : jobless getting job
         for(Building anyBuilding : Building.getBuildings()){
             if(!(anyBuilding instanceof TradeBuilding)) continue ;
             TradeBuilding building = (TradeBuilding) anyBuilding ;
+            building.updateFunctionality();
+            building.functional = true ;
             System.out.println( "" + this.turn  + "  " + building.getRate() ) ;
             if(this.turn % building.getRate() == 0){
-                System.out.println(building.trade());
+                System.out.println(building.trade(gameMap));
             }
+        }
+    }
+
+    public void setWarriorsEnemies(){
+        for(Unit unit : Unit.getUnits()){
+            if( !(unit instanceof Warrior) ) continue ;
+            Warrior warrior = (Warrior) unit ;
+
+            // AGGRESSIVE GUYS
+
+            if(warrior.getUnitMode()==UnitModeEnum.AGGRESSIVE){
+                // TODO : USE A BETTER ALGORITHM FOR THIS
+                for(Unit nearbyUnit : Unit.getUnits()){
+                    if(nearbyUnit.getOwner()==this.player) continue ;
+                    int dr = nearbyUnit.getRow() - warrior.getRow() ;
+                    int dc = nearbyUnit.getColumn() - warrior.getColumn() ;
+                    if( dr * dr + dc * dc <= warrior.getRange() ){
+                        warrior.attackUnit( nearbyUnit , gameMap ) ;
+                        break ;
+                    }
+                }
+            }
+
+            // DEFENSIVE GUYS
+
+            if(warrior.getUnitMode()==UnitModeEnum.DEFENSIVE){
+                int num = 0 ;
+                Unit attackedUnit = null ;
+                for(Unit nearbyUnit : Unit.getUnits()){
+                    if(nearbyUnit.getOwner()==this.player) continue ;
+                    int dr = nearbyUnit.getRow() - warrior.getRow() ;
+                    int dc = nearbyUnit.getColumn() - warrior.getColumn() ;
+                    if( dr * dr + dc * dc <= warrior.getRange() ){
+                        attackedUnit = nearbyUnit ;
+                        num++ ;
+                    }
+                }
+                if(num>=3)
+                    warrior.attackUnit( attackedUnit , gameMap ) ;
+
+            }
+
         }
     }
 

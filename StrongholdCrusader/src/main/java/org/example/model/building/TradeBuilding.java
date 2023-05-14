@@ -2,6 +2,7 @@ package org.example.model.building;
 
 import org.example.model.BuildingEnum;
 import org.example.model.Cost;
+import org.example.model.GameMap;
 import org.example.model.Player;
 import org.example.model.unit.Unit;
 
@@ -13,7 +14,7 @@ import static org.example.model.Cost.negative;
 public class TradeBuilding extends Building {
 
     private final int requiredNumberOfOperators ;
-    private boolean functional ;
+    public boolean functional ;
     private int tradeType ;
     private int rate ;
     private int turnBuilt ;
@@ -33,7 +34,7 @@ public class TradeBuilding extends Building {
         this.numberOfTurnsToGenerateProduct = rate;
     }
 
-    public boolean trade()
+    public boolean trade( GameMap gameMap)
     {
         if(!this.functional)
         {
@@ -300,7 +301,7 @@ public class TradeBuilding extends Building {
         for(String cur : objectsInput)
         {
             Unit current = owner.getUnitByType(cur);
-            owner.removeUnit(current);
+            owner.removeUnit(current , gameMap);
         }
         String assertString = owner.decreaseCost(negative(output));
         if(assertString != null)
@@ -311,7 +312,7 @@ public class TradeBuilding extends Building {
         }
         for(String cur : objectsOutput)
         {
-            Unit.createUnitByName(cur, owner, super.getRow(), super.getColumn());
+            Unit.createUnitByName(cur, owner, owner.getCastleRow(), owner.getCastleColumn());
         }
         return true;
     }

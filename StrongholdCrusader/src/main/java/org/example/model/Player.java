@@ -112,7 +112,7 @@ public class Player {
         return null;
     }
 
-    public void removeUnit(Unit inp)
+    public void removeUnit(Unit inp , GameMap gameMap)
     {
         if(this.units.contains(inp))
         {
@@ -122,7 +122,7 @@ public class Player {
         {
             this.selectedUnits.remove(inp);
         }
-        //TODO remove this unit from the cell and the map, elsewhere it's removed already
+        gameMap.getCell(inp.getRow() , inp.getColumn()).getUnits().remove(inp) ;
 
     }
 
@@ -310,6 +310,14 @@ public class Player {
 
     public int getSword(){
         return this.sword ;
+    }
+
+    public int getCastleRow(){
+        return this.castle.getRow() ;
+    }
+
+    public int getCastleColumn(){
+        return this.castle.getColumn() ;
     }
 
     public int getCheese(){
