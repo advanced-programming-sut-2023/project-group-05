@@ -7,22 +7,37 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class GameMap {
+    private int height ;
+    private int width ;
     private Cell[][] map ;
     private int[][] maskedMap ;
     private int[][] maskedMapUnderGround ;
+    private int[][] maskedMapUpperGround ;
 
     public GameMap(int height , int width){
         //height = number of rows
         //width = number of columns
+        this.height = height ;
+        this.width = width ;
         this.map = new Cell[height][width] ;
         this.maskedMap = new int[height][width] ;
+        this.maskedMapUpperGround = new int[height][width] ;
         this.maskedMapUnderGround = new int[height][width] ;
         for(int i = 0 ; i < height ; i++)
             for(int j = 0 ; j < width ; j++) {
                 map[i][j] = new Cell( CellType.GROUND );
                 maskedMap[i][j] = 0 ;
                 maskedMapUnderGround[i][j] = 0 ;
+                maskedMapUpperGround[i][j] = 1 ;
             }
+    }
+
+    public int getWidth(){
+        return this.width ;
+    }
+
+    public int getHeight(){
+        return this.height ;
     }
 
     public int[][] getMaskedMapUnderGround(){
@@ -31,6 +46,10 @@ public class GameMap {
 
     public int[][] getMaskedMap(){
         return this.maskedMap ;
+    }
+
+    public int[][] getMaskedMapUpperGround(){
+        return this.maskedMapUpperGround ;
     }
 
     public boolean canGo(int row , int column){

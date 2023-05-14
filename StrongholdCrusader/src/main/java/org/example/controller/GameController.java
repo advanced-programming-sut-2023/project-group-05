@@ -69,36 +69,7 @@ public class GameController {
 
         // MOVING UNITS HAPPENS IN THIS PART
 
-        Integer nextColumn = -1 ;
-        Integer nextRow = -1 ;
-        for(Unit unit : Unit.getUnits()){
-            if(unit.getTargetRow() == -1) continue ;
-            unit.setTarget(unit.getTargetRow() , unit.getTargetColumn() , gameMap) ; // for always choosing minimum path
-            nextRow = unit.getNextMoveRow() ;
-            nextColumn = unit.getNextMoveColumn() ;
-            if(nextRow == unit.getRow() && nextColumn == unit.getColumn()&& !(unit instanceof Warrior)){
-                unit.setIsMoving(false) ;
-                continue ;
-            }
-            if(nextRow == unit.getRow() && nextColumn == unit.getColumn()&& unit instanceof Warrior && !((Warrior)unit).getIsPatrolling() ){
-                unit.setIsMoving(false) ;
-                continue ;
-            }
-            if(nextRow == unit.getRow() && nextColumn == unit.getColumn() && unit instanceof Warrior){
-                Warrior warrior = (Warrior)unit ;
-                warrior.setTarget(warrior.getRow(),warrior.getColumn(),gameMap) ;
-                nextRow = warrior.getNextMoveRow() ;
-                nextColumn = warrior.getNextMoveColumn() ;
-            }
-
-            Cell cell = gameMap.getCell(unit.getRow() , unit.getColumn()) ;
-            Cell nextCell = gameMap.getCell(nextRow , nextColumn) ;
-            cell.getUnits().remove(unit) ;
-            nextCell.getUnits().add(unit) ;
-            unit.setRow( nextRow );
-            unit.setColumn( nextColumn ) ;
-
-        }
+        moveAllUnits() ;
 
         // EACH WARRIOR IS SOME STATE : standing , defensive , aggressive based on that
         // the warrior will decide to attack someone or not.
@@ -219,6 +190,40 @@ public class GameController {
 
         // CHECK FOR WINNER AND IF THERE IS ONE , END THE GAME , GIVE POINTS , DELETE ALL INSTANCES FROM WHERE EVER THEY ARE NEEDED TO BE DELETED.
 
+    }
+
+    private void moveAllUnits(){
+        int nextColumn = -1 ;
+        int nextRow = -1 ;
+        for(Unit unit : Unit.getUnits()){
+
+            if(unit.getTargetRow() == -1) continue ;
+            unit.setTarget(unit.getTargetRow() , unit.getTargetColumn() , gameMap) ; // for always choosing minimum path
+            nextRow = unit.getNextMoveRow() ;
+            nextColumn = unit.getNextMoveColumn() ;
+            if(nextRow == unit.getRow() && nextColumn == unit.getColumn()&& !(unit instanceof Warrior)){
+                unit.setIsMoving(false) ;
+                continue ;
+            }
+            if(nextRow == unit.getRow() && nextColumn == unit.getColumn()&& unit instanceof Warrior && !((Warrior)unit).getIsPatrolling() ){
+                unit.setIsMoving(false) ;
+                continue ;
+            }
+            if(nextRow == unit.getRow() && nextColumn == unit.getColumn() && unit instanceof Warrior){
+                Warrior warrior = (Warrior)unit ;
+                warrior.setTarget(warrior.getRow(),warrior.getColumn(),gameMap) ;
+                nextRow = warrior.getNextMoveRow() ;
+                nextColumn = warrior.getNextMoveColumn() ;
+            }
+
+            Cell cell = gameMap.getCell(unit.getRow() , unit.getColumn()) ;
+            Cell nextCell = gameMap.getCell(nextRow , nextColumn) ;
+            cell.getUnits().remove(unit) ;
+            nextCell.getUnits().add(unit) ;
+            unit.setRow( nextRow );
+            unit.setColumn( nextColumn ) ;
+
+        }
     }
 
     public void putYourCastle(Player owner){
@@ -504,7 +509,7 @@ public class GameController {
             return "No Unit Selected";
         if (row > 400 || row <0 || column >400 || column < 0)
             return "Move Unit Failed : Row Or Column Exceeded Map";
-        if (gameMap.getMaskedMap()[row][column] == 1)
+        if (gameMap.getMaskedMap()[row][column] == 1 && gameMap.getMaskedMapUpperGround()[row][column] == 1 )
             return "Move Unit Failed : Destination Is Not Permeable";
         // TODO : EXPLANATION --> IT IS ASSUMED THAT ALL SELECTED UNITS ARE FROM A SINGLE CELL AND THEY ARE GOING TO A SINGLE DESTINATION
         for (Unit unit : player.getSelectedUnits()){

@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 public class Unit {
     protected PathFinder pathFinder ;
+    private boolean isOnHighGround ;
     private final String name ;
     private int hitPoint;
     private final int movingSpeed ;
@@ -36,6 +37,7 @@ public class Unit {
         this.owner = owner ;
         this.row = row ;
         this.column = column ;
+        this.isOnHighGround = false ;
         this.selectable = selectable ;
         this.movingSpeed = movingSpeed ;
         this.range = range ;
@@ -45,6 +47,14 @@ public class Unit {
 
     public boolean getSelectable(){
         return this.selectable ;
+    }
+
+    public boolean getIsOnHighGround(){
+        return this.isOnHighGround ;
+    }
+
+    public void setIsOnHighGround(boolean highGround){
+        this.isOnHighGround = highGround ;
     }
 
     public void die(GameMap gameMap){
