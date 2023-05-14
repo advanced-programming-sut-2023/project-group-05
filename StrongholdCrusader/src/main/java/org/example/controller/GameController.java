@@ -15,7 +15,6 @@ import java.util.Random;
 import java.util.regex.Matcher;
 
 public class GameController {
-    //TODO : DANIAL & MOHAMMAD AMIN : ATTACK - AIR ATTACK - Fill oil - DIG TUNNEL - BUILD EQUIPMENT
     /*TODO: Dear my friend Mohammad amin :
     *       now that I'm writing this comment for you it is 3:00 AM in the morning.
     *       deadline was passed 3 hours ago , why don't you code ?
