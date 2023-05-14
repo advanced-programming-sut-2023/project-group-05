@@ -26,7 +26,7 @@ public class MapMenuController {
                 String background = getCellTypeByColor(cell);
                 String textColor = getTextColor(background);
                 String content = getCellContentByCharacter(cell);
-                if(content.equals("B")){
+                if(content.equals(" B ")){
                     background = ConsoleColors.RED_BACKGROUND ;
                 }
                 System.out.print("|"+background+textColor+content+ConsoleColors.RESET);
@@ -89,14 +89,12 @@ public class MapMenuController {
             return " S ";
         Building building = cell.getBuilding() ;
         if (building != null) {
-
                 if (building instanceof AttackDefenceBuilding)
                     return " W ";
                 if (building.getName().equals("deserttree") || building.getName().equals("cherrytree") || building.getName().equals("datetree") || building.getName().equals("olivetree") || building.getName().equals("coconuttree"))
                     return " T ";
                 if (building.getName().equals("rockeast") || building.getName().equals("rocknorth") || building.getName().equals("rocksouth") || building.getName().equals("rockwest"))
                     return " R ";
-
             return " B ";
         }
         return " # ";

@@ -6,25 +6,12 @@ import org.example.model.building.TradeBuilding;
 import org.example.model.unit.*;
 import org.example.view.Menu;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.regex.Matcher;
 
 public class GameController {
-
-    /*TODO: Dear my friend Mohammad amin :
-    *       now that I'm writing this comment for you it is 3:00 AM in the morning.
-    *       deadline was passed 3 hours ago , why don't you code ?
-    *       Are you afraid of coding ?
-    *       If you are not interested in coding I strongly recommend you to get to a psychiatrist because you
-    *       must be a maniac to select this major ...
-    *       your sincerely , Danial
-    *
-    * */
-
-    /*TODO : */
 
     ArrayList<Player> players ;
     ArrayList <Account> accounts ;
@@ -70,9 +57,6 @@ public class GameController {
     }
 
     public void nextTurn(){
-        // TODO : kill someone what then my friend ? remove them from operating building
-        // TODO : the for each on all units is kinda bad can't you just save each class's instances ?
-
         this.turn++ ;
         this.player = this.players.get( this.turn % this.players.size() ) ;
 
@@ -109,7 +93,7 @@ public class GameController {
                         if(operator.getAdjacantBuildings(gameMap).contains(
                                 gameMap.getCell(operator.getTargetRow(),operator.getTargetColumn()).getBuilding()
                         )){
-                            // TODO : DO THE JOB YOU LITTLE COW
+
                         }
                 } catch ( Exception e ){
                     // Exception handling go brrrrrrrr
@@ -132,14 +116,10 @@ public class GameController {
 
             }
 
-            // Other operators
-
         }
 
         // TRADE BUILDINGS will go brrrrrr
         tradeBuildingsWork() ;
-        // TODO : danial your midterm is 19 / 25 dont forget
-        // TODO : borj mohasere
 
         // ACTIONS IN THE END OF EACH N TURNS ( N = players.size() )
         // INCLUDING : TAX , POPULATION CHANGE , POPULARITY CHANGE , FOOD GETTING EATE
@@ -164,6 +144,8 @@ public class GameController {
 
     public void populationGrowth(Player player){
         int increaseRate = player.getPopularity()/5;
+        if (player.getPopularity() < 0)
+            increaseRate = 0;
         int increased = 0;
         int castleRow = player.getCastle().getRow();
         int castleColumn = player.getCastle().getColumn();
@@ -204,13 +186,12 @@ public class GameController {
         }
     }
 
-    public void tradeBuildingsWork(){ // TODO : jobless getting job
+    public void tradeBuildingsWork(){
         for(Building anyBuilding : Building.getBuildings()){
             if(!(anyBuilding instanceof TradeBuilding)) continue ;
             TradeBuilding building = (TradeBuilding) anyBuilding ;
             building.updateFunctionality();
             building.functional = true ;
-            System.out.println( "" + this.turn  + "  " + building.getRate() ) ;
             if(this.turn % building.getRate() == 0){
                 System.out.println(building.trade(gameMap));
             }
@@ -225,7 +206,7 @@ public class GameController {
             // AGGRESSIVE GUYS
 
             if(warrior.getUnitMode()==UnitModeEnum.AGGRESSIVE){
-                // TODO : USE A BETTER ALGORITHM FOR THIS
+
                 for(Unit nearbyUnit : Unit.getUnits()){
                     if(nearbyUnit.getOwner()==this.player) continue ;
                     int dr = nearbyUnit.getRow() - warrior.getRow() ;
@@ -342,7 +323,6 @@ public class GameController {
         double foodSupply = player.getFoodRate()*0.5+1;
         int totalFoodSupply=(int)Math.floor(player.getPopulation()*foodSupply);
         int unSuppliedFood = changePlayerFoodTypesAmount(player,totalFoodSupply);
-        //TODO : CHANGE THIS CALCULATION ?
         int popularityChange = (int)Math.floor(((double)unSuppliedFood/((double)totalFoodSupply))*-8
                                 +((double)(totalFoodSupply-unSuppliedFood)/(double) totalFoodSupply)*player.getFoodRate()*4);
         player.changePopularity(popularityChange);
@@ -386,6 +366,11 @@ public class GameController {
         gameMap.getCell(row,column).units.add(king);
         player.addUnit(king);
         player.setCastle(castle);
+        player.setPopulationCapacity(8);
+        for (int i =0;i<8;++i){
+            Jobless jobless = new Jobless(player,2,row,column);
+            gameMap.getCell(row,column).addUnit(jobless);
+        }
     }
 
     public void putYourStockPile(Player owner){
@@ -398,10 +383,7 @@ public class GameController {
         Building stockpile = Building.createBuildingByName(name,owner,row,column);
         putBuildingInThePlace(stockpile);
         player.isStockPileCreated = true;
-
-        //TODO : CHECK IF ANY CAPACITY SHOULD GET UPDATED HERE
     }
-
 
     public ArrayList<Integer> getCoordinates () {
 
@@ -441,6 +423,28 @@ public class GameController {
         }
         ArrayList<Integer> ret = new ArrayList<Integer>( Arrays.asList(row , column) ) ;
         return ret ;
+    }
+
+    public void updateBuildingFunctionalities(Player player){
+        int castleRow = player.getCastle().getRow();
+        int castleColumn = player.getCastle().getColumn();
+        for (Building building : player.getBuildings()){
+            if (building instanceof TradeBuilding && !((TradeBuilding) building).getFunctional()
+                && player.getNumberOfJobless()>=((TradeBuilding) building).getRequiredNumberOfOperators()){
+                    for (Unit unit : gameMap.getCell(castleRow,castleRow).units){
+                        if (unit instanceof Jobless) {
+                            Operator operator = new Operator(building.getName(),player,5,castleRow,castleColumn,building);
+                            gameMap.getCell(castleRow,castleColumn).units.remove(unit);
+                            gameMap.getCell(castleRow,castleColumn).units.add(operator);
+                            player.getUnits().remove(unit);
+                            player.getUnits().add(operator);
+                            operator.setTarget(building.getRow(), building.getColumn(), gameMap);
+                        }
+                    }
+                    ((TradeBuilding) building).setObjectsCount(((TradeBuilding) building).getRequiredNumberOfOperators());
+                    ((TradeBuilding) building).updateFunctionality();
+            }
+        }
     }
 
     private void endGame(){
@@ -636,7 +640,6 @@ public class GameController {
         if (row > 400 || column > 400 || row < 0 || column < 0)
             return "SelectUnit Failed : Row Or Column Exceeded Map";
         Cell cell = gameMap.getCell(row,column);
-        //TODO : HANDLE THAT ONLY NON JOBLESS AND NON OPERATOR UNITS CAN BE SELECTED
         boolean ok = false ;
         for(Unit unit : cell.getUnits()){
             if(unit.getOwner()==player)
@@ -670,7 +673,6 @@ public class GameController {
             return "Move Unit Failed : Row Or Column Exceeded Map";
         if (gameMap.getMaskedMap()[row][column] == 1 && gameMap.getMaskedMapUpperGround()[row][column] == 1 )
             return "Move Unit Failed : Destination Is Not Permeable";
-        // TODO : EXPLANATION --> IT IS ASSUMED THAT ALL SELECTED UNITS ARE FROM A SINGLE CELL AND THEY ARE GOING TO A SINGLE DESTINATION
         for (Unit unit : player.getSelectedUnits()){
             unit.setTarget(row,column,gameMap);
             if(unit instanceof Warrior)
@@ -713,7 +715,6 @@ public class GameController {
         String error;
         if ((error = handleSetStateError(row,column))!=null)
             return error;
-        //TODO : EXPLANATION --> IN THE SELECTED UNIT , WE ONLY SELECT APPROPRIATE UNITS
         for (Unit unit : player.getSelectedUnits())
             unit.setUnitMode(UnitModeEnum.getUnitModeEnumByName(state));
         return "SetState Successful!";
@@ -808,6 +809,10 @@ public class GameController {
     }
 
     public String buildEquipment(Matcher matcher){
+        String equipment = matcher.group("equipment");
+        if (player.getSelectedBuilding().getBuildingEnum() != BuildingEnum.SIEGE_TENT)
+            return "You Should Choose A Siege Tent First";
+
         return null;
     }
 
@@ -1010,10 +1015,8 @@ public class GameController {
             return "Ox tether dropped successfully" ;
         }
         Building building = Building.createBuildingByName(type,player,row,column);
-
         putBuildingInThePlace(building);
         player.handleBuildingEffectsOnPlayer(type);
-
         return "Drop Building Successful!";
     }
 
@@ -1037,6 +1040,12 @@ public class GameController {
         String isHereEmpty = isThereBuildingConflict(type,row,column);
         if (isHereEmpty!= null)
             return isHereEmpty;
+        //Is Cell Texture Appropriate
+        if (createBuilding) {
+            String result = isPlaceAppropriateForBuilding(row, column, type);
+            if (result != null)
+                return result;
+        }
         return null;
     }
 
@@ -1060,17 +1069,59 @@ public class GameController {
         return null;
     }
 
+    public String isPlaceAppropriateForBuilding(int row , int column , String type){
+        BuildingEnum buildingEnum = BuildingEnum.getBuildingEnumByName(type);
+        ArrayList<CellType> array = getAppropriateCellTypeForABuilding(buildingEnum);
+        for (int i = row ; i <row + BuildingEnum.getBuildingHeightByName(type);++i){
+            for (int j = column; j < column+BuildingEnum.getBuildingWidthByName(type);++j){
+                if (!array.contains(gameMap.getCell(i,j).getCellType()))
+                    return "This Cell Texture Isn't Appropriate For Placing Building";
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<CellType> getAppropriateCellTypeForABuilding(BuildingEnum buildingEnum){
+        ArrayList<CellType> array = new ArrayList<>();
+        if (buildingEnum == BuildingEnum.APPLE_ORCHARD
+            ||buildingEnum == BuildingEnum.WHEAT_FARM
+            || buildingEnum == BuildingEnum.HOPS_FARMER
+            || buildingEnum == BuildingEnum.DIARY_FARMER
+            || buildingEnum == BuildingEnum.HUNTER_POST)
+        {
+            array.add(CellType.GRASS);
+            array.add(CellType.GRASSLAND);
+            array.add(CellType.MEADOW);
+            return array;
+        }
+        if (buildingEnum == BuildingEnum.QUARRY){
+            array.add(CellType.ROCK_MINE);
+            return array;
+        }
+        if (buildingEnum == BuildingEnum.IRON_MINE){
+            array.add(CellType.IRON_MINE);
+            return array;
+        }
+        if (buildingEnum == BuildingEnum.PITCH_RIG){
+            array.add(CellType.OIL_WELL);
+            return array;
+        }
+        array.add(CellType.GROUND);
+        array.add(CellType.GRASS);
+        array.add(CellType.GRASSLAND);
+        array.add(CellType.MEADOW);
+        return array;
+    }
+
+
     public void putBuildingInThePlace(Building building){
         int row = building.getRow();
         int column = building.getColumn();
-        System.out.println(row + " " + column);
         building.getOwner().addBuilding(building);
-        System.out.println("just checking : " + building.getHeight() + building.getWidth());
         for (int i = row ; i < row + building.getHeight(); i ++)
         {
             for (int j = column ; j < column + building.getWidth(); j ++)
             {
-                System.out.println("i = " + i + " j = " + j);
                 gameMap.getCell(i,j).setBuilding(building);
                 if(!building.getPassable()) gameMap.getMaskedMap()[i][j] = 1 ;
                 if(building.getName().contains( "gate" ) || building.getName().contains( "wall" ) || building.getName().contains( "tower" ) )
@@ -1092,6 +1143,8 @@ public class GameController {
         Unit unit = Unit.createUnitByName(type,player,row,column);
         gameMap.getCell(row,column).addUnit(unit);
         player.addUnit(unit);
+        if (type.equals("trap"))
+            unit.setUnitMode(UnitModeEnum.AGGRESSIVE);
         return "Unit Dropped Successfully!";
     }
 
@@ -1130,6 +1183,8 @@ public class GameController {
         Unit unit = Unit.createUnitByName(type,player,row,column);
         gameMap.getCell(row,column).addUnit(unit);
         player.addUnit(unit);
+        if (type.equals("trap"))
+            unit.setUnitMode(UnitModeEnum.AGGRESSIVE);
         return "Unit Created Successfully!";
     }
 
@@ -1352,7 +1407,6 @@ public class GameController {
 
         player.decreaseGold( Cost.getItemPrices().get(index) * amount ) ;
 
-        //TODO : HANDLE SPACE AND CAPACITY
 
         switch(index){
             case 0 :

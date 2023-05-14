@@ -104,9 +104,4 @@ public class Test {
         Assert.assertEquals("logged out",result);
     }
 
-    @org.junit.Test
-    public void testForgetPassword(){
-        //TODO
-    }
-
 }

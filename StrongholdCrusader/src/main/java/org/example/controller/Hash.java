@@ -24,6 +24,7 @@ public class Hash
     {
         return c;
     }
+
     static public long encode( String S)
     {
         long nowHsh = 0;

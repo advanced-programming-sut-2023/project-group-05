@@ -17,7 +17,6 @@ public class SecurityQuestions
             "i love you ( when your dead )"
     ));
     private static final HashMap < Integer, ArrayList < String > > captcha = new HashMap < Integer, ArrayList < String > >();
-
     public static void initialize(){
         ArrayList < ArrayList<String> > cap = new ArrayList<  >();
 

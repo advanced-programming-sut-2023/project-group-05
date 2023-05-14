@@ -377,4 +377,8 @@ public class TradeBuilding extends Building {
         return this.numberOfTurnsToGenerateProduct;
     }
 
+    public void setObjectsCount(int objectsCount){
+        this.objectsCount = objectsCount;
+    }
+
 }

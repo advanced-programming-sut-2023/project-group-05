@@ -13,11 +13,10 @@ import java.util.*;
 public class Main
 {
     public static void main( String[] args ){
-        SecurityQuestions.initialize();
+        DataBase.wakeUp();
         Hash.setMOD(1000000007);
         Hash.setBASE(5021);
-        ArrayList < String > cap0 = new ArrayList< String >();
-        DataBase.wakeUp();
+        SecurityQuestions.initialize();
         SignupLoginMenu.run(Menu.getScanner()) ;
     }
 }

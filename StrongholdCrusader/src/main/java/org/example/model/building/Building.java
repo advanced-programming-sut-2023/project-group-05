@@ -206,7 +206,7 @@ public class Building {
         if (type.equals("cagedwardog"))
             return new TradeBuilding(type,"",1,1,false,0,true,owner,row,column,100,getBuildingCost(type),3, 200000 , BuildingEnum.CAGED_WAR_DOGS);//TODO : HOW MANY OPERATOR?
         if (type.equals("siegetent"))
-            return new TradeBuilding(type,"",4,4,false,0,false,owner,row,column,300,getBuildingCost(type),1,200000 , BuildingEnum.SIEGE_TENT);
+            return new TradeBuilding(type,"",4,4,true,0,false,owner,row,column,300,getBuildingCost(type),1,200000 , BuildingEnum.SIEGE_TENT);
 
         if (type.equals("stable"))
             return new TradeBuilding(type,"",3,5,false,0,false,owner,row,column,200,getBuildingCost(type),0, 1, BuildingEnum.STABLE);//TODO : HOW MANY OPERATORS?
@@ -237,9 +237,7 @@ public class Building {
         if (type.equals("market"))
             return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,400,getBuildingCost(type),1, 0, BuildingEnum.MARKET);//TODO : HOW MANY OPERAYORS?
         if (type.equals("oxtether"))
-
             return new TradeBuilding(type,"",1,1,true,0,false,owner,row,column,100,getBuildingCost(type),0, 0, BuildingEnum.OX_TETHER);//TODO
-
         if (type.equals("pitchrig"))
             return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,0,getBuildingCost(type),1, 0, BuildingEnum.PITCH_RIG);//TODO
         if (type.equals("quarry"))

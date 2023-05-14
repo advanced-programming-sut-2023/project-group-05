@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 public enum BuildingEnum {
     //TODO : PUT BUILDING SIZE IN THE ARRAYLIST
-
     SMALL_STONE_WALL("smallstonewall",new ArrayList<Integer>(Arrays.asList(1,1)) , 500 ),
     BIG_STONE_WALL("bigstonewall",new ArrayList<Integer>(Arrays.asList(2,2)) , 2000 ),
     SMALL_STONE_GATEHOUSE("smallstonegatehouse",new ArrayList<Integer>(Arrays.asList(1,1)) , 500),
