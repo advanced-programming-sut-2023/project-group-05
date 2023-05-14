@@ -64,19 +64,9 @@ public class Warrior extends Unit {
     @Override
     public void setTarget( int row , int column , GameMap gameMap ){
 
-        boolean upPassable = gameMap.getMaskedMap()[row][column] == 0 ;
-        boolean downPassable = gameMap.getMaskedMapUpperGround()[row][column] == 0 ;
-        boolean upWalking = false ;
-        boolean needStair = false ;
-
-        if( this.isOnHighGround && !upPassable ){
-            upWalking = true ;
-            needStair = true ;
-        }
-        else if( !this.isOnHighGround && !downPassable ){
-            upWalking = false ;
-            needStair = true ;
-        }
+        boolean isOnStair = ( gameMap.getMaskedMap()[this.row][this.column] == 0 )
+                && ( gameMap.getMaskedMapUpperGround()[this.row][this.column] == 0 ) ;
+        boolean needStair = gameMap.getMaskedMap()[row][column] ^ ge ;
 
         if(this.row == row && this.column == column && !this.isPatrolling){
             this.isMoving = false ;
