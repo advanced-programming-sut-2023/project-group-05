@@ -23,6 +23,7 @@ public enum UnitTypeEnum {
     ASSASSINS("assassins"),
     HORSE_ARCHERS("houseArchers"),
     ARABIAN_SWORDSMEN("arabianSwordsmen"),
+    TRAP("trap"),
     FIRE_THROWERS("fireThrowers");
 
     private String type;

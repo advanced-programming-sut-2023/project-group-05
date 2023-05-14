@@ -1109,6 +1109,8 @@ public class GameController {
         Unit unit = Unit.createUnitByName(type,player,row,column);
         gameMap.getCell(row,column).addUnit(unit);
         player.addUnit(unit);
+        if (type.equals("trap"))
+            unit.setUnitMode(UnitModeEnum.AGGRESSIVE);
         return "Unit Dropped Successfully!";
     }
 
@@ -1128,6 +1130,8 @@ public class GameController {
         Unit unit = Unit.createUnitByName(type,player,row,column);
         gameMap.getCell(row,column).addUnit(unit);
         player.addUnit(unit);
+        if (type.equals("trap"))
+            unit.setUnitMode(UnitModeEnum.AGGRESSIVE);
         return "Unit Created Successfully!";
     }
 
