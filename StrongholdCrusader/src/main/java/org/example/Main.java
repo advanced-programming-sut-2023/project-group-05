@@ -1,9 +1,6 @@
 package org.example;
+import org.example.controller.*;
 import org.junit.Assert;
-import org.example.controller.DataBase;
-import org.example.controller.Hash;
-import org.example.controller.PathFinder;
-import org.example.controller.SecurityQuestions;
 import org.example.model.Account;
 import org.example.model.Cost;
 import org.example.view.Menu;
@@ -38,6 +35,6 @@ public class Main
         Cost cost3 = new Cost(0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
         */
 
-        SignupLoginMenu.run(Menu.getScanner()) ;
+        ///SignupLoginMenu.run(Menu.getScanner()) ;
     }
 }
