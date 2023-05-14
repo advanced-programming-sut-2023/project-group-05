@@ -198,6 +198,8 @@ public class GameController {
 
     public void populationGrowth(Player player){
         int increaseRate = player.getPopularity()/5;
+        if (player.getPopularity() < 0)
+            increaseRate = 0;
         int increased = 0;
         int castleRow = player.getCastle().getRow();
         int castleColumn = player.getCastle().getColumn();
