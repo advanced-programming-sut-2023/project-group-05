@@ -429,7 +429,7 @@ public class GameController {
             return "THERE NO GATE HERE SIR" ;
         if(!building.getPassable())
             newState = "OPENED" ;
-        building.setPassable(!building.getPassable()) ;
+        building.setPassable(!building.getPassable(),gameMap) ;
         return "THE GATE YOU SELECTED IS NOW " + newState ;
     }
 

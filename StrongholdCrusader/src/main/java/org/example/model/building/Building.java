@@ -60,8 +60,9 @@ public class Building {
     public static HashMap<String, BuildingEnum> getBuildingEnumByName(){
         return buildingEnumByName;
     }
-    public void setPassable( boolean passable ){
+    public void setPassable( boolean passable , GameMap gameMap ){
         this.passable = passable ;
+        gameMap.getMaskedMap()[this.row][this.column] = ( passable ? 1 : 0 ) ;
     }
 
     public void addUnit( Unit unit ){
