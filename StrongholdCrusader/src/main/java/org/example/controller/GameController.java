@@ -2,10 +2,7 @@ package org.example.controller;
 
 import org.example.model.*;
 import org.example.model.building.Building;
-import org.example.model.unit.Engineer;
-import org.example.model.unit.Tunneler;
-import org.example.model.unit.Unit;
-import org.example.model.unit.Warrior;
+import org.example.model.unit.*;
 import org.example.view.Menu;
 
 import javax.print.DocFlavor;
@@ -394,10 +391,8 @@ public class GameController {
         if ((error= handleSelectUnitError(row,column))!= null)
             return error;
         Cell cell = gameMap.getCell(row,column);
-        // player.getSelectedUnits().clear();
-        // TODO : selected units get cleared ?
         player.setSelectedUnits(cell);
-        return "SelectUnit Successful!";
+        return "UNIT SELECTED SUCCESSFULLY SIR.";
     }
 
     public String handleSelectUnitError (int row , int column){
@@ -740,6 +735,11 @@ public class GameController {
         String error = dropCreateBuildingErrorHandler(row,column,type,false);
         if (error != null)
             return error;
+        if(type.equals("oxtether")){
+            Building oxtether = Building.createBuildingByName("oxtether",player,row,column) ;
+            Operator ox = new Operator("ox" , player , 5 , row , column , oxtether ) ;
+            return "Ox tether dropped successfully" ;
+        }
         Building building = Building.createBuildingByName(type,player,row,column);
         for (int i = row ; i<row+building.getHeight();++i){
             for (int j = column ; j < column + building.getWidth();++j){
@@ -748,7 +748,6 @@ public class GameController {
             }
         }
         player.addBuilding(building);
-        gameMap.getMaskedMap()[row][column] = 1 ;
         player.handleBuildingEffectsOnPlayer(type);
         return "Drop Building Successful!";
     }

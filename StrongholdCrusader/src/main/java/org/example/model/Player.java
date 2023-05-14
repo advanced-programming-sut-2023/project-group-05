@@ -322,7 +322,7 @@ public class Player {
     {
         for (Unit unit : cell.units)
         {
-            if (unit.getOwner().equals(this))
+            if (unit.getOwner().equals(this) && unit.getSelectable())
                 this.selectedUnits.add(unit);
         }
     }

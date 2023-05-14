@@ -220,7 +220,7 @@ public class Building {
         if (type.equals("market"))
             return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,400,getBuildingCost(type),1, 0, BuildingEnum.MARKET);//TODO : HOW MANY OPERAYORS?
         if (type.equals("oxtether"))
-            return new TradeBuilding(type,"",1,2,false,0,false,owner,row,column,100,getBuildingCost(type),0, 0, BuildingEnum.OX_TETHER);//TODO
+            return new TradeBuilding(type,"",1,2,true,0,false,owner,row,column,100,getBuildingCost(type),0, 0, BuildingEnum.OX_TETHER);//TODO
         if (type.equals("pitchrig"))
             return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,0,getBuildingCost(type),1, 0, BuildingEnum.PITCH_RIG);//TODO
         if (type.equals("quarry"))

@@ -6,9 +6,20 @@ import org.example.model.building.Building;
 public class Operator extends Unit {
 
     private Building building ;
+    private int turn ;
 
-    public Operator( String name , Player owner ,int hitPoint, int row , int column ){
-        super( name ,owner ,hitPoint, 0 , 0 , row , column ) ;
+    public Operator( String name , Player owner ,int hitPoint, int row , int column , Building building ){
+        super( name ,owner ,hitPoint, 1 , 0 , row , column , false ) ;
+        this.building = building ;
+        this.turn = 0 ;
+    }
+
+    public void updateTurn(){
+        this.turn++ ;
+    }
+
+    public int getTurn(){
+        return this.turn;
     }
 
 }

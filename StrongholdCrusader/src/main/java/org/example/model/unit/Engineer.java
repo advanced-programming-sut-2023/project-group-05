@@ -11,7 +11,7 @@ public class Engineer extends Unit {
     private static int[][] dir = { { -1 , 0 } , { 0 , 1 } , { 1 , 0 } , { 0 , -1 } } ;
 
     public Engineer( Player owner ,int hitPoint, int row, int column ){
-        super( "Engineer" , owner , hitPoint,0 , 0 , row , column ) ;
+        super( "Engineer" , owner , hitPoint,0 , 0 , row , column , true ) ;
         this.hasOil = false ;
     }
 

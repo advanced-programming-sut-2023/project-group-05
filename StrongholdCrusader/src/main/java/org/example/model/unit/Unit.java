@@ -26,18 +26,24 @@ public class Unit {
     private static HashMap<String , UnitTypeEnum> unitTypeEnumMap = new HashMap<>();
     private static HashMap<String , UnitModeEnum> unitModeEnumMap = new HashMap<>();
 
+    private boolean selectable ;
     protected int targetRow = -1 ;
     protected int targetColumn = -1 ;
-    public Unit( String name , Player owner , int hitPoint,int movingSpeed , int range , int row , int column ){
+    public Unit( String name , Player owner , int hitPoint,int movingSpeed , int range , int row , int column , boolean selectable ){
         this.name = name ;
         this.hitPoint = hitPoint;
         this.owner = owner ;
         this.row = row ;
         this.column = column ;
+        this.selectable = selectable ;
         this.movingSpeed = movingSpeed ;
         this.range = range ;
         units.add(this) ;
         owner.getUnits().add(this) ;
+    }
+
+    public boolean getSelectable(){
+        return this.selectable ;
     }
 
     public void die(GameMap gameMap){
