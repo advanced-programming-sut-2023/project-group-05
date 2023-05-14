@@ -26,7 +26,11 @@ public class MapMenuController {
                 String background = getCellTypeByColor(cell);
                 String textColor = getTextColor(background);
                 String content = getCellContentByCharacter(cell);
+                if(content.equals("B")){
+                    background = ConsoleColors.RED_BACKGROUND ;
+                }
                 System.out.print("|"+background+textColor+content+ConsoleColors.RESET);
+
             }
             System.out.println();
         }

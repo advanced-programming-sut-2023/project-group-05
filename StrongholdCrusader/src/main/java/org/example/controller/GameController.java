@@ -67,7 +67,7 @@ public class GameController {
     }
 
     public void nextTurn(){
-
+        // TODO : kill someone what then my friend ? remove them from operating building
         // TODO : the for each on all units is kinda bad can't you just save each class's instances ?
 
         this.turn++ ;
@@ -136,7 +136,7 @@ public class GameController {
         // TRADE BUILDINGS will go brrrrrr
         tradeBuildingsWork() ;
         // TODO : danial your midterm is 19 / 25 dont forget
-
+        // TODO : borj mohasere
 
         // ACTIONS IN THE END OF EACH N TURNS ( N = players.size() )
         // INCLUDING : TAX , POPULATION CHANGE , POPULARITY CHANGE , FOOD GETTING EATE
@@ -1053,7 +1053,7 @@ public class GameController {
             for (int j = column ; j < column + building.getWidth();++j){
                 gameMap.getCell(i,j).setBuilding(building);
                 if(!building.getPassable()) gameMap.getMaskedMap()[i][j] = 1 ;
-                if(building.getName().contains( "gate" ) || building.getName().contains( "wall" ) )
+                if(building.getName().contains( "gate" ) || building.getName().contains( "wall" ) || building.getName().contains( "tower" ) )
                     gameMap.getMaskedMapUpperGround()[i][j] = 0 ;
             }
         }
@@ -1067,7 +1067,7 @@ public class GameController {
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
         String error;
-        if ((error = dropCreateUnitErrorChecker(type,count,row,column))!=null)
+        if ((error = dropCreateUnitErrorChecker(type,count,row,column,false))!=null)
             return error;
         Unit unit = Unit.createUnitByName(type,player,row,column);
         gameMap.getCell(row,column).addUnit(unit);
@@ -1076,13 +1076,32 @@ public class GameController {
     }
 
     public String createUnit(Matcher matcher){
-        //TODO : ARIA COMPLETE THIS
         String type = matcher.group("type");
         int count = Integer.parseInt(matcher.group("count"));
         int row = Integer.parseInt(matcher.group("row"));
         int column = Integer.parseInt(matcher.group("column"));
+        Building building = player.getSelectedBuilding() ;
+        if(building == null || !building.getName().equals("barracks") || !building.getName().equals("mercenarypost"))
+            return "YOU SHOULD SELECT BARRACKS OR MERCENARY OR TUNNELER GUILD OR ENGINEER GUILD POST , MY DEAR LOVABLE POWERFUL LORD." ;
         String error;
-        if ((error = dropCreateUnitErrorChecker(type,count,row,column))!=null)
+        String[] barracksWarriors = { "archer" , "crossbowman" , "spearman" , "pikeman" , "maceman" , "swordsman" ,
+        "knight" } ;
+        String[] mercenaryWarriors = { "archerbow" , "slave" , "slinger" , "assassin" , "horseswordsman" , "firethrower" } ;
+        String[] tunnelerGuildUnits = { "tunneler" } ;
+        String[] engineerGuildUnits = { "engineer" , "ladderman" } ;
+        boolean correctName = false ;
+        if( building.getName().equals("barracks") ){
+            for(String name : barracksWarriors) if(name.equals( type )) correctName = true ;
+        } else if( building.getName().equals("mercenarypost") ){
+            for(String name : mercenaryWarriors) if(name.equals( type )) correctName = true ;
+        } else if( building.getName().equals("tunnelerguild") ){
+            for(String name : tunnelerGuildUnits) if(name.equals( type )) correctName = true ;
+        } else if( building.getName().equals("engineerguild") ) {
+            for(String name : engineerGuildUnits) if(name.equals( type )) correctName = true ;
+        } else {
+            return "INVALID NAME FOR BUILDING" ;
+        }
+        if ((error = dropCreateUnitErrorChecker(type,count,row,column,true))!=null)
             return error;
         Cost cost = Unit.getCostByName(type);
         String enoughCost = player.decreaseCost(cost);
@@ -1094,13 +1113,18 @@ public class GameController {
         return "Unit Created Successfully!";
     }
 
-    public String dropCreateUnitErrorChecker(String type , int count , int row , int column){
+    public String dropCreateUnitErrorChecker(String type , int count , int row , int column , boolean create){
         if (row > 400 || row <0 || column >400 || column < 0)
             return "Drop/Create Unit Failed : x or y exceeded map!";
         if (count <=0)
             return "Drop/Create Failed : count is smaller than 1!";
         Cell cell = gameMap.getCell(row,column);
         UnitTypeEnum unitTypeEnum = UnitTypeEnum.getUnitTypeByName(type);
+        if( create ){
+            String error = player.decreaseCost( Unit.getCostByName( type ) ) ;
+            if(error!=null)
+                return error ;
+        }
         if (unitTypeEnum == null)
             return "Drop/Create Failed : Unit Type Does Not Exists!";
         if (!cell.permeable(unitTypeEnum))

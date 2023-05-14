@@ -39,7 +39,7 @@ public enum Commands {
     SHOW_TAX_RATE("tax rate show",null),
     SET_FEAR_RATE("fear rate",new ArrayList<String>(Arrays.asList(" -r (?<rate>(-)?\\d+)"))),
     DROP_BUILDING("dropbuilding",new ArrayList<String>(Arrays.asList(" -x (?<column>\\d+)"," -y (?<row>\\d+)"," -t (?<type>\\S+)"))),
-    SELECT_BUILDING("select building",new ArrayList<String>(Arrays.asList(" -x(?<column>\\d+)"," -y(?<row>\\d+)"))),
+    SELECT_BUILDING("select building",new ArrayList<String>(Arrays.asList(" -x (?<column>\\d+)"," -y (?<row>\\d+)"))),
     CREATE_UNIT("createunit",new ArrayList<String>(Arrays.asList(" -t(?<type>\\S+)"," -c(?<count>\\d+)"))),
     REPAIR("repair",null),
     SELECT_UNIT("select unit",new ArrayList<String>(Arrays.asList(" -x (?<column>\\d+)"," -y (?<row>\\d+)"))),
