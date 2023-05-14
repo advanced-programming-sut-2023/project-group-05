@@ -18,6 +18,8 @@ public class SignupLoginMenu {
             }
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.USER_LOGIN))!=null)
                 System.out.print(SignupLoginMenuController.loginUser(scanner , matcher,true));
+            else if ((matcher = Commands.getMatchingMatcher(input, Commands.STAY_LOGGED_IN)) != null)
+                System.out.println(SignupLoginMenuController.loginUserStayLoggedIn(scanner, matcher));
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.FORGET_PASSWORD))!=null) {
                 System.out.println(SignupLoginMenuController.forgetPassword(matcher));
                 wrongPassCounter = 0;
