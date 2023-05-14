@@ -308,6 +308,10 @@ public class Player {
         this.breadCapacity += number*StorageBuilding.maxGranaryCapacityForEachFood;
     }
 
+    public int getSword(){
+        return this.sword ;
+    }
+
     public int getCheese(){
         return this.cheese ;
     }

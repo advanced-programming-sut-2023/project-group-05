@@ -44,6 +44,7 @@ public class GameController {
         this.winner = null ;
         gameMap = new GameMap(400,400);
         putYourCastle( this.player );
+        putYourStockPile( this.player );
     }
 
     public void debug(){
@@ -53,6 +54,15 @@ public class GameController {
         for(Building building : Building.getBuildings()){
             System.out.println("BUILDING : " + building.getName() + " hitpoint : " + building.getHitPoint() + " x = " + building.getColumn() + " y = " + building.getRow() ) ;
         }
+        for(Player p : this.players){
+            System.out.println(
+                    "Player : " + p.getAccount().getNickName() + " " + " apple : " + player.getApple() + " sword : " + player.getSword()
+            ) ;
+        }
+        for(int i = 0 ; i < 20 ; i++)
+            for(int j = 0 ; j < 20 ; j++)
+                System.out.print("" + gameMap.getMaskedMap()[i][j] + (j == 19 ? "\n" : " ")) ;
+
     }
 
     public void nextTurn(){
@@ -62,10 +72,10 @@ public class GameController {
         this.turn++ ;
         this.player = this.players.get( this.turn % this.players.size() ) ;
 
-        if(this.turn == this.turn % this.players.size())
+        if(this.turn == this.turn % this.players.size()){
             putYourCastle( this.player );
-
-        System.out.println("turn : " + this.turn + "playersize : " + this.players.size() ) ;
+            putYourStockPile( this.player );
+        }
 
         // MOVING UNITS HAPPENS IN THIS PART
 
@@ -183,6 +193,10 @@ public class GameController {
 
         }
 
+        // TRADE BUILDINGS will go brrrrrr
+        tradeBuildingsWork() ;
+        // TODO : danial your midterm is 19 / 25 dont forget
+
 
         // ACTIONS IN THE END OF EACH N TURNS ( N = players.size() )
         // INCLUDING : TAX , POPULATION CHANGE , POPULARITY CHANGE , FOOD GETTING EATE
@@ -208,6 +222,17 @@ public class GameController {
             gameMap.getCell(castleRow,castleColumn).units.add(jobless);
         }
         player.changePopulation(increased);
+    }
+
+    public void tradeBuildingsWork(){
+        for(Building anyBuilding : Building.getBuildings()){
+            if(!(anyBuilding instanceof TradeBuilding)) continue ;
+            TradeBuilding building = (TradeBuilding) anyBuilding ;
+            System.out.println( "" + this.turn  + "  " + building.getRate() ) ;
+            if(this.turn % building.getRate() == 0){
+                System.out.println(building.trade());
+            }
+        }
     }
 
     public void taxEffects (Player player){
@@ -236,33 +261,33 @@ public class GameController {
         int nextColumn = -1 ;
         int nextRow = -1 ;
         for(Unit unit : Unit.getUnits()){
+            for( int i = 0; i < unit.getMovingSpeed() ; i++) {
+                if ( unit.getTargetRow() == - 1 ) continue;
+                unit.setTarget( unit.getTargetRow(), unit.getTargetColumn(), gameMap ); // for always choosing minimum path
+                nextRow = unit.getNextRow();
+                nextColumn = unit.getNextColumn();
+                if ( nextRow == unit.getRow() && nextColumn == unit.getColumn() && ! ( unit instanceof Warrior ) ) {
+                    unit.setIsMoving( false );
+                    continue;
+                }
+                if ( nextRow == unit.getRow() && nextColumn == unit.getColumn() && unit instanceof Warrior && ! ( (Warrior) unit ).getIsPatrolling() ) {
+                    unit.setIsMoving( false );
+                    continue;
+                }
+                if ( nextRow == unit.getRow() && nextColumn == unit.getColumn() && unit instanceof Warrior ) {
+                    Warrior warrior = (Warrior) unit;
+                    warrior.setTarget( warrior.getRow(), warrior.getColumn(), gameMap );
+                    nextRow = warrior.getNextRow();
+                    nextColumn = warrior.getNextColumn();
+                }
 
-            if(unit.getTargetRow() == -1) continue ;
-            unit.setTarget(unit.getTargetRow() , unit.getTargetColumn() , gameMap) ; // for always choosing minimum path
-            nextRow = unit.getNextRow() ;
-            nextColumn = unit.getNextColumn() ;
-            if(nextRow == unit.getRow() && nextColumn == unit.getColumn()&& !(unit instanceof Warrior)){
-                unit.setIsMoving(false) ;
-                continue ;
+                Cell cell = gameMap.getCell( unit.getRow(), unit.getColumn() );
+                Cell nextCell = gameMap.getCell( nextRow, nextColumn );
+                cell.getUnits().remove( unit );
+                nextCell.getUnits().add( unit );
+                unit.setRow( nextRow );
+                unit.setColumn( nextColumn );
             }
-            if(nextRow == unit.getRow() && nextColumn == unit.getColumn()&& unit instanceof Warrior && !((Warrior)unit).getIsPatrolling() ){
-                unit.setIsMoving(false) ;
-                continue ;
-            }
-            if(nextRow == unit.getRow() && nextColumn == unit.getColumn() && unit instanceof Warrior){
-                Warrior warrior = (Warrior)unit ;
-                warrior.setTarget(warrior.getRow(),warrior.getColumn(),gameMap) ;
-                nextRow = warrior.getNextRow() ;
-                nextColumn = warrior.getNextColumn() ;
-            }
-
-            Cell cell = gameMap.getCell(unit.getRow() , unit.getColumn()) ;
-            Cell nextCell = gameMap.getCell(nextRow , nextColumn) ;
-            cell.getUnits().remove(unit) ;
-            nextCell.getUnits().add(unit) ;
-            unit.setRow( nextRow );
-            unit.setColumn( nextColumn ) ;
-
         }
     }
 
@@ -400,6 +425,7 @@ public class GameController {
         for(Player player : this.players)
             player.getAccount().setHighScore((int)Math.max(player.getAccount().getHighScore(),player.getScore())) ;
         System.out.println( "the winner is " + winner.getAccount().getNickName() ) ;
+        // TODO : delete trashes
     }
 
     public Player getWinner(){
@@ -988,16 +1014,20 @@ public class GameController {
         return null;
     }
 
+    private boolean validPos(int x , int y){
+        return validRowColumn( x ) & validRowColumn( y ) ;
+    }
+
     public String isThereBuildingConflict (String buildingName,int row , int column){
         int height = BuildingEnum.getBuildingHeightByName(buildingName);
         int width = BuildingEnum.getBuildingWidthByName(buildingName);
-        if (row + height > maxRow || column + height > maxRow )
+        if (!( validPos( row + height , column + width ) && validPos( row , column ) ))
             return "Building Can't Be Placed Here : It Exceeds The Map";
         for (int i = row ; i<row+height;++i){
             for (int j = column ; j < column + width;++j){
-                if (gameMap.getCell(row,column).getBuilding() != null)
+                if (gameMap.getCell(i,j).getBuilding() != null)
                     return "Building Can't Be Placed Here : Another Building Is Here";
-                if (!gameMap.getCell(row,column).units.isEmpty())
+                if (!gameMap.getCell(i,j).units.isEmpty())
                     return "Building Can't Be Placed Here : Some Units Are Here";
             }
         }
@@ -1016,6 +1046,8 @@ public class GameController {
                     gameMap.getMaskedMapUpperGround()[i][j] = 0 ;
             }
         }
+        if(building.getName().contains( "stair" ))
+            gameMap.getMaskedMapUpperGround()[row][column] = gameMap.getMaskedMap()[row][column] = 2 ;
     }
 
     public String dropUnit(Matcher matcher){

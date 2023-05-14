@@ -80,7 +80,7 @@ public class Unit {
         }
         this.targetRow = row ;
         this.targetColumn = column ;
-        pathFinder.setGameMap( gameMap.getMaskedMap() , 400 ) ;
+        pathFinder.setGameMap( gameMap.getMaskedMap() , gameMap.getMaskedMapUpperGround() , 400 ) ;
         pathFinder.Run( row , column ) ;
         this.isMoving = true;
     }
@@ -182,7 +182,7 @@ public class Unit {
         return this.owner ;
     }
 
-    public int getMovingSPeed(){
+    public int getMovingSpeed(){
         return this.movingSpeed ;
     }
 

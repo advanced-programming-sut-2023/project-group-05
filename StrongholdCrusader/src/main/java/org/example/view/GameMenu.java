@@ -12,6 +12,10 @@ import java.util.regex.Pattern;
 public class GameMenu {
 
     public static void run ( Matcher playersMatcher , Account currentAccount ){
+        if(currentAccount == null){
+            System.out.println("invalid username") ;
+            return ;
+        }
         System.out.println("WELCOME TO YOUR KINGDOM MY LORD.") ;
         ArrayList<Account> accounts = new ArrayList<Account>() ;
         Pattern patternUsername = Pattern.compile("(?<username>\\S+)") ;

@@ -103,7 +103,7 @@ public enum BuildingEnum {
     }
 
     public static int getBuildingWidthByName(String name){
-        return Building.getBuildingEnumByName().get(name).shape.get(1);
+        return Building.getBuildingEnumByName().get(name).shape.get(0);
     }
 
     public static int getBuildingHeightByName(String name){

@@ -209,15 +209,15 @@ public class Building {
             return new TradeBuilding(type,"",4,4,false,0,false,owner,row,column,300,getBuildingCost(type),1,200000 , BuildingEnum.SIEGE_TENT);
 
         if (type.equals("stable"))
-            return new TradeBuilding(type,"",3,5,false,0,false,owner,row,column,200,getBuildingCost(type),0, 0, BuildingEnum.STABLE);//TODO : HOW MANY OPERATORS?
+            return new TradeBuilding(type,"",3,5,false,0,false,owner,row,column,200,getBuildingCost(type),0, 1, BuildingEnum.STABLE);//TODO : HOW MANY OPERATORS?
         if (type.equals("tunnelerguild"))
             return new TradeBuilding(type,"",2,3,false,0,false,owner,row,column,0,getBuildingCost(type),0, 0, BuildingEnum.TUNNELER_GUILD);//TODO : HOW MANY OPERATOS?
         if (type.equals("appleorchard"))
-            return new TradeBuilding(type,"",3,5,true,0,false,owner,row,column,300,getBuildingCost(type),1, 0, BuildingEnum.APPLE_ORCHARD);
+            return new TradeBuilding(type,"",3,5,true,0,false,owner,row,column,300,getBuildingCost(type),1, 3, BuildingEnum.APPLE_ORCHARD);
         if (type.equals("diaryfarmer"))
-            return new TradeBuilding(type,"",3,5,true,0,false,owner,row,column,300,getBuildingCost(type),1, 0, BuildingEnum.DIARY_FARMER);
+            return new TradeBuilding(type,"",3,5,true,0,false,owner,row,column,300,getBuildingCost(type),1, 3, BuildingEnum.DIARY_FARMER);
         if (type.equals("hopsfarmer"))
-            return new TradeBuilding(type,"",3,5,true,0,false,owner,row,column,300,getBuildingCost(type),1, 0,BuildingEnum.HOPS_FARMER);
+            return new TradeBuilding(type,"",3,5,true,0,false,owner,row,column,300,getBuildingCost(type),1, 3,BuildingEnum.HOPS_FARMER);
         if (type.equals("hunterpost"))
             return new TradeBuilding(type,"",3,5,true,0,true,owner,row,column,300,getBuildingCost(type),1, 0, BuildingEnum.HUNTER_POST);//TODO: HOLD ANIMALS?
         if (type.equals("wheatfarmer"))

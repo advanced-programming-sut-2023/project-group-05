@@ -35,6 +35,6 @@ public class Main
         Cost cost3 = new Cost(0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
         */
 
-        ///SignupLoginMenu.run(Menu.getScanner()) ;
+        SignupLoginMenu.run(Menu.getScanner()) ;
     }
 }

@@ -64,10 +64,6 @@ public class Warrior extends Unit {
     @Override
     public void setTarget( int row , int column , GameMap gameMap ){
 
-        boolean isOnStair = ( gameMap.getMaskedMap()[this.row][this.column] == 0 )
-                && ( gameMap.getMaskedMapUpperGround()[this.row][this.column] == 0 ) ;
-        boolean needStair = gameMap.getMaskedMap()[row][column] ^ ge ;
-
         if(this.row == row && this.column == column && !this.isPatrolling){
             this.isMoving = false ;
             return ;
@@ -86,7 +82,7 @@ public class Warrior extends Unit {
         }
         ArrayList <int[]> stairs ;
 
-        if(needStair){
+        /*if(needStair){
             PathFinder pf = new PathFinder() ;
             stairs = gameMap.getStairsFrom( this.row , this.column , !this.isOnHighGround ) ;
             for( int[] stair : stairs ){
@@ -97,11 +93,12 @@ public class Warrior extends Unit {
                     break ;
                 }
             }
-        }
+        }*/
 
         super.targetRow = row ;
         super.targetColumn = column ;
-        super.pathFinder.setGameMap( (upWalking ? gameMap.getMaskedMapUpperGround() : gameMap.getMaskedMap()) , 400 ) ;
+        super.pathFinder.setGameMap( gameMap.getMaskedMap(), gameMap.getMaskedMapUpperGround(), 400 ) ;
+        System.out.println( pathFinder.goInDirectionFrom( this.row , this.column ) ) ;
         super.pathFinder.Run( row , column ) ;
         super.isMoving = true;
 

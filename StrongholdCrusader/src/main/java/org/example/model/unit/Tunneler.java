@@ -28,8 +28,8 @@ public class Tunneler extends Unit {
         this.targetRow = row ;
         this.targetColumn = column ;
         this.pathFinder = new PathFinder() ;
-        if(this.underGround) pathFinder.setGameMap( gameMap.getMaskedMapUnderGround() , 400 ) ;
-        else pathFinder.setGameMap( gameMap.getMaskedMap() , 400 ) ;
+        if(this.underGround) pathFinder.setGameMap( gameMap.getMaskedMapUnderGround() , gameMap.getMaskedMapUpperGround(), 400 ) ;
+        else pathFinder.setGameMap( gameMap.getMaskedMap() , gameMap.getMaskedMapUpperGround() , 400 ) ;
         pathFinder.Run( row , column ) ;
         this.isMoving = true;
     }
