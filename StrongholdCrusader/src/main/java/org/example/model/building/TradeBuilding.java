@@ -19,7 +19,6 @@ public class TradeBuilding extends Building {
     private int turnBuilt ;
     private int capacity ;
     private int objectsCount ;
-
     private int numberOfTurnsToGenerateProduct;
 
     public TradeBuilding( String name , String category , int width , int height , boolean passable ,
@@ -32,7 +31,6 @@ public class TradeBuilding extends Building {
         tradeType = 0;
         this.rate = rate;
         this.numberOfTurnsToGenerateProduct = rate;
-
     }
 
     public boolean trade()
@@ -362,6 +360,10 @@ public class TradeBuilding extends Building {
     {
         return this.requiredNumberOfOperators ;
     }
+    public void setNumberOfTurnsToGenerateProduct(){
+        this.numberOfTurnsToGenerateProduct = this.rate;
+    }
+
 
     public int getNumberOfTurnsToGenerateProduct()
     {
