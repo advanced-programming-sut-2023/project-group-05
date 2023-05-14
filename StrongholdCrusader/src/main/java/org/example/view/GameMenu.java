@@ -68,9 +68,9 @@ public class GameMenu {
             else if (Commands.getMatchingMatcher(input,Commands.CREATE_UNIT)!=null)
                 System.out.println( gameController.createUnit(Commands.getMatchingMatcher(input,Commands.CREATE_UNIT)));
 
-            else if (Commands.getMatchingMatcher(input,Commands.REPAIR)!=null)
+            /*else if (Commands.getMatchingMatcher(input,Commands.REPAIR)!=null)
                 System.out.println( gameController.repair(Commands.getMatchingMatcher(input,Commands.REPAIR)));
-
+            */
             else if (Commands.getMatchingMatcher(input,Commands.SELECT_UNIT)!=null)
                 System.out.println(gameController.selectUnit(Commands.getMatchingMatcher(input,Commands.SELECT_UNIT)));
 

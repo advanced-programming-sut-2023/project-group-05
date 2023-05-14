@@ -60,7 +60,7 @@ public enum BuildingEnum {
     POLE_TURNER("poleturner",new ArrayList<Integer>(Arrays.asList(2,2))),
     SIGNPOST("signpost",new ArrayList<Integer>(Arrays.asList(1,1))),
     TUNNEL_ENTRANCE("tunnerlentrance",new ArrayList<Integer>(Arrays.asList(1,1))),
-    STAIR("stair",new ArrayList<Integer>(Arrays.asList(1,1))),
+    STAIR("staircase",new ArrayList<Integer>(Arrays.asList(1,1))),
 
 
     // TREES
