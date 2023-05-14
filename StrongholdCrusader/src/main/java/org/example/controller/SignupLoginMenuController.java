@@ -177,7 +177,7 @@ public class SignupLoginMenuController {
             return "This username does not exist\n";
         JSONObject cur = DataBase.getFromDataBase("userName", userName);
         long pass = (long) cur.get("password");
-        if (pass != Hash.encode(password)) {
+        if (pass != 0 && pass != Hash.encode(password)) {
             ++SignupLoginMenu.wrongPassCounter;
             if(!mode)
                 return "Wrong Password!\n";

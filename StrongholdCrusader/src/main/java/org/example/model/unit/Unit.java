@@ -42,6 +42,7 @@ public class Unit {
         this.movingSpeed = movingSpeed ;
         this.range = range ;
         units.add(this) ;
+        owner.setPopulation( owner.getPopulation() + 1 );
         owner.getUnits().add(this) ;
     }
 

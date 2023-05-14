@@ -334,7 +334,6 @@ public class Cost {
                  int bow , int sword , int mace , int crossbow , int pitch , int armor , int hop , int leatherArmor ,
                  int metalArmor , int ale , int flour , int wheat , int iron , int horse)
     {
-        /// Ignore this fucking sort just focus on the input and the ArrayList
         this.apple = apple ;
         this.cheese = cheese ;
         this.meat = meat ;

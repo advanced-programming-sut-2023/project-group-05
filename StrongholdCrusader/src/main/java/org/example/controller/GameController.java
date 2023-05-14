@@ -24,6 +24,8 @@ public class GameController {
     *
     * */
 
+    /*TODO : */
+
     ArrayList<Player> players ;
     ArrayList <Account> accounts ;
     private int turn ;
@@ -148,6 +150,16 @@ public class GameController {
         foodEffects(player);
         fearEffect(player);
         populationGrowth(player);
+
+        // END GAME ?!
+        int numberOfKings = 0 ;
+        for(Unit unit : Unit.getUnits())
+            if(unit.getName().equals("king")){
+                numberOfKings++ ;
+                winner = unit.getOwner() ;
+            }
+        if(numberOfKings == 1)
+            endGame();
     }
 
     public void populationGrowth(Player player){
@@ -434,10 +446,12 @@ public class GameController {
     private void endGame(){
         System.out.println( "\nTHIS MATCH HAS ENDED AFTER " + this.turn / accounts.size() + " ROUNDS \n" +
                             "THE WINNER IS " + winner.getAccount().getNickName() + "\n" ) ;
-        for(Player player : this.players)
-            player.getAccount().setHighScore((int)Math.max(player.getAccount().getHighScore(),player.getScore())) ;
+        winner.getAccount().setHighScore( (int)winner.getAccount().getHighScore() + 100 * (winner.getPopularity()) + 1000  );
         System.out.println( "the winner is " + winner.getAccount().getNickName() ) ;
-        // TODO : delete trashes
+
+        Building.getBuildings().clear() ;
+        Unit.getUnits().clear() ;
+
     }
 
     public Player getWinner(){
