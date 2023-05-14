@@ -101,6 +101,10 @@ public class Warrior extends Unit {
         return this.isPatrolling ;
     }
 
+    public UnitModeEnum getUnitMode(){
+        return this.unitMode ;
+    }
+
     public void stopPatrol(){
         this.isPatrolling = false ;
         this.patrolTurn = 0 ;
@@ -116,6 +120,7 @@ public class Warrior extends Unit {
     public void attackUnit( Unit unit , GameMap gameMap ){
         this.attackingUnit = unit ;
         this.attackingBuilding = null ;
+        this.isAttacking = true ;
         this.setTarget(unit.getRow() , unit.getColumn() , gameMap) ;
     }
 

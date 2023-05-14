@@ -39,10 +39,10 @@ public class GameController {
 
     public void debug(){
         for(Unit unit : Unit.getUnits()){
-            System.out.println("UNIT : " + unit.getName() + " hitpoint : " + unit.getHitPoint() + " x = " + unit.getColumn() + " y = " + unit.getRow() ) ;
+            System.out.println("UNIT : " + unit.getName() + " hitpoint : " + unit.getHitPoint() + " x = " + unit.getColumn() + " y = " + unit.getRow() + ( unit instanceof Warrior ? " mode = " + ((Warrior)unit).getUnitMode().name() : "" ) ) ;
         }
         for(Building building : Building.getBuildings()){
-            System.out.println("UNIT : " + building.getName() + " hitpoint : " + building.getHitPoint() + " x = " + building.getColumn() + " y = " + building.getRow() ) ;
+            System.out.println("BUILDING : " + building.getName() + " hitpoint : " + building.getHitPoint() + " x = " + building.getColumn() + " y = " + building.getRow() ) ;
         }
     }
 
@@ -52,6 +52,8 @@ public class GameController {
 
         if(this.turn == this.turn % this.players.size())
             putYourCastle( this.player );
+
+        System.out.println("turn : " + this.turn + "playersize : " + this.players.size() ) ;
 
         // MOVING UNITS HAPPENS IN THIS PART
 
@@ -86,15 +88,57 @@ public class GameController {
         }
 
         // EACH WARRIOR IS SOME STATE : standing , defensive , aggressive ... based on that
+        // the warrior will decide to attack someone or not.
 
+        for(Unit unit : Unit.getUnits()){
+            if( !(unit instanceof Warrior) ) continue ;
+            Warrior warrior = (Warrior) unit ;
+
+            // AGGRESSIVE GUYS
+
+            if(warrior.getUnitMode()==UnitModeEnum.AGGRESSIVE){
+                // TODO : USE A BETTER ALGORITHM FOR THIS
+                for(Unit nearbyUnit : Unit.getUnits()){
+                    if(nearbyUnit.getOwner()==this.player) continue ;
+                    int dr = nearbyUnit.getRow() - warrior.getRow() ;
+                    int dc = nearbyUnit.getColumn() - warrior.getColumn() ;
+                    if( dr * dr + dc * dc <= warrior.getRange() ){
+                        warrior.attackUnit( nearbyUnit , gameMap ) ;
+                        break ;
+                    }
+                }
+            }
+
+            // DEFENSIVE GUYS
+
+            if(warrior.getUnitMode()==UnitModeEnum.DEFENSIVE){
+                int num = 0 ;
+                Unit attackedUnit = null ;
+                for(Unit nearbyUnit : Unit.getUnits()){
+                    if(nearbyUnit.getOwner()==this.player) continue ;
+                    int dr = nearbyUnit.getRow() - warrior.getRow() ;
+                    int dc = nearbyUnit.getColumn() - warrior.getColumn() ;
+                    if( dr * dr + dc * dc <= warrior.getRange() ){
+                        attackedUnit = nearbyUnit ;
+                        num++ ;
+                    }
+                }
+                if(num>=3)
+                    warrior.attackUnit( attackedUnit , gameMap ) ;
+
+            }
+
+
+        }
 
         // ALL WARRIORS WHICH ARE ATTACKING WILL DEAL DAMAGE IF THE ENEMY IS IN THEIR RANGE.
+        // if x is damaged by y and y is warrior then whatever state y is in , it will start attacking x
 
         for(Unit attackerUnit : Unit.getUnits()){
             if(!(attackerUnit instanceof Warrior)) continue ;
             Warrior warrior = (Warrior)attackerUnit ;
             if(!warrior.getIsAttacking()) continue ;
-            Building attackingBuilding = warrior.getAttackingBuilding();
+            Building attackedBuilding = warrior.getAttackingBuilding();
             Unit attackedUnit = warrior.getAttackingUnit() ;
             if( attackedUnit != null ){
                 int distance2 = (attackedUnit.getRow() - warrior.getRow())*(attackedUnit.getRow() - warrior.getRow()) +
@@ -106,11 +150,11 @@ public class GameController {
                     }
                 }
             }
-            else if( attackingBuilding != null ){
-                int distance2 = (attackingBuilding.getRow() - warrior.getRow())*(attackingBuilding.getRow() - warrior.getRow()) +
-                        (attackingBuilding.getColumn() - warrior.getColumn()) * (attackingBuilding.getColumn() - warrior.getColumn());
+            else if( attackedBuilding != null ){
+                int distance2 = (attackedBuilding.getRow() - warrior.getRow())*(attackedBuilding.getRow() - warrior.getRow()) +
+                        (attackedBuilding.getColumn() - warrior.getColumn()) * (attackedBuilding.getColumn() - warrior.getColumn());
                 if( distance2 <= warrior.getRange()){
-                    attackingBuilding.getDamaged(warrior.getDamage() , gameMap) ;
+                    attackedBuilding.getDamaged(warrior.getDamage() , gameMap) ;
                 }
             }
         }
@@ -244,7 +288,11 @@ public class GameController {
                 "-> YOUR CASTLE IS THE HEART OF YOUR KINGDOM\n" +
                 "-> CHOOSE A LOCATION FOR IT.");
         Integer row =0;Integer column = 0;
+<<<<<<< HEAD
         ArrayList<Integer> castleCoordinates = getCoordinates();
+=======
+        ArrayList<Integer> castleCoordinates = getCastleCoordinates();
+>>>>>>> origin/main
         row = castleCoordinates.get(0) ;
         column = castleCoordinates.get(1) ;
         String name = "castle";
@@ -255,6 +303,7 @@ public class GameController {
                 false,false,false,false,false,false,true,row.intValue(),column.intValue());
         putBuildingInThePlace(castle);
         gameMap.getCell(row,column).units.add(king);
+<<<<<<< HEAD
         player.addUnit(king);
         player.setCastle(castle);
     }
@@ -275,6 +324,11 @@ public class GameController {
 
 
     public ArrayList<Integer> getCoordinates () {
+=======
+    }
+
+    public ArrayList<Integer> getCastleCoordinates () {
+>>>>>>> origin/main
         String buffer;
         int row , column ;
         while (true) {
@@ -306,7 +360,11 @@ public class GameController {
         Cell cell = gameMap.getCell(row , column);
         if (cell.cellType!=CellType.GROUND || !cell.units.isEmpty() || cell.getBuilding() != null ) {
             System.out.println("Sorry , Can't Place The Castle Here, Please Re-Enter The Location");
+<<<<<<< HEAD
             return getCoordinates();
+=======
+            return getCastleCoordinates();
+>>>>>>> origin/main
         }
         ArrayList<Integer> ret = new ArrayList<Integer>( Arrays.asList(row , column) ) ;
         return ret ;
@@ -929,83 +987,83 @@ public class GameController {
         if( resourceType.equals("apple") )
             cost = new Cost(amount,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("cheese") )
             cost = new Cost(0,amount,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("bread") )
             cost = new Cost(0,0,amount,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("meat") )
             cost = new Cost(0,0,0,amount,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("bow") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     amount,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("crossbow") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,amount,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("spear") )
             cost = new Cost(0,0,0,0,0,0,0,0,amount,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("pike") )
             cost = new Cost(0,0,0,0,0,0,0,amount,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("mace") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,amount,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("sword") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,amount,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("leatherarmor") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,amount,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("metalarmor") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,amount,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("wheat") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,amount
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("flour") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,amount,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("hop") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,amount,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("ale") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,amount,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("stone") )
             cost = new Cost(0,0,0,0,0,0,amount,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("iron") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,amount) ;
+                    ,amount, 0) ;
         else if( resourceType.equals("wood") )
             cost = new Cost(0,0,0,0,0,amount,0,0,0,
                     0,0,0,0,0,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else if( resourceType.equals("pitch") )
             cost = new Cost(0,0,0,0,0,0,0,0,0,
                     0,0,0,0,amount,0,0,0,0,0,0,0
-                    ,0) ;
+                    ,0, 0) ;
         else
             return "RESOURCE TYPE INVALID." ;
 

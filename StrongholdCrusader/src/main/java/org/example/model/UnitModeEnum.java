@@ -4,7 +4,7 @@ import org.example.model.unit.Unit;
 
 public enum UnitModeEnum {
     // TODO : write details of each mode
-    DEFENSIVE("defensive") , OFFENSIVE("offensive") , STANDING("standing") ;
+    DEFENSIVE("defensive") , AGGRESSIVE("aggressive") , STANDING("standing") ;
 
     private final String unitModeName ;
 
