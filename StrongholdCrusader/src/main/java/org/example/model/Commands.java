@@ -51,7 +51,7 @@ public enum Commands {
     AIR_ATTACK ("attack",new ArrayList<String>(Arrays.asList(" -x (?<column>\\d+)"," -y (?<row>\\d+)"))),
     POUR_OIL("pour oil",new ArrayList<String>(Arrays.asList(" -d (?<direction>(up)|(left)|(right)|(down))"))),
     DIG_TUNNEL("dig tunnel",new ArrayList<String>(Arrays.asList(" -x(?<column>\\d+)"," -y(?<row>\\d+)"))),
-    BUILD_EQUIPMENT("build",new ArrayList<String>(Arrays.asList(" -q (?<equipment>\\S+)"))),
+    BUILD_EQUIPMENT("build equipment",new ArrayList<String>(Arrays.asList(" -t (?<name>\\S+)" , " -x(?<column>\\d+)"," -y(?<row>\\d+)"))),
     DISBAND("disband unit",null),
     SET_TEXTURE_OF_CELL("settexture",new ArrayList<String>(Arrays.asList(" -y (?<row>\\d+)"," -x (?<column>\\d+)"," -t (?<type>\\S+)"))),
     SET_TEXTURE_OF_BLOCK("settexture",new ArrayList<String>(Arrays.asList(" -y1 (?<beginRow>\\d+)"," -x1 (?<beginColumn>\\d+)"," -y2 (?<endRow>\\d+)"," -x2 (?<endColumn>\\d+)"," -t (?<type>\\S+)"))),

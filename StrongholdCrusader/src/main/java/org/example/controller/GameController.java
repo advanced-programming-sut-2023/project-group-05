@@ -44,6 +44,7 @@ public class GameController {
     }
 
     public void debug(){
+        this.player.decreaseCost(Cost.negative(new Cost( 1000 , 1000 , 1000 , 1000 , 1000, 1000 , 1000 , 1000 , 1000 , 1000 , 1000, 1000 , 1000 , 1000 , 1000 , 1000, 1000 , 1000, 1000 , 1000 , 1000 , 1000 , 1000 ))) ;
         for(Unit unit : Unit.getUnits()){
             System.out.println("UNIT : " + unit.getName() + " hitpoint : " + unit.getHitPoint() + " x = " + unit.getColumn() + " y = " + unit.getRow() + ( unit instanceof Warrior ? " mode = " + ((Warrior)unit).getUnitMode().name() : "" ) ) ;
         }
@@ -55,10 +56,9 @@ public class GameController {
                     "Player : " + p.getAccount().getNickName() + " " + " apple : " + p.getApple() + " sword : " + p.getSword()
             ) ;
         }
-        this.player.decreaseCost(Cost.negative(new Cost( 1000 , 1000 , 1000 , 1000 , 1000, 1000 , 1000 , 1000 , 1000 , 1000 , 1000, 1000 , 1000 , 1000 , 1000 , 1000, 1000 , 1000, 1000 , 1000 , 1000 , 1000 , 1000 ))) ;
-//        for(int i = 0 ; i < 20 ; i++)
-//            for(int j = 0 ; j < 20 ; j++)
-//                System.out.print("" + gameMap.getMaskedMap()[i][j] + (j == 19 ? "\n" : " ")) ;
+    //for(int i = 0 ; i < 20 ; i++)
+    //            for(int j = 0 ; j < 20 ; j++)
+    //                System.out.print("" + gameMap.getMaskedMap()[i][j] + (j == 19 ? "\n" : " ")) ;
 
     }
 
@@ -875,9 +875,35 @@ public class GameController {
     }
 
     public String buildEquipment(Matcher matcher){
-        String equipment = matcher.group("equipment");
-        if (player.getSelectedBuilding().getBuildingEnum() != BuildingEnum.SIEGE_TENT)
-            return "You Should Choose A Siege Tent First";
+        String equipment = matcher.group("name");
+        int row = Integer.parseInt(matcher.group("row"));
+        int column = Integer.parseInt(matcher.group("column")) ;
+        int engineerCount = 0 ;
+
+        for( Unit unit : Unit.getUnits() ){
+            if( unit.getName().equals("engineer") && unit.getOwner() == player )
+                engineerCount++ ;
+        }
+
+        if( equipment.equals("catapolt") ){
+            if( engineerCount < 4 ) return "YOU NEED 4 engineers" ;
+            gameMap.getCell( row , column ).addUnit(
+                    new Warrior( "catapolt" , player , 100 , 200 , 0 , 40 , 1 , 1 , 1 , false , false , false , false , false , false , false , row , column )
+            ) ;
+            return "catapolt created" ;
+        } else if ( equipment.equals("firecatapolt") ){
+            gameMap.getCell( row , column ).addUnit(
+                    new Warrior( "catapolt" , player , 100 , 200 , 0 , 40 , 1 , 1 , 1 , true , false , false , false , false , false , false , row , column )
+            ) ;
+            return "firecatapolt created" ;
+        } else if ( equipment.equals("dezhkoob") ){
+            gameMap.getCell( row , column ).addUnit(
+                    new Warrior( "dezhkoob" , player , 100 , 200 , 0 , 40 , 1 , 1 , 1 , false , false , false , false , false , false , false , row , column )
+            ) ;
+            return "CREATED DEZHKOOB SUCCESSFULLY" ;
+        }
+
+
 
         return null;
     }
@@ -1388,8 +1414,8 @@ public class GameController {
             ret += "\n  -> Amount : " + trade.getAmount() ;
             ret += "\n  -> Resource : " + trade.getResourceType() ;
             ret += "\n  -> Message : " + trade.getMessage1() ;
-            if( trade.getMessage2() == null ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
-            else ret += "\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
+            if( trade.getOpen() ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
+            else ret += "\n>>>>TRADE IS CLOSED<<<<\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
             ret += "\n----------------------------------------" ;
             index++ ;
         }
@@ -1405,12 +1431,14 @@ public class GameController {
         Cost cost = trade.getCost() ;
         if( player.equals(trade.getPlayer1()) )
             return "YOU CAN NOT TRADE WITH YOURSELF MY LORD" ;
+        if( !trade.getOpen() ) return "TRADE NOT AVAILABLE" ;
         String outputOfDecreaseCost = player.decreaseCost( cost ) ;
         player.increaseGold( trade.getPrice() );
         trade.getPlayer1().decreaseCost( Cost.negative( cost ) ) ;
         if( outputOfDecreaseCost != null ) return outputOfDecreaseCost ;
         trade.setMessage2( message ) ;
         trade.setPlayer2( player ) ;
+        trade.setOpen(false) ;
         return "YOU HAVE TRADED WITH OTHER KINGDOMS SUCCESSFULLY , MY LORD." ;
     }
 

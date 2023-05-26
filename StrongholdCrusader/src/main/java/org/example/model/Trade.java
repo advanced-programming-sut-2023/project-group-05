@@ -9,6 +9,8 @@ public class Trade {
     private final Cost cost ;
     private int price ;
 
+    private boolean open;
+
     private String resourceType ;
     private int amount ;
     private String message1 ;
@@ -21,8 +23,17 @@ public class Trade {
         this.message2 = null ;
         this.resourceType = resourceType ;
         this.amount = amount ;
+        this.open = true ;
         trades.add(this) ;
         this.price = price ;
+    }
+
+    public boolean getOpen(){
+        return this.open ;
+    }
+
+    public void setOpen( boolean open ){
+        this.open = open;
     }
 
     public boolean canHappen(){
