@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 
@@ -25,6 +26,7 @@ public class GameController {
     public static int maxColumn = 400;
     public static HashMap <Operator, AtomicInteger> oxTurn = new HashMap <>() ;
     public static HashMap < Operator, Building> oxQuarry = new HashMap<>() ;
+    public static HashMap< Operator , AtomicBoolean > oxHasStone = new HashMap<>() ;
 
 
     public GameController( ArrayList<Account> accounts ) throws Exception{
@@ -88,16 +90,31 @@ public class GameController {
         for( Unit unit : Unit.getUnits() ){
             if(!( unit instanceof Operator)) continue ;
             if(!unit.getName().equals("ox")) continue ;
-            if( oxTurn.get(unit).equals(new AtomicInteger(0)) ){
+            if( getAdjacentBuildings(unit.getRow(),unit.getColumn()).contains("stockpile") && oxHasStone.get(unit).getAcquire() ){
+                player.stone+=1 ;
+                oxHasStone.get(unit).set( false ) ;
+            }
+            if(unit.getIsMoving()) continue ;
+            if( oxQuarry.get(unit) == null ){
+                for( Building building : Building.getBuildings() ){
+                    if( building.getName().equals("quarry") && building.getOwner() == unit.getOwner() ){
+                        oxQuarry.put( (Operator)unit , building ) ;
+                        break ;
+                    }
+                }
+                if( oxQuarry.get(unit) == null ) continue ;
+            }
+            if( oxTurn.get(unit).getAcquire() == 0 ){
                 // must go to a quarry if the quarry is ready
                 TradeBuilding quarry = (TradeBuilding)oxQuarry.get(unit) ;
-                if( this.turn - quarry.getTurnBuilt() % quarry.getRate() == 0  )
+                if( ( this.turn - quarry.getTurnBuilt() ) % quarry.getRate() == 0  ){
                     for(Cell cell : getAdjacentCells( quarry )){
                         unit.setTarget(cell.getRow() , cell.getColumn(),gameMap) ;
                         if(unit.getNextColumn()!=unit.getColumn()&&unit.getNextRow()!=unit.getRow())
                             break ;
                     }
-                oxTurn.get(unit).set(1) ;
+                    oxTurn.get(unit).set(1) ;
+                }
             } else {
                 // must go to the stockpile
                 Building stockpile = null ;
@@ -139,6 +156,19 @@ public class GameController {
         if(numberOfKings == 1)
             endGame();
         else winner = null ;
+    }
+
+    public ArrayList<String> getAdjacentBuildings( int row , int column ){
+        ArrayList<String> returnValue = new ArrayList<>() ;
+        if( row + 1 < 400 && column + 1 < 400 && gameMap.getCell( row + 1 , column + 1 ).getBuilding() != null )
+            returnValue.add( gameMap.getCell( row + 1 , column + 1 ).getBuilding().getName() ) ;
+        if( row + 1 < 400 && column - 1 >=  0 && gameMap.getCell( row + 1 , column - 1 ).getBuilding() != null )
+            returnValue.add( gameMap.getCell( row + 1 , column - 1 ).getBuilding().getName() ) ;
+        if( row - 1 >= 0  && column + 1 < 400 && gameMap.getCell( row - 1 , column + 1 ).getBuilding()!= null )
+            returnValue.add( gameMap.getCell( row - 1 , column + 1 ).getBuilding().getName() ) ;
+        if( row - 1 >= 0  && column - 1 >=  0 && gameMap.getCell( row - 1 , column - 1 ).getBuilding() != null )
+            returnValue.add( gameMap.getCell( row - 1 , column - 1 ).getBuilding().getName() ) ;
+        return returnValue ;
     }
 
     public ArrayList<Cell> getAdjacentCells(Building building){
@@ -216,7 +246,7 @@ public class GameController {
             TradeBuilding building = (TradeBuilding) anyBuilding ;
             building.updateFunctionality();
             building.functional = true ;
-            if(this.turn % building.getRate() == 0){
+            if( building.getRate() != 0 && this.turn % building.getRate() == 0){
                 System.out.println(building.trade(gameMap));
             }
         }
@@ -998,6 +1028,7 @@ public class GameController {
             Operator ox = new Operator("ox" , player , 5 , row , column , oxtether ) ;
             putBuildingInThePlace(oxtether);
             oxTurn.put( ox , new AtomicInteger(0) ) ;
+            oxHasStone.put( ox , new AtomicBoolean(false) ) ;
             gameMap.getCell( row , column ).addUnit( ox );
             return "Ox tether dropped successfully" ;
         }
@@ -1054,6 +1085,7 @@ public class GameController {
             putBuildingInThePlace(oxtether);
             gameMap.getCell( row , column ).addUnit( ox );
             oxTurn.put( ox , new AtomicInteger(0) ) ;
+            oxHasStone.put( ox , new AtomicBoolean(false) ) ;
             return "Ox tether dropped successfully" ;
         }
         Building building = Building.createBuildingByName(type,player,row,column);
@@ -1367,13 +1399,15 @@ public class GameController {
     public String tradeAccept(Matcher matcher){
         int id = Integer.parseInt(matcher.group("id")) - 1 ;
         String message = matcher.group("message") ;
-        if( id < 1 || id > Trade.getTrades().size() )
+        if( id < 0 || id >= Trade.getTrades().size() )
             return "INVALID ID." ;
-        Trade trade = Trade.getTrades().get(--id) ;
+        Trade trade = Trade.getTrades().get(id) ;
         Cost cost = trade.getCost() ;
         if( player.equals(trade.getPlayer1()) )
             return "YOU CAN NOT TRADE WITH YOURSELF MY LORD" ;
         String outputOfDecreaseCost = player.decreaseCost( cost ) ;
+        player.increaseGold( trade.getPrice() );
+        trade.getPlayer1().decreaseCost( Cost.negative( cost ) ) ;
         if( outputOfDecreaseCost != null ) return outputOfDecreaseCost ;
         trade.setMessage2( message ) ;
         trade.setPlayer2( player ) ;

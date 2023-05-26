@@ -7,14 +7,14 @@ public class Trade {
     private final Player player1 ;
     private Player player2 ;
     private final Cost cost ;
-    private double price ;
+    private int price ;
 
     private String resourceType ;
     private int amount ;
     private String message1 ;
     private String message2 ;
 
-    public Trade( Player player1 , String message1 , Cost cost , double price , int amount ,String resourceType ){
+    public Trade( Player player1 , String message1 , Cost cost , int price , int amount ,String resourceType ){
         this.player1 = player1 ;
         this.message1 =message1 ;
         this.cost = cost ;
@@ -60,7 +60,7 @@ public class Trade {
         return this.cost ;
     }
 
-    public double getPrice(){
+    public int getPrice(){
         return this.price ;
     }
 

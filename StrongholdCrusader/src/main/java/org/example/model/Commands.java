@@ -62,8 +62,8 @@ public enum Commands {
     DROP_UNIT("dropunit",new ArrayList<String>(Arrays.asList(" -x (?<column>\\d+)"," -y (?<row>\\d+)"," -t (?<type>\\S+)"," -c (?<count>\\d+)"))),
     SHOW_TRADE_LIST("trade list",null),
     SHOW_TRADE_HISTORY("trade history",null),
-    TRADE_REQUEST("trade",new ArrayList<String>(Arrays.asList(" -t (?<resourceType>\\S+) -a (?<resourceAmount>\\d+) -p (?<price>\\d+) -m (?<message>\\S+)"))),
-    TRADE_ACCEPT("trade accept",new ArrayList<String>(Arrays.asList(" -i (?<id>\\d+) -m (?<message>\\S+)"))),
+    TRADE_REQUEST("trade",new ArrayList<String>(Arrays.asList(" -t (?<resourceType>\\S+)", " -a (?<amount>\\d+)"," -p (?<price>\\d+)"," -m (?<message>\\S+)"))),
+    TRADE_ACCEPT("trade accept",new ArrayList<String>(Arrays.asList(" -i (?<id>\\d+)" , " -m (?<message>\\S+)"))),
     SHOW_PRICE_LIST("show price list",null),
     //TODO : fix these regexes
     BUY("buy",new ArrayList<String>(Arrays.asList(" -i (?<itemName>\\S+)" , " -a (?<amount>\\d+)"))),
