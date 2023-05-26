@@ -72,7 +72,7 @@ public class Test {
     }
 
     @org.junit.Test
-    public void testLogin(){
+    public void testLogin() throws Exception {
         String invalidUsername = "user login -u sa@am -p APkimoam03$";
         Matcher matcher = Commands.getMatchingMatcher(invalidUsername,Commands.USER_LOGIN);
         String result = SignupLoginMenuController.loginUser(Menu.getScanner(),matcher,false);

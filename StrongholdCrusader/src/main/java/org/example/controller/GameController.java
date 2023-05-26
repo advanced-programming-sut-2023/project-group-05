@@ -8,7 +8,9 @@ import org.example.view.Menu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 
 public class GameController {
@@ -21,9 +23,11 @@ public class GameController {
     private GameMap gameMap;
     public static int maxRow = 400;
     public static int maxColumn = 400;
+    public static HashMap <Operator, AtomicInteger> oxTurn = new HashMap <>() ;
+    public static HashMap < Operator, Building> oxQuarry = new HashMap<>() ;
 
 
-    public GameController( ArrayList<Account> accounts ){
+    public GameController( ArrayList<Account> accounts ) throws Exception{
         this.accounts = accounts ;
         this.players = new ArrayList<Player>() ;
         for( Account acc : accounts ){
@@ -56,7 +60,7 @@ public class GameController {
 
     }
 
-    public void nextTurn(){
+    public void nextTurn() throws Exception {
         this.turn++ ;
         this.player = this.players.get( this.turn % this.players.size() ) ;
 
@@ -81,41 +85,35 @@ public class GameController {
 
         // OPERATORS : units working in some buildings ( workers )
 
-        for(Unit unit : Unit.getUnits()){
-            if(!(unit instanceof Operator)) continue ;
-            Operator  operator = (Operator)unit ;
-            // Oxes are going to say : moo moo ( or otherwise )
-            if(operator.getName().equals("ox")){
-                // if the ox is not moving :
-                if(operator.getIsMoving()) continue ;
-                // if ox is arrived to quarry or stockpile ? ( wait a minute we have no stock pile! mission canceled )
-                try{
-                        if(operator.getAdjacantBuildings(gameMap).contains(
-                                gameMap.getCell(operator.getTargetRow(),operator.getTargetColumn()).getBuilding()
-                        )){
-
-                        }
-                } catch ( Exception e ){
-                    // Exception handling go brrrrrrrr
-                }
-                Building oxTether = operator.getBuilding() ;
-                Building closestQuarry = null ;
-                for(Building building : Building.getBuildings()) if(building.getName().equals("quarry")){
-                    if(closestQuarry==null){
-                        closestQuarry = building ;
-                        continue ;
+        for( Unit unit : Unit.getUnits() ){
+            if(!( unit instanceof Operator)) continue ;
+            if(!unit.getName().equals("ox")) continue ;
+            if( oxTurn.get(unit).equals(new AtomicInteger(0)) ){
+                // must go to a quarry if the quarry is ready
+                TradeBuilding quarry = (TradeBuilding)oxQuarry.get(unit) ;
+                if( this.turn - quarry.getTurnBuilt() % quarry.getRate() == 0  )
+                    for(Cell cell : getAdjacentCells( quarry )){
+                        unit.setTarget(cell.getRow() , cell.getColumn(),gameMap) ;
+                        if(unit.getNextColumn()!=unit.getColumn()&&unit.getNextRow()!=unit.getRow())
+                            break ;
                     }
-                    int distance = (building.getColumn() - oxTether.getColumn()) * (building.getColumn() - oxTether.getColumn()) ;
-                    if ( distance < (closestQuarry.getRow() - oxTether.getRow())*(closestQuarry.getRow() - oxTether.getRow()) + (closestQuarry.getColumn() - oxTether.getColumn()) * (closestQuarry.getColumn() - oxTether.getColumn()) ) {
-                        closestQuarry = building ;
+                oxTurn.get(unit).set(1) ;
+            } else {
+                // must go to the stockpile
+                Building stockpile = null ;
+                for(Building building : Building.getBuildings())
+                    if(building.getName().equals("stockpile") && building.getOwner() == unit.getOwner()){
+                        stockpile = building ;
+                        break ;
                     }
-                }
-                if( (this.turn - ((TradeBuilding)closestQuarry).getTurnBuilt()) % ((TradeBuilding)closestQuarry).getRate() == 0 ){
-                    operator.setTarget(closestQuarry.getRow() , closestQuarry.getColumn() , gameMap) ;
-                }
 
+                for( Cell cell : getAdjacentCells( stockpile ) ){
+                    unit.setTarget( cell.getRow() , cell.getColumn() , gameMap );
+                    if(unit.getNextColumn()!=unit.getColumn()&&unit.getNextRow()!=unit.getRow())
+                        break ;
+                }
+                oxTurn.get(unit).set(0) ;
             }
-
         }
 
         // TRADE BUILDINGS will go brrrrrr
@@ -140,6 +138,32 @@ public class GameController {
             }
         if(numberOfKings == 1)
             endGame();
+        else winner = null ;
+    }
+
+    public ArrayList<Cell> getAdjacentCells(Building building){
+        ArrayList<Cell> adjacentCells = new ArrayList<Cell>() ;
+        int column = building.getColumn() ;
+        int row = building.getRow() ;
+        int height = building.getHeight() ;
+        int width = building.getWidth() ;
+
+        for(int i = 0 ; i < building.getWidth() ; i++){
+            if(row-1>=0  && column + i < 400) adjacentCells.add( gameMap.getCell(row-1 , column+i) ) ;
+            if(row+height<400 && column + i < 400) adjacentCells.add( gameMap.getCell(row+height , column+i) ) ;
+        }
+
+        for(int j = 0 ; j < height ; j++){
+            if(row + j < 400 && column -1 >= 0) adjacentCells.add( gameMap.getCell( row + j, column - 1 ) ) ;
+            if(row + j < 400 && column + width < 400) adjacentCells.add( gameMap.getCell( row + j , column + width ) ) ;
+        }
+
+        if( row - 1 >= 0 && column - 1 >= 0 ) adjacentCells.add( gameMap.getCell(row-1,column-1) ) ;
+        if( row + height < 400 && column + width < 400 ) adjacentCells.add( gameMap.getCell(row+height,column+width) ) ;
+        if(column - 1 >= 0 && row + height < 400) adjacentCells.add( gameMap.getCell(row+height,column-1) ) ;
+        if(row - 1 >= 0 && column + width < 400) adjacentCells.add( gameMap.getCell(row-1,column+width) ) ;
+
+        return adjacentCells ;
     }
 
     public void populationGrowth(Player player){
@@ -275,6 +299,16 @@ public class GameController {
                     unit.setIsMoving( false );
                     continue;
                 }
+                if( unit instanceof Warrior && ((Warrior)unit).getIsAttacking() ){
+                    Warrior warrior = (Warrior) unit ;
+                    int dr = warrior.getRow() - warrior.getEnemyRow() ;
+                    int dc = warrior.getColumn() - warrior.getEnemyColumn() ;
+                    //System.out.println( "" + warrior + (dr * dr + dc * dc <= warrior.getRange() * warrior.getRange()) ) ;
+                    if( dr * dr + dc * dc <= warrior.getRange() * warrior.getRange() ){
+                        warrior.setIsMoving( false );
+                        continue ;
+                    }
+                }
                 if ( nextRow == unit.getRow() && nextColumn == unit.getColumn() && unit instanceof Warrior && ! ( (Warrior) unit ).getIsPatrolling() ) {
                     unit.setIsMoving( false );
                     continue;
@@ -285,13 +319,14 @@ public class GameController {
                     nextRow = warrior.getNextRow();
                     nextColumn = warrior.getNextColumn();
                 }
-
+                //System.out.println("moved " + unit.getName() + " from " + unit.getRow() + " , " + unit.getColumn() ) ;
                 Cell cell = gameMap.getCell( unit.getRow(), unit.getColumn() );
                 Cell nextCell = gameMap.getCell( nextRow, nextColumn );
                 cell.getUnits().remove( unit );
                 nextCell.getUnits().add( unit );
                 unit.setRow( nextRow );
                 unit.setColumn( nextColumn );
+                //System.out.println("to " + unit.getRow() + " , " + unit.getColumn() ) ;
             }
         }
     }
@@ -345,7 +380,7 @@ public class GameController {
         return totalFoodSupply;
     }
 
-    public void putYourCastle(Player owner){
+    public void putYourCastle(Player owner) throws Exception {
         System.out.println("----WELCOME TO THE GAME OF KINGS MY LORD----\n" +
                 ">>> Take A Location And Put Your Castle <<<\n" +
                 "-> YOUR CASTLE IS THE HEART OF YOUR KINGDOM\n" +
@@ -358,9 +393,9 @@ public class GameController {
         column = castleCoordinates.get(1) ;
         String name = "castle";
         Building castle = new Building (name,1,1,true,"",owner,row,column,Building.getBuildingCost(name),
-                -1,0,false,BuildingEnum.CASTLE , 0);
+                10000,0,false,BuildingEnum.CASTLE , 0);
         name = "king";
-        Warrior king = new Warrior(name,owner, 50 , 500,5,1,30,30,0,
+        Warrior king = new Warrior(name,owner, 50 , 500,1,1,30,30,0,
                 false,false,false,false,false,false,true,row.intValue(),column.intValue());
         putBuildingInThePlace(castle);
         gameMap.getCell(row,column).units.add(king);
@@ -373,7 +408,7 @@ public class GameController {
         }
     }
 
-    public void putYourStockPile(Player owner){
+    public void putYourStockPile(Player owner) throws Exception {
         System.out.println("Please Choose A Location And Put Your Stockpile There");
         int row , column;
         ArrayList<Integer> buffer = getCoordinates();
@@ -385,7 +420,7 @@ public class GameController {
         player.isStockPileCreated = true;
     }
 
-    public ArrayList<Integer> getCoordinates () {
+    public ArrayList<Integer> getCoordinates () throws Exception {
 
         String buffer;
         int row , column ;
@@ -397,22 +432,22 @@ public class GameController {
                 row = Integer.parseInt(buffer);
                 if (row >0 && row <400)
                     break;
-                System.out.println("Row Number Is Outside The Map,Re-enter it");
+                System.out.print("Row Number Is Outside The Map,Re-enter it : ");
             } catch (Exception e) {
-                continue;
+                throw new Exception(e) ;
             }
         }
         while (true) {
-            System.out.println("Please Enter Column Number");
+            System.out.print("Please Enter Column Number : ");
             try {
                 buffer = Menu.getScanner().nextLine();
                 Integer.parseInt(buffer);
                 column = Integer.parseInt(buffer);
                 if (column >0 && column <400)
                     break;
-                System.out.println("Column Number Is Outside The Map,Re-enter it");
+                System.out.print("Column Number Is Outside The Map,Re-enter it : ");
             } catch (Exception e) {
-                continue;
+                throw new Exception(e) ;
             }
         }
         Cell cell = gameMap.getCell(row , column);
@@ -455,7 +490,6 @@ public class GameController {
 
         Building.getBuildings().clear() ;
         Unit.getUnits().clear() ;
-
     }
 
     public Player getWinner(){
@@ -673,6 +707,8 @@ public class GameController {
             return "Move Unit Failed : Row Or Column Exceeded Map";
         if (gameMap.getMaskedMap()[row][column] == 1 && gameMap.getMaskedMapUpperGround()[row][column] == 1 )
             return "Move Unit Failed : Destination Is Not Permeable";
+
+
         for (Unit unit : player.getSelectedUnits()){
             unit.setTarget(row,column,gameMap);
             if(unit instanceof Warrior)
@@ -761,7 +797,7 @@ public class GameController {
         else{
             for(Unit unit : player.getSelectedUnits()){
                 if(unit instanceof Warrior ){
-                    ((Warrior)unit).attackBuilding(enemyBuilding) ;
+                    ((Warrior)unit).attackBuilding(enemyBuilding,gameMap) ;
                 }
             }
         }
@@ -960,6 +996,9 @@ public class GameController {
         if(type.equals("oxtether")){
             Building oxtether = Building.createBuildingByName("oxtether",player,row,column) ;
             Operator ox = new Operator("ox" , player , 5 , row , column , oxtether ) ;
+            putBuildingInThePlace(oxtether);
+            oxTurn.put( ox , new AtomicInteger(0) ) ;
+            gameMap.getCell( row , column ).addUnit( ox );
             return "Ox tether dropped successfully" ;
         }
         Building building = Building.createBuildingByName(type,player,row,column);
@@ -1012,6 +1051,9 @@ public class GameController {
         if(type.equals("oxtether")){
             Building oxtether = Building.createBuildingByName("oxtether",player,row,column) ;
             Operator ox = new Operator("ox" , player , 5 , row , column , oxtether ) ;
+            putBuildingInThePlace(oxtether);
+            gameMap.getCell( row , column ).addUnit( ox );
+            oxTurn.put( ox , new AtomicInteger(0) ) ;
             return "Ox tether dropped successfully" ;
         }
         Building building = Building.createBuildingByName(type,player,row,column);

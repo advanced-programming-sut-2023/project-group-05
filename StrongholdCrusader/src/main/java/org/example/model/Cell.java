@@ -14,12 +14,24 @@ public class Cell {
 
     private Building building = null ;
     public CellType cellType;
+    int column ;
+    int row ;
     private static HashMap<String , CellType> cellTypeEnumByName = new HashMap<>();
-    public Cell(CellType cellType)
+    public Cell(CellType cellType , int row , int column)
     {
         this.cellType = cellType;
         this.units = new ArrayList<>(0);
         this.objects = new ArrayList<>(0);
+        this.row = row ;
+        this.column = column ;
+    }
+
+    public int getRow(){
+        return this.row ;
+    }
+
+    public int getColumn(){
+        return this.column ;
     }
 
     public void removeUnit(Unit inp)

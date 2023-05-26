@@ -150,7 +150,7 @@ public class SignupLoginMenuController {
         return "account created successfully" ;
     }
 
-    public static String loginUserStayLoggedIn( Scanner scanner, Matcher matcher)
+    public static String loginUserStayLoggedIn( Scanner scanner, Matcher matcher) throws Exception
     {
         ArrayList < Account > myList = DataBase.getStayLoggedInAccount();
         for(Account cur : myList)
@@ -162,7 +162,7 @@ public class SignupLoginMenuController {
         return "there are not any stayed logged in account :(";
     }
 
-    public static String loginUser( Scanner scanner , Matcher matcher, boolean mode )
+    public static String loginUser( Scanner scanner , Matcher matcher, boolean mode ) throws Exception
     {
         //mode true is for real game --- mode false is for unit test
         String password = matcher.group("password") ;

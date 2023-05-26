@@ -98,7 +98,6 @@ public class Warrior extends Unit {
         super.targetRow = row ;
         super.targetColumn = column ;
         super.pathFinder.setGameMap( gameMap.getMaskedMap(), gameMap.getMaskedMapUpperGround(), 400 ) ;
-        System.out.println( pathFinder.goInDirectionFrom( this.row , this.column ) ) ;
         super.pathFinder.Run( row , column ) ;
         super.isMoving = true;
 
@@ -137,19 +136,43 @@ public class Warrior extends Unit {
         return this.damage ;
     }
 
+    public int getEnemyRow(){
+        if(attackingUnit != null){
+            return attackingUnit.getRow() ;
+        }
+        if(attackingBuilding != null){
+            return attackingBuilding.getRow() ;
+        }
+        return 0 ;
+    }
 
+    public int getEnemyColumn(){
+        if(attackingUnit != null){
+            return attackingUnit.getColumn() ;
+        }
+        if(attackingBuilding != null){
+            return attackingBuilding.getColumn() ;
+        }
+        return 0 ;
+    }
 
     public void attackUnit( Unit unit , GameMap gameMap ){
         this.attackingUnit = unit ;
         this.attackingBuilding = null ;
         this.isAttacking = true ;
-        this.setTarget(unit.getRow() , unit.getColumn() , gameMap) ;
+        int dr = unit.getRow() - this.getRow() ;
+        int dc = unit.getColumn() - this.getColumn() ;
+        if( dr * dr + dc * dc > this.getRange() * this.getRange() )
+            this.setTarget(unit.getRow() , unit.getColumn() , gameMap) ;
     }
 
-    public void attackBuilding( Building building ){
+    public void attackBuilding( Building building , GameMap gameMap ){
         this.attackingBuilding = building ;
         this.attackingUnit = null ;
-        // TODO : ATTACK BULIDING
+        int dr = building.getRow() - this.getRow() ;
+        int dc = building.getColumn() - this.getColumn() ;
+        if( dr * dr + dc * dc > this.getRange() * this.getRange() )
+            this.setTarget(building.getRow() , building.getColumn() , gameMap) ;
     }
 
     public void stopAttacking(){

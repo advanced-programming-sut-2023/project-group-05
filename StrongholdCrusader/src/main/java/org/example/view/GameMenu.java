@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class GameMenu {
 
-    public static void run ( Matcher playersMatcher , Account currentAccount ){
+    public static void run ( Matcher playersMatcher , Account currentAccount ) throws Exception {
         if(currentAccount == null){
             System.out.println("invalid username") ;
             return ;
@@ -156,8 +156,10 @@ public class GameMenu {
                 System.out.println("Invalid Command");
 
             // checking if game is finished
-            if( gameController.getWinner() != null )
+            if( gameController.getWinner() != null ){
+                System.out.println("GAME FINISHED") ;
                 return ;
+            }
         }
     }
 }

@@ -43,7 +43,7 @@ public enum BuildingEnum {
     OX_TETHER("oxtether",new ArrayList<Integer>(Arrays.asList(1,2)) , 100 ),
     PITCH_RIG("pitchrig",new ArrayList<Integer>(Arrays.asList(2,2)) , 0),
     QUARRY("quarry",new ArrayList<Integer>(Arrays.asList(2,2)) , 300 ),
-    STOCKPILE("stockpile",new ArrayList<Integer>(Arrays.asList(1,1)) , 100000),
+    STOCKPILE("stockpile",new ArrayList<Integer>(Arrays.asList(1,1)) , 10000),
     WOODCUTTER("woodcutter",new ArrayList<Integer>(Arrays.asList(2,3)) , 300 ),
     APOTHECARY("apothecary",new ArrayList<Integer>(Arrays.asList(2,3)) , 300),
     HOVEL("hovel",new ArrayList<Integer>(Arrays.asList(2,2)) , 200 ),

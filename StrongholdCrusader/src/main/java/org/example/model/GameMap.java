@@ -26,7 +26,7 @@ public class GameMap {
         this.maskedMapUnderGround = new int[height][width] ;
         for(int i = 0 ; i < height ; i++)
             for(int j = 0 ; j < width ; j++) {
-                map[i][j] = new Cell( CellType.GROUND );
+                map[i][j] = new Cell( CellType.GROUND , i , j );
                 maskedMap[i][j] = 0 ;
                 maskedMapUnderGround[i][j] = 0 ;
                 maskedMapUpperGround[i][j] = 1 ;

@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class MainMenu {
 
-    public static void run( Scanner scanner , Account account ){
+    public static void run( Scanner scanner , Account account ) throws Exception {
         System.out.println("You are currently in MainMenu") ;
         String input ;
         while( true ){

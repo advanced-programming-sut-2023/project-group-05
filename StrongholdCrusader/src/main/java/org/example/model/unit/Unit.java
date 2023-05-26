@@ -62,6 +62,7 @@ public class Unit {
         this.owner.getSelectedUnits().remove(this) ;
         this.owner.getUnits().remove(this) ;
         this.owner.setPopulation( this.owner.getPopulation() - 1 );
+        Unit.getUnits().remove(this) ;
         gameMap.getCell(this.getRow() , this.getColumn()).getUnits().remove(this) ;
     }
 
@@ -162,6 +163,10 @@ public class Unit {
 
     public void setIsMoving( boolean isMoving ){
         this.isMoving = isMoving ;
+        if(this.isMoving==false){
+            this.targetColumn = -1 ;
+            this.targetRow = -1 ;
+        }
     }
 
     public UnitModeEnum getUnitMode(){
@@ -191,10 +196,6 @@ public class Unit {
         return this.name ;
     }
 
-    public void move( int row , int column ){
-        // TODO : move unit to ( row , column )
-
-    }
 
     public static HashMap<String,UnitModeEnum> getUnitModeEnumMap() {
         return unitModeEnumMap ;
@@ -248,7 +249,10 @@ public class Unit {
             return new Warrior(type,owner,20,50,4,1,20,0,0,false,false,false,false,false,false,true,row,column);
         if (type.equals("sangandazatashin"))
             return new Warrior(type,owner,20,50,2,10,20,0,0,false,false,false,false,false,false,true,row,column);
-        //TODO : HANDLE OPERATOR IN-PLACE
+
+        if(type.equals("ox"))
+            return new Unit("ox",owner,1,1,0,row,column,false) ;
+
         return null;
     }
 
