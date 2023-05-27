@@ -56,12 +56,16 @@ public class SignupLoginMenuController {
         String passwordConfirm = matcher.group("passwordConfirmation") ;
         String email = matcher.group("email") ;
         String slogan = matcher.group("sloganchecker")!=null ? matcher.group("slogan") : "no slogan selected";
+
+
+
         if(userName == null || nickName == null || email == null)
             return ("You left a field empty!");
         if (matcher.group("sloganchecker")!=null && matcher.group("slogan")==null)
             return ("you left slogan field empty");
         if(!validUserName(userName))
             return ("Invalid Username!");
+
 
         if(!validPassword(password))
             return ("Invalid password");
@@ -120,6 +124,8 @@ public class SignupLoginMenuController {
                 return "create user failed : wrong re-entered password" ;
 
         }
+
+
         if(!validPassword(password))
             return ("Invalid Password, good luck");
         if(!password.equals(passwordConfirm))

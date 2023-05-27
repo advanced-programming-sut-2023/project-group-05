@@ -321,11 +321,15 @@ public class GameController {
         int nextRow = -1 ;
         for(Unit unit : Unit.getUnits()){
             for( int i = 0; i < unit.getMovingSpeed() ; i++) {
-                if ( unit.getTargetRow() == - 1 ) continue;
+                if ( !unit.getIsMoving() ){
+                    System.out.println("1 - " +  unit.getName());
+                    continue;
+                }
                 unit.setTarget( unit.getTargetRow(), unit.getTargetColumn(), gameMap ); // for always choosing minimum path
                 nextRow = unit.getNextRow();
                 nextColumn = unit.getNextColumn();
                 if ( nextRow == unit.getRow() && nextColumn == unit.getColumn() && ! ( unit instanceof Warrior ) ) {
+                    System.out.println("next row is row" + unit.getName()) ;
                     unit.setIsMoving( false );
                     continue;
                 }
@@ -349,14 +353,14 @@ public class GameController {
                     nextRow = warrior.getNextRow();
                     nextColumn = warrior.getNextColumn();
                 }
-                //System.out.println("moved " + unit.getName() + " from " + unit.getRow() + " , " + unit.getColumn() ) ;
+                System.out.println("moved " + unit.getName() + " from " + unit.getRow() + " , " + unit.getColumn() ) ;
                 Cell cell = gameMap.getCell( unit.getRow(), unit.getColumn() );
                 Cell nextCell = gameMap.getCell( nextRow, nextColumn );
                 cell.getUnits().remove( unit );
                 nextCell.getUnits().add( unit );
                 unit.setRow( nextRow );
                 unit.setColumn( nextColumn );
-                //System.out.println("to " + unit.getRow() + " , " + unit.getColumn() ) ;
+                System.out.println("to " + unit.getRow() + " , " + unit.getColumn() ) ;
             }
         }
     }
@@ -738,10 +742,9 @@ public class GameController {
         if (gameMap.getMaskedMap()[row][column] == 1 && gameMap.getMaskedMapUpperGround()[row][column] == 1 )
             return "Move Unit Failed : Destination Is Not Permeable";
 
-
         for (Unit unit : player.getSelectedUnits()){
             unit.setTarget(row,column,gameMap);
-            if(unit instanceof Warrior)
+            if(unit instanceof Warrior && ( (Warrior) unit ).getIsPatrolling())
                 ((Warrior)unit).stopPatrol() ;
         }
         return "Unit Set For Move!";
@@ -1037,7 +1040,8 @@ public class GameController {
         if( gameMap.getCell( row , column ).cellType != CellType.GROUND && treeType.equals("deserttree") )
             return "DESERT TREES CAN ONLY BE PLACED ON GROUND." ;
 
-        Building.createBuildingByName( treeType , player , row , column ) ;
+        gameMap.getCell( row , column ).setBuilding( Building.createBuildingByName( treeType , player , row , column ) ) ;
+
 
         return "TREE DROPPED SUCCESSFULLY." ;
     }
@@ -1490,7 +1494,7 @@ public class GameController {
     }
 
     public String buy(Matcher matcher){
-        if (player.getSelectedBuilding().getBuildingEnum()!=BuildingEnum.MARKET)
+        if ( player.getSelectedBuilding() != null && player.getSelectedBuilding().getBuildingEnum()!=BuildingEnum.MARKET)
             return "You Should Select Market First";
         String itemName = matcher.group("itemName") ;
         int amount = Integer.parseInt(matcher.group("amount")) ;

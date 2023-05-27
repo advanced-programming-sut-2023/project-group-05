@@ -57,7 +57,7 @@ public enum Commands {
     SET_TEXTURE_OF_BLOCK("settexture",new ArrayList<String>(Arrays.asList(" -y1 (?<beginRow>\\d+)"," -x1 (?<beginColumn>\\d+)"," -y2 (?<endRow>\\d+)"," -x2 (?<endColumn>\\d+)"," -t (?<type>\\S+)"))),
     CLEAR_CELL ("clear",new ArrayList<String>(Arrays.asList(" -x (?<column>\\d+)"," -y(?<row>\\d+)"))),
     DROP_ROCK("droprock",new ArrayList<String>(Arrays.asList(" -x (?<column>\\d+)"," -y (?<row>\\d+)"," -d (?<direction>(n|e|w|s|r))"))),
-    DROPTREE("droptree",new ArrayList<String>(Arrays.asList(" -x (?<column>\\d+)"," -y (?<row>\\d+)"," -t (?<type>\\S+)"))),
+    DROPTREE("droptree",new ArrayList<String>(Arrays.asList(" -x (?<column>\\d+)"," -y (?<row>\\d+)"," -t (?<type>\\S+)" , " -d (?<direction>e|w|s|n)" ))),
     CREATE_BUILDING("create building",new ArrayList<String>(Arrays.asList(" -x (?<column>\\d+)"," -y (?<row>\\d+)"," -t (?<type>\\S+)"))),
     DROP_UNIT("dropunit",new ArrayList<String>(Arrays.asList(" -x (?<column>\\d+)"," -y (?<row>\\d+)"," -t (?<type>\\S+)"," -c (?<count>\\d+)"))),
     SHOW_TRADE_LIST("trade list",null),

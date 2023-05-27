@@ -36,13 +36,13 @@ public class TradeBuilding extends Building {
         this.functional = true;
     }
 
-    public boolean trade( GameMap gameMap)
+    public boolean trade( GameMap gameMap )
     {
         if(!this.functional)
         {
             return false;
         }
-        System.out.println("I'm Alive!");
+        //System.out.println("I'm Alive!");
         Cost input = new Cost(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
         Cost output = new Cost(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -306,14 +306,14 @@ public class TradeBuilding extends Building {
             owner.removeUnit(current , gameMap);
         }
         String assertString = owner.decreaseCost(negative(output));
-        System.out.println(output.resource);
-        System.out.println(negative(output).resource);
-        System.out.println(input.resource);
-        System.out.println(negative(output).getApple());
+        //System.out.println(output.resource);
+        //System.out.println(negative(output).resource);
+        //System.out.println(input.resource);
+        //System.out.println(negative(output).getApple());
         if(assertString != null)
         {
-            System.out.println("Something is fuckedUp HEAVY!!");
-            System.out.println(assertString);
+            //System.out.println("Something is fuckedUp HEAVY!!");
+            //System.out.println(assertString);
             return false;
         }
         for(String cur : objectsOutput)

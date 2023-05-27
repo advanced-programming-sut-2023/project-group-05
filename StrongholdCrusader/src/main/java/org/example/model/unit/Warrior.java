@@ -42,6 +42,7 @@ public class Warrior extends Unit {
         this.defendPower = defendPower ;
         this.reloadSpeed = reloadSpeed ;
         this.isPatrolling = false ;
+        this.isMoving = false ;
         this.hasFire = hasFire ;
         this.canPushLadder = canPushLadder ;
         this.hasHorse = hasHorse ;
@@ -51,6 +52,8 @@ public class Warrior extends Unit {
         this.damage = damage ;
         this.unitMode = UnitModeEnum.STANDING ;
         this.canDamageCastle = canDamageCastle ;
+        this.isAttacking = false ;
+        this.isPatrolling = false ;
     }
 
     public void setUnitMode(UnitModeEnum unitMode){
