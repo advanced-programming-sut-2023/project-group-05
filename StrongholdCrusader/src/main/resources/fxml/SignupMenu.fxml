@@ -6,9 +6,35 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane xmlns="http://javafx.com/javafx"
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.view.SignupMenu"
-            prefHeight="1000.0" prefWidth="1000.0"
-            stylesheets="@../css/Menu/LoginMenu.css">
-</Pane>
+            prefHeight="400.0" prefWidth="600.0">
+    <center>
+        <VBox>
+            <HBox>
+                <Text text = "username : " />
+                <TextField promptText = "username" fx:id = "usernameTextField" />
+            </HBox>
+            <HBox>
+                <Text text = "password : " />
+                <PasswordField promptText="password" fx:id = "passwordField" />
+            </HBox>
+            <HBox>
+                <Text text = "slogan : " />
+                <TextField promptText="slogan" fx:id = "sloganTextField" />
+                <Button text = "random" />
+            </HBox>
+            <HBox>
+                <Text text = "nickname : " />
+                <TextField promptText="nickname" fx:id = "nicknameTextField" />
+            </HBox>
+            <HBox>
+                <Text text = "email : " />
+                <TextField promptText="email" fx:id = "emailTextField" />
+            </HBox>
+            <Button text = "submit" onMouseClicked="#submit" />
+        </VBox>
+    </center>
+</BorderPane>
