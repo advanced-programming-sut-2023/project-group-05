@@ -6,7 +6,6 @@ import org.example.model.GameMap;
 import org.example.model.Player;
 import org.example.model.unit.Unit;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 

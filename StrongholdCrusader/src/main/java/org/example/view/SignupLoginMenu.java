@@ -1,12 +1,26 @@
 package org.example.view;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import org.example.controller.SignupLoginMenuController;
 import org.example.model.Commands;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
-public class SignupLoginMenu {
+public class SignupLoginMenu extends Application {
     public static int wrongPassCounter = 0;
+
+    @Override
+    public void start( Stage stage ) throws Exception{
+        BorderPane borderPane = FXMLLoader.load(getClass().getResource("/fxml/SignupLoginMenu.fxml")) ;
+        Scene scene = new Scene( borderPane ) ;
+        stage.setScene(scene) ;
+        stage.show() ;
+    }
+
     public static void run ( Scanner scanner ) throws Exception {
         Matcher matcher ;
 
@@ -30,4 +44,5 @@ public class SignupLoginMenu {
                 System.out.println("Invalid Command");
         }
     }
+
 }

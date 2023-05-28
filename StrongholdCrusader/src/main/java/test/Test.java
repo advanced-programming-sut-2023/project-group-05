@@ -8,9 +8,6 @@ import org.example.view.Menu;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 
-import javax.print.DocFlavor;
-import javax.swing.plaf.PanelUI;
-import java.awt.geom.RectangularShape;
 import java.util.regex.Matcher;
 
 

@@ -2,7 +2,6 @@ package org.example.model;
 
 import org.example.model.unit.Unit;
 
-import javax.swing.*;
 
 public enum CellType {
     GROUND("ground"),
