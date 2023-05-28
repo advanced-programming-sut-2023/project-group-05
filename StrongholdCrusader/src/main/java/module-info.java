@@ -7,5 +7,8 @@ module AA {
 
     exports org.example.model;
     exports org.example.view;
+    exports org.example.controller;
     opens org.example.view to javafx.fxml;
+    opens org.example.model to javafx.fxml;
+    opens org.example.controller to javafx.fxml;
 }

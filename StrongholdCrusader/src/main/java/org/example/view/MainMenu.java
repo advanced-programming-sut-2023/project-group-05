@@ -1,12 +1,14 @@
 package org.example.view;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
 import org.example.controller.ProfileMenuController;
 import org.example.model.Account;
 import org.example.model.Commands;
 
 import java.util.Scanner;
 
-public class MainMenu {
+public class MainMenu extends Application {
 
     public static void run( Scanner scanner , Account account ) throws Exception {
         System.out.println("You are currently in MainMenu") ;
@@ -29,4 +31,8 @@ public class MainMenu {
 
     }
 
+    @Override
+    public void start(Stage stage) throws Exception {
+
+    }
 }

@@ -1,0 +1,39 @@
+.background{
+    -fx-background-image: url("../../images/MenuBackGrounds/StartMenuBackground.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+    -fx-background-size: 1000 1000;
+}
+.loginText{
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: White;
+}
+.loginButton{
+    -fx-background-image: url("../../images/MenuBackGrounds/loginButton.jpg");
+    -fx-background-position: center;
+    -fx-opacity: 0.6;
+    -fx-border-radius: 5px;
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: White;
+}
+.signupText{
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: Black;
+}
+.signupButton{
+    -fx-background-image: url("../../images/MenuBackGrounds/signupButton.jpg");
+    -fx-background-position: center;
+    -fx-opacity: 0.6;
+    -fx-border-radius: 5px;
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: White;
+}
+.welcomeText{
+    -fx-font-size: 50px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ee371a;
+}

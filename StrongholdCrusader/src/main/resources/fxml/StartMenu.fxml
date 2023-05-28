@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.view.StartMenu"
+            prefHeight="1000"
+            prefWidth="1000"
+            stylesheets="@../css/Menu/StartMenu.css"
+            styleClass="background">
+    <top>
+        <VBox alignment="BOTTOM_CENTER">
+            <Text text="Welcome To Strongholds Game" styleClass="welcomeText"/>
+        </VBox>
+    </top>
+    <center>
+        <HBox alignment="CENTER_LEFT" spacing="500">
+            <Button text="Login" styleClass="loginButton" onMouseClicked="#login"/>
+            <Button text="signup" styleClass="signupButton" onMouseClicked="#signup"/>
+        </HBox>
+    </center>
+</BorderPane>

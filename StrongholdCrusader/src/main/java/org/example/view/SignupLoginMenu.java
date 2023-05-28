@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import org.example.controller.SignupLoginMenuController;
 import org.example.model.Commands;
 
+import java.net.URL;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 public class SignupLoginMenu extends Application {
@@ -15,7 +16,7 @@ public class SignupLoginMenu extends Application {
 
     @Override
     public void start( Stage stage ) throws Exception{
-        BorderPane borderPane = FXMLLoader.load(getClass().getResource("/fxml/SignupLoginMenu.fxml")) ;
+        BorderPane borderPane = FXMLLoader.load(SignupLoginMenu.class.getResource("/fxml/SignupLoginMenu.fxml"));
         Scene scene = new Scene( borderPane ) ;
         stage.setScene(scene) ;
         stage.show() ;
@@ -23,7 +24,6 @@ public class SignupLoginMenu extends Application {
 
     public static void run ( Scanner scanner ) throws Exception {
         Matcher matcher ;
-
         while (true){
             String input = Menu.getScanner().nextLine();
             if ((matcher =Commands.getMatchingMatcher(input,Commands.CREATE_USER))!=null) {

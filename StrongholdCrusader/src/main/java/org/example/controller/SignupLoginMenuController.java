@@ -172,8 +172,7 @@ public class SignupLoginMenuController {
     {
         //mode true is for real game --- mode false is for unit test
         String password = matcher.group("password") ;
-        String userName = matcher.group( "username" ) ;
-
+        String userName = matcher.group( "username" );
         boolean stay_in = (matcher.group("stayloggedin") != null);
         if(!validUserName(userName) || ! validPassword(password))
             return "login failed : Invalid username / password\n";
