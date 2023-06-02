@@ -24,6 +24,7 @@ public class LoginMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        DataBase.wakeUp() ;
         BorderPane borderPane = FXMLLoader.load(StartMenu.class.getResource("/fxml/LoginMenu.fxml"));
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
@@ -32,7 +33,18 @@ public class LoginMenu extends Application {
     }
 
     public void forgetPassword(MouseEvent mouseEvent) throws Exception {
-        new ForgetPassword().start(StartMenu.stage);
+        String username = usernameTextField.getText() ;
+        Account account = Account.getAccountsMap().get( username );
+
+        if( account == null ){
+            Alert alert = new Alert( Alert.AlertType.ERROR ) ;
+            alert.setTitle( "ERROR" ) ;
+            alert.setContentText( "account not found." );
+            alert.showAndWait() ;
+            return ;
+        }
+
+        (new ForgetPassword()).initialize( account ) ;
     }
 
     public void login(MouseEvent mouseEvent) throws Exception {
