@@ -90,7 +90,7 @@ public class Account
         this.question = _question;
         this.answer = _answer;
         accountsMap.put(this.userName, this);
-        if(! DataBase.isAccountInData(this) ) DataBase.addNewAccount(this);
+        //if(! DataBase.isAccountInData(this) ) DataBase.addNewAccount(this);
     }
 
 }

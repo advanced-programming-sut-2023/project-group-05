@@ -1,12 +1,14 @@
 package org.example.view;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
 import org.example.controller.ProfileMenuController;
 import org.example.model.Account;
 import org.example.model.Commands;
 
 import java.util.regex.Matcher;
 
-public class ProfileMenu {
+public class ProfileMenu extends Application {
 
     public static void run( Account account ){
         System.out.println( "YOU ARE NOW IN PROFILE MENU ( enter exit to get back )" ) ;
@@ -40,5 +42,10 @@ public class ProfileMenu {
             else
                 System.out.println("Invalid Command");
         }
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
     }
 }

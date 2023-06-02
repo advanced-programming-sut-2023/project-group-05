@@ -1,0 +1,35 @@
+.fieldText {
+    -fx-font-weight: bold ;
+    -fx-fill: #c00000;
+    -fx-font-size: 20px ;
+    -fx-font-family: "Times New Roman" ;
+}
+
+.background {
+    -fx-background-image: url("../../images/MenuBackGrounds/signupMenu.jpg") ;
+    -fx-background-size: 1000 600 ;
+}
+
+.inputField {
+    -fx-background-color: black ;
+    -fx-prompt-text-fill: white ;
+    -fx-text-fill: white ;
+}
+
+.inputField:focused {
+    -fx-opacity: 0.5 ;
+    -fx-prompt-text-fill: white ;
+    -fx-text-fill: white ;
+}
+
+.button {
+    -fx-background-color: black ;
+    -fx-text-fill: white ;
+    -fx-font-size: 20px ;
+    -fx-opacity: 0.5 ;
+}
+
+.button:hover {
+    -fx-opacity: 1 ;
+    -fx-text-fill: red ;
+}

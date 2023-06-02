@@ -14,7 +14,7 @@ public class SecurityQuestions
             "we will win" ,
             "we are great" ,
             "i am hungry" ,
-            "i love you ( when your dead )"
+            "help me please"
     ));
     private static final HashMap < Integer, ArrayList < String > > captcha = new HashMap < Integer, ArrayList < String > >();
     public static void initialize(){
