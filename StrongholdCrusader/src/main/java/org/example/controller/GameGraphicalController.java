@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
@@ -14,6 +15,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import org.example.Main;
@@ -41,12 +43,12 @@ public class GameGraphicalController {
     public static void init( Stage stage , Pane pane ){
         GameGraphicalController.pane = pane ;
         GameGraphicalController.stage = stage ;
-        width = 5 ;
-        height = 5 ;
+        width = 200 ;
+        height = 200 ;
         SCREEN_HEIGHT = 700 ;
         SCREEN_WIDTH = 1000 ;
         pane.requestFocus() ;
-        initMap( 5 , 5 ) ;
+        initMap( height , width ) ;
         initImages() ;
         initKeyboardControlKeys() ;
         initGraphicalMenu() ;
@@ -64,12 +66,16 @@ public class GameGraphicalController {
         map = new Rectangle[height][width] ;
         mapX = new double[height][width] ;
         mapY = new double[height][width] ;
-        for(int i = 0 ; i < height ; i++)
-            for(int j = 0 ; j< width ; j++){
-                map[i][j] = new Rectangle( j * 40, i * 40, 40, 40 );
-                map[i][j].setFill(new ImagePattern(new Image(Main.class.getResource( "/images/tiles/desert_tile.jpg" ).toExternalForm()))) ;
-                pane.getChildren().add( map[i][j] ) ;
+        ImagePattern imagePattern = new ImagePattern( new Image( Main.class.getResource( "/images/tiles/desert_tile.jpg" ).toExternalForm() ) ) ;
+        for(int i = 0 ; i < height ; i++){
+            for( int j = 0; j < width; j++ ){
+                map[i][j] = new Rectangle(0, 0, 40, 40 );
+                map[i][j].setX( j * 40 ) ;
+                map[i][j].setY( i * 40 ) ;
+                map[i][j].setFill( imagePattern );
+                pane.getChildren().add( map[i][j] );
             }
+        }
         // adjusting the correct angle to look from
         Point3D axis1 = new Point3D( 0 , 0 , 1 ) ;
         Point3D axis2 = new Point3D( 1 , -1 , 0 ) ;
@@ -82,6 +88,7 @@ public class GameGraphicalController {
 
         rotate1.setAngle(45) ;
         rotate2.setAngle(60) ;
+
 
         for(int i = 0 ; i < height ; i++)
             for(int j = 0 ; j < width ; j++)
