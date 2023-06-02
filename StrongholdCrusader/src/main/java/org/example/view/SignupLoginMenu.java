@@ -27,7 +27,7 @@ public class SignupLoginMenu extends Application {
         while (true){
             String input = Menu.getScanner().nextLine();
             if ((matcher =Commands.getMatchingMatcher(input,Commands.CREATE_USER))!=null) {
-                System.out.println(SignupLoginMenuController.createUser(scanner, matcher, true));
+                //System.out.println(SignupLoginMenuController.createUser(scanner, matcher, true));
                 wrongPassCounter = 0;
             }
             else if ((matcher = Commands.getMatchingMatcher(input,Commands.USER_LOGIN))!=null)

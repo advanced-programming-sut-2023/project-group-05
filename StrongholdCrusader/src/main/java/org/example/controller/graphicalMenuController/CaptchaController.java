@@ -9,18 +9,27 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import org.example.view.Captcha;
 import org.example.view.MainMenu;
 
 import java.io.File;
 
 public class CaptchaController {
 
+    private static boolean isPassed = false ;
     private static Button submitButton ;
     private static TextField textField ;
     private static int number = 2254 ;
+    private static EventHandler eventHandler ;
+
+    public static void setEventHandler( EventHandler eventHandler ){
+        CaptchaController.eventHandler = eventHandler ;
+    }
 
     public static void initialize( BorderPane pane ){
         selectNumber() ;
+        isPassed = false ;
         VBox vbox = (VBox) pane.getChildren().get( 0 ) ;
         vbox.setAlignment( Pos.CENTER ) ;
         submitButton = new Button() ;
@@ -53,10 +62,14 @@ public class CaptchaController {
                 } catch ( Exception e ){
                     passed = false ;
                 }
-                if( passed ) System.out.println( "passed" ) ;
-                else System.out.println( "failed" ) ;
+                isPassed = passed ;
+                eventHandler.handle( mouseEvent ) ;
             }
         } );
+    }
+
+    public static boolean isPassed(){
+        return isPassed ;
     }
 
 }

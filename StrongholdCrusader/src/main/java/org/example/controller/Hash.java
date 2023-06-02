@@ -2,8 +2,8 @@ package org.example.controller;
 
 public class Hash
 {
-    static private long MOD;
-    static private long BASE;
+    static private long MOD = 1000000007 ;
+    static private long BASE = 5021 ;
     static public void setMOD(long inp)
     {
         MOD = inp;

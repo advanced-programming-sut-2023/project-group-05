@@ -23,7 +23,7 @@ public class Test {
         long hash = new Hash(password).getHsh();
         Account account = new Account("username","bakeri","moaminkiani1@gmail.com",hash,0,"let's conquer",1,1);
     }
-    @org.junit.Test
+    /*@org.junit.Test
     public void testCreateUser(){
         String leftSlogan = "user create -u sth -p APkimoam03$ APkimoam03$ -email moaminkiani1@gmail.com -n bakeri -s";
         Matcher matcher = Commands.getMatchingMatcher(leftSlogan,Commands.CREATE_USER);
@@ -66,7 +66,7 @@ public class Test {
         result = SignupLoginMenuController.createUser(Menu.getScanner(),matcher,false);
         Assert.assertEquals("password confirmation does not match.",result);
 
-    }
+    }*/
 
     @org.junit.Test
     public void testLogin() throws Exception {

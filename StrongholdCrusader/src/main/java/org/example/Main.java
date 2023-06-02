@@ -11,8 +11,6 @@ public class Main
 {
     public static void main( String[] args ) throws Exception {
         DataBase.wakeUp();
-        Hash.setMOD(1000000007);
-        Hash.setBASE(5021);
         SecurityQuestions.initialize();
         SignupLoginMenu.run(Menu.getScanner()) ;
     }

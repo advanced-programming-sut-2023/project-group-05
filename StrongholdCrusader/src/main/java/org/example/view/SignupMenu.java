@@ -1,6 +1,9 @@
 package org.example.view;
 
 import javafx.application.Application;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -10,51 +13,84 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.example.Main;
+import org.example.controller.SecurityQuestions;
 import org.example.controller.SignupLoginMenuController;
+import org.example.controller.graphicalMenuController.CaptchaController;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SignupMenu extends Application {
-    public TextField usernameTextField;
-    public PasswordField passwordField ;
-    public TextField emailTextField;
-    public TextField nicknameTextField;
-    public TextField sloganTextField;
+    public static Stage stage ;
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private PasswordField passwordField ;
+    @FXML
+    private TextField emailTextField;
+    @FXML
+    private TextField nicknameTextField;
+    @FXML
+    private TextField sloganTextField;
+    @FXML
+    private PasswordField passwordConfirmField;
 
     @Override
     public void start(Stage stage) throws Exception {
+        SignupMenu.stage = stage ;
         BorderPane borderPane = FXMLLoader.load( getClass().getResource( "/fxml/SignupMenu.fxml" ) ) ;
         stage.setScene( new Scene(borderPane) ) ;
         stage.setTitle( "Signup Menu" ) ;
         stage.show() ;
     }
 
-    public void submit( MouseEvent mouseEvent ){
 
-        boolean validUsername = SignupLoginMenuController.validUserName( usernameTextField.getText() ) ;
-        boolean validEmail = SignupLoginMenuController.validEmail( emailTextField.getText() ) ;
-        boolean validPassword = SignupLoginMenuController.validPassword( passwordField.getText() ) ;
-        boolean validNickname = SignupLoginMenuController.validNickname( nicknameTextField.getText() ) ;
+    public void randomSlogan( MouseEvent mouseEvent ){
+        sloganTextField.setText( SecurityQuestions.getRandomSlogan() ) ;
+    }
+
+    public void submit() throws Exception{
+        String username = usernameTextField.getText() ;
+        String password = passwordField.getText() ;
         String slogan = sloganTextField.getText() ;
+        String nickname = nicknameTextField.getText() ;
+        String email = emailTextField.getText() ;
+        String passwordConfirm = passwordConfirmField.getText() ;
 
-        if( !validUsername ){
-            (new Alert( Alert.AlertType.ERROR , "INVALID USERNAME" )).showAndWait() ;
-            return ;
-        }
-        if( !validEmail ){
-            (new Alert( Alert.AlertType.ERROR , "INVALID EMAIL" )).showAndWait() ;
-            return ;
-        }
-        if( !validPassword ){
-            (new Alert( Alert.AlertType.ERROR , "INVALID PASSWORD" )).showAndWait() ;
-            return ;
-        }
-        if( !validNickname ){
-            (new Alert( Alert.AlertType.ERROR , "INVALID NICKNAME" )).showAndWait() ;
-            return ;
-        }
-        if( slogan.equals("") ){
-            (new Alert( Alert.AlertType.ERROR , "INVALID SLOGAN" )).showAndWait() ;
-            return ;
-        }
+        EventHandler eventHandler = new EventHandler<>() {
+            @Override
+            public void handle( Event event ){
+                if( CaptchaController.isPassed() ){
+                    String output = SignupLoginMenuController.createUser( username , password , nickname , passwordConfirm , email , slogan ) ;
+                    if( !CaptchaController.isPassed() ){
+                        Alert alert = new Alert( Alert.AlertType.ERROR ) ;
+                        alert.setTitle( "Captcha failed." ) ;
+                        alert.setContentText( "You have entered wrong captcha." );
+                        alert.showAndWait() ;
+                    }
+                    else if( output != null ){
+                        Alert alert = new Alert( Alert.AlertType.ERROR ) ;
+                        alert.setTitle( "ERROR" ) ;
+                        alert.setContentText( output );
+                        alert.showAndWait() ;
+                    } else {
+                        Alert alert = new Alert( Alert.AlertType.INFORMATION ) ;
+                        alert.setTitle( "Signup successful" );
+                        alert.setContentText( "you have successfully registered your account." );
+                        alert.showAndWait() ;
+                    }
+                    try {
+                        (new StartMenu()).start( SignupMenu.stage ) ;
+                    } catch(Exception e) {
+                        e.printStackTrace() ;
+                    }
+                }
+            }
+        } ;
+
+        new Captcha().run( stage , eventHandler ) ;
+
 
     }
+
 }

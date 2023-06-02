@@ -24,9 +24,13 @@
                 <PasswordField styleClass="inputField" promptText="password" fx:id = "passwordField" />
             </HBox>
             <HBox spacing = "10" alignment = "CENTER" >
+                <Text styleClass="fieldText" text = "  confirm : " />
+                <PasswordField styleClass="inputField" promptText="password" fx:id = "passwordConfirmField" />
+            </HBox>
+            <HBox spacing = "10" alignment = "CENTER" >
                 <Text styleClass="fieldText" text = "slogan : " />
                 <TextField styleClass="inputField" promptText="slogan" fx:id = "sloganTextField" />
-                <Button styleClass = "button" text = "random" />
+                <Button styleClass = "button" onMouseClicked="#randomSlogan" text = "random" />
             </HBox>
             <HBox spacing = "10" alignment = "CENTER">
                 <Text styleClass="fieldText" text = "nickname : " />

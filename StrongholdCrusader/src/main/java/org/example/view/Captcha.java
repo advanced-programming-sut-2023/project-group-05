@@ -1,6 +1,7 @@
 package org.example.view;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,6 +24,11 @@ public class Captcha extends Application {
         stage.setScene( scene ) ;
         stage.show() ;
         CaptchaController.initialize( borderPane ) ;
+    }
+
+    public void run( Stage stage , EventHandler eventHandler ) throws Exception {
+        CaptchaController.setEventHandler( eventHandler ) ;
+        this.start( stage ) ;
     }
 
 }

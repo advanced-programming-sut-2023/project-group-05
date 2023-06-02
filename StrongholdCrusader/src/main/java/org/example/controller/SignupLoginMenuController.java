@@ -49,29 +49,18 @@ public class SignupLoginMenuController {
         return validLength && hasNum && hasCapital && hasSmall && hasOther ;
     }
 
-    public static String createUser(Scanner scanner , Matcher matcher,boolean mode){
-        String userName = matcher.group("username") ;
-        String nickName = matcher.group("nickname") ;
-        String password = matcher.group("password") ;
-        String passwordConfirm = matcher.group("passwordConfirmation") ;
-        String email = matcher.group("email") ;
-        String slogan = matcher.group("sloganchecker")!=null ? matcher.group("slogan") : "no slogan selected";
+    public static String createUser( String username , String password , String nickname , String passwordConfirm , String email , String slogan ){
 
-
-
-        if(userName == null || nickName == null || email == null)
-            return ("You left a field empty!");
-        if (matcher.group("sloganchecker")!=null && matcher.group("slogan")==null)
-            return ("you left slogan field empty");
-        if(!validUserName(userName))
-            return ("Invalid Username!");
-
+        if(!validUserName(username))
+            return "Invalid Username!";
 
         if(!validPassword(password))
-            return ("Invalid password");
+            return "Invalid password";
 
         if(!validEmail(email))
-            return ("Invalid Email address!!");
+            return "Invalid Email address!";
+        if(slogan == null)
+            return "fill slogan form" ;
 
         boolean emailExists = false ;
         for( Account acc : Account.getAccountsMap().values() ){
@@ -82,78 +71,20 @@ public class SignupLoginMenuController {
         }
         if( emailExists )
             return "Email already exists" ;
-        if(DataBase.getFromDataBase("userName", userName) != null)
-        {
-            String randomUsername = userName ;
-            Random random = new Random() ;
-            while( DataBase.getFromDataBase("userName", randomUsername) != null )
-                randomUsername += Math.abs(random.nextInt())  % 100 ;
-            if (!mode)
-                return "create user failed : Username Already Exists";
-            System.out.println("This username already exists :/\nYou can pick " + randomUsername + "if you like\n" +
-                    "Enter ( y / n ) for yes or no : "  ) ;
-            String inputYN = scanner.nextLine() ;
-            if( !inputYN.equals( "y" ) )
-                return "create user failed : Username Already Exists";
-            userName = randomUsername ;
-        }
-        if( slogan.equals("random") ){
-            slogan = SecurityQuestions.getRandomSlogan();
-            System.out.println( "YOUR SLOGAN IS RANDOMLY CHOSEN : " + slogan ) ;
-        }
-        if(password.equals("random"))
-        {
-            String[] character = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
-                    "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"} ;
-            password = "" ;
-            Random random = new Random() ;
-            password += "#$%" ;
-            for(int i = 0 ; i < 4 ; i++)
-                password += character[ Math.abs(random.nextInt()) % 26 ] ;
-            password += "$#5489" ;
-            for(int i = 0 ; i < 4 ; i++)
-                password += character[ Math.abs(random.nextInt()) % 26 ].toUpperCase() ;
-            password += "@!@!" ;
-            for(int i = 0 ; i < 4 ; i++)
-                password += Math.abs(random.nextInt()) % 26 ;
-            password += "#$@" ;
-            passwordConfirm = password ;
-            System.out.println("Your random password is here! " + password + "Please re-enter your password ;)");
-            String inputReEnter = scanner.nextLine() ;
-            if( !inputReEnter.equals(password) )
-                return "create user failed : wrong re-entered password" ;
-
-        }
-
-
-        if(!validPassword(password))
-            return ("Invalid Password, good luck");
+        if(DataBase.getFromDataBase("userName", username) != null)
+            return "username already exists" ;
         if(!password.equals(passwordConfirm))
             return ("password confirmation does not match.");
-        if(!SecurityQuestions.runCaptcha(scanner)) return "I knew it! You are a damn robot :(" ;
-        System.out.println( "you passed" );
-        System.out.println("Pick your security question:");
-        for(int i = 1; i <= SecurityQuestions.questions.size(); i ++)
-        {
-            System.out.print(i);
-            System.out.println( " - " + SecurityQuestions.questions.get(i - 1));
-        }
-        long questionNum ;
-        try{questionNum = Integer.parseInt(scanner.nextLine()) ;}
-        catch(Exception e){
-            return "Create Account failed : You did not enter a number." ;
-        }
-        if(questionNum > SecurityQuestions.questions.size() || questionNum < 1 )
-            return "INVALID NUMBER : out of range" ;
-        System.out.print( "Insert your answer : " ) ;
-        long answer ;
-        try{answer = Integer.parseInt( scanner.nextLine() ) ;}
-        catch(Exception e) {
-            return "ERROR : enter a number as your answer!";
-        }
-        Account account = new Account( userName , nickName , email , (new Hash(password)).getHsh() , 0 ,
+
+        int answer = 0 ;
+        int questionNum = 1 ;
+
+        // TODO : answer and question number
+
+        Account account = new Account( username , nickname , email , (new Hash(password)).getHsh() , 0 ,
                 slogan , questionNum - 1 , answer ) ;
-        return "account created successfully" ;
+        DataBase.addNewAccount(account);
+        return null ;
     }
 
     public static String loginUserStayLoggedIn( Scanner scanner, Matcher matcher) throws Exception
