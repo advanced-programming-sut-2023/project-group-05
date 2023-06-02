@@ -99,36 +99,19 @@ public class SignupLoginMenuController {
         return "there are not any stayed logged in account :(";
     }
 
-    public static String loginUser( Scanner scanner , Matcher matcher, boolean mode ) throws Exception
-    {
-        //mode true is for real game --- mode false is for unit test
-        String password = matcher.group("password") ;
-        String userName = matcher.group( "username" );
-        boolean stay_in = (matcher.group("stayloggedin") != null);
-        if(!validUserName(userName) || ! validPassword(password))
-            return "login failed : Invalid username / password\n";
-        if(mode && !SecurityQuestions.runCaptcha(scanner))
-            return "you didn't pass captcha test";
-        if( DataBase.getFromDataBase("userName", userName) == null)
-            return "This username does not exist\n";
-        JSONObject cur = DataBase.getFromDataBase("userName", userName);
+    public static String loginUser( String username , String password ) {
+        if(!validUserName(username) || ! validPassword(password))
+            return "login failed : Invalid username / password";
+        if( DataBase.getFromDataBase("userName", username) == null)
+            return "This username does not exist" ;
+        JSONObject cur = DataBase.getFromDataBase("userName", username);
         long pass = (long) cur.get("password");
         if (pass != 0 && pass != Hash.encode(password)) {
             ++SignupLoginMenu.wrongPassCounter;
-            if(!mode)
-                return "Wrong Password!\n";
-            System.out.println("Wrong Password");
-            for(int j = 0 ; j < SignupLoginMenu.wrongPassCounter ; j++)
-                Sleep.handleSleep(); ;
-            return "You Can Try It Again Now\n";
+            return "Wrong Password!\n";
         }
-        if (!mode)
-            return "User Logged In! hooray !";
         System.out.println("User Logged In! hooray !");
-        Account account = Account.getAccountsMap().get(userName);
-        if(stay_in) DataBase.setStayLoggedIn(account);
-        MainMenu.run(scanner, account);
-        return "";
+        return null ;
     }
 
 

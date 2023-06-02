@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.view.LoginMenu"
-            prefHeight="800.0" prefWidth="800.0">
+            stylesheets="@../css/Menu/LoginMenu.css"
+            styleClass="background"
+            prefHeight="600.0" prefWidth="1000.0">
     <center>
-        <VBox>
-            <TextField promptText="Username" fx:id="username"/>
-            <PasswordField promptText="Password" fx:id="password"/>
-            <HBox spacing="20">
-                <Button text="Forget Password" onMouseClicked="#forgetPassword"/>
-                <Button text="Login" onMouseClicked="#login"/>
-                <Button text="Back To Start Menu" onMouseClicked="#back"/>
+        <VBox spacing = "10" alignment="CENTER" >
+            <TextField maxWidth="300" promptText="Username" fx:id="usernameTextField"/>
+            <PasswordField maxWidth="300" promptText="Password" fx:id="passwordField"/>
+            <HBox alignment = "CENTER" spacing="20">
+                <Button maxWidth="200" text="Forget Password" onMouseClicked="#forgetPassword"/>
+                <Button maxWidth="200" text="Login" onMouseClicked="#login"/>
+                <Button maxWidth="200" text="Back To Start Menu" onMouseClicked="#back"/>
             </HBox>
         </VBox>
     </center>

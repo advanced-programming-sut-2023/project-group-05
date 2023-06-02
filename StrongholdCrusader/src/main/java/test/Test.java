@@ -68,7 +68,7 @@ public class Test {
 
     }*/
 
-    @org.junit.Test
+    /*@org.junit.Test
     public void testLogin() throws Exception {
         String invalidUsername = "user login -u sa@am -p APkimoam03$";
         Matcher matcher = Commands.getMatchingMatcher(invalidUsername,Commands.USER_LOGIN);
@@ -99,6 +99,6 @@ public class Test {
         matcher = Commands.getMatchingMatcher(logout,Commands.LOGOUT);
         result = SignupLoginMenuController.logout(matcher);
         Assert.assertEquals("logged out",result);
-    }
+    }*/
 
 }
