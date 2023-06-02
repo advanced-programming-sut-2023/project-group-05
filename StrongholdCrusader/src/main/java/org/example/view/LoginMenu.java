@@ -44,8 +44,7 @@ public class LoginMenu extends Application {
             alert.showAndWait();
         }
         //TODO : CAPTCHA
-        else
-        {
+        else {
              new MainMenu().start(StartMenu.stage);
         }
 

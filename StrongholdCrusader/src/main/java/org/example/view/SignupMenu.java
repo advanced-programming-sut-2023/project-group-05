@@ -23,6 +23,7 @@ public class SignupMenu extends Application {
     public void start(Stage stage) throws Exception {
         BorderPane borderPane = FXMLLoader.load( getClass().getResource( "/fxml/SignupMenu.fxml" ) ) ;
         stage.setScene( new Scene(borderPane) ) ;
+        stage.setTitle( "Signup Menu" ) ;
         stage.show() ;
     }
 

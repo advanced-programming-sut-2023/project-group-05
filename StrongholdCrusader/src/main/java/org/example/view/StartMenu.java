@@ -27,6 +27,7 @@ public class StartMenu extends Application {
         BorderPane borderPane = FXMLLoader.load(StartMenu.class.getResource("/fxml/StartMenu.fxml"));
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
+        stage.setTitle( "Stronghold Crusader" ) ;
         stage.show();
     }
 

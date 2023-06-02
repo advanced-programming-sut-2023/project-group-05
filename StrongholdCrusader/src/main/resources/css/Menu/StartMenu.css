@@ -1,8 +1,8 @@
 .background{
     -fx-background-image: url("../../images/MenuBackGrounds/StartMenuBackground.jpg");
     -fx-background-repeat: stretch;
-    -fx-background-position: center center;
-    -fx-background-size: 1000 1000;
+    -fx-background-position: center;
+    -fx-background-size: 1000 600;
 }
 .loginText{
     -fx-font-size: 40px;
@@ -33,7 +33,7 @@
     -fx-text-fill: White;
 }
 .welcomeText{
-    -fx-font-size: 50px;
+    -fx-font-size: 50 ;
     -fx-font-weight: bold;
-    -fx-text-fill: #ee371a;
+    -fx-fill : #c50000;
 }

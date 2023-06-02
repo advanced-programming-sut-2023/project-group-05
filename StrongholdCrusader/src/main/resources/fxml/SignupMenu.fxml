@@ -10,31 +10,33 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.view.SignupMenu"
-            prefHeight="400.0" prefWidth="600.0">
+            stylesheets="@../css/Menu/SignupMenu.css"
+            prefHeight="600.0" prefWidth="1000.0"
+            styleClass = "background">
     <center>
-        <VBox>
-            <HBox>
-                <Text text = "username : " />
-                <TextField promptText = "username" fx:id = "usernameTextField" />
+        <VBox spacing = "10" alignment="CENTER" >
+            <HBox spacing = "10" alignment = "CENTER" >
+                <Text styleClass="fieldText" text = "username : " />
+                <TextField styleClass="inputField" promptText = "username" fx:id = "usernameTextField" />
             </HBox>
-            <HBox>
-                <Text text = "password : " />
-                <PasswordField promptText="password" fx:id = "passwordField" />
+            <HBox spacing = "10" alignment = "CENTER" >
+                <Text styleClass="fieldText" text = "password : " />
+                <PasswordField styleClass="inputField" promptText="password" fx:id = "passwordField" />
             </HBox>
-            <HBox>
-                <Text text = "slogan : " />
-                <TextField promptText="slogan" fx:id = "sloganTextField" />
-                <Button text = "random" />
+            <HBox spacing = "10" alignment = "CENTER" >
+                <Text styleClass="fieldText" text = "slogan : " />
+                <TextField styleClass="inputField" promptText="slogan" fx:id = "sloganTextField" />
+                <Button styleClass = "button" text = "random" />
             </HBox>
-            <HBox>
-                <Text text = "nickname : " />
-                <TextField promptText="nickname" fx:id = "nicknameTextField" />
+            <HBox spacing = "10" alignment = "CENTER">
+                <Text styleClass="fieldText" text = "nickname : " />
+                <TextField styleClass="inputField" promptText="nickname" fx:id = "nicknameTextField" />
             </HBox>
-            <HBox>
-                <Text text = "email : " />
-                <TextField promptText="email" fx:id = "emailTextField" />
+            <HBox spacing = "10" alignment = "CENTER" >
+                <Text styleClass="fieldText" text = "email : " />
+                <TextField styleClass="inputField" promptText="email" fx:id = "emailTextField" />
             </HBox>
-            <Button text = "submit" onMouseClicked="#submit" />
+            <Button styleClass = "button" text = "submit" onMouseClicked="#submit" />
         </VBox>
     </center>
 </BorderPane>
