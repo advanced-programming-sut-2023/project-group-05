@@ -68,7 +68,6 @@ public class Unit {
         switch( this.name ){
             case "archer" :
                 image = UnitImagesEnum.SWORDSMAN.image ;
-                System.out.println( "Unit.java 68 : " + image ) ;
                 break ;
             case "swordsman" :
                 image = UnitImagesEnum.SWORDSMAN.image ;
