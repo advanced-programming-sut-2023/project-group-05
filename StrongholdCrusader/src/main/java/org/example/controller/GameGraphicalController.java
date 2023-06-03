@@ -122,7 +122,7 @@ public class GameGraphicalController {
         ArrayList<Rectangle> badThing = new ArrayList<>();
         initArray(badThing, badThings, 40, 40);
         ArrayList<Rectangle> towerAndWall = new ArrayList<>();
-        initArray(towerAndWall, towerAndWalls, 20, 40);
+        initArray(towerAndWall, towerAndWalls, 20, 20);
         for (Rectangle rectangle : houseAndStorages)
             pane.getChildren().add(rectangle);
         current = houseAndStorages;
