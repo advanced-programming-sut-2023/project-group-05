@@ -37,7 +37,7 @@ public class WalkingAnimation extends Transition {
         double width = unit.getShape().getWidth() ;
         double height = unit.getShape().getHeight() ;
         unit.getShape().setFill( imagePatterns.get( num ) ) ;
-        unit.getShape().setWidth( 50 ) ;
-        unit.getShape().setHeight( 50 ) ;
+        //unit.getShape().setWidth( 50 ) ;
+        //unit.getShape().setHeight( 50 ) ;
     }
 }

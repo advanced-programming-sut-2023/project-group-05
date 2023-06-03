@@ -118,6 +118,7 @@ public class GameGraphicalController extends Thread {
         System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 25 , 20 )) ;
         System.out.println( "GameGraphicalController : " + gameController.dropUnit( "operator" , 1 , 20 , 20 )) ;
         gameController.getGameMap().getCell( 13 , 13 ).getUnits().get( 0 ).getWalkingAnimations().get(0).play() ;
+        gameController.getGameMap().getCell( 25 , 20 ).getUnits().get( 0 ).getWalkingAnimations().get(2).play() ;
     }
 
 }

@@ -99,10 +99,10 @@ public class Unit {
 
     public void setWalkingAnimations(){
         walkingAnimations = new ArrayList <>() ;
-        walkingAnimations.add( new WalkingAnimation( "archer/down" , 8 , this , 3 ) ) ;
-        walkingAnimations.add( new WalkingAnimation( "archer/right" , 8 , this , 3 ) ) ;
-        walkingAnimations.add( new WalkingAnimation( "archer/up" , 8 , this , 3 ) ) ;
-        walkingAnimations.add( new WalkingAnimation( "archer/left" , 8 , this , 3 ) ) ;
+        walkingAnimations.add( new WalkingAnimation( "swordsman/down" , 8 , this , 1000 ) ) ;
+        walkingAnimations.add( new WalkingAnimation( "swordsman/right" , 8 , this , 1000 ) ) ;
+        walkingAnimations.add( new WalkingAnimation( "swordsman/up" , 8 , this , 1000 ) ) ;
+        walkingAnimations.add( new WalkingAnimation( "swordsman/left" , 8 , this , 1000 ) ) ;
     }
 
     public ArrayList<WalkingAnimation> getWalkingAnimations(){
