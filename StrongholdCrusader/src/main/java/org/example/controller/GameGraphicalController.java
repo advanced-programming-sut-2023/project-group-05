@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class GameGraphicalController {
-
+    private static GameController gameController ;
     private static Stage stage ;
     private static Pane pane ;
     private static Polygon[][] map ;
@@ -34,8 +34,9 @@ public class GameGraphicalController {
     private static Camera camera ;
     public static ArrayList<Shape> reservedShapes ;
 
-    public static void init( Stage stage , Pane pane ){
+    public static void init( Stage stage , Pane pane , GameController gameController ){
         GameGraphicalController.pane = pane ;
+        GameGraphicalController.gameController = gameController ;
         GameGraphicalController.stage = stage ;
         reservedShapes = new ArrayList<>() ;
         width = 400 ;
@@ -43,6 +44,7 @@ public class GameGraphicalController {
         SCREEN_HEIGHT = 700 ;
         SCREEN_WIDTH = 1000 ;
         pane.requestFocus() ;
+        initTestMode() ; // placing some objects for debug
         initMap( height , width ) ;
         initImages() ;
         initKeyboardControlKeys() ;
@@ -57,7 +59,7 @@ public class GameGraphicalController {
 
         map = new Polygon[height][width] ;
 
-        camera = new Camera( map , pane ) ;
+        camera = new Camera( map , pane , gameController ) ;
 
         camera.draw() ;
         camera.move(0) ;
@@ -97,6 +99,11 @@ public class GameGraphicalController {
         ImagePattern imagePattern ;
         imagePattern = new ImagePattern( new Image( url.toExternalForm() ) ) ;
         return imagePattern ;
+    }
+
+    private static void initTestMode(){
+        System.out.println( "you are running the test mode" ) ;
+        System.out.println( "GameGraphicalController 106 : " + gameController.dropUnit( "archer" , 1 , 20 , 20 ) ) ;
     }
 
 }

@@ -1,9 +1,15 @@
 package org.example.model.unit;
 
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import org.example.controller.PathFinder;
 
 import org.example.model.*;
 import org.example.model.building.Building;
+import org.example.model.enums.UnitImagesEnum;
+import org.example.view.MainMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +37,7 @@ public class Unit {
     private boolean selectable ;
     protected int targetRow = -1 ;
     protected int targetColumn = -1 ;
+    private Rectangle shape ;
     public Unit( String name , Player owner , int hitPoint,int movingSpeed , int range , int row , int column , boolean selectable ){
         this.name = name ;
         this.hitPoint = hitPoint;
@@ -44,6 +51,35 @@ public class Unit {
         units.add(this) ;
         owner.setPopulation( owner.getPopulation() + 1 );
         owner.getUnits().add(this) ;
+    }
+
+    public Rectangle getShape(){
+        return this.shape ;
+    }
+
+    public void setShape(){
+        this.shape = new Rectangle( 0 , 0 , 50 , 50 ) ;
+        Image image = null ;
+
+        switch( this.name ){
+            case "archer" :
+                image = UnitImagesEnum.ARCHER.image ;
+                System.out.println( "Unit.java 68 : " + image ) ;
+                break ;
+            case "crossbowman" :
+                image = UnitImagesEnum.CROSSBOWMAN.image ;
+                break ;
+            case "spearman" :
+                image = UnitImagesEnum.ARCHER.image ;
+                break ;
+            case "pikeman" :
+                image = UnitImagesEnum.ARCHER.image ;
+                break ;
+                // TODO : complete
+        }
+
+        this.shape.setFill( new ImagePattern( image ) ) ;
+
     }
 
     public boolean getSelectable(){

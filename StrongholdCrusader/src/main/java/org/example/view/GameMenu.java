@@ -124,8 +124,8 @@ public class GameMenu {
                 System.out.println( gameController.createBuilding(Commands.getMatchingMatcher(input,Commands.CREATE_BUILDING)));
 
             else if (Commands.getMatchingMatcher(input,Commands.DROP_UNIT)!=null)
-                System.out.println( gameController.dropUnit(Commands.getMatchingMatcher(input,Commands.DROP_UNIT)));
-
+                //System.out.println( gameController.dropUnit(Commands.getMatchingMatcher(input,Commands.DROP_UNIT)));
+                System.out.println( "pass" ) ;
             else if (Commands.getMatchingMatcher(input,Commands.TRADE_REQUEST)!=null)
                 System.out.println( gameController.tradeRequest(Commands.getMatchingMatcher(input,Commands.TRADE_REQUEST)));
 

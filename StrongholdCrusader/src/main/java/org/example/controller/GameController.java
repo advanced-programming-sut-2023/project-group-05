@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.model.*;
 import org.example.model.building.Building;
 import org.example.model.building.TradeBuilding;
+import org.example.model.enums.UnitImagesEnum;
 import org.example.model.unit.*;
 import org.example.view.Menu;
 
@@ -39,8 +40,9 @@ public class GameController {
         this.turn = 0 ;
         this.winner = null ;
         gameMap = new GameMap(400,400);
-        putYourCastle( this.player );
-        putYourStockPile( this.player );
+        // putYourCastle( this.player );
+        // putYourStockPile( this.player );
+        System.out.println( "TODO : we assume castle is put" ) ;
     }
 
     public void debug(){
@@ -1236,20 +1238,17 @@ public class GameController {
             gameMap.getMaskedMapUpperGround()[row][column] = gameMap.getMaskedMap()[row][column] = 2 ;
     }
 
-    public String dropUnit(Matcher matcher){
-        String type = matcher.group("type");
-        int count = Integer.parseInt(matcher.group("count"));
-        int row = Integer.parseInt(matcher.group("row"));
-        int column = Integer.parseInt(matcher.group("column"));
+    public String dropUnit( String type , int count , int row , int column ){
         String error;
         if ((error = dropCreateUnitErrorChecker(type,count,row,column,false))!=null)
             return error;
         Unit unit = Unit.createUnitByName(type,player,row,column);
+        unit.setShape() ;
         gameMap.getCell(row,column).addUnit(unit);
         player.addUnit(unit);
         if (type.equals("trap"))
             unit.setUnitMode(UnitModeEnum.AGGRESSIVE);
-        return "Unit Dropped Successfully!";
+        return null ;
     }
 
     public String createUnit(Matcher matcher){

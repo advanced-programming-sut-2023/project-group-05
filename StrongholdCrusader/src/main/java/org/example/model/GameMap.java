@@ -26,7 +26,9 @@ public class GameMap {
         this.maskedMapUnderGround = new int[height][width] ;
         for(int i = 0 ; i < height ; i++)
             for(int j = 0 ; j < width ; j++) {
-                map[i][j] = new Cell( CellType.GROUND , i , j );
+                if( i < 12 || i > 390 || j < 12 || j > 390 ) map[i][j] = new Cell( CellType.SEA , i , j ) ;
+                else if ( i == 13 && j == 13 ) map[i][j] = new Cell( CellType.GRASS , i , j ) ;
+                else map[i][j] = new Cell( CellType.GROUND , i , j );
                 maskedMap[i][j] = 0 ;
                 maskedMapUnderGround[i][j] = 0 ;
                 maskedMapUpperGround[i][j] = 1 ;
