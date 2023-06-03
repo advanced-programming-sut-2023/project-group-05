@@ -17,7 +17,7 @@ import org.example.Main;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class GameGraphicalController {
+public class GameGraphicalController extends Thread {
     private static GameController gameController ;
     private static Stage stage ;
     private static Pane pane ;
@@ -33,6 +33,17 @@ public class GameGraphicalController {
     private static final int TILE_WIDTH = TILE_HEIGHT * 2 ;
     private static Camera camera ;
     public static ArrayList<Shape> reservedShapes ;
+
+    public void run(){
+        while( true ){
+            try {
+                Thread.sleep(1000) ;
+            } catch(InterruptedException e) {
+                e.printStackTrace( );
+            }
+            System.out.println( "thread is running" ) ;
+        }
+    }
 
     public static void init( Stage stage , Pane pane , GameController gameController ){
         GameGraphicalController.pane = pane ;
@@ -72,16 +83,16 @@ public class GameGraphicalController {
             @Override
             public void handle( KeyEvent keyEvent ){
                 if( keyEvent.getCode().equals( KeyCode.DOWN ) ){
-                    camera.move( 1 );
+                    camera.move( 0 );
                 }
                 if( keyEvent.getCode().equals( KeyCode.UP ) ){
-                    camera.move( 0 ) ;
+                    camera.move( 1 ) ;
                 }
                 if( keyEvent.getCode().equals( KeyCode.LEFT ) ){
-                    camera.move( 3 ) ;
+                    camera.move( 2 ) ;
                 }
                 if( keyEvent.getCode().equals( KeyCode.RIGHT ) ){
-                    camera.move( 2 ) ;
+                    camera.move( 3 ) ;
                 }
             }
         } ) ;
@@ -103,7 +114,10 @@ public class GameGraphicalController {
 
     private static void initTestMode(){
         System.out.println( "you are running the test mode" ) ;
-        System.out.println( "GameGraphicalController 106 : " + gameController.dropUnit( "archer" , 1 , 20 , 20 ) ) ;
+        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "archer" , 1 , 13 , 13 ) ) ;
+        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 25 , 20 )) ;
+        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "operator" , 1 , 20 , 20 )) ;
+        gameController.getGameMap().getCell( 13 , 13 ).getUnits().get( 0 ).getWalkingAnimations().get(0).play() ;
     }
 
 }

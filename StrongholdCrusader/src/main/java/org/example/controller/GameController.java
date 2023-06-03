@@ -1244,6 +1244,7 @@ public class GameController {
             return error;
         Unit unit = Unit.createUnitByName(type,player,row,column);
         unit.setShape() ;
+        unit.setWalkingAnimations() ;
         gameMap.getCell(row,column).addUnit(unit);
         player.addUnit(unit);
         if (type.equals("trap"))
@@ -1286,6 +1287,8 @@ public class GameController {
         Unit unit = Unit.createUnitByName(type,player,row,column);
         gameMap.getCell(row,column).addUnit(unit);
         player.addUnit(unit);
+        unit.setShape() ;
+        unit.setWalkingAnimations() ;
         if (type.equals("trap"))
             unit.setUnitMode(UnitModeEnum.AGGRESSIVE);
         return "Unit Created Successfully!";

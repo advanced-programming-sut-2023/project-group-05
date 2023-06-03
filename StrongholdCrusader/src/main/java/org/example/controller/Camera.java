@@ -155,11 +155,8 @@ public class Camera {
                 map[i][j].setLayoutY( y ) ;
                 // putting the units of that tile there
                 for( Unit unit : gameController.getGameMap().getCell( i , j ).getUnits() ){
-                    unit.getShape().setX( x ) ;
-                    unit.getShape().setY( y ) ;
-                    System.out.println( "fill = " + unit.getShape().getFill() ) ;
-                    System.out.println( unit.getShape() ) ;
-                    System.out.println( "drew a soldier" ) ;
+                    unit.getShape().setX( x - unit.getShape().getWidth() / 2 ) ;
+                    unit.getShape().setY( y + TILE_HEIGHT / 2 - unit.getShape().getHeight() )  ;
                 }
             }
         }

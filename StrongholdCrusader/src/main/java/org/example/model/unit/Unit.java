@@ -1,12 +1,16 @@
 package org.example.model.unit;
 
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import org.example.controller.PathFinder;
 
 import org.example.model.*;
+import org.example.model.animations.WalkingAnimation;
 import org.example.model.building.Building;
 import org.example.model.enums.UnitImagesEnum;
 import org.example.view.MainMenu;
@@ -58,28 +62,51 @@ public class Unit {
     }
 
     public void setShape(){
-        this.shape = new Rectangle( 0 , 0 , 50 , 50 ) ;
+        this.shape = new Rectangle( 0 , 0 , 40 , 40 ) ;
         Image image = null ;
 
         switch( this.name ){
             case "archer" :
-                image = UnitImagesEnum.ARCHER.image ;
+                image = UnitImagesEnum.SWORDSMAN.image ;
                 System.out.println( "Unit.java 68 : " + image ) ;
                 break ;
-            case "crossbowman" :
-                image = UnitImagesEnum.CROSSBOWMAN.image ;
+            case "swordsman" :
+                image = UnitImagesEnum.SWORDSMAN.image ;
                 break ;
-            case "spearman" :
-                image = UnitImagesEnum.ARCHER.image ;
+            case "operator" :
+                image = UnitImagesEnum.SWORDSMAN.image ;
                 break ;
-            case "pikeman" :
-                image = UnitImagesEnum.ARCHER.image ;
-                break ;
+
                 // TODO : complete
         }
 
+        this.shape.setWidth( 15 ) ;
+        this.shape.setHeight( this.shape.getWidth() * image.getHeight() / image.getWidth() ) ;
         this.shape.setFill( new ImagePattern( image ) ) ;
 
+        // setting getting selected
+        Player player = this.owner ;
+        Unit unit = this ;
+        this.shape.setOnMouseClicked( new EventHandler <MouseEvent>() {
+            @Override
+            public void handle( MouseEvent mouseEvent ){
+                player.selectUnit( unit );
+            }
+        } ) ;
+    }
+
+    private ArrayList<WalkingAnimation> walkingAnimations ;
+
+    public void setWalkingAnimations(){
+        walkingAnimations = new ArrayList <>() ;
+        walkingAnimations.add( new WalkingAnimation( "archer/down" , 8 , this , 3 ) ) ;
+        walkingAnimations.add( new WalkingAnimation( "archer/right" , 8 , this , 3 ) ) ;
+        walkingAnimations.add( new WalkingAnimation( "archer/up" , 8 , this , 3 ) ) ;
+        walkingAnimations.add( new WalkingAnimation( "archer/left" , 8 , this , 3 ) ) ;
+    }
+
+    public ArrayList<WalkingAnimation> getWalkingAnimations(){
+        return this.walkingAnimations ;
     }
 
     public boolean getSelectable(){
@@ -309,7 +336,7 @@ public class Unit {
         if(name.equals("maceman")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
                 0 , 0 , 0 , 0 , 1 , 0 , 0 , 0, 0 , 0,
                 0 , 0 , 0 , 0 , 0, 0) ;
-        if(name.equals("swordsmen")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
+        if(name.equals("swordsman")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,
                 0 , 0 , 0 , 1 , 0 , 0 , 0 , 0, 0 , 0,
                 0 , 0 , 0 , 0 , 0, 0) ;
         if(name.equals("knight")) return new Cost( 0 , 0 , 0 , 0 , 0,  0, 0 ,

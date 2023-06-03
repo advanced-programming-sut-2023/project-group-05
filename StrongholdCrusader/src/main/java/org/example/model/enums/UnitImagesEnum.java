@@ -7,11 +7,12 @@ import org.example.view.MainMenu;
 public enum UnitImagesEnum {
 
     ARCHER("archer.png"),
-    CROSSBOWMAN("archer.png");
+    //CROSSBOWMAN("archer.png"),
+    OPERATOR("operator.png"),
 //    SPEARMAN("spearman.png"),
 //    PIKEMAN("pikeman.png"),
 //    MACEMAN("maceman.png"),
-//    SWORDSMAN("swordsman.png"),
+    SWORDSMAN("swordsman.png");
 //    KNIGHT("knight.png"),
 //    TUNNELER("tunneler.png"),
 //    LADDERMAN("ladderman.png"),

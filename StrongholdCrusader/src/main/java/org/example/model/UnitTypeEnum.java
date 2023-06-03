@@ -11,7 +11,7 @@ public enum UnitTypeEnum {
     SPEARMEN("spearmen"),
     PIKEMEN("pikemen"),
     MACEMEN("macemen"),
-    SWORDSMEN("swordsmen"),
+    SWORDSMEN("swordsman"),
     KNIGHT("knight"),
     TUNNELER("tunneler"),
     LADDERMEN("laddermen"),
