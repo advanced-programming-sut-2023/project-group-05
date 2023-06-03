@@ -13,6 +13,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import org.example.Main;
+import org.example.model.BuildingImages;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -54,14 +55,10 @@ public class GameGraphicalController {
     }
 
     private static void initMap( int height , int width ){
-
-        map = new Polygon[height][width] ;
-
-        camera = new Camera( map , pane ) ;
-
-        camera.draw() ;
-        camera.move(0) ;
-
+        map = new Polygon[height][width];
+        camera = new Camera( map , pane );
+        camera.draw();
+        camera.move(0);
     }
 
     public static void initKeyboardControlKeys(){
@@ -88,9 +85,11 @@ public class GameGraphicalController {
     private static int selectedButton = 0 ;
 
     public static void initGraphicalMenu(){
-        graphicalMenu = new Rectangle( 0 , SCREEN_HEIGHT*0.8 , SCREEN_WIDTH , SCREEN_HEIGHT*0.2 ) ;
-        reservedShapes.add( graphicalMenu ) ;
-        pane.getChildren().add( graphicalMenu ) ;
+        graphicalMenu = new Rectangle(0,SCREEN_HEIGHT*0.8,SCREEN_WIDTH,SCREEN_HEIGHT*0.2);
+        reservedShapes.add(graphicalMenu);
+        pane.getChildren().add(graphicalMenu);
+        graphicalMenu.setFill(new ImagePattern(BuildingImages.MENU.getImage()));
+
     }
 
     public static ImagePattern loadImagePattern( URL url ){
