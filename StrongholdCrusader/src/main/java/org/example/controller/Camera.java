@@ -1,6 +1,8 @@
 package org.example.controller;
 
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -8,9 +10,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import org.example.Main;
-import org.example.model.CellType;
-import org.example.model.enums.UnitImagesEnum;
+import org.example.model.Player;
 import org.example.model.unit.Unit;
 
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ public class Camera {
     private final int TILE_HEIGHT = 20 ;
     private final int viewSize = 50 ;
     private GameController gameController;
+    private int unitCount ;
 
     public Camera( Polygon[][] map , Pane pane , GameController gameController ){
         this.map = map ;
@@ -32,10 +33,10 @@ public class Camera {
         this.pos = new int[]{0, 0};
         this.gameController = gameController ;
         this.size = map.length ;
+        this.unitCount = 0 ;
     }
 
     public void draw(){
-        //ImagePattern imagePattern = new ImagePattern( new Image( Main.class.getResource( "/images/tiles/desert_tile.jpg" ).toExternalForm() ) ) ;
 
         for(int i = 0 ; i < size ; i++){
             for( int j = 0; j < size ; j++ ){
@@ -58,6 +59,17 @@ public class Camera {
                         break ;
                 }
                 map[i][j].setFill( paint );
+                int finalI = i ;
+                int finalJ = j ;
+                map[i][j].setOnMouseClicked( new EventHandler <MouseEvent>() {
+                    @Override
+                    public void handle( MouseEvent mouseEvent ){
+                        for( Player player : gameController.getPlayers() )
+                            for(Unit unit : player.getSelectedUnits()){
+                                unit.moveTo(finalI, finalJ) ;
+                            }
+                    }
+                } );
             }
         }
 
@@ -115,8 +127,10 @@ public class Camera {
                 for( Unit unit : gameController.getGameMap().getCell( xAdd , j ).getUnits() ){
                     units.add( unit.getShape() ) ;
                 }
-                pane.getChildren().add( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size(), map[xAdd][j] );
+                // pane.getChildren().add( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size(), map[xAdd][j] );
                 pane.getChildren().addAll( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size() , units ) ;
+                // pane.getChildren().addAll( 0, units ) ;
+                pane.getChildren().add( 0, map[xAdd][j] );
             }
         } else {
             int yRemove = dy == 1 ? this.pos[1] : this.pos[1] + viewSize - 1 ;
@@ -130,12 +144,13 @@ public class Camera {
                 pane.getChildren().removeAll( units ) ;
             }
             if( yAdd >= 0 && yAdd < size ) for( int i = this.pos[0] ; i < this.pos[0] + viewSize ; i++ ){
-                pane.getChildren().add( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size() , map[i][yAdd] ) ;
                 ArrayList <Shape> units = new ArrayList<>() ;
                 for( Unit unit : gameController.getGameMap().getCell( i , yAdd ).getUnits() ){
                     units.add( unit.getShape() ) ;
                 }
                 pane.getChildren().addAll( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size() , units ) ;
+                // pane.getChildren().addAll( 0 , units ) ;
+                pane.getChildren().add( 0 , map[i][yAdd] ) ;
             }
         }
 
@@ -158,16 +173,23 @@ public class Camera {
                     unit.getShape().setX( x - unit.getShape().getWidth() / 2 ) ;
                     unit.getShape().setY( y + TILE_HEIGHT / 2 - unit.getShape().getHeight() )  ;
                 }
+
             }
         }
     }
 
-    public int getX(){
-        return this.pos[0] ;
+    public double[] getUnitCoordinates(int x, int y, Unit unit){
+//
+//        unit.getShape().setX( x - unit.getShape().getWidth() / 2 ) ;
+//        unit.getShape().setY( y + TILE_HEIGHT / 2 - unit.getShape().getHeight() )  ;
+        int I = x - this.pos[0] ;
+        int J = y - this.pos[1] ;
+        return new double[]{( I - J ) * ( TILE_WIDTH / 2 + 1 ) + 500 - unit.getShape().getWidth() / 2 ,
+                            ( I + J ) * ( TILE_HEIGHT / 2 + 1 ) - 270 + TILE_HEIGHT / 2 - unit.getShape().getHeight() };
     }
 
-    public int getY(){
-        return this.pos[1] ;
+    public int[] getPos(){
+        return this.pos ;
     }
 
 }

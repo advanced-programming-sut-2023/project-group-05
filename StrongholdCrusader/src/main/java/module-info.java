@@ -4,6 +4,7 @@ module AA {
     requires javafx.media;
     requires json.simple;
     requires junit;
+    requires javafx.graphics;
 
     exports org.example.model;
     exports org.example.view;

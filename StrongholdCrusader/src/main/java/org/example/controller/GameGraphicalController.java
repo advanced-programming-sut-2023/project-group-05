@@ -45,7 +45,7 @@ public class GameGraphicalController {
     private static int SCREEN_WIDTH;
     private static final int TILE_HEIGHT = 20;
     private static final int TILE_WIDTH = TILE_HEIGHT * 2;
-    private static Camera camera;
+    public static Camera camera;
     public static ArrayList<Shape> reservedShapes;
 
     public static void init(Stage stage, Pane pane , GameController gameController) {
@@ -65,10 +65,9 @@ public class GameGraphicalController {
         initGraphicalMenu();
     }
 
-    private static void initImages() {
+    private static void initImages(){
         // init images
     }
-
 
     private static void initMap( int height , int width ){
 
@@ -205,8 +204,6 @@ public class GameGraphicalController {
         System.out.println( "GameGraphicalController : " + gameController.dropUnit( "archer" , 1 , 13 , 13 ) ) ;
         System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 25 , 20 )) ;
         System.out.println( "GameGraphicalController : " + gameController.dropUnit( "operator" , 1 , 20 , 20 )) ;
-        gameController.getGameMap().getCell( 13 , 13 ).getUnits().get( 0 ).getWalkingAnimations().get(0).play() ;
-        gameController.getGameMap().getCell( 25 , 20 ).getUnits().get( 0 ).getWalkingAnimations().get(2).play() ;
     }
 
 }

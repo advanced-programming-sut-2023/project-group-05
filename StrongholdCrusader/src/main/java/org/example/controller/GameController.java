@@ -64,6 +64,10 @@ public class GameController {
 
     }
 
+    public ArrayList<Player> getPlayers(){
+        return players ;
+    }
+
     public void nextTurn() throws Exception {
         this.turn++ ;
         this.player = this.players.get( this.turn % this.players.size() ) ;

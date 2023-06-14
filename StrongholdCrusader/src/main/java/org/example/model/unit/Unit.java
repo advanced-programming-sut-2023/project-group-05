@@ -1,6 +1,8 @@
 package org.example.model.unit;
 
 import javafx.event.EventHandler;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Unit {
+    private WalkingAnimation playingWalkingAnimation ;
     protected PathFinder pathFinder = new PathFinder() ;
     protected boolean isOnHighGround ;
     private final String name ;
@@ -98,9 +101,9 @@ public class Unit {
 
     public void setWalkingAnimations(){
         walkingAnimations = new ArrayList <>() ;
+        walkingAnimations.add( new WalkingAnimation( "swordsman/up" , 8 , this , 1000 ) ) ;
         walkingAnimations.add( new WalkingAnimation( "swordsman/down" , 8 , this , 1000 ) ) ;
         walkingAnimations.add( new WalkingAnimation( "swordsman/right" , 8 , this , 1000 ) ) ;
-        walkingAnimations.add( new WalkingAnimation( "swordsman/up" , 8 , this , 1000 ) ) ;
         walkingAnimations.add( new WalkingAnimation( "swordsman/left" , 8 , this , 1000 ) ) ;
     }
 
@@ -132,6 +135,29 @@ public class Unit {
         this.hitPoint -= x ;
         if(this.hitPoint <= 0)
             this.die(gameMap) ;
+    }
+
+    public void moveTo(int x, int y){
+        if( this.playingWalkingAnimation != null ) this.playingWalkingAnimation.stop() ;
+        this.isMoving = true ;
+        pathFinder.Run(x, y) ;
+        targetColumn = y ;
+        targetRow = x ;
+        int dir = pathFinder.goInDirectionFrom( this.row , this.column ) ;
+        if(dir == -1){
+            this.targetColumn = this.column ;
+            this.targetRow = this.row ;
+            return ;
+        }
+        this.playingWalkingAnimation = this.walkingAnimations.get(dir) ;
+        this.walkingAnimations.get(dir).play() ;
+    }
+
+    public void moveToIfNeeded(){
+        if( targetColumn != this.column && targetRow != this.row ){
+            System.out.println( "here" );
+            moveTo(targetRow, targetColumn);
+        }
     }
 
     public static ArrayList<Unit> getUnits(){
