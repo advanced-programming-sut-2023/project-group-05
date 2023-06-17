@@ -22,9 +22,11 @@ public class Camera {
     private int[] pos ; // the position for reference cell
     private Pane pane ; // where we draw things
     private int size ;
-    private final int TILE_WIDTH = 42 ;
     private final int TILE_HEIGHT = 22 ;
+    private final int TILE_WIDTH = TILE_HEIGHT * 2 ;
     private final int viewSize = 50 ;
+    private final int xShift = TILE_WIDTH * 11 ;
+    private final int yShift = TILE_HEIGHT * 12 ;
     private GameController gameController;
     private int unitCount ;
 
@@ -35,6 +37,10 @@ public class Camera {
         this.gameController = gameController ;
         this.size = map.length ;
         this.unitCount = 0 ;
+    }
+
+    public Polygon[][] getMap(){
+        return this.map ;
     }
 
     public int getViewSize(){
@@ -178,8 +184,8 @@ public class Camera {
                 int J = j - this.pos[1] ;
                 // there was initially a + 1 after TILE_WIDTH / 2 and TILE_HEIGHT / 2 due debugging, which is removed.
                 // you can add it if needed and change back TILE_WIDTH and TILE_HEIGHT to 20 and 40
-                int x = ( I - J ) * ( TILE_WIDTH / 2) + 500 ;
-                int y = ( I + J ) * ( TILE_HEIGHT / 2 ) - 270 ;
+                int x = ( I - J ) * ( TILE_WIDTH / 2) + xShift ;
+                int y = ( I + J ) * ( TILE_HEIGHT / 2 ) - yShift ;
                 map[i][j].setLayoutX( x ) ;
                 map[i][j].setLayoutY( y ) ;
                 // putting the units of that tile there
@@ -198,8 +204,14 @@ public class Camera {
 //        unit.getShape().setY( y + TILE_HEIGHT / 2 - unit.getShape().getHeight() )  ;
         int I = x - this.pos[0] ;
         int J = y - this.pos[1] ;
-        return new double[]{( I - J ) * ( TILE_WIDTH / 2 + 1 ) + 500 - unit.getShape().getWidth() / 2 ,
-                            ( I + J ) * ( TILE_HEIGHT / 2 + 1 ) - 270 + TILE_HEIGHT / 2 - unit.getShape().getHeight() };
+        return new double[]{( I - J ) * ( TILE_WIDTH / 2 ) + xShift - unit.getShape().getWidth() / 2 ,
+                            ( I + J ) * ( TILE_HEIGHT / 2 ) - yShift + TILE_HEIGHT / 2 - unit.getShape().getHeight() };
+    }
+
+    public int[] getMapPos( double x , double y ){
+        int[] ret = new int[2] ;
+
+        return ret ;
     }
 
     public int[] getPos(){

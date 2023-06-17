@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import org.example.Main;
 import org.example.model.BuildingImages;
 import org.example.model.Minimap;
+import org.example.model.UnitTypeEnum;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -46,10 +47,14 @@ public class GameGraphicalController {
     private static ArrayList<Rectangle> buildings;
     private static int SCREEN_HEIGHT;
     private static int SCREEN_WIDTH;
-    private static final int TILE_HEIGHT = 20;
+    private static final int TILE_HEIGHT = 22;
     private static final int TILE_WIDTH = TILE_HEIGHT * 2;
     public static Camera camera;
+    public static double[] mousePos = {0, 0} ;
+    public static Polygon mouse ;
+    public static int mouseSize = 2 ;
     public static ArrayList<Node> reservedShapes;
+    private static String selectedBuildingType = null ;
 
     public static void init(Stage stage, Pane pane , GameController gameController) {
         GameGraphicalController.pane = pane;
@@ -66,10 +71,51 @@ public class GameGraphicalController {
         initImages();
         initKeyboardControlKeys();
         initGraphicalMenu();
+        initMouse() ;
     }
 
     private static void initImages(){
         // init images
+    }
+
+    private static void initMouse(){
+        mouse = new Polygon( 0 , 0 , mouseSize * TILE_WIDTH/2 , mouseSize * TILE_HEIGHT/2 , 0 , mouseSize * TILE_HEIGHT , - TILE_WIDTH/2 * mouseSize , mouseSize * TILE_HEIGHT/2 ) ;
+        mouse.setOpacity( 0.5 );
+        pane.getChildren().add( mouse ) ;
+        reservedShapes.add( mouse ) ;
+        pane.setOnMouseMoved( new EventHandler <MouseEvent>() {
+            @Override
+            public void handle( MouseEvent mouseEvent ){
+//                mouse.setLayoutX( mousePos[0] );
+//                mouse.setLayoutY( mousePos[1] );
+            }
+        } ) ;
+        for(int i = 0 ; i < 400 ; i++)
+            for(int j = 0 ; j < 400 ; j++){
+                Polygon cell = camera.getMap()[i][j] ;
+                int finalI = i ;
+                int finalJ = j ;
+                cell.setOnMouseMoved( new EventHandler <MouseEvent>() {
+                    @Override
+                    public void handle( MouseEvent mouseEvent ){
+                        mouse.setLayoutX( cell.getLayoutX() ) ;
+                        mouse.setLayoutY( cell.getLayoutY() ) ;
+                        boolean green = true;
+                        outer :
+                            for(int k = finalI ; k < finalI + mouseSize ; k++)
+                                for(int m = finalJ ; m < finalJ + mouseSize ; m++)
+                                    if(!gameController.getGameMap().getCell(k,m).permeable( UnitTypeEnum.ARCHER ) ||
+                                            !gameController.getGameMap().getCell(k,m).getUnits().isEmpty() ){
+                                        green = false;
+                                        break outer;
+                                    }
+                        if(green)
+                            mouse.setFill( Color.GREEN ) ;
+                        else
+                            mouse.setFill( Color.RED ) ;
+                    }
+                } );
+            }
     }
 
     private static void initMap( int height , int width ){
@@ -103,7 +149,6 @@ public class GameGraphicalController {
         });
     }
 
-    private static int selectedButton = 0;
     public static ArrayList<Rectangle> current;
     public static ArrayList<Circle> buttons = new ArrayList<>();
     public static HashMap<Circle, ArrayList<Rectangle>> buttonMap = new HashMap<>();
@@ -122,21 +167,37 @@ public class GameGraphicalController {
 
         pane.getChildren().add(graphicalMenu);
         ArrayList<Rectangle> armoury = new ArrayList<>();
-        initArray(armoury, armouries, 40, 40);
+        ArrayList<String> armouryNames = new ArrayList<>( Arrays.asList( "armoury1" , "armoury2" , "armoury3" , "armoury4" , "armoury5" ) ) ;
+        initArray(armoury, armouries, 40, 40, armouryNames);
+
         ArrayList<Rectangle> food = new ArrayList<>();
-        initArray(food, foods, 30, 30);
+        ArrayList<String> foodNames = new ArrayList<>( Arrays.asList( "food1" , "food2" , "food3" , "food4" , "food5" , "food6" , "food7" , "food8", "food9" ) ) ;
+        initArray(food, foods, 30, 30, foodNames);
+
         ArrayList<Rectangle> houseAndStorages = new ArrayList<>();
-        initArray(houseAndStorages, houseAndStorage, 30, 30);
+        ArrayList<String> houseAndStorageNames = new ArrayList<>( Arrays.asList( "has1" , "has2" , "has3" , "has4" , "has5" , "has6" , "has7" ) ) ;
+        initArray(houseAndStorages, houseAndStorage, 30, 30, houseAndStorageNames);
+
         ArrayList<Rectangle> industry = new ArrayList<>();
-        initArray(industry, industries, 40, 40);
+        ArrayList<String> industryNames = new ArrayList<>( Arrays.asList( "ind1" , "ind2" , "ind3" , "ind4" , "ind5" ) ) ;
+        initArray(industry, industries, 40, 40, industryNames);
+
         ArrayList<Rectangle> militaryBuilding = new ArrayList<>();
-        initArray(militaryBuilding, militaryBuildings, 40, 40);
+        ArrayList<String> militaryBuildingsNames = new ArrayList<>( Arrays.asList( "mil1" , "mil2" , "mil3" , "mil4" , "mil5" , "mil6" , "mil7" ) ) ;
+        initArray(militaryBuilding, militaryBuildings, 40, 40, militaryBuildingsNames);
+
         ArrayList<Rectangle> goodThing = new ArrayList<>();
-        initArray(goodThing, goodThings, 40, 40);
+        ArrayList<String> goodNames = new ArrayList<>( Arrays.asList( "gt1" , "gt2" , "gt3" , "gt4" , "gt5" , "gt6", "gt7" , "gt8") ) ;
+        initArray(goodThing, goodThings, 40, 40, goodNames);
+
         ArrayList<Rectangle> badThing = new ArrayList<>();
-        initArray(badThing, badThings, 40, 40);
+        ArrayList<String> badNames = new ArrayList<>( Arrays.asList( "bt1" , "bt2" , "bt3" , "bt4" , "bt5" , "bt6" , "bt7" , "bt8" ) ) ;
+        initArray(badThing, badThings, 40, 40, badNames);
+
         ArrayList<Rectangle> towerAndWall = new ArrayList<>();
-        initArray(towerAndWall, towerAndWalls, 20, 40);
+        ArrayList<String> towerAndWallNames = new ArrayList<>( Arrays.asList( "taw1" , "taw2" , "taw3" , "taw4" , "taw5" , "taw6" , "taw7" , "taw8" , "taw9" ) ) ;
+        initArray(towerAndWall, towerAndWalls, 20, 40, towerAndWallNames);
+
         for (Rectangle rectangle : houseAndStorages)
             pane.getChildren().add(rectangle);
         current = houseAndStorages;
@@ -189,12 +250,19 @@ public class GameGraphicalController {
         for (Rectangle rectangle : second) pane.getChildren().add(rectangle);
     }
 
-    public static void initArray(ArrayList<Rectangle> array, ArrayList<Image> images, int height, int width) {
+    public static void initArray(ArrayList<Rectangle> array, ArrayList<Image> images, int height, int width, ArrayList<String> buildingNames) {
         int size = images.size();
         for (int i = 0; i < size; ++i) {
             Rectangle rectangle = new Rectangle(150 + SCREEN_WIDTH * ((double) i / size) * 0.5, SCREEN_HEIGHT * 0.85, height * 2, width * 2.5);
             rectangle.setFill(new ImagePattern(images.get(i)));
-            //TODO : SETON CLICK ON RECTANGLE
+            int finalI = i ;
+            rectangle.setOnMouseClicked( new EventHandler <MouseEvent>() {
+                @Override
+                public void handle( MouseEvent mouseEvent ){
+                    System.out.println( "name : " + buildingNames.get(finalI) ) ;
+                    selectedBuildingType = buildingNames.get(finalI) ;
+                }
+            } );
             array.add(rectangle);
         }
         menuMap.add(array);

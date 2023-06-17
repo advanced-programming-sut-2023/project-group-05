@@ -37,6 +37,13 @@ public class GameMap {
             for(int j = 20 ; j <= 40 ; j++)
                 if( Math.pow((i-30),2) + Math.pow(j-30,2) <= 100 )
                     map[i][j].setCellType(CellType.GRASS) ;
+
+        map[13][30].setCellType( CellType.SEA ) ;
+        map[30][40].setCellType( CellType.SEA ) ;
+        map[13][31].setCellType( CellType.SEA ) ;
+        map[13][32].setCellType( CellType.SEA ) ;
+        map[13][33].setCellType( CellType.SEA ) ;
+
     }
 
     public int getWidth(){

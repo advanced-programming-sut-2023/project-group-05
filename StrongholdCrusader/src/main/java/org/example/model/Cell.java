@@ -11,7 +11,6 @@ import java.util.Objects;
 public class Cell {
     public ArrayList<Objects> objects;
     public ArrayList<Unit> units;
-
     private Building building = null ;
     public CellType cellType;
     int column ;
