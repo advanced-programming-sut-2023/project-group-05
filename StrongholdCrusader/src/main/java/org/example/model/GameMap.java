@@ -11,9 +11,9 @@ public class GameMap {
     private int height ;
     private int width ;
     private Cell[][] map ;
-    private int[][] maskedMap ;
-    private int[][] maskedMapUnderGround ;
-    private int[][] maskedMapUpperGround ;
+    private int[][] maskedMap ; // zeros and ones showing whether if soldiers can go here
+    private int[][] maskedMapUnderGround ; // same for underground
+    private int[][] maskedMapUpperGround ; // same for above the buildings
 
     public GameMap(int height , int width){
         //height = number of rows
@@ -27,12 +27,16 @@ public class GameMap {
         for(int i = 0 ; i < height ; i++)
             for(int j = 0 ; j < width ; j++) {
                 if( i < 12 || i > 390 || j < 12 || j > 390 ) map[i][j] = new Cell( CellType.SEA , i , j ) ;
-                else if ( i == 13 && j == 13 ) map[i][j] = new Cell( CellType.GRASS , i , j ) ;
                 else map[i][j] = new Cell( CellType.GROUND , i , j );
                 maskedMap[i][j] = 0 ;
                 maskedMapUnderGround[i][j] = 0 ;
                 maskedMapUpperGround[i][j] = 1 ;
             }
+        // creating a grass circle with radius 10 and center ( 30 , 30 )
+        for(int i = 20 ; i <= 40 ; i++)
+            for(int j = 20 ; j <= 40 ; j++)
+                if( Math.pow((i-30),2) + Math.pow(j-30,2) <= 100 )
+                    map[i][j].setCellType(CellType.GRASS) ;
     }
 
     public int getWidth(){

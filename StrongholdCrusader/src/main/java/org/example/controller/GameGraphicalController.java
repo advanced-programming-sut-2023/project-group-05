@@ -1,6 +1,8 @@
 package org.example.controller;
 
 import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -16,6 +18,7 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import org.example.Main;
 import org.example.model.BuildingImages;
+import org.example.model.Minimap;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -46,7 +49,7 @@ public class GameGraphicalController {
     private static final int TILE_HEIGHT = 20;
     private static final int TILE_WIDTH = TILE_HEIGHT * 2;
     public static Camera camera;
-    public static ArrayList<Shape> reservedShapes;
+    public static ArrayList<Node> reservedShapes;
 
     public static void init(Stage stage, Pane pane , GameController gameController) {
         GameGraphicalController.pane = pane;
@@ -70,14 +73,12 @@ public class GameGraphicalController {
     }
 
     private static void initMap( int height , int width ){
-
         map = new Polygon[height][width] ;
 
         camera = new Camera( map , pane , gameController ) ;
 
         camera.draw() ;
         camera.move(0) ;
-
     }
 
     public static void initKeyboardControlKeys() {
@@ -112,6 +113,13 @@ public class GameGraphicalController {
         graphicalMenu = new Rectangle(0, SCREEN_HEIGHT * 0.7, SCREEN_WIDTH, SCREEN_HEIGHT * 0.3);
         graphicalMenu.setFill(new ImagePattern(BuildingImages.MENU.getImage()));
         reservedShapes.add(graphicalMenu);
+
+        // adding the minimap
+        Minimap minimap = new Minimap(camera, gameController) ;
+        minimap.setLayoutX( minimap.getLayoutX() + SCREEN_WIDTH - minimap.getSize() );
+        reservedShapes.add( minimap ) ;
+        pane.getChildren().add( minimap ) ;
+
         pane.getChildren().add(graphicalMenu);
         ArrayList<Rectangle> armoury = new ArrayList<>();
         initArray(armoury, armouries, 40, 40);

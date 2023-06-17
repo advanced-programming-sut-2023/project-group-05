@@ -10,6 +10,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import org.example.model.Minimap;
 import org.example.model.Player;
 import org.example.model.unit.Unit;
 
@@ -21,8 +22,8 @@ public class Camera {
     private int[] pos ; // the position for reference cell
     private Pane pane ; // where we draw things
     private int size ;
-    private final int TILE_WIDTH = 40 ;
-    private final int TILE_HEIGHT = 20 ;
+    private final int TILE_WIDTH = 42 ;
+    private final int TILE_HEIGHT = 22 ;
     private final int viewSize = 50 ;
     private GameController gameController;
     private int unitCount ;
@@ -36,7 +37,16 @@ public class Camera {
         this.unitCount = 0 ;
     }
 
+    public int getViewSize(){
+        return this.viewSize ;
+    }
+
     public void draw(){
+
+        Paint grassPaint = new ImagePattern( new Image( getClass().getResource("/images/tiles/grass.jpg").toExternalForm() ) ) ;
+        Paint waterPaint = new ImagePattern( new Image( getClass().getResource("/images/tiles/water.jpg").toExternalForm() ) ) ;
+        Paint groundPaint = new ImagePattern( new Image( getClass().getResource("/images/tiles/ground.jpg").toExternalForm() ) ) ;
+
 
         for(int i = 0 ; i < size ; i++){
             for( int j = 0; j < size ; j++ ){
@@ -49,13 +59,13 @@ public class Camera {
                 Paint paint = Color.BLACK ;
                 switch( gameController.getGameMap().getCell( i , j ).getCellType() ){
                     case GROUND :
-                        paint = Color.YELLOW ;
+                        paint = groundPaint ;
                         break ;
                     case SEA :
-                        paint = Color.BLUE ;
+                        paint = waterPaint ;
                         break ;
                     case GRASS :
-                        paint = Color.GREEN ;
+                        paint = grassPaint ;
                         break ;
                 }
                 map[i][j].setFill( paint );
@@ -103,12 +113,14 @@ public class Camera {
                 break ;
         }
 
-        if( size < Math.max(this.pos[0] + dx,this.pos[1]+dy) || Math.min(this.pos[0] + dx , this.pos[1] + dy) < 0 )
+        if( size <= Math.max(this.pos[0] + dx,this.pos[1]+dy) || Math.min(this.pos[0] + dx , this.pos[1] + dy) < 0 )
             return ;
 
-        if( size < Math.max( this.pos[0] + viewSize - 1 + dx , this.pos[1] + dy + viewSize - 1 )
+        if( size <= Math.max( this.pos[0] + viewSize - 1 + dx , this.pos[1] + dy + viewSize - 1 )
                 || Math.min( this.pos[0] + viewSize - 1 + dx , this.pos[1] + dy + viewSize - 1 ) < 0 )
             return ;
+
+        moveMinimap(dx, dy) ;
 
         // removing tiles & units exiting our view, and removing tiles entering our view :
         if( dx != 0 ){
@@ -164,8 +176,10 @@ public class Camera {
                 // putting the tile on it's place
                 int I = i - this.pos[0] ;
                 int J = j - this.pos[1] ;
-                int x = ( I - J ) * ( TILE_WIDTH / 2 + 1 ) + 500 ;
-                int y = ( I + J ) * ( TILE_HEIGHT / 2 + 1 ) - 270 ;
+                // there was initially a + 1 after TILE_WIDTH / 2 and TILE_HEIGHT / 2 due debugging, which is removed.
+                // you can add it if needed and change back TILE_WIDTH and TILE_HEIGHT to 20 and 40
+                int x = ( I - J ) * ( TILE_WIDTH / 2) + 500 ;
+                int y = ( I + J ) * ( TILE_HEIGHT / 2 ) - 270 ;
                 map[i][j].setLayoutX( x ) ;
                 map[i][j].setLayoutY( y ) ;
                 // putting the units of that tile there
@@ -190,6 +204,19 @@ public class Camera {
 
     public int[] getPos(){
         return this.pos ;
+    }
+
+
+    // minimap related methods
+
+    private Minimap minimap ;
+    public void setMinimap(Minimap minimap){
+        this.minimap = minimap ;
+    }
+
+    private void moveMinimap(int dx, int dy){
+        if(minimap == null) return;
+        minimap.move(dx, dy) ;
     }
 
 }
