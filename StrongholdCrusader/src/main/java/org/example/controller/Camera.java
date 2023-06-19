@@ -2,6 +2,7 @@ package org.example.controller;
 
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -80,10 +81,18 @@ public class Camera {
                 map[i][j].setOnMouseClicked( new EventHandler <MouseEvent>() {
                     @Override
                     public void handle( MouseEvent mouseEvent ){
-                        for( Player player : gameController.getPlayers() )
-                            for(Unit unit : player.getSelectedUnits()){
-                                unit.moveTo(finalI, finalJ) ;
+                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
+                            for( Player player : gameController.getPlayers() ){
+                                for(Unit unit : player.getSelectedUnits()) unit.getShape().setEffect(null) ;
+                                player.getSelectedUnits().clear() ;
                             }
+                        }
+                        else
+                            for( Player player : gameController.getPlayers() )
+                                for(Unit unit : player.getSelectedUnits()){
+                                    unit.moveTo(finalI, finalJ) ;
+                                }
+
                     }
                 } );
             }
@@ -96,7 +105,7 @@ public class Camera {
         for( int i = 0 ; i < viewSize ; i++)
             for( int j = 0 ; j < viewSize ; j++ )
                 for( Unit unit : gameController.getGameMap().getCell( i , j ).units )
-                    pane.getChildren().add( unit.getShape() ) ;
+                    pane.getChildren().addAll( unit.getShape() , unit.getHealthBar() ) ;
 
     }
 
@@ -137,6 +146,7 @@ public class Camera {
                 ArrayList <Shape> units = new ArrayList<>() ;
                 for( Unit unit : gameController.getGameMap().getCell( xRemove , j ).getUnits() ){
                     units.add( unit.getShape() ) ;
+                    units.add( unit.getHealthBar() ) ;
                 }
                 pane.getChildren().removeAll( units );
             }
@@ -144,6 +154,7 @@ public class Camera {
                 ArrayList <Shape> units = new ArrayList<>() ;
                 for( Unit unit : gameController.getGameMap().getCell( xAdd , j ).getUnits() ){
                     units.add( unit.getShape() ) ;
+                    units.add( unit.getHealthBar() ) ;
                 }
                 // pane.getChildren().add( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size(), map[xAdd][j] );
                 pane.getChildren().addAll( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size() , units ) ;
@@ -158,6 +169,7 @@ public class Camera {
                 ArrayList <Shape> units = new ArrayList<>() ;
                 for( Unit unit : gameController.getGameMap().getCell( i , yRemove ).getUnits() ){
                     units.add( unit.getShape() ) ;
+                    units.add( unit.getHealthBar() ) ;
                 }
                 pane.getChildren().removeAll( units ) ;
             }
@@ -165,6 +177,7 @@ public class Camera {
                 ArrayList <Shape> units = new ArrayList<>() ;
                 for( Unit unit : gameController.getGameMap().getCell( i , yAdd ).getUnits() ){
                     units.add( unit.getShape() ) ;
+                    units.add( unit.getHealthBar() ) ;
                 }
                 pane.getChildren().addAll( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size() , units ) ;
                 // pane.getChildren().addAll( 0 , units ) ;

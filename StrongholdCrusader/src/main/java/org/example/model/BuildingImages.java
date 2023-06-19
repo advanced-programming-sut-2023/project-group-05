@@ -30,23 +30,23 @@ public enum BuildingImages {
     SIEGE_TENT("militaryBuildings/siegeTent.png",4),
     STABLE("militaryBuildings/stable.png",4),
     TUNNELER_GUILD("militaryBuildings/tunnelerGuild.png",4),
-    APPLE_ORCHARD("foods/appleFarm.png",2),
-    DIARY_FARMER("foods/cheeseFarm.png",2),
-    HOPS_FARMER("foods/hopsFarm.png",2),
-    HUNTER_POST("foods/hunters.png",2),
-    WHEAT_FARM("foods/wheatFarm.png",2),
+    APPLE_ORCHARD("foods/appleorchard.png",2),
+    DIARY_FARMER("foods/dairyfarmer.png",2),
+    HOPS_FARMER("foods/hopsfarmer.png",2),
+    HUNTER_POST("foods/hunterpost.png",2),
+    WHEAT_FARM("foods/wheatfarmer.png",2),
     BAKERY("foods/bakery.png",2),
     BREWER("foods/brewer.png",2),
     GRANARY("houseAndStorage/granary.png",3),
     INN("foods/inn.png",2),
-    MILL("foods/windMill.png",2),
-    IRON_MINE("industries/ironMine.png",8),
+    MILL("foods/windmill.png",2),
+    IRON_MINE("industries/ironmine.png",8),
     MARKET("houseAndStorage/market.png",3),
-    OX_TETHER("industries/oxTether.png",8),
-    PITCH_RIG("industries/pitch.png",8),
+    OX_TETHER("industries/oxtether.png",8),
+    PITCH_RIG("industries/pitchrig.png",8),
     QUARRY("industries/quarry.png",8),
     STOCKPILE("houseAndStorage/stockpile.png",3),
-    WOODCUTTER("industries/woodCutter.png",8),
+    WOODCUTTER("industries/woodcutter.png",8),
     APOTHECARY("popularityBuildings/goodThings/Apothecary.png",5),
     HOVEL("houseAndStorage/house.png",3),
     CHAPEL("popularityBuildings/goodThings/chapel.png",5),
@@ -67,9 +67,9 @@ public enum BuildingImages {
     BAD_THINGS_7("popularityBuildings/badThings/bad7.gif",6),
     BAD_THINGS_8("popularityBuildings/badThings/bad8.gif",6),
     ARMOURER("armouries/armourer.png",1),
-    BLACKSMITH("armouries/blackSmith.png",1),
+    BLACKSMITH("armouries/blacksmith.png",1),
     FLETCHER("armouries/fletcher.png",1),
-    POLE_TURNER("armouries/poleTurner.png",1),
+    POLE_TURNER("armouries/poleturner.png",1),
     TANNER("armouries/tanner.png",1),
     SIGNPOST("houseAndStorage/signPost.png",3),
     MENU("menu.png",0);
@@ -80,6 +80,8 @@ public enum BuildingImages {
 
     private int category;
     BuildingImages( String buildingImageName,int category ){
+        if( null == MainMenu.class.getResource( "/images/buildings/buildingMenu/"+buildingImageName) )
+            System.out.println( "YOUUUUUUUUUUU" + buildingImageName );
         this.image = new Image(MainMenu.class.getResource( "/images/buildings/buildingMenu/"+buildingImageName).toExternalForm() ) ;
         switch (category) {
             case 1 -> GameGraphicalController.armouries.add(image);

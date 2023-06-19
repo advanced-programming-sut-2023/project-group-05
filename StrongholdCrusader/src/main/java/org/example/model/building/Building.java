@@ -80,9 +80,9 @@ public class Building {
         for(int i = this.row ; i < this.row + this.height ; i++)
             for(int j = this.column ; j < this.column + this.width ; j++ )
                 gameMap.getCell(i,j).setBuilding( null );
-        // TODO : removing it's effects like : popularity , fearrate
         this.owner.setPopularity( this.owner.getPopularity() - this.popularityRate );
-        this.owner.setFearRate( this.owner.getFearRate() ) ;
+        this.owner.setFearRate( this.owner.getFearRate() - this.fearRate ) ;
+        buildings.remove(this) ;
     }
 
     public void getDamaged( int damage , GameMap gameMap ){

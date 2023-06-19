@@ -3,6 +3,7 @@ package org.example.model.unit;
 import javafx.event.EventHandler;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Effect;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -27,6 +28,7 @@ public class Unit {
     private final String name ;
     private int hitPoint;
     private final int movingSpeed ;
+    private final int initialHitpoint ;
     private final Player owner ;
     private final int range ;
     private Cost cost ;
@@ -45,6 +47,7 @@ public class Unit {
     protected int targetRow = -1 ;
     protected int targetColumn = -1 ;
     private Rectangle shape ;
+    private Rectangle healthBar ;
     public Unit( String name , Player owner , int hitPoint,int movingSpeed , int range , int row , int column , boolean selectable ){
         this.name = name ;
         this.hitPoint = hitPoint;
@@ -55,6 +58,7 @@ public class Unit {
         this.selectable = selectable ;
         this.movingSpeed = movingSpeed ;
         this.range = range ;
+        this.initialHitpoint = this.hitPoint ;
         units.add(this) ;
         owner.setPopulation( owner.getPopulation() + 1 );
         owner.getUnits().add(this) ;
@@ -63,9 +67,13 @@ public class Unit {
     public Rectangle getShape(){
         return this.shape ;
     }
+    public Rectangle getHealthBar(){ return this.healthBar ;}
 
     public void setShape(){
         this.shape = new Rectangle( 0 , 0 , 40 , 40 ) ;
+        this.healthBar = new Rectangle( 0 , 0 , 15 , 2 ) ;
+        healthBar.setFill( Color.GREEN ) ;
+        healthBar.setVisible( false ) ;
         Image image = null ;
 
         switch( this.name ){
@@ -93,8 +101,26 @@ public class Unit {
             @Override
             public void handle( MouseEvent mouseEvent ){
                 player.selectUnit( unit );
+                Glow glow = new Glow() ;
+                glow.setLevel( 200 );
+                unit.getShape().setEffect( glow ) ;
             }
         } ) ;
+        Unit finalThis = this ;
+        this.shape.setOnMouseMoved( new EventHandler <MouseEvent>() {
+            @Override
+            public void handle( MouseEvent mouseEvent ){
+                healthBar.setVisible( true ) ;
+                healthBar.setX( finalThis.getShape().getX() ) ;
+                healthBar.setY( finalThis.getShape().getY() - 5 ) ;
+            }
+        } ) ;
+        this.shape.setOnMouseExited( new EventHandler <MouseEvent>() {
+            @Override
+            public void handle( MouseEvent mouseEvent ){
+                healthBar.setVisible( false ) ;
+            }
+        } );
     }
 
     private ArrayList<WalkingAnimation> walkingAnimations ;
@@ -133,6 +159,7 @@ public class Unit {
 
     public void getDamaged(int x , GameMap gameMap){
         this.hitPoint -= x ;
+        this.healthBar.setWidth( 15 * this.hitPoint / this.initialHitpoint ) ;
         if(this.hitPoint <= 0)
             this.die(gameMap) ;
     }
