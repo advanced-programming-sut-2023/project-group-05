@@ -52,8 +52,7 @@ public class GameGraphicalController {
     private static int mouseRow = 0 ;
     private static int mouseColumn = 0 ;
     public static ArrayList<Node> reservedShapes;
-    private static String chosenBuilding = "" ;
-    private static String selectedBuildingType = null ;
+    private static String chosenBuildingName = "" ;
     public static ArrayList<Rectangle> current;
     public static ArrayList<Circle> buttons = new ArrayList<>();
     public static HashMap<Circle, ArrayList<Rectangle>> buttonMap = new HashMap<>();
@@ -71,14 +70,9 @@ public class GameGraphicalController {
         pane.requestFocus();
         initTestMode() ;
         initMap(height, width);
-        initImages();
         initKeyboardControlKeys();
         initGraphicalMenu();
         initMouse() ;
-    }
-
-    private static void initImages(){
-        // init images
     }
 
     private static void updateMouse(){
@@ -126,8 +120,7 @@ public class GameGraphicalController {
                     pane.getChildren().remove( mouse ) ;
                     reservedShapes.remove( mouse ) ;
                 } else if ( mouse.getFill() == Color.GREEN ) {
-                    // TODO : owner
-                    gameController.putBuildingInPlace( Building.createBuildingByName( chosenBuilding , gameController.getPlayers().get(0) , mouseRow , mouseColumn ) ) ;
+                    gameController.putBuildingInPlace( Building.createBuildingByName( chosenBuildingName, gameController.getPlayers().get(0) , mouseRow , mouseColumn ) ) ;
                     addBuildingImage( mouseRow , mouseColumn ) ;
                 } else {
                     System.out.println( "Bro you can't place that shit here" ) ;
@@ -165,10 +158,16 @@ public class GameGraphicalController {
     }
 
     private static void addBuildingImage(int row, int column){
-        ImagePattern imagePattern = BuildingImages.getImagePattern( chosenBuilding ) ;
-        Rectangle rectangle = new Rectangle( 0 , 0 , 101 , 101 ) ;
+        ImagePattern imagePattern = BuildingImages.getImagePattern( chosenBuildingName ) ;
+        int width = BuildingEnum.getBuildingWidthByName( chosenBuildingName ) ;
+        int height = BuildingEnum.getBuildingHeightByName( chosenBuildingName ) ;
+        double x = map[row][column].getLayoutX() ;
+        double y = map[row][column].getLayoutY() ;
+        Rectangle rectangle = new Rectangle( x - TILE_WIDTH * width / 2 , y , TILE_WIDTH * width , TILE_HEIGHT * height ) ;
         pane.getChildren().add(rectangle) ;
-        rectangle.setFill( imagePattern ) ;
+        //rectangle.setFill( imagePattern ) ;
+        pane.getChildren().remove( mouse ) ;
+        reservedShapes.remove( mouse ) ;
     }
 
     public static void initGraphicalMenu() {
@@ -276,8 +275,8 @@ public class GameGraphicalController {
             rectangle.setOnMouseClicked( new EventHandler <MouseEvent>() {
                 @Override
                 public void handle( MouseEvent mouseEvent ){
-                    chosenBuilding = buildingNames.get(finalI) ;
-                    System.out.println( "name : " + chosenBuilding ) ;
+                    chosenBuildingName = buildingNames.get(finalI) ;
+                    System.out.println( "name : " + chosenBuildingName ) ;
                     mouseHeight = BuildingEnum.getBuildingHeightByName( buildingNames.get(finalI) ) ;
                     mouseWidth = BuildingEnum.getBuildingWidthByName( buildingNames.get(finalI) ) ;
                     updateMouse() ;
@@ -285,7 +284,6 @@ public class GameGraphicalController {
                         pane.getChildren().add( mouse );
                         reservedShapes.add( mouse );
                     }
-                    selectedBuildingType = buildingNames.get(finalI) ;
                 }
             } );
             array.add(rectangle);

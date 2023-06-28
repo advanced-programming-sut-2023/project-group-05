@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.model.Account;
+import org.example.view.MainMenu;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 
 public class DataBase
 {
+
+    public static String location = (MainMenu.class.getResource("/data.json").toString()).replaceAll("file:/","") ;
 
     public static void deleteAccount( String type, String S )
     {
@@ -103,7 +106,6 @@ public class DataBase
         return ret;
     }
 
-    public static String location = "src/main/java/org/example/data.json";
 
     public static JSONObject transformAccountToJSONObject( Account account)
     {
@@ -192,11 +194,11 @@ public class DataBase
     public static void wakeUp()
     {
         JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader(location))
-        {
+        try{
+            FileReader reader = new FileReader(location) ;
             Object obj = jsonParser.parse(reader);
             JSONArray data = (JSONArray) obj;
-            for (Object datum : data)
+            for(Object datum : data)
             {
                 JSONObject currentObject = (JSONObject) datum;
                 String userName = (String) currentObject.get("userName");

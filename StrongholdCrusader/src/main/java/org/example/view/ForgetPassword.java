@@ -38,7 +38,7 @@ public class ForgetPassword extends Application {
         BorderPane borderPane = FXMLLoader.load(StartMenu.class.getResource("/fxml/ForgetPassword.fxml"));
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
-        stage.setTitle("Forget password") ;
+        stage.setTitle("Forget password");
         stage.show();
     }
 
