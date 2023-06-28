@@ -161,11 +161,28 @@ public class GameGraphicalController {
         ImagePattern imagePattern = BuildingImages.getImagePattern( chosenBuildingName ) ;
         int width = BuildingEnum.getBuildingWidthByName( chosenBuildingName ) ;
         int height = BuildingEnum.getBuildingHeightByName( chosenBuildingName ) ;
+        /*
+        *  TODO:  read this:
+        *         It's 23:53 and I'm already tired...
+        *         28-JUNE-2023
+        *         -Danial
+        */
+        // fact : every building is in shape of a hexagon-like.
+        int size = width ;
+        Polygon hexagon = new Polygon(
+                0, 0,
+                size * TILE_WIDTH / 2 , size * TILE_HEIGHT / 2,
+                size * TILE_WIDTH / 2 , 3 * size * TILE_HEIGHT / 2,
+                0 , 4 * size * TILE_HEIGHT / 2,
+                -size * TILE_WIDTH / 2 , 3 * size * TILE_HEIGHT / 2,
+                -size * TILE_WIDTH / 2 , size * TILE_HEIGHT / 2
+        ) ;
+        pane.getChildren().add(hexagon) ;
         double x = map[row][column].getLayoutX() ;
-        double y = map[row][column].getLayoutY() ;
-        Rectangle rectangle = new Rectangle( x - TILE_WIDTH * width / 2 , y , TILE_WIDTH * width , TILE_HEIGHT * height ) ;
-        pane.getChildren().add(rectangle) ;
-        //rectangle.setFill( imagePattern ) ;
+        double y = map[row][column].getLayoutY() - TILE_HEIGHT * size ;
+        hexagon.setLayoutX(x) ;
+        hexagon.setLayoutY(y) ;
+        hexagon.setFill( imagePattern ) ;
         pane.getChildren().remove( mouse ) ;
         reservedShapes.remove( mouse ) ;
     }

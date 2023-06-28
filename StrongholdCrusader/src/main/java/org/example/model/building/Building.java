@@ -245,7 +245,7 @@ public class Building {
         if (type.equals("stockpile"))
             return new StorageBuilding(type,1,1,false,"",owner,row,column,getBuildingCost(type),10000,0,false,1000,BuildingEnum.STOCKPILE);//TODO
         if (type.equals("woodcutter"))
-            return new TradeBuilding(type,"",2,3,false,0,false,owner,row,column,300,getBuildingCost(type),1, 0, BuildingEnum.WOODCUTTER);//TODO
+            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),1, 0, BuildingEnum.WOODCUTTER);//TODO
         if (type.equals("apothecary"))
             return new TradeBuilding(type,"",2,3,false,+1,false,owner,row,column,300,getBuildingCost(type),1, 0, BuildingEnum.APOTHECARY);//TODO
         if (type.equals("hovel"))
