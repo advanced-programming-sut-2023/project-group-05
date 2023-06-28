@@ -1,12 +1,15 @@
 package org.example.model;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import org.example.Main;
 import org.example.controller.GameGraphicalController;
 import org.example.view.MainMenu;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public enum BuildingImages {
 //    SMALL_STONE_WALL(),
@@ -77,9 +80,21 @@ public enum BuildingImages {
 //    STAIR();
 
     private Image image ;
+    private ImagePattern imagePattern ;
 
     private int category;
-    BuildingImages( String buildingImageName,int category ){
+    private String name ;
+    public static ArrayList<BuildingImages> allBuildingImages ;
+
+    BuildingImages(String buildingImageName, int category ){
+        Matcher matcher = Pattern.compile("/(?<name>\\S+)\\.((png)|(gif))$").matcher(buildingImageName) ;
+        add(this) ;
+        if( matcher.find() ){
+            this.name = matcher.group("name") ;
+        } else {
+            System.out.println( "##############fuck-this-image##############" ) ;
+            System.out.println( buildingImageName ) ;
+        }
         if( null == MainMenu.class.getResource( "/images/buildings/buildingMenu/"+buildingImageName) )
             System.out.println( "YOUUUUUUUUUUU" + buildingImageName );
         this.image = new Image(MainMenu.class.getResource( "/images/buildings/buildingMenu/"+buildingImageName).toExternalForm() ) ;
@@ -95,10 +110,34 @@ public enum BuildingImages {
             default -> {
             }
         }
+        this.imagePattern = new ImagePattern( image ) ;
+    }
+
+    private void add(BuildingImages o){
+        if( allBuildingImages == null ) allBuildingImages = new ArrayList<>() ;
+        allBuildingImages.add( o ) ;
     }
 
     public Image getImage(){
         return this.image;
+    }
+
+    private String getName(){
+        return this.name ;
+    }
+
+    private ImagePattern getImagePattern(){
+        return this.imagePattern ;
+    }
+
+    public static ImagePattern getImagePattern(String name){
+        for( BuildingImages x : allBuildingImages ){
+            if(x.getName().equals(name)){
+                return x.getImagePattern() ;
+            }
+        }
+        System.out.println( "IMAGE NOT FOUND" ) ;
+        return null ;
     }
 
 }

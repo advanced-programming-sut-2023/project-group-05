@@ -3,7 +3,6 @@ package org.example.controller;
 import org.example.model.*;
 import org.example.model.building.Building;
 import org.example.model.building.TradeBuilding;
-import org.example.model.enums.UnitImagesEnum;
 import org.example.model.unit.*;
 import org.example.view.Menu;
 
@@ -437,7 +436,7 @@ public class GameController {
         name = "king";
         Warrior king = new Warrior(name,owner, 50 , 500,1,1,30,30,0,
                 false,false,false,false,false,false,true,row.intValue(),column.intValue());
-        putBuildingInThePlace(castle);
+        putBuildingInPlace(castle);
         gameMap.getCell(row,column).units.add(king);
         player.addUnit(king);
         player.setCastle(castle);
@@ -456,7 +455,7 @@ public class GameController {
         column = buffer.get(1);
         String name = "stockpile";
         Building stockpile = Building.createBuildingByName(name,owner,row,column);
-        putBuildingInThePlace(stockpile);
+        putBuildingInPlace(stockpile);
         player.isStockPileCreated = true;
     }
 
@@ -1062,14 +1061,14 @@ public class GameController {
         if(type.equals("oxtether")){
             Building oxtether = Building.createBuildingByName("oxtether",player,row,column) ;
             Operator ox = new Operator("ox" , player , 5 , row , column , oxtether ) ;
-            putBuildingInThePlace(oxtether);
+            putBuildingInPlace(oxtether);
             oxTurn.put( ox , new AtomicInteger(0) ) ;
             oxHasStone.put( ox , new AtomicBoolean(false) ) ;
             gameMap.getCell( row , column ).addUnit( ox );
             return "Ox tether dropped successfully" ;
         }
         Building building = Building.createBuildingByName(type,player,row,column);
-        putBuildingInThePlace(building);
+        putBuildingInPlace(building);
         player.handleBuildingEffectsOnPlayer(type);
         return "Create Building Successful!";
     }
@@ -1118,14 +1117,14 @@ public class GameController {
         if(type.equals("oxtether")){
             Building oxtether = Building.createBuildingByName("oxtether",player,row,column) ;
             Operator ox = new Operator("ox" , player , 5 , row , column , oxtether ) ;
-            putBuildingInThePlace(oxtether);
+            putBuildingInPlace(oxtether);
             gameMap.getCell( row , column ).addUnit( ox );
             oxTurn.put( ox , new AtomicInteger(0) ) ;
             oxHasStone.put( ox , new AtomicBoolean(false) ) ;
             return "Ox tether dropped successfully" ;
         }
         Building building = Building.createBuildingByName(type,player,row,column);
-        putBuildingInThePlace(building);
+        putBuildingInPlace(building);
         player.handleBuildingEffectsOnPlayer(type);
         return "Drop Building Successful!";
     }
@@ -1224,7 +1223,7 @@ public class GameController {
     }
 
 
-    public void putBuildingInThePlace(Building building){
+    public void putBuildingInPlace( Building building){
         int row = building.getRow();
         int column = building.getColumn();
         building.getOwner().addBuilding(building);

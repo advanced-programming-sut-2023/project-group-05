@@ -1,9 +1,7 @@
 package org.example.controller;
 
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -15,14 +13,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import org.example.Main;
-import org.example.model.BuildingImages;
-import org.example.model.CellType;
-import org.example.model.Minimap;
-import org.example.model.UnitTypeEnum;
-import org.example.view.MainMenu;
+import org.example.model.*;
+import org.example.model.building.Building;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -53,11 +46,18 @@ public class GameGraphicalController {
     private static final int TILE_HEIGHT = 22;
     private static final int TILE_WIDTH = TILE_HEIGHT * 2;
     public static Camera camera;
-    public static double[] mousePos = {0, 0} ;
     public static Polygon mouse ;
-    public static int mouseSize = 2 ;
+    public static int mouseWidth = 1 ;
+    private static int mouseHeight = 1 ;
+    private static int mouseRow = 0 ;
+    private static int mouseColumn = 0 ;
     public static ArrayList<Node> reservedShapes;
+    private static String chosenBuilding = "" ;
     private static String selectedBuildingType = null ;
+    public static ArrayList<Rectangle> current;
+    public static ArrayList<Circle> buttons = new ArrayList<>();
+    public static HashMap<Circle, ArrayList<Rectangle>> buttonMap = new HashMap<>();
+    public static ArrayList<ArrayList<Rectangle>> menuMap = new ArrayList<>();
 
     public static void init(Stage stage, Pane pane , GameController gameController) {
         GameGraphicalController.pane = pane;
@@ -81,8 +81,14 @@ public class GameGraphicalController {
         // init images
     }
 
+    private static void updateMouse(){
+        int[] arr = { 0 , 0 , mouseHeight * TILE_WIDTH / 2 , mouseHeight * TILE_HEIGHT / 2 , ( mouseHeight - mouseWidth ) * TILE_WIDTH / 2 , ( mouseHeight + mouseWidth ) * TILE_HEIGHT / 2 , -mouseWidth * TILE_WIDTH / 2 , mouseWidth * TILE_HEIGHT / 2 } ;
+        for(int i = 0 ; i < 8 ; i++)
+            mouse.getPoints().set(i , (double)arr[i] ) ;
+    }
+
     private static void initMouse(){
-        mouse = new Polygon( 0 , 0 , mouseSize * TILE_WIDTH/2 , mouseSize * TILE_HEIGHT/2 , 0 , mouseSize * TILE_HEIGHT , - TILE_WIDTH/2 * mouseSize , mouseSize * TILE_HEIGHT/2 ) ;
+        mouse = new Polygon( 0 , 0 , mouseHeight * TILE_WIDTH / 2 , mouseHeight * TILE_HEIGHT / 2 , ( mouseHeight - mouseWidth ) * TILE_WIDTH / 2 , ( mouseHeight + mouseWidth ) * TILE_HEIGHT / 2 , -mouseWidth * TILE_WIDTH / 2 , mouseWidth * TILE_HEIGHT / 2 ) ;
         mouse.setOpacity( 0.5 );
         for(int i = 0 ; i < 400 ; i++)
             for(int j = 0 ; j < 400 ; j++){
@@ -94,10 +100,12 @@ public class GameGraphicalController {
                     public void handle( MouseEvent mouseEvent ){
                         mouse.setLayoutX( cell.getLayoutX() ) ;
                         mouse.setLayoutY( cell.getLayoutY() ) ;
+                        mouseRow = finalI ;
+                        mouseColumn = finalJ ;
                         boolean green = true;
                         outer :
-                            for(int k = finalI ; k < finalI + mouseSize ; k++)
-                                for(int m = finalJ ; m < finalJ + mouseSize ; m++)
+                            for(int k = finalI ; k < finalI + mouseHeight ; k++)
+                                for(int m = finalJ ; m < finalJ + mouseWidth ; m++)
                                     if(gameController.getGameMap().getCell(k,m).getBuilding() != null ||
                                             !gameController.getGameMap().getCell(k,m).getUnits().isEmpty() ||
                                             gameController.getGameMap().getCell(k,m).getCellType() == CellType.SEA ){
@@ -118,7 +126,9 @@ public class GameGraphicalController {
                     pane.getChildren().remove( mouse ) ;
                     reservedShapes.remove( mouse ) ;
                 } else if ( mouse.getFill() == Color.GREEN ) {
-                    System.out.println( "Ok placing this building here i guess" ) ;
+                    // TODO : owner
+                    gameController.putBuildingInPlace( Building.createBuildingByName( chosenBuilding , gameController.getPlayers().get(0) , mouseRow , mouseColumn ) ) ;
+                    addBuildingImage( mouseRow , mouseColumn ) ;
                 } else {
                     System.out.println( "Bro you can't place that shit here" ) ;
                 }
@@ -128,9 +138,7 @@ public class GameGraphicalController {
 
     private static void initMap( int height , int width ){
         map = new Polygon[height][width] ;
-
         camera = new Camera( map , pane , gameController ) ;
-
         camera.draw() ;
         camera.move(0) ;
     }
@@ -151,21 +159,21 @@ public class GameGraphicalController {
                 }
                 if( keyEvent.getCode().equals( KeyCode.RIGHT ) ){
                     camera.move( 3 ) ;
-
                 }
             }
         });
     }
 
-    public static ArrayList<Rectangle> current;
-    public static ArrayList<Circle> buttons = new ArrayList<>();
-    public static HashMap<Circle, ArrayList<Rectangle>> buttonMap = new HashMap<>();
-    public static ArrayList<ArrayList<Rectangle>> menuMap = new ArrayList<>();
+    private static void addBuildingImage(int row, int column){
+        ImagePattern imagePattern = BuildingImages.getImagePattern( chosenBuilding ) ;
+        Rectangle rectangle = new Rectangle( 0 , 0 , 101 , 101 ) ;
+        pane.getChildren().add(rectangle) ;
+        rectangle.setFill( imagePattern ) ;
+    }
 
     public static void initGraphicalMenu() {
         graphicalMenu = new Rectangle(0, SCREEN_HEIGHT * 0.7, SCREEN_WIDTH, SCREEN_HEIGHT * 0.3);
         graphicalMenu.setFill(new ImagePattern(BuildingImages.MENU.getImage()));
-        //graphicalMenu.setFill(new ImagePattern(new Image( MainMenu.class.getResource( "/images/buildings/buildingMenu/menu.png" ).toExternalForm() )));
         reservedShapes.add(graphicalMenu);
 
         // adding the minimap
@@ -184,7 +192,7 @@ public class GameGraphicalController {
         initArray(food, foods, 30, 30, foodNames);
 
         ArrayList<Rectangle> houseAndStorages = new ArrayList<>();
-        ArrayList<String> houseAndStorageNames = new ArrayList<>( Arrays.asList( "stockpile" , "market" , "has3" , "hovel" , "has5" , "has6" , "has7" ) ) ;
+        ArrayList<String> houseAndStorageNames = new ArrayList<>( Arrays.asList( "granary" , "market" , "stockpile" , "hovel" , "has5" , "has6" , "has7" ) ) ;
         initArray(houseAndStorages, houseAndStorage, 30, 30, houseAndStorageNames);
 
         ArrayList<Rectangle> industry = new ArrayList<>();
@@ -268,9 +276,15 @@ public class GameGraphicalController {
             rectangle.setOnMouseClicked( new EventHandler <MouseEvent>() {
                 @Override
                 public void handle( MouseEvent mouseEvent ){
-                    System.out.println( "name : " + buildingNames.get(finalI) ) ;
-                    pane.getChildren().add( mouse ) ;
-                    reservedShapes.add( mouse ) ;
+                    chosenBuilding = buildingNames.get(finalI) ;
+                    System.out.println( "name : " + chosenBuilding ) ;
+                    mouseHeight = BuildingEnum.getBuildingHeightByName( buildingNames.get(finalI) ) ;
+                    mouseWidth = BuildingEnum.getBuildingWidthByName( buildingNames.get(finalI) ) ;
+                    updateMouse() ;
+                    if( !pane.getChildren().contains( mouse ) ){
+                        pane.getChildren().add( mouse );
+                        reservedShapes.add( mouse );
+                    }
                     selectedBuildingType = buildingNames.get(finalI) ;
                 }
             } );

@@ -9,8 +9,8 @@ public enum BuildingEnum {
     //TODO : PUT BUILDING SIZE IN THE ARRAYLIST
     SMALL_STONE_WALL("smallstonewall",new ArrayList<Integer>(Arrays.asList(1,1)) , 500 ),
     BIG_STONE_WALL("bigstonewall",new ArrayList<Integer>(Arrays.asList(2,2)) , 2000 ),
-    SMALL_STONE_GATEHOUSE("smallstonegatehouse",new ArrayList<Integer>(Arrays.asList(1,1)) , 500),
-    BIG_STONE_GATEHOUSE("bigstonegatehouse",new ArrayList<Integer>(Arrays.asList(2,2)) , 1000 ),
+    SMALL_STONE_GATEHOUSE("smallstonegatehouse",new ArrayList<Integer>(Arrays.asList(2,2)) , 500),
+    BIG_STONE_GATEHOUSE("bigstonegatehouse",new ArrayList<Integer>(Arrays.asList(4,4)) , 1000 ),
     DRAW_BRIDGE("drawbridge",new ArrayList<Integer>(Arrays.asList(1,3)) , 200 ),
     LOOKOUT_TOWER("lookouttower",new ArrayList<Integer>(Arrays.asList(3,3)) , 5000 ),
     PERIMETER_TOWER("perimetertower",new ArrayList<Integer>(Arrays.asList(4,4)) , 4000 ),
@@ -43,7 +43,7 @@ public enum BuildingEnum {
     OX_TETHER("oxtether",new ArrayList<Integer>(Arrays.asList(1,2)) , 100 ),
     PITCH_RIG("pitchrig",new ArrayList<Integer>(Arrays.asList(2,2)) , 0),
     QUARRY("quarry",new ArrayList<Integer>(Arrays.asList(2,2)) , 300 ),
-    STOCKPILE("stockpile",new ArrayList<Integer>(Arrays.asList(1,1)) , 10000),
+    STOCKPILE("stockpile",new ArrayList<Integer>(Arrays.asList(3,3)) , 10000),
     WOODCUTTER("woodcutter",new ArrayList<Integer>(Arrays.asList(2,3)) , 300 ),
     APOTHECARY("apothecary",new ArrayList<Integer>(Arrays.asList(2,3)) , 300),
     HOVEL("hovel",new ArrayList<Integer>(Arrays.asList(2,2)) , 200 ),
@@ -66,20 +66,18 @@ public enum BuildingEnum {
     // TREES
 
 
-    DESERT_TREE(null,new ArrayList<Integer>(Arrays.asList()),100),
-    OLIVE_TREE(null,new ArrayList<Integer>(Arrays.asList()),100),
-    DATE_TREE(null,new ArrayList<Integer>(Arrays.asList()),100),
-    CHERRY_TREE(null,new ArrayList<Integer>(Arrays.asList()),100),
-    COCONUT_TREE(null,new ArrayList<Integer>(Arrays.asList()),100),
-
+    DESERT_TREE("deserttree",new ArrayList<Integer>(Arrays.asList(1,1)),100),
+    OLIVE_TREE("olivetree",new ArrayList<Integer>(Arrays.asList(1,1)),100),
+    DATE_TREE("datetree",new ArrayList<Integer>(Arrays.asList(1,1)),100),
+    CHERRY_TREE("cherrytree",new ArrayList<Integer>(Arrays.asList(1,1)),100),
+    COCONUT_TREE("coconuttree",new ArrayList<Integer>(Arrays.asList(1,1)),100),
 
     // ROCKS
 
-
-    ROCK_NORTH(null,new ArrayList<Integer>(Arrays.asList()),100),
-    ROCK_SOUTH(null,new ArrayList<Integer>(Arrays.asList()),100),
-    ROCK_EAST(null,new ArrayList<Integer>(Arrays.asList()),100),
-    ROCK_WEST(null,new ArrayList<Integer>(Arrays.asList()),100),
+    ROCK_NORTH("rocknorth",new ArrayList<Integer>(Arrays.asList(1,1)),100),
+    ROCK_SOUTH("rocksouth",new ArrayList<Integer>(Arrays.asList(1,1)),100),
+    ROCK_EAST("rockeast",new ArrayList<Integer>(Arrays.asList(1,1)),100),
+    ROCK_WEST("rockwest",new ArrayList<Integer>(Arrays.asList(1,1)),100),
 
     //Castle
     CASTLE("castle",new ArrayList<Integer>(Arrays.asList()),1000000);

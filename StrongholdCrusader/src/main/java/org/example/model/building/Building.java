@@ -151,6 +151,7 @@ public class Building {
     }
 
     public static Building createBuildingByName (String type , Player owner,int row , int column){
+
         // TREES
 
         if(type.equals("deserttree")) return new Building( "deserttree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.DESERT_TREE , 0 ) ;
@@ -166,8 +167,8 @@ public class Building {
         if(type.equals("rocknorth")) return new Building( "rocknorth" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_NORTH , 0 ) ;
         if(type.equals("rocksouth")) return new Building( "rocksouth" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.ROCK_SOUTH , 0 ) ;
 
-
         // OTHER
+
         if (type.equals("smallstonewall"))
             return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),500,0,false,BuildingEnum.SMALL_STONE_WALL,0);
         if (type.equals("bigstonewall"))
