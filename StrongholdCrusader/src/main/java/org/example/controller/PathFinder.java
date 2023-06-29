@@ -3,10 +3,10 @@ package org.example.controller;
 import java.util.ArrayList;
 
 public class PathFinder
-{
+{ // TODO : static pathfinder
     public static int SZ = 400;
-    private int [][][] gameMap = new int[SZ][SZ][2];
-    public int [][][] distance = new int [SZ][SZ][2];
+    private int [][][] gameMap = new int[2][][] ;
+    public int [][][] distance = new int[2][SZ][SZ];
 
     public int [] dx = new int[] {-1, 1, 0, 0, 0};
     public int [] dy = new int[] {0, 0, -1, 1, 0};
@@ -16,19 +16,13 @@ public class PathFinder
         return x >= 0 && x < SZ && y >= 0 && y < SZ;
     }
 
-    public void setGameMap( int[][] maskedMap1 , int [][] maskedMap2, int size )
-    {
-        for(int i = 0 ; i < size ; i++) {
-            for (int j = 0; j < size; j++) {
-                gameMap[i][j][0] = maskedMap1[i][j];
-                gameMap[i][j][1] = maskedMap2[i][j];
-            }
-        }
+    public void setGameMap( int[][] maskedMap1 , int[][] maskedMap2, int size ){
+        gameMap[0] = maskedMap1 ;
+        gameMap[1] = maskedMap2 ;
     }
 
     public void Run(Integer x, Integer y)
     {
-
         int n = SZ, m = SZ; /// this might change too
         int X = x, Y = y;
         ArrayList< Integer > Q = new ArrayList< Integer >();
@@ -38,16 +32,16 @@ public class PathFinder
             {
                 for(int k = 0; k < 2; k ++)
                 {
-                    if(X == i && Y == j && gameMap[i][j][k] != 1)
+                    if(X == i && Y == j && gameMap[k][i][j] != 1)
                     {
-                        distance[i][j][k] = 0;
+                        distance[k][i][j] = 0;
                         Q.add(i);
                         Q.add(j);
                         Q.add(k);
                     }
                     else
                     {
-                        distance[i][j][k] = SZ * SZ + 10;
+                        distance[k][i][j] = SZ * SZ + 10;
                     }
                 }
             }
@@ -59,16 +53,16 @@ public class PathFinder
             int f = (int) Q.get(i);
             int s = (int) Q.get(i + 1);
             int t = (int) Q.get(i + 2);
-            int curDis = distance[f][s][t] + 1;
+            int curDis = distance[t][f][s] + 1;
             i += 3;
             for(int d = 0; d < 5; d ++)
             {
                 int nx = f + dx[d], ny = s + dy[d], nz = t ^ dz[d];
                 if(!validPos(nx,ny))continue ;
-                boolean condition = (dz[d] == 1 && gameMap[nx][ny][nz] == 2) || (dz[d] == 0 && gameMap[nx][ny][nz] != 1);
-                if(validPos(nx, ny) && condition && distance[nx][ny][nz] > curDis)
+                boolean condition = (dz[d] == 1 && gameMap[nz][nx][ny] == 2) || (dz[d] == 0 && gameMap[nz][nx][ny] != 1);
+                if(validPos(nx, ny) && condition && distance[nz][nx][ny] > curDis)
                 {
-                    distance[nx][ny][nz] = curDis;
+                    distance[nz][nx][ny] = curDis;
                     Q.add(nx);
                     Q.add(ny);
                     Q.add(nz);
@@ -89,15 +83,15 @@ public class PathFinder
     public int goInDirectionFrom(Integer x, Integer y) /// up, down, left, right, otherMap (0, 1, 2, 3, 4) and -1 if it is fucked!
     {
         int z = -1;
-        if(gameMap[x][y][0] != 1)
+        if(gameMap[0][x][y] != 1)
         {
             z = 0;
         }
-        if(gameMap[x][y][1] != 1)
+        if(gameMap[1][x][y] != 1)
         {
             z = 1;
         }
-        if(z!=-1 && distance[x][y][z] > distance[x][y][1-z]){
+        if(z!=-1 && distance[z][x][y] > distance[1-z][x][y]){
             z = 1 - z ;
         }
         if(z == -1)
@@ -107,7 +101,7 @@ public class PathFinder
         for(int d = 0; d < 5; d ++)
         {
             int nx = x + dx[d], ny = y + dy[d], nz = dz[d] ^ z;
-            if(validPos(nx, ny) && distance[x][y][z] == distance[nx][ny][nz] + 1)
+            if(validPos(nx, ny) && distance[z][x][y] == distance[nz][nx][ny] + 1)
             {
                 return d;
             }

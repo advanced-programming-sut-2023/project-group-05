@@ -30,7 +30,7 @@ public enum BuildingImages {
     OIL_SMELTER("towersAndWalls/traps/oilSmelter.png",7),
 //    PITCH_DITCH(),
     CAGED_WAR_DOGS("towersAndWalls/traps/dogTrap.png",7),
-    SIEGE_TENT("militaryBuildings/siegeTent.png",4),
+    SIEGE_TENT("militaryBuildings/siegetent.png",4),
     STABLE("militaryBuildings/stable.png",4),
     TUNNELER_GUILD("militaryBuildings/tunnelerGuild.png",4),
     APPLE_ORCHARD("foods/appleorchard.png",2),
@@ -75,7 +75,7 @@ public enum BuildingImages {
     POLE_TURNER("armouries/poleturner.png",1),
     TANNER("armouries/tanner.png",1),
     SIGNPOST("houseAndStorage/signPost.png",3),
-    MENU("menu.png",0);
+    MENU("menu/menu.png",0);
 //    TUNNEL_ENTRANCE(),
 //    STAIR();
 

@@ -1223,12 +1223,11 @@ public class GameController {
     }
 
 
-    public void putBuildingInPlace( Building building){
+    public void putBuildingInPlace( Building building ){
         int row = building.getRow();
         int column = building.getColumn();
         building.getOwner().addBuilding(building);
         for (int i = row ; i < row + building.getHeight(); i ++)
-        {
             for (int j = column ; j < column + building.getWidth(); j ++)
             {
                 gameMap.getCell(i,j).setBuilding(building);
@@ -1236,7 +1235,7 @@ public class GameController {
                 if(building.getName().contains( "gate" ) || building.getName().contains( "wall" ) || building.getName().contains( "tower" ) )
                     gameMap.getMaskedMapUpperGround()[i][j] = 0 ;
             }
-        }
+
         if(building.getName().contains( "stair" ))
             gameMap.getMaskedMapUpperGround()[row][column] = gameMap.getMaskedMap()[row][column] = 2 ;
     }
@@ -1248,6 +1247,7 @@ public class GameController {
         Unit unit = Unit.createUnitByName(type,player,row,column);
         unit.setShape() ;
         unit.setWalkingAnimations() ;
+        unit.setPathFinder( gameMap ) ;
         gameMap.getCell(row,column).addUnit(unit);
         player.addUnit(unit);
         if (type.equals("trap"))

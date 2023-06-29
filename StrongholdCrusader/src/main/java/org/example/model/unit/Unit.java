@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import org.example.controller.GameController;
 import org.example.controller.PathFinder;
 
 import org.example.model.*;
@@ -23,7 +24,7 @@ import java.util.HashMap;
 
 public class Unit {
     private WalkingAnimation playingWalkingAnimation ;
-    protected PathFinder pathFinder = new PathFinder() ;
+    protected PathFinder pathFinder ;
     protected boolean isOnHighGround ;
     private final String name ;
     private int hitPoint;
@@ -62,6 +63,11 @@ public class Unit {
         units.add(this) ;
         owner.setPopulation( owner.getPopulation() + 1 );
         owner.getUnits().add(this) ;
+        pathFinder = new PathFinder() ;
+    }
+
+    public void setPathFinder(GameMap gameMap){
+        pathFinder.setGameMap( gameMap.getMaskedMap() , gameMap.getMaskedMapUpperGround() , 400 ) ;
     }
 
     public Rectangle getShape(){
@@ -172,6 +178,7 @@ public class Unit {
         targetRow = x ;
         int dir = pathFinder.goInDirectionFrom( this.row , this.column ) ;
         if(dir == -1){
+            System.out.println( "YOU CODED CORRECTLY" ) ;
             this.targetColumn = this.column ;
             this.targetRow = this.row ;
             return ;
@@ -197,7 +204,7 @@ public class Unit {
         }
         this.targetRow = row ;
         this.targetColumn = column ;
-        pathFinder.setGameMap( gameMap.getMaskedMap() , gameMap.getMaskedMapUpperGround() , 400 ) ;
+        // pathFinder.setGameMap( gameMap.getMaskedMap() , gameMap.getMaskedMapUpperGround() , 400 ) ;
         pathFinder.Run( row , column ) ;
         this.isMoving = true;
     }
@@ -255,18 +262,6 @@ public class Unit {
     public int getTargetRow(){
         return this.targetRow ;
     }
-
-    /*
-    TODO : public Building getBuilding(){
-        return this.building ;
-    }
-    */
-
-    /*
-    TODO : public void goToJob( Building building ){
-        // go to the job in that building
-    }
-    */
 
     public boolean getIsMoving(){
         return this.isMoving ;

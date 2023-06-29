@@ -121,7 +121,7 @@ public class GameGraphicalController {
                     reservedShapes.remove( mouse ) ;
                 } else if ( mouse.getFill() == Color.GREEN ) {
                     gameController.putBuildingInPlace( Building.createBuildingByName( chosenBuildingName, gameController.getPlayers().get(0) , mouseRow , mouseColumn ) ) ;
-                    addBuildingImage( mouseRow , mouseColumn ) ;
+                    camera.addBuilding( addBuildingImage( mouseRow , mouseColumn ) ) ;
                 } else {
                     System.out.println( "Bro you can't place that shit here" ) ;
                 }
@@ -153,11 +153,15 @@ public class GameGraphicalController {
                 if( keyEvent.getCode().equals( KeyCode.RIGHT ) ){
                     camera.move( 3 ) ;
                 }
+                if( keyEvent.getCode().equals( KeyCode.K ) ){
+                    debug() ;
+                }
+
             }
         });
     }
 
-    private static void addBuildingImage(int row, int column){
+    private static Polygon addBuildingImage(int row, int column){
         ImagePattern imagePattern = BuildingImages.getImagePattern( chosenBuildingName ) ;
         int width = BuildingEnum.getBuildingWidthByName( chosenBuildingName ) ;
         int height = BuildingEnum.getBuildingHeightByName( chosenBuildingName ) ;
@@ -185,6 +189,7 @@ public class GameGraphicalController {
         hexagon.setFill( imagePattern ) ;
         pane.getChildren().remove( mouse ) ;
         reservedShapes.remove( mouse ) ;
+        return hexagon ;
     }
 
     public static void initGraphicalMenu() {
@@ -320,6 +325,14 @@ public class GameGraphicalController {
         System.out.println( "GameGraphicalController : " + gameController.dropUnit( "archer" , 1 , 13 , 13 ) ) ;
         System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 25 , 20 )) ;
         System.out.println( "GameGraphicalController : " + gameController.dropUnit( "operator" , 1 , 20 , 20 )) ;
+
+    }
+    private static void debug(){
+        for(int i = 0 ; i < 20 ; i++){
+            for(int j = 0 ; j < 20 ; j++){
+                System.out.print( "" + gameController.getGameMap().getMaskedMap()[i][j] + ( j == 19 ? "\n" : "" ) ) ;
+            }
+        }
     }
 
 }

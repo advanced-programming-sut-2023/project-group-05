@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class Camera {
 
     private Polygon[][] map ; // the map that the camera is viewing
+    private ArrayList<Polygon> buildings ; // buildings in our view
     private int[] pos ; // the position for reference cell
     private Pane pane ; // where we draw things
     private int size ;
@@ -31,10 +32,11 @@ public class Camera {
     private GameController gameController;
     private int unitCount ;
 
-    public Camera( Polygon[][] map , Pane pane , GameController gameController ){
+    public Camera(Polygon[][] map, Pane pane, GameController gameController){
         this.map = map ;
         this.pane = pane ;
         this.pos = new int[]{0, 0};
+        this.buildings = new ArrayList<>() ;
         this.gameController = gameController ;
         this.size = map.length ;
         this.unitCount = 0 ;
@@ -48,12 +50,15 @@ public class Camera {
         return this.viewSize ;
     }
 
+    public void addBuilding(Polygon newBuilding){
+        buildings.add( newBuilding ) ;
+    }
+
     public void draw(){
 
         Paint grassPaint = new ImagePattern( new Image( getClass().getResource("/images/tiles/grass.jpg").toExternalForm() ) ) ;
         Paint waterPaint = new ImagePattern( new Image( getClass().getResource("/images/tiles/water.jpg").toExternalForm() ) ) ;
         Paint groundPaint = new ImagePattern( new Image( getClass().getResource("/images/tiles/ground.jpg").toExternalForm() ) ) ;
-
 
         for(int i = 0 ; i < size ; i++){
             for( int j = 0; j < size ; j++ ){
@@ -190,7 +195,13 @@ public class Camera {
         this.pos[1] += dy ;
 
         // moving to selected location
-        for(int i = this.pos[0] ; i < Math.min ( size , this.pos[0] + viewSize ) ; i++){
+        for(Polygon building : buildings){
+            building.setLayoutX( building.getLayoutX() + TILE_WIDTH * (-dx+dy) / 2 );
+            building.setLayoutY( building.getLayoutY() + TILE_HEIGHT * (-dx-dy) / 2 );
+        }
+        System.out.println( dy ) ;
+
+        for(int i = this.pos[0] ; i < Math.min ( size , this.pos[0] + viewSize ) ; i++)
             for( int j = this.pos[1] ; j < Math.min ( this.pos[1] + viewSize , size ) ; j++ ){
                 // putting the tile on it's place
                 int I = i - this.pos[0] ;
@@ -208,13 +219,10 @@ public class Camera {
                 }
 
             }
-        }
+
     }
 
     public double[] getUnitCoordinates(int x, int y, Unit unit){
-//
-//        unit.getShape().setX( x - unit.getShape().getWidth() / 2 ) ;
-//        unit.getShape().setY( y + TILE_HEIGHT / 2 - unit.getShape().getHeight() )  ;
         int I = x - this.pos[0] ;
         int J = y - this.pos[1] ;
         return new double[]{( I - J ) * ( TILE_WIDTH / 2 ) + xShift - unit.getShape().getWidth() / 2 ,
@@ -230,7 +238,6 @@ public class Camera {
     public int[] getPos(){
         return this.pos ;
     }
-
 
     // minimap related methods
 
