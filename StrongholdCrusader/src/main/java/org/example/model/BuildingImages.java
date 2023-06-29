@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import org.example.Main;
 import org.example.controller.GameGraphicalController;
+import org.example.controller.bottomMenu;
 import org.example.view.MainMenu;
 
 import java.util.ArrayList;
@@ -99,14 +100,14 @@ public enum BuildingImages {
             System.out.println( "YOUUUUUUUUUUU" + buildingImageName );
         this.image = new Image(MainMenu.class.getResource( "/images/buildings/buildingMenu/"+buildingImageName).toExternalForm() ) ;
         switch (category) {
-            case 1 -> GameGraphicalController.armouries.add(image);
-            case 2 -> GameGraphicalController.foods.add(image);
-            case 3 -> GameGraphicalController.houseAndStorage.add(image);
-            case 4 -> GameGraphicalController.militaryBuildings.add(image);
-            case 5 -> GameGraphicalController.goodThings.add(image);
-            case 6 -> GameGraphicalController.badThings.add(image);
-            case 7 -> GameGraphicalController.towerAndWalls.add(image);
-            case 8 -> GameGraphicalController.industries.add(image);
+            case 1 -> bottomMenu.armouries.add(image);
+            case 2 -> bottomMenu.foods.add(image);
+            case 3 -> bottomMenu.houseAndStorage.add(image);
+            case 4 -> bottomMenu.militaryBuildings.add(image);
+            case 5 -> bottomMenu.goodThings.add(image);
+            case 6 -> bottomMenu.badThings.add(image);
+            case 7 -> bottomMenu.towerAndWalls.add(image);
+            case 8 -> bottomMenu.industries.add(image);
             default -> {
             }
         }
