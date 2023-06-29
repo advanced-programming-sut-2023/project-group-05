@@ -69,6 +69,7 @@ public class GameGraphicalController {
         SCREEN_WIDTH = 1000;
         pane.requestFocus();
         initTestMode() ;
+        instantiate() ;
         initMap(height, width);
         initKeyboardControlKeys();
         initGraphicalMenu();
@@ -96,7 +97,7 @@ public class GameGraphicalController {
                         mouse.setLayoutY( cell.getLayoutY() ) ;
                         mouseRow = finalI ;
                         mouseColumn = finalJ ;
-                        boolean green = true;
+                        boolean green = true ;
                         outer :
                             for(int k = finalI ; k < finalI + mouseHeight ; k++)
                                 for(int m = finalJ ; m < finalJ + mouseWidth ; m++)
@@ -117,21 +118,25 @@ public class GameGraphicalController {
             @Override
             public void handle( MouseEvent mouseEvent ){
                 if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                    pane.getChildren().remove( mouse ) ;
-                    reservedShapes.remove( mouse ) ;
+                    mouse.setVisible(false) ;
                 } else if ( mouse.getFill() == Color.GREEN ) {
                     gameController.putBuildingInPlace( Building.createBuildingByName( chosenBuildingName, gameController.getPlayers().get(0) , mouseRow , mouseColumn ) ) ;
-                    camera.addBuilding( addBuildingImage( mouseRow , mouseColumn ) ) ;
+                    addBuildingImage( mouseRow , mouseColumn ) ;
                 } else {
                     System.out.println( "Bro you can't place that shit here" ) ;
                 }
             }
         } );
+        reservedShapes.add( mouse ) ;
+        mouse.setVisible( false ) ;
+        pane.getChildren().add( mouse ) ;
     }
 
-    private static void initMap( int height , int width ){
+    private static void instantiate(){
         map = new Polygon[height][width] ;
         camera = new Camera( map , pane , gameController ) ;
+    }
+    private static void initMap( int height , int width ){
         camera.draw() ;
         camera.move(0) ;
     }
@@ -161,35 +166,9 @@ public class GameGraphicalController {
         });
     }
 
-    private static Polygon addBuildingImage(int row, int column){
-        ImagePattern imagePattern = BuildingImages.getImagePattern( chosenBuildingName ) ;
-        int width = BuildingEnum.getBuildingWidthByName( chosenBuildingName ) ;
-        int height = BuildingEnum.getBuildingHeightByName( chosenBuildingName ) ;
-        /*
-        *  TODO:  read this:
-        *         It's 23:53 and I'm already tired...
-        *         28-JUNE-2023
-        *         -Danial
-        */
-        // fact : every building is in shape of a hexagon-like.
-        int size = width ;
-        Polygon hexagon = new Polygon(
-                0, 0,
-                size * TILE_WIDTH / 2 , size * TILE_HEIGHT / 2,
-                size * TILE_WIDTH / 2 , 3 * size * TILE_HEIGHT / 2,
-                0 , 4 * size * TILE_HEIGHT / 2,
-                -size * TILE_WIDTH / 2 , 3 * size * TILE_HEIGHT / 2,
-                -size * TILE_WIDTH / 2 , size * TILE_HEIGHT / 2
-        ) ;
-        pane.getChildren().add(hexagon) ;
-        double x = map[row][column].getLayoutX() ;
-        double y = map[row][column].getLayoutY() - TILE_HEIGHT * size ;
-        hexagon.setLayoutX(x) ;
-        hexagon.setLayoutY(y) ;
-        hexagon.setFill( imagePattern ) ;
-        pane.getChildren().remove( mouse ) ;
-        reservedShapes.remove( mouse ) ;
-        return hexagon ;
+    private static void addBuildingImage(int row, int column){
+        camera.addBuilding(row , column , chosenBuildingName);
+        mouse.setVisible(false) ;
     }
 
     public static void initGraphicalMenu() {
@@ -284,8 +263,8 @@ public class GameGraphicalController {
     }
 
     public static void alterMenu(ArrayList<Rectangle> first, ArrayList<Rectangle> second, Pane pane) {
-        for (Rectangle rectangle : first) pane.getChildren().remove(rectangle);
-        for (Rectangle rectangle : second) pane.getChildren().add(rectangle);
+        for (Rectangle rectangle : first) pane.getChildren().remove(rectangle) ;
+        for (Rectangle rectangle : second) pane.getChildren().add(rectangle) ;
     }
 
     public static void initArray(ArrayList<Rectangle> array, ArrayList<Image> images, int height, int width, ArrayList<String> buildingNames) {
@@ -302,10 +281,7 @@ public class GameGraphicalController {
                     mouseHeight = BuildingEnum.getBuildingHeightByName( buildingNames.get(finalI) ) ;
                     mouseWidth = BuildingEnum.getBuildingWidthByName( buildingNames.get(finalI) ) ;
                     updateMouse() ;
-                    if( !pane.getChildren().contains( mouse ) ){
-                        pane.getChildren().add( mouse );
-                        reservedShapes.add( mouse );
-                    }
+                    mouse.setVisible(true) ;
                 }
             } );
             array.add(rectangle);

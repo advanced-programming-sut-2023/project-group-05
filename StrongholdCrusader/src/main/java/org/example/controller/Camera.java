@@ -11,14 +11,22 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import org.example.model.BuildingEnum;
+import org.example.model.BuildingImages;
 import org.example.model.Minimap;
 import org.example.model.Player;
+import org.example.model.building.Building;
 import org.example.model.unit.Unit;
 
 import java.util.ArrayList;
 
 public class Camera {
-
+    // a brief view of the pane children :
+    // {
+    // all map[i][j]s ,
+    // units & buildings in order of non-decreasing ( i + j ) ~ y ,
+    // reserved nodes ( menus, ..., etc, things that should be on top of every thing
+    // }
     private Polygon[][] map ; // the map that the camera is viewing
     private ArrayList<Polygon> buildings ; // buildings in our view
     private int[] pos ; // the position for reference cell
@@ -50,8 +58,44 @@ public class Camera {
         return this.viewSize ;
     }
 
-    public void addBuilding(Polygon newBuilding){
-        buildings.add( newBuilding ) ;
+    public void addBuilding(int row , int column , String chosenBuildingName){
+        ImagePattern imagePattern = BuildingImages.getImagePattern( chosenBuildingName ) ;
+        int width = BuildingEnum.getBuildingWidthByName( chosenBuildingName ) ;
+        int height = BuildingEnum.getBuildingHeightByName( chosenBuildingName ) ;
+        // fact : every building is in shape of a hexagon-like.
+        int buildingSize = width ;
+        Polygon hexagon = new Polygon(
+                0, 0,
+                buildingSize * TILE_WIDTH / 2 , buildingSize * TILE_HEIGHT / 2,
+                buildingSize * TILE_WIDTH / 2 , 3 * buildingSize * TILE_HEIGHT / 2,
+                0 , 4 * buildingSize * TILE_HEIGHT / 2,
+                -buildingSize * TILE_WIDTH / 2 , 3 * buildingSize * TILE_HEIGHT / 2,
+                -buildingSize * TILE_WIDTH / 2 , buildingSize * TILE_HEIGHT / 2
+        ) ;
+        double x = map[row][column].getLayoutX() ;
+        double y = map[row][column].getLayoutY() - TILE_HEIGHT * buildingSize ;
+        hexagon.setLayoutX(x) ;
+        hexagon.setLayoutY(y) ;
+        hexagon.setFill( imagePattern ) ;
+        buildings.add( hexagon ) ;
+        // adding the building in pane
+        int n = 0 ; // number of things with greater ( i + j )
+
+        // first calculate n among rectangles ( buildings )
+        for(Building building : Building.getBuildings()){
+            if( building.getRow() + building.getColumn() + building.getHeight() - 1 > row + column - 1 + buildingSize )
+                n++ ;
+        }
+        for(int i = this.pos[0] ; i < this.pos[0] + viewSize ; i++){
+            for(int j = this.pos[1] ; j < this.pos[1] + viewSize ; j++){
+                for(Unit unit : gameController.getGameMap().getCell(i,j).getUnits()){
+                    if(unit.getRow() + unit.getColumn()> 2 * buildingSize + row + column - 2) n++ ;
+                }
+            }
+        }
+
+        pane.getChildren().add( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size() - n , hexagon ) ;
+
     }
 
     public void draw(){
@@ -63,9 +107,6 @@ public class Camera {
         for(int i = 0 ; i < size ; i++){
             for( int j = 0; j < size ; j++ ){
                 // highest point on the tile is ( x , y )
-                // the +1 is only for debugging and should be removed
-                //int x = ( i - j ) * ( TILE_WIDTH / 2 + 1 ) ;
-                //int y = ( i + j ) * ( TILE_HEIGHT / 2 + 1 ) ;
                 int x = 0 , y = 0 ;
                 map[i][j] = new Polygon( x , y , x + TILE_WIDTH/2 , y + TILE_HEIGHT/2 , x , y + TILE_HEIGHT , x - TILE_WIDTH/2 , y + TILE_HEIGHT/2 ) ;
                 Paint paint = Color.BLACK ;
@@ -105,7 +146,7 @@ public class Camera {
 
         for( int i = 0 ; i < viewSize ; i++ )
             for( int j = 0 ; j < viewSize ; j++ ){
-                pane.getChildren().add( map[i][j] ) ;
+                pane.getChildren().add( 0 , map[i][j] ) ;
             }
         for( int i = 0 ; i < viewSize ; i++)
             for( int j = 0 ; j < viewSize ; j++ )
@@ -199,7 +240,6 @@ public class Camera {
             building.setLayoutX( building.getLayoutX() + TILE_WIDTH * (-dx+dy) / 2 );
             building.setLayoutY( building.getLayoutY() + TILE_HEIGHT * (-dx-dy) / 2 );
         }
-        System.out.println( dy ) ;
 
         for(int i = this.pos[0] ; i < Math.min ( size , this.pos[0] + viewSize ) ; i++)
             for( int j = this.pos[1] ; j < Math.min ( this.pos[1] + viewSize , size ) ; j++ ){

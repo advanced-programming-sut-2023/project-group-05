@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Game extends Application {
-
+    // TODO : check if kiani is removing from pane or setting visible !!!
     @Override
     public void start( Stage stage ) throws Exception {
         Pane pane = FXMLLoader.load( getClass().getResource( "/fxml/Game.fxml" ) ) ;
