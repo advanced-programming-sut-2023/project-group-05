@@ -1,12 +1,10 @@
 package View;
 
-import Controller.ServerController;
-import Controller.URLFinder;
+import Controller.GameRoomController;
 import Model.ClientConnection;
-import Model.ServerConnection;
+import Model.GameRoomConnection;
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,12 +15,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class ServerStartGameMenu extends Application
+public class GameRoomStartGameMenu extends Application
 {
     public BorderPane curPane;
     public VBox vbox;
-    ServerConnection serverConnection;
-    public ServerStartGameMenu(ServerConnection _serverConnection)
+    GameRoomConnection serverConnection;
+    public GameRoomStartGameMenu( GameRoomConnection _serverConnection)
     {
         serverConnection = _serverConnection;
     }
@@ -46,7 +44,7 @@ public class ServerStartGameMenu extends Application
                 @Override
                 public void handle(MouseEvent mouseEvent)
                 {
-                    ServerController.RemoveClient(clientConnection);
+                    GameRoomController.RemoveClient(clientConnection);
                     vBox.getChildren().remove(hBox);
                 }
             });
@@ -73,7 +71,7 @@ public class ServerStartGameMenu extends Application
         TestButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                ServerController.AddClient(new ClientConnection("Amir", serverConnection.getServerName(), serverConnection.getServerPort()));
+                GameRoomController.AddClient(new ClientConnection("Amir", serverConnection.getServerName(), serverConnection.getServerPort()));
             }
         });
         vBox.getChildren().addAll(button, TestButton);

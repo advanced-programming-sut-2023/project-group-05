@@ -1,21 +1,21 @@
 package Controller;
 
 import Model.ClientConnection;
-import Model.ServerConnection;
-import View.ServerStartGameMenu;
+import Model.GameRoomConnection;
+import View.GameRoomStartGameMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ServerController
+public class GameRoomController
 {
-    public static ServerStartGameMenu serverStartGameMenu;
-    public static HashMap < String, ServerConnection > ServersMap = new HashMap<>();
-    public static ArrayList <ServerConnection > Servers = new ArrayList<>();
+    public static GameRoomStartGameMenu serverStartGameMenu;
+    public static HashMap < String, GameRoomConnection> ServersMap = new HashMap<>();
+    public static ArrayList <GameRoomConnection> Servers = new ArrayList<>();
     public static ArrayList <ClientConnection > Clients = new ArrayList<>();
-    public static boolean AddServer(ServerConnection serverConnection)
+    public static boolean AddServer( GameRoomConnection serverConnection)
     {
-        for(ServerConnection now : Servers)
+        for( GameRoomConnection now : Servers)
         {
             if(now.getServerName().equals(serverConnection.getServerName()))
             {

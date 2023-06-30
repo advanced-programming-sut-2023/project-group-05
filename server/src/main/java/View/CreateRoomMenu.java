@@ -1,8 +1,8 @@
 package View;
 
-import Controller.ServerController;
+import Controller.GameRoomController;
 import Controller.URLFinder;
-import Model.ServerConnection;
+import Model.GameRoomConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -56,12 +56,12 @@ public class CreateRoomMenu extends Application
             new ErrorWindow("Server Capacity is Invalid", "Retry!").start(new Stage());
             return;
         }
-        ServerConnection serverConnection = new ServerConnection(serverName.getText(), serverPassword.getText(), port, max);
-        if(ServerController.AddServer(serverConnection))
+        GameRoomConnection serverConnection = new GameRoomConnection(serverName.getText(), serverPassword.getText(), port, max);
+        if( GameRoomController.AddServer(serverConnection))
         {
             /// System.out.println("Server Created Successfully");
-            ServerController.serverStartGameMenu = new ServerStartGameMenu(serverConnection);
-            ServerController.serverStartGameMenu.start(stage);
+            GameRoomController.serverStartGameMenu = new GameRoomStartGameMenu(serverConnection);
+            GameRoomController.serverStartGameMenu.start(stage);
         }
         else
         {

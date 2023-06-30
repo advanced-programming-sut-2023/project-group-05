@@ -2,14 +2,14 @@ package Model;
 
 import java.util.ArrayList;
 
-public class ServerConnection
+public class GameRoomConnection
 {
     private final String serverName;
     private final String serverPassword;
     private final int serverPort;
     private final int maxCapacity;
     private ArrayList < ClientConnection > Clients = new ArrayList<>();
-    public ServerConnection(String _serverName, String _serverPassword, int _serverPort, int _maxCapacity)
+    public GameRoomConnection( String _serverName, String _serverPassword, int _serverPort, int _maxCapacity)
     {
         serverName = _serverName;
         serverPassword = _serverPassword;
