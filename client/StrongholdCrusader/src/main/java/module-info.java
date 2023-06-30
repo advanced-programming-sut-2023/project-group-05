@@ -5,6 +5,7 @@ module AA {
     requires json.simple;
     requires junit;
     requires javafx.graphics;
+    requires com.google.gson;
 
     exports org.example.model;
     exports org.example.view;

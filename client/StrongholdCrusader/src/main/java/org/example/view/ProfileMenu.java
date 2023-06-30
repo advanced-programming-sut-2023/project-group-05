@@ -1,16 +1,8 @@
 package org.example.view;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import org.example.controller.ProfileMenuController;
-import org.example.model.Account;
-import org.example.model.Commands;
+public class ProfileMenu {
 
-import java.util.regex.Matcher;
-
-public class ProfileMenu extends Application {
-
-    public static void run( Account account ){
+    /*public static void run( Account account ){
         System.out.println( "YOU ARE NOW IN PROFILE MENU ( enter exit to get back )" ) ;
         ProfileMenuController profileMenuController = new ProfileMenuController( account ) ;
         Matcher matcher;
@@ -47,5 +39,5 @@ public class ProfileMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-    }
+    }*/
 }

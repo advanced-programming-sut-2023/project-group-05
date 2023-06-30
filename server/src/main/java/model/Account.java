@@ -1,6 +1,6 @@
-package org.example.model;
+package model;
 
-import org.example.controller.DataBase;
+import model.DataBase;
 
 import java.util.HashMap;
 
@@ -90,7 +90,8 @@ public class Account
         this.question = _question;
         this.answer = _answer;
         accountsMap.put(this.userName, this);
-        //if(! DataBase.isAccountInData(this) ) DataBase.addNewAccount(this);
+        if(! DataBase.isAccountInData(this) )
+            DataBase.addNewAccount(this);
     }
 
 }

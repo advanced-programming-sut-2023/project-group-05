@@ -8,7 +8,8 @@ import org.example.model.unit.Unit;
 import java.util.ArrayList;
 
 public class Player {
-    private Account account ;
+    String username ;
+    String nickname ;
     private ArrayList <Building> buildings ;
     private ArrayList<Unit> units ;
     //TODO : Handle Castle
@@ -53,8 +54,9 @@ public class Player {
     public int crossbow ;
     public int leatherArmour ;
 
-    public Player( Account account ){
-        this.account = account ;
+    public Player( String username , String nickname ){
+        this.username = username ;
+        this.nickname = nickname ;
         this.isGranaryCreated = false;
         this.isStockPileCreated = false;
         this.mace = 0 ;
@@ -109,6 +111,14 @@ public class Player {
             }
         }
         return null;
+    }
+
+    public String getNickname(){
+        return this.nickname ;
+    }
+
+    public String getUsername(){
+        return this.username ;
     }
 
     public void removeUnit(Unit inp , GameMap gameMap)
@@ -277,10 +287,6 @@ public class Player {
         // WHAT ?!
         /*this.selectedBuilding = null;
         this.selectedUnits = new ArrayList<>();*/
-    }
-
-    public Account getAccount(){
-        return this.account ;
     }
 
     public double getGold()

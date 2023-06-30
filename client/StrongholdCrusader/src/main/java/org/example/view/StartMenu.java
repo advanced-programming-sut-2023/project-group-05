@@ -17,7 +17,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class StartMenu extends Application {
+public class StartMenu extends Application { // where you choose whether to login or signup
     public static Stage stage;
     private Text welcomeText = new Text("Welcome To Strongholds Game");
 

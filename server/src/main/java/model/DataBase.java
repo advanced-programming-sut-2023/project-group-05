@@ -1,6 +1,6 @@
 package model ;
 
-import org.example.model.Account;
+import model.Account ;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

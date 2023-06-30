@@ -10,7 +10,7 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import org.example.controller.GameController;
 import org.example.controller.GameGraphicalController;
-import org.example.model.Account;
+import org.example.model.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,10 +26,9 @@ public class Game extends Application {
         stage.show() ;
         // for test
         // our player : ( always the 0-th index )
-        Account acc1 = new Account( "Danial" , "dani_gang" , "DanialManial@gmail.com" , 12345678 , 0 , "we shall conquer" , 2 ,2 ) ;
-        // other players :
-        Account acc2 = new Account( "Amin" , "amin_gang" , "AminMamin@gmail.com" , 12345678 , 0 , "amin is the true king" , 0 ,0 ) ;
-        GameController gameController = (new GameController( new ArrayList <Account>( Arrays.asList( acc1 , acc2 ) ) )) ;
+        Player player1 = new Player( "username1" , "nickname1" ) ;
+        Player player2 = new Player( "username2" , "nickname2" ) ;
+        GameController gameController = (new GameController( new ArrayList<>(Arrays.asList(player1 , player2)) )) ;
         GameGraphicalController.init( stage , pane , gameController ) ;
     }
 

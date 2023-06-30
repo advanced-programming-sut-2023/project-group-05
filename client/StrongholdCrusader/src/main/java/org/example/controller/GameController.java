@@ -17,7 +17,6 @@ import java.util.regex.Matcher;
 public class GameController {
 
     ArrayList<Player> players ;
-    ArrayList <Account> accounts ;
     private int turn ;
     private Player winner ;
     Player player ;
@@ -29,12 +28,8 @@ public class GameController {
     public static HashMap< Operator , AtomicBoolean > oxHasStone = new HashMap<>() ;
 
 
-    public GameController( ArrayList<Account> accounts ) throws Exception{
-        this.accounts = accounts ;
-        this.players = new ArrayList<Player>() ;
-        for( Account acc : accounts ){
-            this.players.add( new Player( acc ) ) ;
-        }
+    public GameController( ArrayList<Player> players ) throws Exception{
+        this.players = players ;
         this.player = this.players.get(0) ;
         this.turn = 0 ;
         this.winner = null ;
@@ -42,25 +37,6 @@ public class GameController {
         // putYourCastle( this.player );
         // putYourStockPile( this.player );
         System.out.println( "TODO : we assume castle is put" ) ;
-    }
-
-    public void debug(){
-        this.player.decreaseCost(Cost.negative(new Cost( 1000 , 1000 , 1000 , 1000 , 1000, 1000 , 1000 , 1000 , 1000 , 1000 , 1000, 1000 , 1000 , 1000 , 1000 , 1000, 1000 , 1000, 1000 , 1000 , 1000 , 1000 , 1000 ))) ;
-        for(Unit unit : Unit.getUnits()){
-            System.out.println("UNIT : " + unit.getName() + " hitpoint : " + unit.getHitPoint() + " x = " + unit.getColumn() + " y = " + unit.getRow() + ( unit instanceof Warrior ? " mode = " + ((Warrior)unit).getUnitMode().name() : "" ) ) ;
-        }
-        for(Building building : Building.getBuildings()){
-            System.out.println("BUILDING : " + building.getName() + " hitpoint : " + building.getHitPoint() + " x = " + building.getColumn() + " y = " + building.getRow() ) ;
-        }
-        for(Player p : this.players){
-            System.out.println(
-                    "Player : " + p.getAccount().getNickName() + " " + " apple : " + p.getApple() + " sword : " + p.getSword()
-            ) ;
-        }
-    //for(int i = 0 ; i < 20 ; i++)
-    //            for(int j = 0 ; j < 20 ; j++)
-    //                System.out.print("" + gameMap.getMaskedMap()[i][j] + (j == 19 ? "\n" : " ")) ;
-
     }
 
     public ArrayList<Player> getPlayers(){
@@ -522,11 +498,7 @@ public class GameController {
     }
 
     private void endGame(){
-        System.out.println( "\nTHIS MATCH HAS ENDED AFTER " + this.turn / accounts.size() + " ROUNDS \n" +
-                            "THE WINNER IS " + winner.getAccount().getNickName() + "\n" ) ;
-        winner.getAccount().setHighScore( (int)winner.getAccount().getHighScore() + 100 * (winner.getPopularity()) + 1000  );
-        System.out.println( "the winner is " + winner.getAccount().getNickName() ) ;
-
+        // TODO : give credit to winner, send to server
         Building.getBuildings().clear() ;
         Unit.getUnits().clear() ;
     }
@@ -1418,7 +1390,7 @@ public class GameController {
         ret += "----------------------------------------" ;
         for( Trade trade : Trade.getTrades() ){
             ret += "\nINDEX : " + index + " < " ;
-            ret += "\nPlayer : " + trade.getPlayer1().getAccount().getNickName() ;
+            ret += "\nPlayer : " + trade.getPlayer1().getNickname() ;
             ret += "\n  -> Price : " + trade.getPrice() ;
             ret += "\n  -> Amount : " + trade.getAmount() ;
             ret += "\n  -> Resource : " + trade.getResourceType() ;

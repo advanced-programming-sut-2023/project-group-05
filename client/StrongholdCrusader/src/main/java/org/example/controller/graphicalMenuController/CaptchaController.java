@@ -60,7 +60,7 @@ public class CaptchaController {
                     input = Integer.parseInt( textField.getText() ) ;
                     if( input != number ) passed = false ;
                 } catch ( Exception e ){
-                    passed = false ;
+                    e.printStackTrace();
                 }
                 isPassed = passed ;
                 eventHandler.handle( mouseEvent ) ;

@@ -1,21 +1,7 @@
 package test;
-import org.example.Main;
-import org.example.controller.Hash;
-import org.example.controller.SignupLoginMenuController;
-import org.example.model.Account;
-import org.example.model.Commands;
-import org.example.view.Menu;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-
-import java.util.regex.Matcher;
-
-
-import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Test {
-    @BeforeClass
+    /*@BeforeClass
     public static void testSetup(){
         Hash.setMOD(1000000007);
         Hash.setBASE(5021);
@@ -23,7 +9,7 @@ public class Test {
         long hash = new Hash(password).getHsh();
         Account account = new Account("username","bakeri","moaminkiani1@gmail.com",hash,0,"let's conquer",1,1);
     }
-    /*@org.junit.Test
+    @org.junit.Test
     public void testCreateUser(){
         String leftSlogan = "user create -u sth -p APkimoam03$ APkimoam03$ -email moaminkiani1@gmail.com -n bakeri -s";
         Matcher matcher = Commands.getMatchingMatcher(leftSlogan,Commands.CREATE_USER);

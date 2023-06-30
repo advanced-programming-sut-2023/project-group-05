@@ -20,7 +20,7 @@ import org.example.controller.graphicalMenuController.CaptchaController;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class SignupMenu extends Application {
+public class SignupMenu extends Application { // where you signup
     public static Stage stage ;
     @FXML
     private TextField usernameTextField;
@@ -67,22 +67,38 @@ public class SignupMenu extends Application {
                         alert.setTitle( "Captcha failed." ) ;
                         alert.setContentText( "You have entered wrong captcha." );
                         alert.showAndWait() ;
+                        try {
+                            (new StartMenu()).start( SignupMenu.stage ) ;
+                        } catch(Exception e) {
+                            e.printStackTrace() ;
+                        }
                     }
                     else if( output != null ){
                         Alert alert = new Alert( Alert.AlertType.ERROR ) ;
                         alert.setTitle( "ERROR" ) ;
                         alert.setContentText( output );
                         alert.showAndWait() ;
+                        try {
+                            (new StartMenu()).start( SignupMenu.stage ) ;
+                        } catch(Exception e) {
+                            e.printStackTrace() ;
+                        }
                     } else {
                         Alert alert = new Alert( Alert.AlertType.INFORMATION ) ;
                         alert.setTitle( "Signup successful" );
                         alert.setContentText( "you have successfully registered your account." );
                         alert.showAndWait() ;
                     }
+
+                } else {
+                    Alert alert = new Alert( Alert.AlertType.ERROR ) ;
+                    alert.setTitle( "Wrong captcha" ) ;
+                    alert.setContentText( "you have entered wrong captcha" ) ;
+                    alert.showAndWait() ;
                     try {
-                        (new StartMenu()).start( SignupMenu.stage ) ;
-                    } catch(Exception e) {
-                        e.printStackTrace() ;
+                        ( new SignupMenu() ).start(stage) ;
+                    } catch( Exception e ){
+                        e.printStackTrace();
                     }
                 }
             }

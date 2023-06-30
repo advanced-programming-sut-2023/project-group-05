@@ -11,11 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.example.controller.DataBase;
 import org.example.controller.Hash;
 import org.example.controller.SignupLoginMenuController;
 import org.example.controller.graphicalMenuController.CaptchaController;
-import org.example.model.Account;
 
 public class LoginMenu extends Application {
     public TextField usernameTextField;
@@ -24,27 +22,11 @@ public class LoginMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        DataBase.wakeUp() ;
         BorderPane borderPane = FXMLLoader.load(StartMenu.class.getResource("/fxml/LoginMenu.fxml"));
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.show();
         LoginMenu.stage = stage ;
-    }
-
-    public void forgetPassword(MouseEvent mouseEvent) throws Exception {
-        String username = usernameTextField.getText() ;
-        Account account = Account.getAccountsMap().get( username );
-
-        if( account == null ){
-            Alert alert = new Alert( Alert.AlertType.ERROR ) ;
-            alert.setTitle( "ERROR" ) ;
-            alert.setContentText( "account not found." );
-            alert.showAndWait() ;
-            return ;
-        }
-
-        (new ForgetPassword()).initialize( account ) ;
     }
 
     public void login(MouseEvent mouseEvent) throws Exception {
@@ -60,18 +42,29 @@ public class LoginMenu extends Application {
                     alert.setTitle( "Captcha failed." ) ;
                     alert.setContentText( "You have entered wrong captcha." );
                     alert.showAndWait() ;
+                    try {
+                        (new LoginMenu()).start( stage ) ;
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 else if ( output != null ) {
                     Alert alert = new Alert( Alert.AlertType.ERROR ) ;
                     alert.setTitle( "ERROR" ) ;
                     alert.setContentText( output ) ;
                     alert.showAndWait() ;
+                    try {
+                        (new LoginMenu()).start( stage ) ;
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 else {
                     Alert alert = new Alert( Alert.AlertType.INFORMATION ) ;
                     alert.setTitle( "Signup successful" );
                     alert.setContentText( "you have successfully logged in." );
                     alert.showAndWait() ;
+                    // proceed to profile menu
                 }
             }
         } ;

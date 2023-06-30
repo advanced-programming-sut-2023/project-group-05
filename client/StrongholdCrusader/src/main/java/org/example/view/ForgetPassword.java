@@ -1,29 +1,13 @@
 package org.example.view;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.example.controller.DataBase;
-import org.example.controller.Hash;
-import org.example.controller.SecurityQuestions;
-import org.example.controller.SignupLoginMenuController;
-import org.example.controller.graphicalMenuController.ForgetPasswordController;
-import org.example.model.Account;
 
 public class ForgetPassword extends Application {
 
@@ -42,16 +26,16 @@ public class ForgetPassword extends Application {
         stage.show();
     }
 
-    public void initialize( Account account ) throws Exception {
+    /*public void initialize( Account account ) throws Exception {
         ForgetPasswordController.setAccount( account ) ;
         this.start( LoginMenu.stage ) ;
-    }
+    }*/
 
-    public void showQuestion(){
+    /*public void showQuestion(){
         securityQuestionText.setText( SecurityQuestions.questions.get((int)ForgetPasswordController.getAccount().getQuestion()) ) ;
-    }
+    }*/
 
-    public void submit( MouseEvent mouseEvent ){
+    /*public void submit( MouseEvent mouseEvent ){
         String answer = answerTextField.getText() ;
         long answerLong ;
         try{
@@ -79,5 +63,5 @@ public class ForgetPassword extends Application {
             return ;
         }
         ForgetPasswordController.getAccount().setPassword( Hash.encode(newPassword) );
-    }
+    }*/
 }

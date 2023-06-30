@@ -1,25 +1,15 @@
 package org.example.controller;
 
-import org.example.model.Account;
-import org.example.model.Sleep;
-import org.example.view.MainMenu;
-import org.example.view.Menu;
-import org.example.view.SignupLoginMenu;
-import org.json.simple.JSONObject;
+import com.google.gson.Gson;
+import javafx.scene.control.Alert;
 
-import java.net.Inet4Address;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.Scanner;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignupLoginMenuController {
-    SignupLoginMenu signupLoginMenu;
-    SignupLoginMenuController(SignupLoginMenu signupMenu){
-        this.signupLoginMenu = signupMenu;
-    }
 
     public static boolean validNickname( String nickname )
     {
@@ -52,42 +42,40 @@ public class SignupLoginMenuController {
     public static String createUser( String username , String password , String nickname , String passwordConfirm , String email , String slogan ){
 
         if(!validUserName(username))
-            return "Invalid Username!";
+            return "Username form is not valid";
 
         if(!validPassword(password))
-            return "Invalid password";
+            return "weak password";
 
         if(!validEmail(email))
             return "Invalid Email address!";
-        if(slogan == null)
-            return "fill slogan form" ;
 
-        boolean emailExists = false ;
-        for( Account acc : Account.getAccountsMap().values() ){
-            if( acc.getEmail().equalsIgnoreCase( email ) ){
-                emailExists = true ;
-                break ;
-            }
-        }
-        if( emailExists )
-            return "Email already exists" ;
-        if(DataBase.getFromDataBase("userName", username) != null)
-            return "username already exists" ;
+        if(slogan == null || slogan.equals(""))
+            return "empty slogan" ;
+
         if(!password.equals(passwordConfirm))
-            return ("password confirmation does not match.");
+            return "password confirmation does not match.";
 
         int answer = 0 ;
         int questionNum = 1 ;
 
         // TODO : answer and question number
-
-        Account account = new Account( username , nickname , email , (new Hash(password)).getHsh() , 0 ,
-                slogan , questionNum - 1 , answer ) ;
-        DataBase.addNewAccount(account);
+        try {
+            Socket socket = new Socket( "localhost", 2020 );
+            DataOutputStream writer = new DataOutputStream( socket.getOutputStream() ) ;
+            DataInputStream reader = new DataInputStream( socket.getInputStream() ) ;
+            String[] createUserJson = { "register" , username , password , slogan , nickname , email , "" + (questionNum - 1) , "" + answer } ;
+            writer.writeUTF( (new Gson()).toJson( createUserJson ) );
+            writer.flush() ;
+            boolean ok = reader.readBoolean() ;
+            if( !ok ) return "register failed : username already exists" ;
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
         return null ;
     }
 
-    public static String loginUserStayLoggedIn( Scanner scanner, Matcher matcher) throws Exception
+    /*public static String loginUserStayLoggedIn( Scanner scanner, Matcher matcher) throws Exception
     {
         ArrayList < Account > myList = DataBase.getStayLoggedInAccount();
         for(Account cur : myList)
@@ -97,25 +85,41 @@ public class SignupLoginMenuController {
             return "success";
         }
         return "there are not any stayed logged in account :(";
-    }
+    }*/
 
     public static String loginUser( String username , String password ) {
         if(!validUserName(username) || ! validPassword(password))
             return "login failed : Invalid username / password";
-        if( DataBase.getFromDataBase("userName", username) == null)
-            return "This username does not exist" ;
-        JSONObject cur = DataBase.getFromDataBase("userName", username);
-        long pass = (long) cur.get("password");
-        if (pass != 0 && pass != Hash.encode(password)) {
-            ++SignupLoginMenu.wrongPassCounter;
-            return "Wrong Password!\n";
+        Socket socket = null ;
+        while( socket == null ){
+            try {
+                socket = new Socket( "localhost", 2020 );
+            } catch( Exception e ){
+                Alert alert = new Alert( Alert.AlertType.ERROR ) ;
+                alert.setTitle("Connection error") ;
+                alert.setContentText("The server might be down temporarily.\nPress ok to try again.") ;
+                alert.showAndWait() ;
+            }
         }
-        System.out.println("User Logged In! hooray !");
+        try {
+            DataOutputStream writer = new DataOutputStream( socket.getOutputStream() ) ;
+            String[] output = { "login" , username , password } ;
+            Gson gson = new Gson() ;
+            writer.writeUTF( gson.toJson( output ) ) ;
+            writer.flush() ;
+            DataInputStream reader = new DataInputStream( socket.getInputStream() ) ;
+            boolean ok = reader.readBoolean() ;
+            socket.close() ;
+            if( !ok ) return "your username / password does not exist in database." ;
+        } catch( Exception e ){
+            e.printStackTrace() ;
+        }
+
         return null ;
     }
 
 
-    public static String forgetPassword (Matcher matcher){
+    /*public static String forgetPassword (Matcher matcher){
         String username = matcher.group("username") ;
         if( DataBase.getFromDataBase("userName", username) == null)
             return "This username does not exist\n";
@@ -134,7 +138,7 @@ public class SignupLoginMenuController {
         account.setPassword( newPasswordHash );
         Account.addAccount(account) ;
         return "password recovered successfully";
-    }
+    }*/
 
     public static String logout(Matcher matcher){
         return "logged out" ;

@@ -1,11 +1,9 @@
 package org.example.controller;
 
-import org.example.model.Account;
-
 import java.util.regex.Matcher;
 
 public class ProfileMenuController {
-
+/*
     Account account ;
 
     public ProfileMenuController( Account account ){
@@ -102,5 +100,5 @@ public class ProfileMenuController {
         System.out.println( "nickname : " + account.getNickName() ) ;
         System.out.println( "slogan : " + account.getSlogan() ) ;
         System.out.println( "highest score : " + account.getHighScore() ) ;
-    }
+    }*/
 }
