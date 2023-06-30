@@ -4,6 +4,8 @@ import controller.LoginRegisterThread;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.util.Map;
+
 public class Main extends Application
 {
     public static Stage stage;
@@ -18,5 +20,6 @@ public class Main extends Application
         (new LoginRegisterThread()).start() ;
         new CreateGameRoomMenu().start(stage);
         /// new ErrorWindow().start(new Stage());
+        new MainMenu().start(stage);
     }
 }

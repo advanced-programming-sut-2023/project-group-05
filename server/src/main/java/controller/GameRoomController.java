@@ -11,18 +11,18 @@ public class GameRoomController
 {
     public static GameRoomMenu serverStartGameMenu;
     public static HashMap < String, GameRoomConnection> ServersMap = new HashMap<>();
-    public static ArrayList <GameRoomConnection> Servers = new ArrayList<>();
+    public static ArrayList <GameRoomConnection> Rooms = new ArrayList<>();
     public static ArrayList <ClientConnection > Clients = new ArrayList<>();
     public static boolean AddServer( GameRoomConnection serverConnection)
     {
-        for( GameRoomConnection now : Servers)
+        for( GameRoomConnection now : Rooms)
         {
             if(now.getServerName().equals(serverConnection.getServerName()))
             {
                 return false;
             }
         }
-        Servers.add(serverConnection);
+        Rooms.add(serverConnection);
         ServersMap.put(serverConnection.getServerName(), serverConnection);
         return true;
     }
