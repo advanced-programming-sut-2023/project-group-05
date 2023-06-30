@@ -10,17 +10,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class GameRoomStartGameMenu extends Application
+public class GameRoomMenu extends Application
 {
     public BorderPane curPane;
     public VBox vbox;
     GameRoomConnection serverConnection;
-    public GameRoomStartGameMenu( GameRoomConnection _serverConnection)
+    public GameRoomMenu( GameRoomConnection _serverConnection)
     {
         serverConnection = _serverConnection;
     }
@@ -33,12 +32,14 @@ public class GameRoomStartGameMenu extends Application
         for(int i = 0; i < serverConnection.getClients().size(); i ++)
         {
             HBox hBox = new HBox();
+            hBox.setStyle( "-fx-border-color: black ; -fx-max-width: 400" );
             hBox.setAlignment(Pos.CENTER);
             hBox.setSpacing(15);
             ClientConnection clientConnection = serverConnection.getClients().get(i);
             Label label = new Label("Client " + i + ": " + clientConnection.userName + " joined the served");
             /// System.out.println(label.getText());
             Button button = new Button("Kick This Client");
+            button.setStyle( "-fx-background-color: black ; -fx-text-fill: red " ) ;
             hBox.getChildren().addAll(label, button);
             button.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -51,8 +52,8 @@ public class GameRoomStartGameMenu extends Application
             vBox.getChildren().add(hBox);
         }
 
-        Button button = new Button("Start The Game");
-        button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        Button startButton = new Button("Start The Game");
+        startButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent)
             {
@@ -67,14 +68,11 @@ public class GameRoomStartGameMenu extends Application
                 System.out.println("Start The Game !!");
             }
         });
-        Button TestButton = new Button("Add New Virtual Client");
-        TestButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                GameRoomController.AddClient(new ClientConnection("Amir", serverConnection.getServerName(), serverConnection.getServerPort()));
-            }
-        });
-        vBox.getChildren().addAll(button, TestButton);
+        vBox.getChildren().add( startButton ) ;
+    }
+
+    public void addClient(){
+
     }
 
     @Override
