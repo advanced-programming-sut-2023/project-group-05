@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="View.ServerMainMenu"
+            prefHeight="400.0" prefWidth="400.0">
+    <center>
+        <VBox alignment="CENTER" spacing="30">
+            <Label alignment="CENTER" text="Create Your Server For The Game" maxWidth="300"/>
+            <TextField promptText="Enter The Server Name" maxWidth="300" fx:id="serverName"/>
+            <TextField promptText="Enter The Server Password" maxWidth="300" fx:id="serverPassword"/>
+            <TextField promptText="Enter The Port Number" maxWidth="300" fx:id="portNumber"/>
+            <TextField promptText="Enter Server Capacity" maxWidth="300" fx:id="maxCapacity"/>
+            <Button alignment="CENTER" text="Create Server" onMouseClicked="#startTheServer"/>
+        </VBox>
+    </center>
+
+</BorderPane>
