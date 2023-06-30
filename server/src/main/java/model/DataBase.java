@@ -1,4 +1,4 @@
-package org.example.controller;
+package model ;
 
 import org.example.model.Account;
 import org.json.simple.JSONArray;
