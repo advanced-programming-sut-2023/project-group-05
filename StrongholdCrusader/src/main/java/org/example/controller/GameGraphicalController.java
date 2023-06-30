@@ -166,10 +166,7 @@ public class GameGraphicalController {
     }
 
 
-    public static void alterMenu(ArrayList<Rectangle> first, ArrayList<Rectangle> second, Pane pane) {
-        for (Rectangle rectangle : first) pane.getChildren().remove(rectangle);
-        for (Rectangle rectangle : second) pane.getChildren().add(rectangle);
-    }
+
 
 
     public static ImagePattern loadImagePattern(URL url) {
