@@ -1,8 +1,8 @@
-package View;
+package view;
 
-import Controller.GameRoomController;
-import Model.ClientConnection;
-import Model.GameRoomConnection;
+import controller.GameRoomController;
+import model.ClientConnection;
+import model.GameRoomConnection;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class GameRoomMenu extends Application
@@ -80,8 +79,6 @@ public class GameRoomMenu extends Application
     {
         stage.setWidth(500);
         stage.setHeight(600);
-        serverConnection.AddNewClient(new ClientConnection("Master", serverConnection.getServerName(), serverConnection.getServerPort()));
-        serverConnection.AddNewClient(new ClientConnection("Slave", serverConnection.getServerName(), serverConnection.getServerPort()));
         stage.setTitle("Start Game Menu");
         curPane = new BorderPane();
         this.vbox = new VBox();

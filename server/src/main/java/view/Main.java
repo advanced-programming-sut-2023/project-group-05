@@ -1,6 +1,6 @@
-package View;
+package view;
 
-import Controller.LoginRegisterThread;
+import controller.LoginRegisterThread;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

@@ -2,8 +2,9 @@ module com.example.servermenu {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.google.gson;
+    requires json.simple;
 
 
-    exports View;
-    opens View to javafx.fxml;
+    exports view;
+    opens view to javafx.fxml;
 }
