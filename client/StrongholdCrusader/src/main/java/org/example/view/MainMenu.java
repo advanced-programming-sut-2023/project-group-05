@@ -56,6 +56,11 @@ public class MainMenu extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 System.out.println("TODO: Go To Client Chat");
+                try {
+                    new ChatMenu().start(stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
