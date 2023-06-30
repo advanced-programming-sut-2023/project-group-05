@@ -1,8 +1,8 @@
-package Controller;
+package controller;
 
-import Model.ClientConnection;
-import Model.GameRoomConnection;
-import View.GameRoomStartGameMenu;
+import model.ClientConnection;
+import model.GameRoomConnection;
+import view.GameRoomStartGameMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;

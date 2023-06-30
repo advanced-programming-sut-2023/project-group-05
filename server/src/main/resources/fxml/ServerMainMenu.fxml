@@ -9,7 +9,7 @@
 <BorderPane styleClass="Background"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="View.CreateRoomMenu"
+            fx:controller="view.CreateRoomMenu"
             stylesheets="@../css/CreateRoomMenu.css"
             prefHeight="400.0" prefWidth="400.0">
     <center>

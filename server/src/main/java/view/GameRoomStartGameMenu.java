@@ -1,8 +1,8 @@
-package View;
+package view;
 
-import Controller.GameRoomController;
-import Model.ClientConnection;
-import Model.GameRoomConnection;
+import controller.GameRoomController;
+import model.ClientConnection;
+import model.GameRoomConnection;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

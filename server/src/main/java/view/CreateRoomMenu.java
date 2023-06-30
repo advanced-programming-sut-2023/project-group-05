@@ -1,8 +1,8 @@
-package View;
+package view;
 
-import Controller.GameRoomController;
-import Controller.URLFinder;
-import Model.GameRoomConnection;
+import controller.GameRoomController;
+import controller.URLFinder;
+import model.GameRoomConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

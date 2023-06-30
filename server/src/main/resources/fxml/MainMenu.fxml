@@ -8,7 +8,7 @@
 
 <TabPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="View.MainMenu"
+            fx:controller="view.MainMenu"
             prefHeight="600.0" prefWidth="800.0">
     <Tab text="CreateRoom" closable="false">
     </Tab>

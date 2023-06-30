@@ -1,6 +1,6 @@
-package Controller;
+package controller;
 
-import Model.Chat;
+import model.Chat;
 
 import java.util.ArrayList;
 

@@ -3,6 +3,6 @@ module com.example.servermenu {
     requires javafx.fxml;
 
 
-    exports View;
-    opens View to javafx.fxml;
+    exports view;
+    opens view to javafx.fxml;
 }

@@ -1,10 +1,10 @@
-package View;
+package view;
 
-import Controller.ChatController;
-import Controller.GameRoomController;
-import Controller.URLFinder;
-import Model.Chat;
-import Model.GameRoomConnection;
+import controller.ChatController;
+import controller.GameRoomController;
+import controller.URLFinder;
+import model.Chat;
+import model.GameRoomConnection;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;

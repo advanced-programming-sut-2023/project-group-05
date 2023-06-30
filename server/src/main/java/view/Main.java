@@ -1,13 +1,11 @@
-package View;
+package view;
 
-import Controller.ChatController;
-import Controller.GameRoomController;
-import Model.Chat;
-import Model.GameRoomConnection;
+import controller.ChatController;
+import controller.GameRoomController;
+import model.Chat;
+import model.GameRoomConnection;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import java.util.Map;
 
 public class Main extends Application
 {
