@@ -14,7 +14,7 @@ public class Main extends Application
     public void start(Stage _stage) throws Exception
     {
         stage = _stage;
-        new ServerMainMenu().start(stage);
+        new CreateRoomMenu().start(stage);
         /// new ErrorWindow().start(new Stage());
     }
 }

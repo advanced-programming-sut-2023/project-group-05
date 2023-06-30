@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class ServerMainMenu extends Application
+public class CreateRoomMenu extends Application
 {
     public static int limit = 2;
     public static Stage stage;
@@ -29,6 +29,7 @@ public class ServerMainMenu extends Application
         Scene scene = new Scene(curPane);
         stage.setScene(scene);
         stage.show();
+        curPane.requestFocus() ;
     }
 
     public void startTheServer(MouseEvent mouseEvent) throws Exception {
