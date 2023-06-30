@@ -1,10 +1,12 @@
 package view;
 
 import controller.LoginRegisterThread;
+import controller.ChatController;
+import controller.GameRoomController;
+import model.Chat;
+import model.GameRoomConnection;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import java.util.Map;
 
 public class Main extends Application
 {
@@ -18,8 +20,10 @@ public class Main extends Application
     {
         stage = _stage;
         (new LoginRegisterThread()).start() ;
-        new CreateGameRoomMenu().start(stage);
-        /// new ErrorWindow().start(new Stage());
+
+        ChatController.AddChat(new Chat("Ali", "ghasem"));
+        GameRoomController.AddServer(new GameRoomConnection("Test", "1234", 8888, 8));
+
         new MainMenu().start(stage);
     }
 }

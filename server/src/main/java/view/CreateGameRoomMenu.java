@@ -25,7 +25,7 @@ public class CreateGameRoomMenu extends Application
     {
         stage = _stage;
         stage.setTitle("Server Main Menu");
-        BorderPane curPane = FXMLLoader.load(URLFinder.run("/fxml/ServerMainMenu.fxml"));
+        BorderPane curPane = FXMLLoader.load(URLFinder.run("/fxml/CreateGameRoomMenu.fxml"));
         Scene scene = new Scene(curPane);
         stage.setScene(scene);
         stage.show();

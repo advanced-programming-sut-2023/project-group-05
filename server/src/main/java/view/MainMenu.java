@@ -31,7 +31,7 @@ public class MainMenu extends Application
         for(int i = 0; i < GameRoomController.Rooms.size(); i ++)
         {
             GameRoomConnection gameRoomConnection = GameRoomController.Rooms.get(i);
-            Label label = new Label("Room number " + (i + 1) + " name: " + gameRoomConnection.getServerName() + " port: " + gameRoomConnection.getServerPort() + " " + gameRoomConnection.getClients().size() + "/" + gameRoomConnection.getMaxCapacity());
+            Label label = new Label("Room number " + (i + 1) + " name: " + gameRoomConnection.getServerName() + " port: " + gameRoomConnection.getServerPort() + " Capacity: " + gameRoomConnection.getClients().size() + "/" + gameRoomConnection.getMaxCapacity());
             vBox.getChildren().add(label);
         }
         Button createRoomButton = new Button("Create New Room");
@@ -39,7 +39,7 @@ public class MainMenu extends Application
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
-                    new CreateGameRoomMenu().start(new Stage());
+                    new CreateGameRoomMenu().start(stage);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -57,7 +57,7 @@ public class MainMenu extends Application
         for(int i = 0; i < ChatController.Chats.size(); i ++)
         {
             Chat chat = ChatController.Chats.get(i);
-            Label label = new Label("chat number " + (i + 1) + " between " + chat.first + " and " + chat.second + " with total " + chat.Messages.size() + " messages");
+            Label label = new Label("chat number " + (i + 1) + " between " + chat.getFirst() + " and " + chat.getSecond() + " with total " + chat.getMessages().size() + " messages");
             vBox.getChildren().add(label);
         }
         Button createChatButton = new Button("Create new Chat");

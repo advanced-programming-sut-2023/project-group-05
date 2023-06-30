@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class DataBase
 {
-
     public static String location = ( Main.class.getResource("/data.json").toString()).replaceAll("file:/","") ;
 
     public static void deleteAccount( String type, String S )

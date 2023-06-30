@@ -18,7 +18,9 @@ public class GameRoomMenu extends Application
     public BorderPane curPane;
     public VBox vbox;
     GameRoomConnection serverConnection;
+
     public GameRoomMenu( GameRoomConnection _serverConnection)
+
     {
         serverConnection = _serverConnection;
     }
