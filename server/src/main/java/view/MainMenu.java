@@ -39,7 +39,7 @@ public class MainMenu extends Application
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
-                    new CreateRoomMenu().start(stage);
+                    new CreateGameRoomMenu().start(stage);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

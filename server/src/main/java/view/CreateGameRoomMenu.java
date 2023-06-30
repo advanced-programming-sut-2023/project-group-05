@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class CreateRoomMenu extends Application
+public class CreateGameRoomMenu extends Application
 {
     public static int limit = 2;
     public static Stage stage;
@@ -25,7 +25,7 @@ public class CreateRoomMenu extends Application
     {
         stage = _stage;
         stage.setTitle("Server Main Menu");
-        BorderPane curPane = FXMLLoader.load(URLFinder.run("/fxml/ServerMainMenu.fxml"));
+        BorderPane curPane = FXMLLoader.load(URLFinder.run("/fxml/CreateGameRoomMenu.fxml"));
         Scene scene = new Scene(curPane);
         stage.setScene(scene);
         stage.show();
@@ -60,7 +60,7 @@ public class CreateRoomMenu extends Application
         if( GameRoomController.AddServer(serverConnection))
         {
             /// System.out.println("Server Created Successfully");
-            GameRoomController.serverStartGameMenu = new GameRoomStartGameMenu(serverConnection);
+            GameRoomController.serverStartGameMenu = new GameRoomMenu(serverConnection);
             GameRoomController.serverStartGameMenu.start(stage);
         }
         else

@@ -9,8 +9,8 @@
 <BorderPane styleClass="Background"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.CreateRoomMenu"
-            stylesheets="@../css/CreateRoomMenu.css"
+            fx:controller="view.CreateGameRoomMenu"
+            stylesheets="@../css/CreateGameRoomMenu.css"
             prefHeight="400.0" prefWidth="400.0">
     <center>
         <VBox alignment="CENTER" spacing="30">

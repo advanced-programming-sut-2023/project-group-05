@@ -2,14 +2,14 @@ package controller;
 
 import model.ClientConnection;
 import model.GameRoomConnection;
-import view.GameRoomStartGameMenu;
+import view.GameRoomMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameRoomController
 {
-    public static GameRoomStartGameMenu serverStartGameMenu;
+    public static GameRoomMenu serverStartGameMenu;
     public static HashMap < String, GameRoomConnection> ServersMap = new HashMap<>();
     public static ArrayList <GameRoomConnection> Rooms = new ArrayList<>();
     public static ArrayList <ClientConnection > Clients = new ArrayList<>();

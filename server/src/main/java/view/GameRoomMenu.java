@@ -15,12 +15,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class GameRoomStartGameMenu extends Application
+public class GameRoomMenu extends Application
 {
     public BorderPane curPane;
     public VBox vbox;
     GameRoomConnection serverConnection;
-    public GameRoomStartGameMenu( GameRoomConnection _serverConnection)
+    public GameRoomMenu(GameRoomConnection _serverConnection)
     {
         serverConnection = _serverConnection;
     }
