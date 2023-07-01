@@ -16,6 +16,7 @@ public enum MenuImages {
     MenuImages(String menuName)
     {
         this.image = new Image(MainMenu.class.getResource("/images/MenuBackGrounds/"+menuName).toString());
+        this.imagePattern = new ImagePattern(image);
         bottomMenu.menuImages.add(image);
     }
     public Image getImage(){

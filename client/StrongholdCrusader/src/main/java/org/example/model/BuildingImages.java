@@ -98,7 +98,7 @@ public enum BuildingImages {
         }
         if( null == MainMenu.class.getResource( "/images/buildings/buildingMenu/"+buildingImageName) )
             System.out.println( "YOUUUUUUUUUUU" + buildingImageName );
-        this.image = new Image(MainMenu.class.getResource( "/images/buildings/buildingMenu/"+buildingImageName).toExternalForm() ) ;
+        this.image = new Image(MainMenu.class.getResource( "/images/buildings/buildingMenu/"+buildingImageName).toExternalForm()) ;
         switch (category) {
             case 1 -> bottomMenu.armouries.add(image);
             case 2 -> bottomMenu.foods.add(image);
