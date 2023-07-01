@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -15,6 +16,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.example.model.*;
 import org.example.view.MainMenu;
@@ -148,17 +150,15 @@ public class bottomMenu {
     }
 
     public static <T, K> void alterMenu(ArrayList<T> first, ArrayList<K> second, Pane pane) {
-        for (T t : first) ((Node) t).setVisible(false);
+        for (T t : first) pane.getChildren().remove((Node) t);
         for (K k : second) pane.getChildren().add((Node) k);
     }
 
-    private static void addToPane(ArrayList<Node> buffer)
-    {
+    private static void addToPane(ArrayList<Node> buffer) {
         pane.getChildren().addAll(buffer);
     }
 
-    private static void removeFromPane(ArrayList<Node>buffer)
-    {
+    private static void removeFromPane(ArrayList<Node> buffer) {
         pane.getChildren().removeAll(buffer);
     }
 
@@ -178,7 +178,7 @@ public class bottomMenu {
                     GameGraphicalController.mouseHeight = BuildingEnum.getBuildingHeightByName(buildingNames.get(finalI));
                     GameGraphicalController.mouseWidth = BuildingEnum.getBuildingWidthByName(buildingNames.get(finalI));
                     GameGraphicalController.updateMouse();
-                    mouse.setVisible( true ) ;
+                    mouse.setVisible(true);
                 }
             });
             array.add(rectangle);
@@ -190,10 +190,10 @@ public class bottomMenu {
     //Pause Menu
 
     public static ArrayList<Image> menuImages = new ArrayList<>();
-    private static Rectangle pauseMenu = new Rectangle(SCREEN_HEIGHT * 0.85, SCREEN_WIDTH * 0.85);
-    private static Rectangle resume = new Rectangle(SCREEN_HEIGHT * 0.15 + 20, SCREEN_WIDTH * 0.5);
-    private static Circle sound = new Circle(SCREEN_HEIGHT * 0.15 + 30, SCREEN_WIDTH * 0.15 + 30, 20);
-    private static Rectangle exit = new Rectangle(SCREEN_HEIGHT * 0.85 - 20, SCREEN_WIDTH * 0.5);
+    private static Rectangle pauseMenu = new Rectangle(SCREEN_WIDTH * 0.2, SCREEN_HEIGHT * 0.05, SCREEN_WIDTH * 0.6, SCREEN_HEIGHT * 0.7);
+    private static Rectangle resume = new Rectangle(SCREEN_WIDTH * 0.5 - 50, SCREEN_HEIGHT * 0.3 - 50, 100, 100);
+    private static Circle sound = new Circle(SCREEN_WIDTH * 0.5, SCREEN_HEIGHT * 0.7 - 70, 50);
+    private static Rectangle exit = new Rectangle(SCREEN_WIDTH * 0.7, SCREEN_HEIGHT * 7, 30, 30);
     private static boolean toggle = false;
     private static boolean paused = false;
 
@@ -226,6 +226,8 @@ public class bottomMenu {
     }
 
     public static void pauseGame() {
+        System.out.println(SCREEN_HEIGHT);
+        System.out.println("IN PAUSE FUNC");
         if (!paused)
             pane.getChildren().addAll(pauseMenu, sound, exit, resume);
         else
@@ -241,17 +243,24 @@ public class bottomMenu {
     private static boolean infoToggle = false;
 
     static {
-        Circle back = new Circle(SCREEN_HEIGHT * 0.95, SCREEN_WIDTH * 0.1, 15);
+        Circle back = new Circle(SCREEN_WIDTH * 0.65 + 20, SCREEN_HEIGHT * 0.9 - 50, 15);
         back.setFill(new ImagePattern(new Image(MainMenu.class.getResource("/images/icons/back.png").toExternalForm())));
         shopKeys.add(back);
-        Rectangle buy = new Rectangle(SCREEN_HEIGHT * 0.8, SCREEN_WIDTH * 0.5, 100, 10);
+
+        Rectangle buy = new Rectangle(SCREEN_WIDTH * 0.4, SCREEN_HEIGHT * 0.85 - 15, 100, 50);
         buy.setFill(new ImagePattern(new Image(MainMenu.class.getResource("/images/icons/buy.png").toString())));
-        Rectangle sell = new Rectangle(SCREEN_HEIGHT * 0.8 + 20, SCREEN_WIDTH * 0.5, 100, 10);
+
+        Rectangle sell = new Rectangle(SCREEN_WIDTH * 0.4, SCREEN_HEIGHT * 0.85 + 50, 100, 50);
         sell.setFill(new ImagePattern(new Image(MainMenu.class.getResource("/images/icons/sell.png").toString())));
+
         shopKeys.add(buy);
         shopKeys.add(sell);
-        Circle info = new Circle(SCREEN_HEIGHT * 0.95, SCREEN_WIDTH - 10, 15);
+
+        Circle info = new Circle(SCREEN_WIDTH * 0.65 + 20, SCREEN_HEIGHT * 0.9 + 50, 15);
         info.setFill(new ImagePattern(new Image(MainMenu.class.getResource("/images/icons/info.png").toExternalForm())));
+
+        shopKeys.add(info);
+
         Text text = new Text("Stone : To Build Buildings\n" +
                 "Wood : To Build Buildings And Bows\n" +
                 "Pitch : To Build Fire Traps\n" +
@@ -260,8 +269,10 @@ public class bottomMenu {
                 "Bow And CrossBow : Suitable For Distant Attack\n" +
                 "Spear And Pike : Suitable For Attacking By Spearmen And Pikemen\n" +
                 "Sword : Suitable For Strong Swordsmen");
-        text.setX(450);
-        text.setY(450);
+        text.setX(SCREEN_WIDTH * 0.3);
+        text.setY(SCREEN_HEIGHT * 0.3);
+        text.setFill(Color.WHITE);
+        text.setFont(new Font("Courier", 25));
         Rectangle information = new Rectangle(50, 50, SCREEN_WIDTH * 0.8, SCREEN_HEIGHT * 0.8);
         information.setOpacity(0.8);
         info.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -285,13 +296,13 @@ public class bottomMenu {
                         ArrayList<Shape> buffer = new ArrayList<>();
                         buffer.addAll(houseAndStorages);
                         buffer.addAll(buttons);
+                        pane.getChildren().removeAll(back, info);
                         alterMenu(current, buffer, pane);
                         current = houseAndStorages;
                     }
                     case 1 -> {
                         ArrayList<Shape> buffer = new ArrayList<>();
                         buffer.addAll(ShopImages.shopMap.get(0));
-                        buffer.add(back);
                         alterMenu(current, buffer, pane);
                         current = buffer;
                         currentDepth = 0;
@@ -299,7 +310,6 @@ public class bottomMenu {
                     case 2 -> {
                         ArrayList<Shape> buffer = new ArrayList<>();
                         buffer.addAll(ShopImages.shopMap.get(currentShopMode));
-                        buffer.add(back);
                         alterMenu(current, buffer, pane);
                         current = buffer;
                         currentDepth = 1;
@@ -321,33 +331,50 @@ public class bottomMenu {
         });
     }
 
+    public static void preInitShop() {
+        buffer.clear();
+        buffer.addAll(buttons);
+        removeFromPane(buffer);
+        pane.getChildren().addAll(shopKeys.get(0), shopKeys.get(3));
+        initShopMenu(null, 0, 0);
+    }
+
     public static void initShopMenu(Rectangle rectangle, int mode, int identity) {
         if (rectangle == null) {
-            HashMap <Integer,ArrayList<Rectangle>> map = ShopImages.shopMap;
+            HashMap<Integer, ArrayList<Rectangle>> map = ShopImages.shopMap;
             buffer.clear();
             buffer.addAll(map.get(mode));
             //TODO : Inventory
-            for (int i =0;i<ShopImages.shopMap.size();++i) {
-                Text bff = new Text(map.get(mode).get(i).getX(), map.get(mode).get(i).getY(), "0");
-                bff.setFill(Color.WHITE);
-                bff.setStyle("-fx-font: 10");
-                buffer.add(bff);
+            if (mode > 0) {
+                pane.getChildren().removeAll(map.get(0));
+                for (int i = 0; i < map.get(mode).size(); ++i)
+                    buffer.add(new Text(map.get(mode).get(i).getX() + map.get(mode).get(i).getHeight() / 2, map.get(mode).get(i).getY() + 7 + map.get(mode).get(i).getHeight(), "0"));
             }
             alterMenu(current, buffer, pane);
             currentDepth = (mode == 0) ? 0 : 1;
             current = buffer;
             return;
         }
-        Rectangle rectangle1 = new Rectangle(rectangle.getLayoutX() - 20, rectangle.getLayoutY(), 20, 20);
+
+        Rectangle rectangle1 = new Rectangle(SCREEN_WIDTH*0.3, SCREEN_HEIGHT*0.85, 90, 90);
+        rectangle1.setFill(rectangle.getFill());
+
+        //todo : convert identity to price
         Text buyPrice = new Text(Integer.toString(identity));
-        buyPrice.setX(shopKeys.get(1).getLayoutX() + 20);
+        buyPrice.setX(shopKeys.get(1).getLayoutX() + 80);
         Text sellPrice = new Text(Integer.toString(identity / 2));
-        sellPrice.setX(shopKeys.get(2).getLayoutX() + 20);
-        ArrayList<Node> buffer = new ArrayList<>(Arrays.asList(rectangle1, buyPrice, sellPrice, shopKeys.get(1), shopKeys.get(2), shopKeys.get(3)));
-        alterMenu(current, buffer, pane);
-        current = buffer;
-        currentShopMode = mode;
+        sellPrice.setX(shopKeys.get(2).getLayoutX() + 80);
+
+        ArrayList<Node> secondBuffer = new ArrayList<>();
+        addToBuffer(secondBuffer, rectangle1, shopKeys.get(1), shopKeys.get(2), buyPrice, sellPrice);
+        alterMenu(current, secondBuffer, pane);
+        current = secondBuffer;
+
         currentDepth = 2;
+    }
+
+    private static void addToBuffer(ArrayList<Node> buffer, Node... nodes) {
+        buffer.addAll(Arrays.asList(nodes));
     }
 
     //Trade
@@ -359,7 +386,8 @@ public class bottomMenu {
 
     static {
         tradeFirstMenu.setOpacity(0.8);
-        tradeFirstMenu.setFill(new ImagePattern(new Image(MainMenu.class.getResource("/images/shop/tradeBackground.png").toExternalForm())));;
+        tradeFirstMenu.setFill(new ImagePattern(new Image(MainMenu.class.getResource("/images/shop/tradeBackground.png").toExternalForm())));
+        ;
         sendTrade.setFill(new ImagePattern(new Image(MainMenu.class.getResource("/images/shop/sendTrade.png").toExternalForm())));
         receiveTrade.setFill(new ImagePattern(new Image(MainMenu.class.getResource("/images/shop/receiveTrade.png").toExternalForm())));
         closeTrade.setFill(new ImagePattern(new Image(MainMenu.class.getResource("/images/shop/close.png").toExternalForm())));
@@ -406,7 +434,7 @@ public class bottomMenu {
     }
 
     private static void sendTrade() {
-        HashMap <Integer, Integer> letter = new HashMap<>();
+        HashMap<Integer, Integer> letter = new HashMap<>();
         //  todo : handle all players , this is after that
         int cnt = 1;
         buffer.add(tradeFirstMenu);
@@ -417,42 +445,49 @@ public class bottomMenu {
         ImagePattern plus = new ImagePattern(new Image(MainMenu.class.getResource("/images/icons/plus.png").toString()));
         for (ShopImages item : ShopImages.values()) {
             if (item.getCategory() > 0) {
-                Rectangle rectangle = new Rectangle(SCREEN_HEIGHT*0.1+cnt*20,SCREEN_WIDTH*0.1+cnt*20,20,20);
+                Rectangle rectangle = new Rectangle(SCREEN_HEIGHT * 0.1 + cnt * 20, SCREEN_WIDTH * 0.1 + cnt * 20, 20, 20);
                 rectangle.setFill(new ImagePattern(item.getImage()));
-                Circle lower = new Circle(rectangle.getLayoutX(),rectangle.getLayoutY()+50,15);
-                Circle upper = new Circle(lower.getCenterX(),lower.getCenterY()+50,15);
+                Circle lower = new Circle(rectangle.getLayoutX(), rectangle.getLayoutY() + 50, 15);
+                Circle upper = new Circle(lower.getCenterX(), lower.getCenterY() + 50, 15);
                 lower.setFill(minus);
                 upper.setFill(plus);
-                Text zeroText = new Text("0");zeroText.setFill(Color.WHITE);zeroText.setStyle("-fx-font: 15");
+                Text zeroText = new Text("0");
+                zeroText.setFill(Color.WHITE);
+                zeroText.setStyle("-fx-font: 15");
                 lower.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     int a;
+
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        if ((a = Integer.parseInt(zeroText.getText())) > -250 )
-                            zeroText.setText(Integer.toString(a-25));
+                        if ((a = Integer.parseInt(zeroText.getText())) > -250)
+                            zeroText.setText(Integer.toString(a - 25));
                     }
                 });
                 upper.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     int a;
+
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        if ((a = Integer.parseInt(zeroText.getText())) < 450 )
-                            zeroText.setText(Integer.toString(a+25));
+                        if ((a = Integer.parseInt(zeroText.getText())) < 450)
+                            zeroText.setText(Integer.toString(a + 25));
                     }
                 });
                 values.add(zeroText);
                 items.add(rectangle);
-                buffer.add(zeroText);buffer.add(rectangle);buffer.add(lower);buffer.add(upper);
+                buffer.add(zeroText);
+                buffer.add(rectangle);
+                buffer.add(lower);
+                buffer.add(upper);
             }
         }
-        Circle send = new Circle(closeTrade.getCenterX(),closeTrade.getCenterY()+SCREEN_HEIGHT*0.8,20);
+        Circle send = new Circle(closeTrade.getCenterX(), closeTrade.getCenterY() + SCREEN_HEIGHT * 0.8, 20);
         buffer.add(send);
         addToPane(buffer);
         send.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                for (int i = 0;i<values.size();++i)
-                    letter.put(i+1,Integer.parseInt(values.get(i).getText()));
+                for (int i = 0; i < values.size(); ++i)
+                    letter.put(i + 1, Integer.parseInt(values.get(i).getText()));
                 //TODO : HOW TO RETURN TO THE ACCOUNT ?
                 removeFromPane(buffer);
             }
@@ -463,9 +498,9 @@ public class bottomMenu {
         buffer.clear();
         buffer.add(closeTrade);
         buffer.add(tradeFirstMenu);
-        Circle sent = new Circle(tradeFirstMenu.getLayoutX()+SCREEN_WIDTH*0.1,tradeFirstMenu.getLayoutY()+SCREEN_HEIGHT*0.1,25);
+        Circle sent = new Circle(tradeFirstMenu.getLayoutX() + SCREEN_WIDTH * 0.1, tradeFirstMenu.getLayoutY() + SCREEN_HEIGHT * 0.1, 25);
         sent.setFill(new ImagePattern(new Image(MainMenu.class.getResource("/images/icons/sent.png").toExternalForm())));
-        Circle receive = new Circle(sent.getCenterX()+SCREEN_WIDTH*0.2,sent.getCenterY(),25);
+        Circle receive = new Circle(sent.getCenterX() + SCREEN_WIDTH * 0.2, sent.getCenterY(), 25);
         receive.setFill(new ImagePattern(new Image(MainMenu.class.getResource("/images/icons/receive.png").toString())));
         buffer.add(sent);
         buffer.add(receive);
@@ -488,13 +523,11 @@ public class bottomMenu {
         addToPane(buffer);
     }
 
-    private static ArrayList<Node> myPastTrades()
-    {
+    private static ArrayList<Node> myPastTrades() {
         return null;
     }
 
-    private static ArrayList<Node> requestsToMe()
-    {
+    private static ArrayList<Node> requestsToMe() {
         return null;
     }
 

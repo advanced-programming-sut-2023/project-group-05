@@ -175,7 +175,7 @@ public class GameGraphicalController {
             public void handle( MouseEvent mouseEvent ){
                 selectedBuildingName = chosenBuildingName ;
                 if( selectedBuildingName.equals( "market" ) ){
-                    bottomMenu.initShopMenu( null , 0 , 0 ) ;
+                    bottomMenu.preInitShop(); ;
                 }
             }
         } );
