@@ -43,14 +43,14 @@ public class GameController {
         return players ;
     }
 
-    public void nextTurn() throws Exception {
+    public void nextTurn() {
         this.turn++ ;
         this.player = this.players.get( this.turn % this.players.size() ) ;
 
-        if(this.turn == this.turn % this.players.size()){
+        /*if(this.turn == this.turn % this.players.size()){
             putYourCastle( this.player );
             putYourStockPile( this.player );
-        }
+        }*/
 
         // MOVING UNITS HAPPENS IN THIS PART
 
@@ -178,7 +178,7 @@ public class GameController {
     }
 
     public void populationGrowth(Player player){
-        int increaseRate = player.getPopularity()/5;
+        /*int increaseRate = player.getPopularity()/5;
         if (player.getPopularity() < 0)
             increaseRate = 0;
         int increased = 0;
@@ -191,7 +191,7 @@ public class GameController {
             player.addUnit(jobless);
             gameMap.getCell(castleRow,castleColumn).units.add(jobless);
         }
-        player.changePopulation(increased);
+        player.changePopulation(increased);*/ // TODO : EVERY THING
     }
 
     public void dealAllDamages(){

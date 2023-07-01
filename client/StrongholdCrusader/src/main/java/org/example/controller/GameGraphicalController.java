@@ -2,6 +2,7 @@ package org.example.controller;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -13,9 +14,12 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
+import org.example.Main;
 import org.example.model.*;
 import org.example.model.building.Building;
+import org.example.model.unit.Unit;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -45,6 +49,7 @@ public class GameGraphicalController {
     private static int mouseColumn = 0 ;
     public static Minimap minimap ;
     public static ArrayList<Node> reservedShapes;
+    public static Rectangle attackingMouse = new Rectangle( 0 , 0 , 40 , 40 ) ;
     public static String chosenBuildingName = "" ;
     public static String selectedBuildingName = "" ;
     public static ArrayList<Rectangle> current;
@@ -78,7 +83,14 @@ public class GameGraphicalController {
         return pane ;
     }
 
+    public static Player getPlayer(){
+        return gameController.getPlayers().get( 0 ) ;
+    }
+
     private static void initMouse(){
+        attackingMouse.setFill( new ImagePattern( new Image( Main.class.getResource( "/images/icons/sword.png" ).toExternalForm() ) ) ) ;
+        pane.getChildren().add( attackingMouse ) ;
+        attackingMouse.setVisible( false ) ;
         mouse.setOpacity( 0.5 );
         for(int i = 0 ; i < 400 ; i++)
             for(int j = 0 ; j < 400 ; j++){
@@ -171,7 +183,14 @@ public class GameGraphicalController {
                     SoundController.setMusicMute( ! SoundController.isMusicMute );
                 }
                 if( keyEvent.getCode().equals(KeyCode.A) ){
-
+                    for( Unit unit : Unit.getUnits() ){
+                        Player player = unit.getOwner() ;
+                        if( player != gameController.getPlayers().get(0) ) continue ;
+                        player.selectUnit( unit );
+                        Glow glow = new Glow() ;
+                        glow.setLevel( 200 );
+                        unit.getShape().setEffect( glow ) ;
+                    }
                 }
             }
         });
@@ -201,15 +220,18 @@ public class GameGraphicalController {
     private static void initTestMode(){
         System.out.println( "you are running the test mode" ) ;
         System.out.println( "GameGraphicalController : " + gameController.dropUnit( "archer" , 1 , 13 , 13 ) ) ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 25 , 20 )) ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "operator" , 1 , 20 , 20 )) ;
-
+        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 15 ) ) ;
+        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 17 ) ) ;
+        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 20 ) ) ;
+       // System.out.println( "GameGraphicalController : " + gameController.dropUnit( "operator" , 1 , 20 , 20 ) ) ;
+        gameController.nextTurn() ;
+        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 13 ) ) ;
+        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 17 ) ) ;
+        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 22 ) ) ;
     }
     private static void debug(){
-        for(int i = 0 ; i < 20 ; i++){
-            for(int j = 0 ; j < 20 ; j++){
-                System.out.print( "" + gameController.getGameMap().getMaskedMap()[i][j] + ( j == 19 ? "\n" : "" ) ) ;
-            }
+        for( Unit unit : Unit.getUnits() ){
+            System.out.println( unit.getOwner().getNickname() ) ;
         }
     }
 

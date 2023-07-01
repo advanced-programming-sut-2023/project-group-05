@@ -5,18 +5,22 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Effect;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import org.example.controller.GameController;
+import org.example.controller.GameGraphicalController;
 import org.example.controller.PathFinder;
 
 import org.example.model.*;
 import org.example.model.animations.WalkingAnimation;
+import org.example.model.animations.gettingDamageAnimation;
 import org.example.model.building.Building;
 import org.example.model.enums.UnitImagesEnum;
+import org.example.view.Game;
 import org.example.view.MainMenu;
 
 import java.util.ArrayList;
@@ -49,6 +53,8 @@ public class Unit {
     protected int targetColumn = -1 ;
     private Rectangle shape ;
     private Rectangle healthBar ;
+
+    int[][] adjacencyArray = { { 0 , -1 } , { 1 , 0 } , { -1 , 0 } , { 0 , 1 } } ;
     public Unit( String name , Player owner , int hitPoint,int movingSpeed , int range , int row , int column , boolean selectable ){
         this.name = name ;
         this.hitPoint = hitPoint;
@@ -106,10 +112,20 @@ public class Unit {
         this.shape.setOnMouseClicked( new EventHandler <MouseEvent>() {
             @Override
             public void handle( MouseEvent mouseEvent ){
-                player.selectUnit( unit );
-                Glow glow = new Glow() ;
-                glow.setLevel( 200 );
-                unit.getShape().setEffect( glow ) ;
+                if( mouseEvent.getButton() != MouseButton.PRIMARY ) return ;
+                if( player == GameGraphicalController.getPlayer() ){
+                    player.selectUnit( unit );
+                    Glow glow = new Glow() ;
+                    glow.setLevel( 200 );
+                    unit.getShape().setEffect( glow ) ;
+                    return ;
+                }
+                if( GameGraphicalController.attackingMouse.isVisible() ){
+                    for( Unit u : GameGraphicalController.getPlayer().getSelectedUnits() ){
+                        u.attack( unit ) ;
+                        System.out.println( "attacking" ) ;
+                    }
+                }
             }
         } ) ;
         Unit finalThis = this ;
@@ -119,12 +135,18 @@ public class Unit {
                 healthBar.setVisible( true ) ;
                 healthBar.setX( finalThis.getShape().getX() ) ;
                 healthBar.setY( finalThis.getShape().getY() - 5 ) ;
+                GameGraphicalController.attackingMouse.setX( mouseEvent.getX() - GameGraphicalController.attackingMouse.getWidth() - 1 ) ;
+                GameGraphicalController.attackingMouse.setY( mouseEvent.getY() - GameGraphicalController.attackingMouse.getHeight() - 1 ) ;
+                if( owner != GameGraphicalController.getPlayer() && !GameGraphicalController.getPlayer().getSelectedUnits().isEmpty() )
+                    GameGraphicalController.attackingMouse.setVisible( true ) ;
+
             }
         } ) ;
         this.shape.setOnMouseExited( new EventHandler <MouseEvent>() {
             @Override
             public void handle( MouseEvent mouseEvent ){
                 healthBar.setVisible( false ) ;
+                GameGraphicalController.attackingMouse.setVisible( false ) ;
             }
         } );
     }
@@ -161,16 +183,20 @@ public class Unit {
         this.owner.setPopulation( this.owner.getPopulation() - 1 );
         Unit.getUnits().remove(this) ;
         gameMap.getCell(this.getRow() , this.getColumn()).getUnits().remove(this) ;
+        GameGraphicalController.getPane().getChildren().remove( this.shape ) ;
     }
+
+    public int walkingReason = -1 ; // 0 : move , 1 : attack
 
     public void getDamaged(int x , GameMap gameMap){
         this.hitPoint -= x ;
         this.healthBar.setWidth( 15 * this.hitPoint / this.initialHitpoint ) ;
         if(this.hitPoint <= 0)
             this.die(gameMap) ;
+        ( new gettingDamageAnimation( shape ) ).playFromStart() ;
     }
 
-    public void moveTo(int x, int y){
+    public boolean moveTo(int x, int y){
         if( this.playingWalkingAnimation != null ) this.playingWalkingAnimation.stop() ;
         this.isMoving = true ;
         pathFinder.Run(x, y) ;
@@ -178,13 +204,27 @@ public class Unit {
         targetRow = x ;
         int dir = pathFinder.goInDirectionFrom( this.row , this.column ) ;
         if(dir == -1){
-            System.out.println( "YOU CODED CORRECTLY" ) ;
             this.targetColumn = this.column ;
             this.targetRow = this.row ;
-            return ;
+            return false ;
         }
+        walkingReason = 0 ;
         this.playingWalkingAnimation = this.walkingAnimations.get(dir) ;
         this.walkingAnimations.get(dir).play() ;
+        return true ;
+    }
+
+    public void attack( Unit unit ){
+        boolean canAttack = false ;
+        for(int i = 0 ; i < 4 ; i++){
+            if( moveTo(adjacencyArray[i][0] + unit.getRow() , adjacencyArray[i][1] + unit.getColumn() ) ){
+                canAttack = true ;
+                break ;
+            }
+        }
+        if( !canAttack ) return ;
+        walkingReason = 1 ;
+        // TODO : attack
     }
 
     public void moveToIfNeeded(){

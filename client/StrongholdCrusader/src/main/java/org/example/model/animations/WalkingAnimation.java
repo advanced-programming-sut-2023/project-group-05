@@ -63,6 +63,7 @@ public class WalkingAnimation extends Transition {
         unitColumn = unit.getColumn() ;
         if(unitRow == targetRow && unitColumn == targetColumn){
             unit.setIsMoving( false ) ;
+            unit.walkingReason = -1 ;
             return ;
         }
         super.play() ;

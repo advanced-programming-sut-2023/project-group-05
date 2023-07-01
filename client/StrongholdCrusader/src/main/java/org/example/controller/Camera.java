@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
@@ -11,14 +12,19 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.example.model.BuildingEnum;
 import org.example.model.BuildingImages;
 import org.example.model.Minimap;
 import org.example.model.Player;
+import org.example.model.animations.ClownAnimation;
 import org.example.model.building.Building;
 import org.example.model.unit.Unit;
 
 import java.util.ArrayList;
+
 
 public class Camera {
     // a brief view of the pane children :
@@ -72,29 +78,46 @@ public class Camera {
                 -buildingSize * TILE_WIDTH / 2 , 3 * buildingSize * TILE_HEIGHT / 2,
                 -buildingSize * TILE_WIDTH / 2 , buildingSize * TILE_HEIGHT / 2
         ) ;
+        Text text = new Text( "name :" + chosenBuildingName + "\nrow=" + row + "\ncolumn=" + column+"\nlittle tornado in 5" ) ;
+        Rectangle rect = new Rectangle( 0 , 0 , 190 , 115 ) ;
+        text.setFont( new Font(20) ) ;
+        text.setFill( Color.RED ) ;
+        pane.getChildren().add( hexagon ) ;
+        pane.getChildren().add( rect ) ;
+        pane.getChildren().add( text ) ;
+        text.setVisible( false ) ;
+        rect.setVisible( false ) ;
+        text.setOpacity( 0.85 ) ;
+        rect.setOpacity( 0.6 ) ;
+        ClownAnimation animation = (new ClownAnimation( text , rect )) ;
+        hexagon.setOnMouseMoved( new EventHandler <MouseEvent>() {
+            @Override
+            public void handle( MouseEvent mouseEvent ){
+                text.setX( hexagon.getLayoutX() + mouseEvent.getX() + 5 ) ;
+                text.setY( hexagon.getLayoutY() + mouseEvent.getY() + 20 ) ;
+                rect.setX( hexagon.getLayoutX() + mouseEvent.getX() + 1 ) ;
+                rect.setY( hexagon.getLayoutY() + mouseEvent.getY() ) ;
+                if(!text.isVisible()){
+                    text.setVisible( true );
+                    rect.setVisible( true );
+                    animation.playFromStart();
+                }
+            }
+        } ) ;
+        hexagon.setOnMouseExited( new EventHandler <MouseEvent>() {
+            @Override
+            public void handle( MouseEvent mouseEvent ){
+                text.setVisible( false ) ;
+                rect.setVisible( false ) ;
+                animation.stop() ;
+            }
+        } );
         double x = map[row][column].getLayoutX() ;
         double y = map[row][column].getLayoutY() - TILE_HEIGHT * buildingSize ;
         hexagon.setLayoutX(x) ;
         hexagon.setLayoutY(y) ;
         hexagon.setFill( imagePattern ) ;
         buildings.add( hexagon ) ;
-        // adding the building in pane
-        int n = 0 ; // number of things with greater ( i + j )
-
-        // first calculate n among rectangles ( buildings )
-        for(Building building : Building.getBuildings()){
-            if( building.getRow() + building.getColumn() + building.getHeight() - 1 > row + column - 1 + buildingSize )
-                n++ ;
-        }
-        for(int i = this.pos[0] ; i < this.pos[0] + viewSize ; i++){
-            for(int j = this.pos[1] ; j < this.pos[1] + viewSize ; j++){
-                for(Unit unit : gameController.getGameMap().getCell(i,j).getUnits()){
-                    if(unit.getRow() + unit.getColumn()> 2 * buildingSize + row + column - 2) n++ ;
-                }
-            }
-        }
-
-        pane.getChildren().add( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size() - n , hexagon ) ;
         return hexagon ;
     }
 
