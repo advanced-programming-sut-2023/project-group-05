@@ -1,12 +1,10 @@
 package view;
 
+import com.google.gson.Gson;
+import controller.ChatThread;
 import controller.LoginRegisterThread;
-import controller.ChatController;
 import controller.GameRoomController;
-import model.Account;
-import model.Chat;
-import model.DataBase;
-import model.GameRoomConnection;
+import model.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -19,11 +17,23 @@ public class Main extends Application
     }
     @Override
     public void start(Stage _stage) throws Exception {
-        DataBase.wakeUp() ;
-        stage = _stage;
-        (new LoginRegisterThread()).start() ;
-        ChatController.AddChat(new Chat("Ali", "ghasem"));
-        GameRoomController.AddServer(new GameRoomConnection("Test", "1234", 8888, 8));
-        new MainMenu().start(stage);
+        /*DataBase.wakeUp();
+        ChatLog.WAKEUP();
+        stage = _stage;*/
+        /// (new LoginRegisterThread()).start() ;
+        /// (new ChatThread()).start();
+
+        System.out.println(new Gson().toJson(new ChatPacket("Me", "Suck My Cock", "You", "{'size':'big'}")));
+
+        /*Chat chat = new Chat("Ariya", "Danial");
+        Chat chat1 = new Chat("Kiani", "Yazid");
+        chat.AddMessage(new Message("Ariya", "kir!"));
+        chat1.AddMessage(new Message("Kiani", "alat be kamat"));
+        ChatLog.AddChat(chat);
+        ChatLog.AddChat(chat1);
+         */
+
+        /// GameRoomController.AddServer(new GameRoomConnection("Test", "1234", 8888, 8));
+        /// new MainMenu().start(stage);
     }
 }

@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.controller.ChatConnection;
 import org.example.controller.ProfileMenuController;
 import org.example.controller.URLFinder;
 import org.example.model.Commands;
@@ -23,6 +24,8 @@ public class MainMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        String userName = "Danial";
+        ChatConnection connection = new ChatConnection("localhost", 2021, userName);
         stage.setTitle("Main Menu");
         BorderPane borderPane = FXMLLoader.load(URLFinder.run("/fxml/MainMenu.fxml"));
         VBox vBox = new VBox();

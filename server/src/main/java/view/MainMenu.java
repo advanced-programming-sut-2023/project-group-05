@@ -1,9 +1,9 @@
 package view;
 
-import controller.ChatController;
 import controller.GameRoomController;
 import controller.URLFinder;
 import model.Chat;
+import model.ChatLog;
 import model.GameRoomConnection;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -54,17 +54,23 @@ public class MainMenu extends Application
         vBox.getChildren().clear();
         vBox.setSpacing(20);
         vBox.getChildren().add(new Label("Chat Rooms' List"));
-        for(int i = 0; i < ChatController.Chats.size(); i ++)
+        for(int i = 0; i < ChatLog.chatLog.size(); i ++)
         {
-            Chat chat = ChatController.Chats.get(i);
+            Chat chat = ChatLog.chatLog.get(i);
             Label label = new Label("chat number " + (i + 1) + " between " + chat.getFirst() + " and " + chat.getSecond() + " with total " + chat.getMessages().size() + " messages");
             vBox.getChildren().add(label);
         }
         Button createChatButton = new Button("Create new Chat");
         createChatButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent mouseEvent) {
+            public void handle(MouseEvent mouseEvent)
+            {
                 System.out.println("create Chat Menu should be Enabled");
+                try {
+                    new CreateChatMenu().start(new Stage());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         vBox.getChildren().add(createChatButton);

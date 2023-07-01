@@ -20,12 +20,14 @@ import org.example.model.Message;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ChatPage extends Application {
-
+public class ChatPage extends Application
+{
+    public static String userName;
     public static Chat chat;
     public static VBox vBox;
-    public ChatPage(Chat _chat)
+    public ChatPage(Chat _chat, String _userName)
     {
+        userName = _userName;
         chat = _chat;
     }
     public static void updatePane()
@@ -44,7 +46,7 @@ public class ChatPage extends Application {
         sendMessage.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                chat.AddMessage(new Message(chat.getFirst(), chat.getSecond(), textField.getText(), (new Date()).toString()));
+                chat.AddMessage(new Message(userName, textField.getText()));
                 textField.setText("");
             }
         });
