@@ -1,8 +1,6 @@
 package org.example.model.unit;
 
 import javafx.event.EventHandler;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.Effect;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
@@ -10,18 +8,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
-import org.example.controller.GameController;
 import org.example.controller.GameGraphicalController;
 import org.example.controller.PathFinder;
 
 import org.example.model.*;
+import org.example.model.animations.AttackingAnimation;
 import org.example.model.animations.WalkingAnimation;
 import org.example.model.animations.gettingDamageAnimation;
 import org.example.model.building.Building;
 import org.example.model.enums.UnitImagesEnum;
-import org.example.view.Game;
-import org.example.view.MainMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +50,8 @@ public class Unit {
     private Rectangle healthBar ;
 
     int[][] adjacencyArray = { { 0 , -1 } , { 1 , 0 } , { -1 , 0 } , { 0 , 1 } } ;
+    private static GameMap gameMap ;
+
     public Unit( String name , Player owner , int hitPoint,int movingSpeed , int range , int row , int column , boolean selectable ){
         this.name = name ;
         this.hitPoint = hitPoint;
@@ -70,6 +67,10 @@ public class Unit {
         owner.setPopulation( owner.getPopulation() + 1 );
         owner.getUnits().add(this) ;
         pathFinder = new PathFinder() ;
+    }
+
+    public static void setGameMap( GameMap gameMap ){
+        Unit.gameMap = gameMap ;
     }
 
     public void setPathFinder(GameMap gameMap){
@@ -122,7 +123,7 @@ public class Unit {
                 }
                 if( GameGraphicalController.attackingMouse.isVisible() ){
                     for( Unit u : GameGraphicalController.getPlayer().getSelectedUnits() ){
-                        u.attack( unit ) ;
+                        u.moveToAttackTo( unit ) ;
                         System.out.println( "attacking" ) ;
                     }
                 }
@@ -176,6 +177,8 @@ public class Unit {
     public void setIsOnHighGround(boolean highGround){
         this.isOnHighGround = highGround ;
     }
+    public int walkingReason = -1 ; // 0 : move , 1 : attack
+    public Unit enemy = null ;
 
     public void die(GameMap gameMap){
         this.owner.getSelectedUnits().remove(this) ;
@@ -186,14 +189,12 @@ public class Unit {
         GameGraphicalController.getPane().getChildren().remove( this.shape ) ;
     }
 
-    public int walkingReason = -1 ; // 0 : move , 1 : attack
-
     public void getDamaged(int x , GameMap gameMap){
         this.hitPoint -= x ;
         this.healthBar.setWidth( 15 * this.hitPoint / this.initialHitpoint ) ;
         if(this.hitPoint <= 0)
             this.die(gameMap) ;
-        ( new gettingDamageAnimation( shape ) ).playFromStart() ;
+        //( new gettingDamageAnimation( shape ) ).playFromStart() ;
     }
 
     public boolean moveTo(int x, int y){
@@ -214,7 +215,7 @@ public class Unit {
         return true ;
     }
 
-    public void attack( Unit unit ){
+    public void moveToAttackTo( Unit unit ){ // this will move until the enemy is in range
         boolean canAttack = false ;
         for(int i = 0 ; i < 4 ; i++){
             if( moveTo(adjacencyArray[i][0] + unit.getRow() , adjacencyArray[i][1] + unit.getColumn() ) ){
@@ -224,7 +225,21 @@ public class Unit {
         }
         if( !canAttack ) return ;
         walkingReason = 1 ;
-        // TODO : attack
+        enemy = unit ;
+    }
+
+    public void attack(){ // this will deal damage to the enemy in range
+        boolean canAttack = false ;
+        for( int i = 0 ; i < 4 ; i++){
+            if( this.row == enemy.getRow() + adjacencyArray[i][0] && this.column == enemy.getColumn() + adjacencyArray[i][1] ){
+                canAttack = true ;
+                break ;
+            }
+        }
+        if(!canAttack) return ;
+        enemy.getDamaged( 10 , gameMap ) ;
+        if( enemy.getHitPoint() <= 0 ) return ;
+        (AttackingAnimation.setUnit( this , enemy )).play() ;
     }
 
     public void moveToIfNeeded(){
@@ -353,57 +368,58 @@ public class Unit {
 
     public static Unit createUnitByName(String type,Player owner,int row , int column){
         UnitTypeEnum unitType = UnitTypeEnum.getUnitTypeByName(type);
+        Unit newUnit = null ;
         if (unitType == UnitTypeEnum.ARCHER)
-            return new Warrior(type,owner,10,100,10,20,10,10,10,true,false,false,false,false,false,false,row , column);
+            newUnit = new Warrior(type,owner,10,100,10,20,10,10,10,true,false,false,false,false,false,false,row , column);
         if (unitType == UnitTypeEnum.CROSSBOWMEN)
-            return new Warrior(type,owner,10,150,7,7,15,15,7,false,false,false,false,false,false,false,row,column);
+            newUnit = new Warrior(type,owner,10,150,7,7,15,15,7,false,false,false,false,false,false,false,row,column);
         if (unitType == UnitTypeEnum.SPEARMEN)
-            return new Warrior(type,owner,10,50,15,10,0,3,10,false,true,false,true,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,10,50,15,10,0,3,10,false,true,false,true,false,false,true,row,column);
         if (unitType == UnitTypeEnum.PIKEMEN)
-            return new Warrior(type,owner,10,50,7,10,15,20,10,false,false,false,false,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,10,50,7,10,15,20,10,false,false,false,false,false,false,true,row,column);
         if (unitType == UnitTypeEnum.MACEMEN)
-            return new Warrior(type,owner,10,150,15,10,20,13,5,false,false,false,false,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,10,150,15,10,20,13,5,false,false,false,false,false,false,true,row,column);
         if (unitType == UnitTypeEnum.SWORDSMEN)
-            return new Warrior(type,owner,10,250,7,10,25,10,5,false,false,false,false,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,10,250,7,10,25,10,5,false,false,false,false,false,false,true,row,column);
         if (unitType == UnitTypeEnum.KNIGHT)
-            return new Warrior(type,owner,10,250,20,10,25,20,5,false,false,true,false,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,10,250,20,10,25,20,5,false,false,true,false,false,false,true,row,column);
         if (unitType == UnitTypeEnum.TUNNELER)
-            return new Tunneler(owner,5,row,column);
+            newUnit = new Tunneler(owner,5,row,column);
         if (unitType == UnitTypeEnum.LADDERMEN)
-            return new LadderMan(owner,5,row,column);
+            newUnit = new LadderMan(owner,5,row,column);
         if (unitType == UnitTypeEnum.ENGINEER)
-            return new Engineer(owner,5,row,column);
+            newUnit = new Engineer(owner,5,row,column);
         if (unitType == UnitTypeEnum.BLACKMONK)
-            return new Warrior(type,owner,10,50,7,5,10,10,5,false,false,false,false,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,10,50,7,5,10,10,5,false,false,false,false,false,false,true,row,column);
         if (unitType == UnitTypeEnum.ARCHERBOW)
-            return new Warrior(type,owner,10,100,15,15,10,10,10,false,false,false,false,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,10,100,15,15,10,10,10,false,false,false,false,false,false,true,row,column);
         if (unitType == UnitTypeEnum.SLAVES)
-            return new Warrior(type,owner,10,50,15,10,5,5,5,true,false,false,false,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,10,50,15,10,5,5,5,true,false,false,false,false,false,true,row,column);
         if (unitType == UnitTypeEnum.SLINGERS)
-            return new Warrior(type,owner,10,50,15,5,7,5,5,false,false,false,false,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,10,50,15,5,7,5,5,false,false,false,false,false,false,true,row,column);
         if (unitType == UnitTypeEnum.ASSASSINS)
-            return new Warrior(type,owner,10,150,10,10,10,10,10,false,false,false,false,true,true,true,row,column);
+            newUnit = new Warrior(type,owner,10,150,10,10,10,10,10,false,false,false,false,true,true,true,row,column);
         if (unitType == UnitTypeEnum.HORSE_ARCHERS)
-            return new Warrior(type,owner,10,100,25,12,10,15,10,false,false,true,false,false, false,false,row,column);
+            newUnit = new Warrior(type,owner,10,100,25,12,10,15,10,false,false,true,false,false, false,false,row,column);
         if (unitType == UnitTypeEnum.ARABIAN_SWORDSMEN)
-            return new Warrior(type,owner,10,200,20,5,20,20,5,false,false,false,false,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,10,200,20,5,20,20,5,false,false,false,false,false,false,true,row,column);
         if (unitType == UnitTypeEnum.FIRE_THROWERS)
-            return new Warrior(type,owner,10,50,20,5,15,7,5,true,false,false,false,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,10,50,20,5,15,7,5,true,false,false,false,false,false,true,row,column);
         if (type.equals("jobless"))
-            return new Jobless(owner , 2,row , column);
+            newUnit = new Jobless(owner , 2,row , column);
         if (type.equals("trap"))
-            return new Warrior(type,owner,1000,5,0,1,1000,0,0,false,false,false,false,false,false,false,row,column);
+            newUnit = new Warrior(type,owner,1000,5,0,1,1000,0,0,false,false,false,false,false,false,false,row,column);
         if (type.equals("manjenigh"))
-            return new Warrior(type,owner,20,50,2,40,20,0,0,false,false,false,false,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,20,50,2,40,20,0,0,false,false,false,false,false,false,true,row,column);
         if (type.equals("dejkub"))
-            return new Warrior(type,owner,20,50,4,1,20,0,0,false,false,false,false,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,20,50,4,1,20,0,0,false,false,false,false,false,false,true,row,column);
         if (type.equals("sangandazatashin"))
-            return new Warrior(type,owner,20,50,2,10,20,0,0,false,false,false,false,false,false,true,row,column);
+            newUnit = new Warrior(type,owner,20,50,2,10,20,0,0,false,false,false,false,false,false,true,row,column);
 
         if(type.equals("ox"))
             return new Unit("ox",owner,1,1,0,row,column,false) ;
 
-        return null;
+        return newUnit ;
     }
 
     public static Cost getCostByName(String name){

@@ -34,6 +34,7 @@ public class GameController {
         this.turn = 0 ;
         this.winner = null ;
         gameMap = new GameMap(400,400);
+        Unit.setGameMap( gameMap ) ;
         // putYourCastle( this.player );
         // putYourStockPile( this.player );
         System.out.println( "TODO : we assume castle is put" ) ;

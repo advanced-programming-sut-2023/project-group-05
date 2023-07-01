@@ -43,7 +43,6 @@ public class WalkingAnimation extends Transition {
         this.setOnFinished( new EventHandler <ActionEvent>() {
             @Override
             public void handle( ActionEvent actionEvent ){
-                if(unit.getTargetRow() != unit.getRow() || unit.getTargetColumn() != unit.getColumn() )
                     finalThis.play() ;
             }
         } );
@@ -56,13 +55,19 @@ public class WalkingAnimation extends Transition {
 
     @Override
     public void play(){
-        if(!unit.getIsMoving()) return ;
+        //if(!unit.getIsMoving()) return ;
         setTarget() ;
         updated = false ;
         unitRow = unit.getRow() ;
         unitColumn = unit.getColumn() ;
+        // stop walking if you are at target
         if(unitRow == targetRow && unitColumn == targetColumn){
+            System.out.println( "Stop" ) ;
             unit.setIsMoving( false ) ;
+            // if unit is attacking someone, start the fight
+            if( unit.walkingReason == 1 ){
+                unit.attack() ;
+            }
             unit.walkingReason = -1 ;
             return ;
         }
