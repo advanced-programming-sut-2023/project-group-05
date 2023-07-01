@@ -9,7 +9,7 @@ public class ChatThread extends Thread {
     public void run(){
         ServerSocket serverSocket ;
         try{
-            serverSocket = new ServerSocket( "localhost" , 2021 ) ;
+            serverSocket = new ServerSocket( 2021 ) ;
             while(true){
                 Socket client = serverSocket.accept() ;
 
