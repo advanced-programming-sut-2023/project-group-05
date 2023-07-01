@@ -43,6 +43,7 @@ public class GameGraphicalController {
     public static int mouseHeight = 1 ;
     private static int mouseRow = 0 ;
     private static int mouseColumn = 0 ;
+    public static Minimap minimap ;
     public static ArrayList<Node> reservedShapes;
     public static String chosenBuildingName = "" ;
     public static String selectedBuildingName = "" ;
@@ -149,20 +150,29 @@ public class GameGraphicalController {
                     camera.move( 0 );
                 }
                 if( keyEvent.getCode().equals( KeyCode.UP ) ){
-                    camera.move( 1 ) ;
+                    camera.move( 1 );
                 }
                 if( keyEvent.getCode().equals( KeyCode.LEFT ) ){
-                    camera.move( 2 ) ;
+                    camera.move( 2 );
                 }
                 if( keyEvent.getCode().equals( KeyCode.RIGHT ) ){
-                    camera.move( 3 ) ;
+                    camera.move( 3 );
                 }
-                if (keyEvent.getCode().equals(KeyCode.ESCAPE))
+                if( keyEvent.getCode().equals( KeyCode.ESCAPE ) ){
                     bottomMenu.pauseGame();
-                if( keyEvent.getCode().equals( KeyCode.K ) ){
-                    debug() ;
                 }
+                if( keyEvent.getCode().equals( KeyCode.K ) ){
+                    debug();
+                }
+                if( keyEvent.getCode().equals(KeyCode.M) ){
+                    minimap.setVisible( ! minimap.isVisible() );
+                }
+                if( keyEvent.getCode().equals(KeyCode.S) ){
+                    SoundController.setMusicMute( ! SoundController.isMusicMute );
+                }
+                if( keyEvent.getCode().equals(KeyCode.A) ){
 
+                }
             }
         });
     }

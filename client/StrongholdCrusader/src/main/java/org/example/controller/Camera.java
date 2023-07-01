@@ -284,6 +284,7 @@ public class Camera {
     private Minimap minimap ;
     public void setMinimap(Minimap minimap){
         this.minimap = minimap ;
+        GameGraphicalController.minimap = minimap ;
     }
 
     private void moveMinimap(int dx, int dy){
