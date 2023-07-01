@@ -45,6 +45,7 @@ public class GameGraphicalController {
     private static int mouseColumn = 0 ;
     public static ArrayList<Node> reservedShapes;
     public static String chosenBuildingName = "" ;
+    public static String selectedBuildingName = "" ;
     public static ArrayList<Rectangle> current;
     public static ArrayList<Circle> buttons = new ArrayList<>();
     public static HashMap<Circle, ArrayList<Rectangle>> buttonMap = new HashMap<>();
@@ -167,8 +168,17 @@ public class GameGraphicalController {
     }
 
     private static void addBuildingImage(int row, int column){
-        camera.addBuilding(row , column , chosenBuildingName);
+        Polygon buildingShape = camera.addBuilding(row , column , chosenBuildingName);
         mouse.setVisible(false) ;
+        buildingShape.setOnMouseClicked( new EventHandler <MouseEvent>() {
+            @Override
+            public void handle( MouseEvent mouseEvent ){
+                selectedBuildingName = chosenBuildingName ;
+                if( selectedBuildingName.equals( "market" ) ){
+                    bottomMenu.initShopMenu( null , 0 , 0 ) ;
+                }
+            }
+        } );
     }
 
 

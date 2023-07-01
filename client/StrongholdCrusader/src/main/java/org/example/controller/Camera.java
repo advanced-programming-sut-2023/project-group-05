@@ -58,7 +58,7 @@ public class Camera {
         return this.viewSize ;
     }
 
-    public void addBuilding(int row , int column , String chosenBuildingName){
+    public Polygon addBuilding(int row , int column , String chosenBuildingName){
         ImagePattern imagePattern = BuildingImages.getImagePattern( chosenBuildingName ) ;
         int width = BuildingEnum.getBuildingWidthByName( chosenBuildingName ) ;
         int height = BuildingEnum.getBuildingHeightByName( chosenBuildingName ) ;
@@ -95,7 +95,7 @@ public class Camera {
         }
 
         pane.getChildren().add( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size() - n , hexagon ) ;
-
+        return hexagon ;
     }
 
     public void draw(){
