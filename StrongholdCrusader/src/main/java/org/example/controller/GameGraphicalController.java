@@ -165,10 +165,6 @@ public class GameGraphicalController {
         rectangle.setFill(imagePattern);
     }
 
-
-
-
-
     public static ImagePattern loadImagePattern(URL url) {
         ImagePattern imagePattern;
         imagePattern = new ImagePattern(new Image(url.toExternalForm()));
