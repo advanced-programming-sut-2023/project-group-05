@@ -192,8 +192,21 @@ public class GameGraphicalController {
                         unit.getShape().setEffect( glow ) ;
                     }
                 }
+                if( keyEvent.getCode().equals(KeyCode.TAB) ){
+                    PlayerList.add( gameController.getPlayers() , pane ) ;
+                }
             }
         });
+
+        pane.setOnKeyReleased( new EventHandler <KeyEvent>() {
+            @Override
+            public void handle( KeyEvent keyEvent ){
+                if( keyEvent.getCode() == KeyCode.TAB ){
+                    PlayerList.remove() ;
+                }
+            }
+        } );
+
     }
 
     private static void addBuildingImage(int row, int column){

@@ -62,7 +62,6 @@ public class WalkingAnimation extends Transition {
         unitColumn = unit.getColumn() ;
         // stop walking if you are at target
         if(unitRow == targetRow && unitColumn == targetColumn){
-            System.out.println( "Stop" ) ;
             unit.setIsMoving( false ) ;
             // if unit is attacking someone, start the fight
             if( unit.walkingReason == 1 ){

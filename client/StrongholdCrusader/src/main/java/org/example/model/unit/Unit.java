@@ -36,6 +36,7 @@ public class Unit {
     private UnitModeEnum unitMode ;
     // TODO : private Building building ;
     protected boolean isMoving ;
+    public static double UNIT_SIZE = 40 ;
 
     protected int row ;
     protected int column ;
@@ -83,7 +84,7 @@ public class Unit {
     public Rectangle getHealthBar(){ return this.healthBar ;}
 
     public void setShape(){
-        this.shape = new Rectangle( 0 , 0 , 40 , 40 ) ;
+        this.shape = new Rectangle( 0 , 0 , UNIT_SIZE , UNIT_SIZE ) ;
         this.healthBar = new Rectangle( 0 , 0 , 15 , 2 ) ;
         healthBar.setFill( Color.GREEN ) ;
         healthBar.setVisible( false ) ;
@@ -124,7 +125,6 @@ public class Unit {
                 if( GameGraphicalController.attackingMouse.isVisible() ){
                     for( Unit u : GameGraphicalController.getPlayer().getSelectedUnits() ){
                         u.moveToAttackTo( unit ) ;
-                        System.out.println( "attacking" ) ;
                     }
                 }
             }
@@ -238,8 +238,12 @@ public class Unit {
         }
         if(!canAttack) return ;
         enemy.getDamaged( 10 , gameMap ) ;
-        if( enemy.getHitPoint() <= 0 ) return ;
-        (AttackingAnimation.setUnit( this , enemy )).play() ;
+        if( enemy.getHitPoint() <= 0 ){
+            System.out.println( "killed the enemy" ) ;
+            return ;
+        }
+        System.out.println("attacking");
+        (new AttackingAnimation( this , enemy )).playFromStart(); ;
     }
 
     public void moveToIfNeeded(){
