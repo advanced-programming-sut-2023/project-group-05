@@ -34,9 +34,7 @@ public class GameGraphicalController {
     private static Polygon[][] map;
     private static int width;
     private static int height;
-    private static Rectangle graphicalMenu;
-    private static ArrayList<Rectangle> graphicalMenuButton;
-    private static ArrayList<Rectangle> buildings;
+    public static ArrayList<Polygon> selectedBuildingsShapes = new ArrayList <>() ;
     public static int SCREEN_HEIGHT = 700 ;
     public static int SCREEN_WIDTH = 1000 ;
     private static final int TILE_HEIGHT = 22;
@@ -215,8 +213,18 @@ public class GameGraphicalController {
         buildingShape.setOnMouseClicked( new EventHandler <MouseEvent>() {
             @Override
             public void handle( MouseEvent mouseEvent ){
+                if( mouseEvent.getButton() == MouseButton.PRIMARY ){
+
+                    Glow glow = new Glow() ;
+                    glow.setLevel( 100 );
+                    buildingShape.setEffect( glow ) ;
+                    selectedBuildingsShapes.add( buildingShape ) ;
+                } else {
+                    buildingShape.setEffect( null );
+                    selectedBuildingsShapes.remove( buildingShape ) ;
+                }
                 selectedBuildingName = chosenBuildingName ;
-                if( selectedBuildingName.equals( "market" ) ){
+                if( mouseEvent.getButton() == MouseButton.PRIMARY && selectedBuildingName.equals( "market" ) ){
                     bottomMenu.preInitShop(); ;
                 }
             }

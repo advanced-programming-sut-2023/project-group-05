@@ -85,7 +85,7 @@ public class bottomMenu {
         ArrayList<String> badNames = new ArrayList<>(Arrays.asList("bt1", "bt2", "bt3", "bt4", "bt5", "bt6", "bt7", "bt8"));
         initArray(badThing, badThings, 40, 40, badNames);
 
-        ArrayList<String> towerAndWallNames = new ArrayList<>(Arrays.asList("taw1", "taw2", "taw3", "taw4", "taw5", "squaretower", "roundtower", "taw8", "taw9"));
+        ArrayList<String> towerAndWallNames = new ArrayList<>(Arrays.asList("smallstonegatehouse", "bigstonegatehouse", "taw3", "lookouttower", "perimetertower", "squaretower", "roundtower", "taw8", "taw9"));
         initArray(towerAndWall, towerAndWalls, 20, 40, towerAndWallNames);
     }
 

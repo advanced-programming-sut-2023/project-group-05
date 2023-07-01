@@ -176,13 +176,13 @@ public class Building {
         if (type.equals("drawbridge"))
             return new Building(type,1,3,true,"",owner,row,column,getBuildingCost(type),200,0,false,BuildingEnum.DRAW_BRIDGE,0);
         if (type.equals("lookouttower"))
-            return new AttackDefenceBuilding(type,3,3,false,"",owner,row,column,getBuildingCost(type),5000,0,false,70,20,false,20,BuildingEnum.LOOKOUT_TOWER);
+            return new AttackDefenceBuilding(type,2,2,false,"",owner,row,column,getBuildingCost(type),5000,0,false,70,20,false,20,BuildingEnum.LOOKOUT_TOWER);
         if (type.equals("perimetertower"))
-            return new AttackDefenceBuilding(type,4,4,false,"",owner,row,column,getBuildingCost(type),4000,0,false,35,20,false,20,BuildingEnum.PERIMETER_TOWER);
+            return new AttackDefenceBuilding(type,2,2,false,"",owner,row,column,getBuildingCost(type),4000,0,false,35,20,false,20,BuildingEnum.PERIMETER_TOWER);
         if (type.equals("squaretower"))
-            return  new AttackDefenceBuilding(type,3,3,false,"",owner,row,column,getBuildingCost(type),4000,0,false,50,20,false,20,BuildingEnum.SQUARE_TOWER);
+            return  new AttackDefenceBuilding(type,2,2,false,"",owner,row,column,getBuildingCost(type),4000,0,false,50,20,false,20,BuildingEnum.SQUARE_TOWER);
         if (type.equals("roundtower"))
-            return  new AttackDefenceBuilding(type,3,3,false,"",owner,row,column,getBuildingCost(type),4000,0,false,50,20,false,20,BuildingEnum.ROUND_TOWER);
+            return  new AttackDefenceBuilding(type,2,2,false,"",owner,row,column,getBuildingCost(type),4000,0,false,50,20,false,20,BuildingEnum.ROUND_TOWER);
         if (type.equals("defenceturret"))
             return new AttackDefenceBuilding(type,3,3,false,"",owner,row,column,getBuildingCost(type),2000,0,false,50,20,false,20,BuildingEnum.DEFENCE_TURRET);
         if (type.equals("smallstonegatehouse"))
@@ -191,9 +191,9 @@ public class Building {
             return new AttackDefenceBuilding(type,4,4,true,"",owner,row,column,getBuildingCost(type),1000,0,false,40,20,false,20,BuildingEnum.BIG_STONE_GATEHOUSE);
         if (type.equals("armoury"))
 
-            return  new StorageBuilding(type,3,3,false,"",owner,row,column,getBuildingCost(type),2000,0,false,200,BuildingEnum.ARMOURY);
+            return  new StorageBuilding(type,2,2,false,"",owner,row,column,getBuildingCost(type),2000,0,false,200,BuildingEnum.ARMOURY);
         if (type.equals("barracks"))
-            return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,2000,getBuildingCost(type),0, 200000 , BuildingEnum.BARRACKS);
+            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,2000,getBuildingCost(type),0, 200000 , BuildingEnum.BARRACKS);
         if (type.equals("mercenarypost"))
             return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,2000,getBuildingCost(type),0, 200000 , BuildingEnum.MERCENARY_POST);
 
@@ -206,7 +206,7 @@ public class Building {
         if (type.equals("cagedwardog"))
             return new TradeBuilding(type,"",1,1,false,0,true,owner,row,column,100,getBuildingCost(type),3, 200000 , BuildingEnum.CAGED_WAR_DOGS);//TODO : HOW MANY OPERATOR?
         if (type.equals("siegetent"))
-            return new TradeBuilding(type,"",4,4,true,0,false,owner,row,column,300,getBuildingCost(type),1,200000 , BuildingEnum.SIEGE_TENT);
+            return new TradeBuilding(type,"",2,2,true,0,false,owner,row,column,300,getBuildingCost(type),1,200000 , BuildingEnum.SIEGE_TENT);
 
         if (type.equals("stable"))
             return new TradeBuilding(type,"",3,5,false,0,false,owner,row,column,200,getBuildingCost(type),0, 1, BuildingEnum.STABLE);//TODO : HOW MANY OPERATORS?

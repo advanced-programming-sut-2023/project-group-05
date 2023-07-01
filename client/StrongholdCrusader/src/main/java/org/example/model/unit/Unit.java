@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import org.example.controller.GameGraphicalController;
 import org.example.controller.PathFinder;
 
@@ -17,6 +18,7 @@ import org.example.model.animations.WalkingAnimation;
 import org.example.model.animations.gettingDamageAnimation;
 import org.example.model.building.Building;
 import org.example.model.enums.UnitImagesEnum;
+import org.example.view.Game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +51,7 @@ public class Unit {
     protected int targetColumn = -1 ;
     private Rectangle shape ;
     private Rectangle healthBar ;
+    private Text HPText = new Text() ;
 
     int[][] adjacencyArray = { { 0 , -1 } , { 1 , 0 } , { -1 , 0 } , { 0 , 1 } } ;
     private static GameMap gameMap ;
@@ -130,12 +133,29 @@ public class Unit {
             }
         } ) ;
         Unit finalThis = this ;
+        Rectangle rect = new Rectangle( 0 , 0 , 110 , 40 ) ;
+        HPText.setText( "HP=" + this.hitPoint+ "\n" + this.name );
+        HPText.setStyle( "-fx-font-weight: bold" ) ;
+        rect.setVisible( false ) ;
+        rect.setFill( Color.PURPLE ) ;
+        rect.setOpacity( 0.5 ) ;
+        HPText.setVisible( false ) ;
         this.shape.setOnMouseMoved( new EventHandler <MouseEvent>() {
             @Override
             public void handle( MouseEvent mouseEvent ){
                 healthBar.setVisible( true ) ;
                 healthBar.setX( finalThis.getShape().getX() ) ;
                 healthBar.setY( finalThis.getShape().getY() - 5 ) ;
+                if( !rect.isVisible() ){
+                    rect.setVisible( true ) ;
+                    HPText.setVisible( true ) ;
+                    GameGraphicalController.getPane().getChildren().add( rect );
+                    GameGraphicalController.getPane().getChildren().add( HPText );
+                }
+                rect.setX( mouseEvent.getX() + 16 ) ;
+                HPText.setY( mouseEvent.getY() + 15 ) ;
+                HPText.setX( mouseEvent.getX() + 20 ) ;
+                rect.setY( mouseEvent.getY() + 1 ) ;
                 GameGraphicalController.attackingMouse.setX( mouseEvent.getX() - GameGraphicalController.attackingMouse.getWidth() - 1 ) ;
                 GameGraphicalController.attackingMouse.setY( mouseEvent.getY() - GameGraphicalController.attackingMouse.getHeight() - 1 ) ;
                 if( owner != GameGraphicalController.getPlayer() && !GameGraphicalController.getPlayer().getSelectedUnits().isEmpty() )
@@ -147,6 +167,9 @@ public class Unit {
             @Override
             public void handle( MouseEvent mouseEvent ){
                 healthBar.setVisible( false ) ;
+                HPText.setVisible( false ) ;
+                rect.setVisible( false ) ;
+                GameGraphicalController.getPane().getChildren().removeAll( rect , HPText ) ;
                 GameGraphicalController.attackingMouse.setVisible( false ) ;
             }
         } );
@@ -191,6 +214,7 @@ public class Unit {
 
     public void getDamaged(int x , GameMap gameMap){
         this.hitPoint -= x ;
+        this.HPText.setText( "HP=" + this.hitPoint + "\n" + this.name ) ;
         this.healthBar.setWidth( 15 * this.hitPoint / this.initialHitpoint ) ;
         if(this.hitPoint <= 0)
             this.die(gameMap) ;
@@ -240,7 +264,11 @@ public class Unit {
         enemy.getDamaged( 10 , gameMap ) ;
         if( enemy.getHitPoint() <= 0 ){
             System.out.println( "killed the enemy" ) ;
+            enemy = null ;
             return ;
+        } else if( enemy.enemy == null ) {
+            enemy.enemy = this ;
+            enemy.attack() ;
         }
         System.out.println("attacking");
         (new AttackingAnimation( this , enemy )).playFromStart(); ;

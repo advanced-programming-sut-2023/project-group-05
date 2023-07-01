@@ -70,21 +70,27 @@ public class Camera {
         int height = BuildingEnum.getBuildingHeightByName( chosenBuildingName ) ;
         // fact : every building is in shape of a hexagon-like.
         int buildingSize = width ;
+        int tallness = buildingSize ;
+        // special cases :
+        if( chosenBuildingName.equals("lookouttower") ) tallness = 8 ;
+        if( chosenBuildingName.equals("perimetertower") ) tallness = 6 ;
+        if( chosenBuildingName.equals("squaretower") ) tallness = 6 ;
+        if( chosenBuildingName.equals("roundtower") ) tallness = 6 ;
         Polygon hexagon = new Polygon(
                 0, 0,
                 buildingSize * TILE_WIDTH / 2 , buildingSize * TILE_HEIGHT / 2,
-                buildingSize * TILE_WIDTH / 2 , 3 * buildingSize * TILE_HEIGHT / 2,
-                0 , 4 * buildingSize * TILE_HEIGHT / 2,
-                -buildingSize * TILE_WIDTH / 2 , 3 * buildingSize * TILE_HEIGHT / 2,
+                buildingSize * TILE_WIDTH / 2 , buildingSize * TILE_HEIGHT / 2 + tallness * TILE_HEIGHT,
+                0 ,  buildingSize * TILE_HEIGHT + tallness * TILE_HEIGHT ,
+                -buildingSize * TILE_WIDTH / 2 , buildingSize * TILE_HEIGHT / 2 + tallness * TILE_HEIGHT,
                 -buildingSize * TILE_WIDTH / 2 , buildingSize * TILE_HEIGHT / 2
         ) ;
-        Text text = new Text( "name :" + chosenBuildingName + "\nrow=" + row + "\ncolumn=" + column+"\nlittle tornado in 5" ) ;
-        Rectangle rect = new Rectangle( 0 , 0 , 190 , 115 ) ;
+        Text text = new Text( "name :" + chosenBuildingName + "\nHP=" +
+                GameGraphicalController.gameController.getGameMap().getCell(row,column).getBuilding().getHitPoint()
+                + "\nrow=" + row + "\ncolumn=" + column+"\nlittle tornado in 5" ) ;
+        Rectangle rect = new Rectangle( 0 , 0 , 190 , 140 ) ;
         text.setFont( new Font(20) ) ;
         text.setFill( Color.RED ) ;
         pane.getChildren().add( hexagon ) ;
-        pane.getChildren().add( rect ) ;
-        pane.getChildren().add( text ) ;
         text.setVisible( false ) ;
         rect.setVisible( false ) ;
         text.setOpacity( 0.85 ) ;
@@ -97,9 +103,12 @@ public class Camera {
                 text.setY( hexagon.getLayoutY() + mouseEvent.getY() + 20 ) ;
                 rect.setX( hexagon.getLayoutX() + mouseEvent.getX() + 1 ) ;
                 rect.setY( hexagon.getLayoutY() + mouseEvent.getY() ) ;
+                text.setText( text.getText().replaceAll( "HP=\\d+" , "HP=" + GameGraphicalController.gameController.getGameMap().getCell(row,column).getBuilding().getHitPoint() ) ) ;
                 if(!text.isVisible()){
                     text.setVisible( true );
                     rect.setVisible( true );
+                    GameGraphicalController.getPane().getChildren().add( rect ) ;
+                    GameGraphicalController.getPane().getChildren().add( text ) ;
                     animation.playFromStart();
                 }
             }
@@ -109,11 +118,13 @@ public class Camera {
             public void handle( MouseEvent mouseEvent ){
                 text.setVisible( false ) ;
                 rect.setVisible( false ) ;
+                GameGraphicalController.getPane().getChildren().remove( rect ) ;
+                GameGraphicalController.getPane().getChildren().remove( text ) ;
                 animation.stop() ;
             }
         } );
         double x = map[row][column].getLayoutX() ;
-        double y = map[row][column].getLayoutY() - TILE_HEIGHT * buildingSize ;
+        double y = map[row][column].getLayoutY() - TILE_HEIGHT * tallness ;
         hexagon.setLayoutX(x) ;
         hexagon.setLayoutY(y) ;
         hexagon.setFill( imagePattern ) ;
@@ -151,10 +162,14 @@ public class Camera {
                     @Override
                     public void handle( MouseEvent mouseEvent ){
                         if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            for( Player player : gameController.getPlayers() ){
-                                for(Unit unit : player.getSelectedUnits()) unit.getShape().setEffect(null) ;
-                                player.getSelectedUnits().clear() ;
+                            Player player = GameGraphicalController.getPlayer() ;
+                            for(Unit unit : player.getSelectedUnits()) unit.getShape().setEffect(null) ;
+                            player.getSelectedUnits().clear() ;
+
+                            for( Shape shape : GameGraphicalController.selectedBuildingsShapes ){
+                                shape.setEffect( null );
                             }
+                            GameGraphicalController.selectedBuildingsShapes.clear() ;
                         }
                         else
                             for( Player player : gameController.getPlayers() )
