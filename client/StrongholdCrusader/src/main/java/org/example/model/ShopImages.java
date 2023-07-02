@@ -13,15 +13,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public enum ShopImages {
-    RICE("food/rice.jpeg", 1, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.15, 50, 1),
+    RICE("food/rice.png", 1, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.15, 50, 1),
     MEAT("food/meat.png", 1, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.22, 50, 2),
-    CHEESE("food/cheese.jpeg", 1, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.29, 50, 3),
+    CHEESE("food/cheese.png", 1, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.29, 50, 3),
     BREAD("food/bread.png", 1, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.36, 50, 4),
     APPLE("food/apple.png", 1, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.43, 50, 5),
-    ALE("food/ale.jpeg", 1, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.5, 50, 6),
-    VEG("food/veg.jpeg", 1, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.57, 50, 7),
-    WHEAT("food/wheat.jpeg", 1, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.64, 50, 8),
-    FOOD("food/food.jpeg", -1, GameGraphicalController.SCREEN_HEIGHT*0.85, GameGraphicalController.SCREEN_WIDTH*0.15, 90, 0),
+    ALE("food/ale.png", 1, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.5, 50, 6),
+    VEG("food/veg.png", 1, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.57, 50, 7),
+    WHEAT("food/wheat.png", 1, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.64, 50, 8),
+    FOOD("food/food.png", -1, GameGraphicalController.SCREEN_HEIGHT*0.85, GameGraphicalController.SCREEN_WIDTH*0.15, 90, 0),
     IRON("rawMaterial/iron.jpeg", 2, GameGraphicalController.SCREEN_HEIGHT*0.85, GameGraphicalController.SCREEN_WIDTH*0.15, 75, 9),
     PITCH("rawMaterial/pitch.png", 2, GameGraphicalController.SCREEN_HEIGHT*0.85, GameGraphicalController.SCREEN_WIDTH*0.3, 75, 10),
     STONE("rawMaterial/stone.jpeg", 2, GameGraphicalController.SCREEN_HEIGHT*0.85, GameGraphicalController.SCREEN_WIDTH*0.45, 75, 11),
@@ -38,8 +38,8 @@ public enum ShopImages {
     WEAPON("weapons/weapon.jpeg", -3, GameGraphicalController.SCREEN_HEIGHT*0.85, GameGraphicalController.SCREEN_WIDTH*0.45, 90, 0),
     TRADE("trade.png", 0, GameGraphicalController.SCREEN_HEIGHT*0.87, GameGraphicalController.SCREEN_WIDTH*0.65, 35, -1);
     private Rectangle rectangle;
-    private int cost;
     private int category;
+    private int identity;
     public static HashMap<Integer, ArrayList<Rectangle>> shopMap = new HashMap<>();
 
     static {
@@ -51,6 +51,7 @@ public enum ShopImages {
     private Image image;
 
     ShopImages(String imageName, int category, double row, double column, double size, int identity) {
+        this.identity = identity;
         this.image = new Image(MainMenu.class.getResource("/images/shop/" + imageName).toString());
         this.category = category;
         this.rectangle = new Rectangle(column, row, size, size);
@@ -65,7 +66,7 @@ public enum ShopImages {
                         case -1 -> bottomMenu.initShopMenu(null, 1, 0);
                         case -2 -> bottomMenu.initShopMenu(null, 2, 0);
                         case -3 -> bottomMenu.initShopMenu(null, 3, 0);
-                        default -> bottomMenu.initShopMenu(rectangle, 0, cost);
+                        default -> bottomMenu.initShopMenu(rectangle, 0, identity);
                     }
                 }
             }
@@ -73,9 +74,13 @@ public enum ShopImages {
 
     }
 
+    public static HashMap<Rectangle,Integer> recToIdentity = new HashMap<>();
+
     static {
-        for (ShopImages shopImages : ShopImages.values())
+        for (ShopImages shopImages : ShopImages.values()) {
             shopMap.get(shopImages.category).add(shopImages.rectangle);
+            recToIdentity.put(shopImages.rectangle,shopImages.identity);
+        }
         shopMap.get(0).add(RAW_MATERIAL.rectangle);
         shopMap.get(0).add(WEAPON.rectangle);
         shopMap.get(0).add(FOOD.rectangle);
@@ -85,13 +90,14 @@ public enum ShopImages {
         return image;
     }
 
+    public int getIdentity() {
+        return identity;
+    }
+
     public Rectangle getRectangle() {
         return rectangle;
     }
 
-    public int getCost() {
-        return cost;
-    }
 
     public int getCategory() {
         return category;
