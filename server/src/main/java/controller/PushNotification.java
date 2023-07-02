@@ -35,9 +35,11 @@ public class PushNotification extends Thread
         for(int i = 0; i < ChatConnection.connections.size(); i ++)
         {
             ChatConnection cur = ChatConnection.connections.get(i);
+            if(!cur.isAlive()) continue;
             if(cur.userName.equals(chatPacket.to))
             {
-                cur.dataOutputStream.writeUTF(new Gson().toJson(chatPacket));
+                System.out.println("Output Data " + chatPacket.toJson().toJSONString());
+                cur.dataOutputStream.writeUTF(chatPacket.toJson().toJSONString());
             }
         }
     }

@@ -1,7 +1,5 @@
 package controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import model.Account;
 import model.Chat;
 import model.ChatLog;
@@ -28,6 +26,7 @@ public class ChatConnection extends Thread
 
     public ChatConnection(Socket _socket) throws IOException
     {
+        System.out.println("ANOTHER CONNECTION HERE!!");
         socket = _socket;
         dataInputStream = new DataInputStream(socket.getInputStream());
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
@@ -44,9 +43,11 @@ public class ChatConnection extends Thread
                 if(dataInputStream.available() != 0)
                 {
                     String dataIn = dataInputStream.readUTF();
+                    System.out.println(" DataIn from client: " + dataIn);
                     try
                     {
-                        ChatPacket inp = new Gson().fromJson(dataIn, ChatPacket.class);
+                        JSONParser anotherParser = new JSONParser();
+                        ChatPacket inp = ChatPacket.fromJson((JSONObject) anotherParser.parse(dataIn));
                         String _to = inp.to;
                         String command = inp.command;
                         String name = inp.name;
@@ -54,19 +55,19 @@ public class ChatConnection extends Thread
 
 
                         if(command.equals("GetSingleChat"))
-                        {
+                        {;
                             ChatPacket out = null;
                             for(int i = 0; i < ChatLog.chatLog.size(); i ++)
                             {
                                 Chat chat = ChatLog.chatLog.get(i);
-                                if(chat.getFirst().equals(name))
+                                if(chat.getFirst().equals(name) && chat.getSecond().equals(userName))
                                 {
-                                    out = new ChatPacket(this.userName, "DATA", chat.getSecond(), chat.toJson().toJSONString());
+                                    out = new ChatPacket(this.userName, "DATA", "", chat.toJson().toJSONString());
                                     break;
                                 }
                                 else if(chat.getSecond().equals(name))
                                 {
-                                    out = new ChatPacket(this.userName, "DATA", chat.getFirst(), chat.toJson().toJSONString());
+                                    out = new ChatPacket(this.userName, "DATA", "", chat.toJson().toJSONString());
                                     break;
                                 }
                             }
@@ -122,9 +123,6 @@ public class ChatConnection extends Thread
                             }
                             notifications.Push(new ChatPacket(this.userName, "GetChatList", "", jsonArray.toJSONString()));
                         }
-                    } catch (JsonSyntaxException e)
-                    {
-                        dataOutputStream.writeUTF("400: Missing topic or command fields.");
                     } catch (ParseException e) {
                         throw new RuntimeException(e);
                     }

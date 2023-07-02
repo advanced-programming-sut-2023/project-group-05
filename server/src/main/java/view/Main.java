@@ -17,13 +17,13 @@ public class Main extends Application
     }
     @Override
     public void start(Stage _stage) throws Exception {
-        /*DataBase.wakeUp();
+        DataBase.wakeUp();
         ChatLog.WAKEUP();
-        stage = _stage;*/
-        /// (new LoginRegisterThread()).start() ;
-        /// (new ChatThread()).start();
+        stage = _stage;
+        (new LoginRegisterThread()).start() ;
+        (new ChatThread()).start();
 
-        System.out.println(new Gson().toJson(new ChatPacket("Me", "Suck My Cock", "You", "{'size':'big'}")));
+        /// System.out.println((new ChatPacket("Me", "Suck My Cock", "You", "{'size':'big'}")).toJson());
 
         /*Chat chat = new Chat("Ariya", "Danial");
         Chat chat1 = new Chat("Kiani", "Yazid");
@@ -32,8 +32,8 @@ public class Main extends Application
         ChatLog.AddChat(chat);
         ChatLog.AddChat(chat1);
          */
-
-        /// GameRoomController.AddServer(new GameRoomConnection("Test", "1234", 8888, 8));
+        /// new Account("Ariya", "AH", "prefix.suffix.aria@gmail.com", 1010, 10, "KIR", 0, 0);
+        GameRoomController.AddServer(new GameRoomConnection("Test", "1234", 8888, 8));
         /// new MainMenu().start(stage);
     }
 }
