@@ -141,11 +141,6 @@ public class SignupLoginMenuController {
         return "password recovered successfully";
     }*/
 
-    public static ArrayList<String> getAccountList()
-    {
-        return null;
-    }
-
     public static String logout(Matcher matcher){
         return "logged out" ;
     }
