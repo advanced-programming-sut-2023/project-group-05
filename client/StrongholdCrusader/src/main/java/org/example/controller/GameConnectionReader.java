@@ -12,7 +12,7 @@ public class GameConnectionReader extends Thread {
     private Socket socket = null ;
     private DataInputStream reader ;
 
-    public GameConnectionReader(){
+    public GameConnectionReader(String username){
 
         while( port == -1 ){
             try{
@@ -20,7 +20,7 @@ public class GameConnectionReader extends Thread {
                 Socket askForPortSocket = new Socket( "localhost" , 2019 ) ;
                 port = new DataInputStream( askForPortSocket.getInputStream() ).readInt() ;
                 DataOutputStream askForPortWriter = new DataOutputStream( askForPortSocket.getOutputStream() ) ;
-                askForPortWriter.writeUTF( "reader" ) ;
+                askForPortWriter.writeUTF( "reader" + username ) ;
                 askForPortWriter.flush() ;
                 System.out.println( "port " + port + " taken by reader." ) ;
             } catch( Exception e ){

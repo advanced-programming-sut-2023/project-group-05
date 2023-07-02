@@ -13,11 +13,14 @@ public class GameMasterReader extends Thread {
     private GameMasterWriter gmw ;
     private DataInputStream reader ;
     private ServerSocket serverSocket ;
+    private String username ;
 
-    public GameMasterReader(int port, GameMasterWriter gmw){
+    public GameMasterReader(int port, GameMasterWriter gmw, String username){
         this.port = port ;
         this.gmw = gmw ;
+        this.username = username ;
         gmw.setGmr( this ) ;
+        gmw.setUsername( username );
         while(true){
             try{
                 serverSocket = new ServerSocket(port) ;

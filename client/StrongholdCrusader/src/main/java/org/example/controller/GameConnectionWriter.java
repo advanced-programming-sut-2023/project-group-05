@@ -10,7 +10,7 @@ public class GameConnectionWriter{
     private DataOutputStream writer ;
     private Socket socket = null ;
 
-    public GameConnectionWriter(){
+    public GameConnectionWriter(String username){
 
         while(port == -1){
             try {
@@ -18,7 +18,7 @@ public class GameConnectionWriter{
                 Socket askForPortSocket = new Socket( "localhost", 2019 );
                 port = new DataInputStream( askForPortSocket.getInputStream() ).readInt();
                 DataOutputStream askForPortWriter = new DataOutputStream( askForPortSocket.getOutputStream() ) ;
-                askForPortWriter.writeUTF( "writer" );
+                askForPortWriter.writeUTF( "writer" + username );
                 askForPortWriter.flush() ;
                 System.out.println( "port " + port + " taken by writer" );
             } catch(Exception e) {

@@ -38,7 +38,7 @@ public class PortDistributor extends Thread {
                             portToWriter.put( username , new GameMasterWriter(freePort) ) ;
                         } else if ( clientType.contains("writer") ){
                             String username = clientType.replaceAll("^writer" , "") ;
-                            (new GameMasterReader(freePort,portToWriter.get(username))).start() ;
+                            (new GameMasterReader(freePort,portToWriter.get(username),username)).start() ;
                         } else {
                             System.out.println( "Unexpected client type." ) ;
                         }

@@ -10,6 +10,7 @@ public class GameMasterWriter {
     private DataOutputStream writer ;
     private GameMasterReader gmr ;
     private ServerSocket serverSocket ;
+    private String username ;
 
     public GameMasterWriter(int port){
         this.port = port ;
@@ -34,6 +35,9 @@ public class GameMasterWriter {
 
     public void setGmr( GameMasterReader gmr ){
         this.gmr = gmr ;
+    }
+    public void setUsername( String username ){
+        this.username = username ;
     }
 
 }
