@@ -18,6 +18,8 @@ public class GameController {
 
     public static String currentUsername ;
     public static String currentNickname ;
+    public static String currentSlogan ;
+    public static String currentEmail ;
     ArrayList<Player> players ;
     private int turn ;
     private Player winner ;

@@ -68,12 +68,12 @@ public class GameGraphicalController {
         width = 400;
         height = 400;
         pane.requestFocus();
-        initTestMode() ;
+        // initTestMode() ;
         instantiate() ;
         initGraphicalMenu();
         initMap(height, width);
         initMouse() ;
-        initKeyboardControlKeys();
+        initKeyboardControlKeys() ;
     }
 
     public static void updateMouse(){
@@ -132,8 +132,6 @@ public class GameGraphicalController {
                 } else if ( mouse.getFill() == Color.GREEN ) {
                     gameController.putBuildingInPlace( Building.createBuildingByName( chosenBuildingName, gameController.getPlayers().get(0) , mouseRow , mouseColumn ) ) ;
                     addBuildingImage( mouseRow , mouseColumn ) ;
-                } else {
-                    System.out.println( "Bro you can't place that shit here" ) ;
                 }
             }
         } );

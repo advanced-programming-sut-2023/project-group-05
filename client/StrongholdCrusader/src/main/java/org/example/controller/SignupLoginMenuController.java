@@ -117,18 +117,6 @@ public class SignupLoginMenuController {
         }
     }
 
-    /*public static String loginUserStayLoggedIn( Scanner scanner, Matcher matcher) throws Exception
-    {
-        ArrayList < Account > myList = DataBase.getStayLoggedInAccount();
-        for(Account cur : myList)
-        {
-            System.out.println("User Logged In ;)");
-            MainMenu.run(scanner, cur);
-            return "success";
-        }
-        return "there are not any stayed logged in account :(";
-    }*/
-
     public static String loginUser( String username , String password ) {
         if(!validUserName(username) || ! validPassword(password))
             return "login failed : Invalid username / password";

@@ -111,8 +111,6 @@ public class Camera {
         Rectangle rect = new Rectangle( 0 , 0 , 190 , 140 ) ;
         text.setFont( new Font(20) ) ;
         text.setFill( Color.RED ) ;
-        System.out.println( middleNode.getChildren().size() ) ;
-        System.out.println( findIndex(row+column + 2 * width - 2) ) ;
         middleNode.getChildren().add( findIndex(row+column + 2 * width - 2) , hexagon ) ;
         loadedBuildingsY.add( row + column + 2 * width - 2 ) ;
         text.setVisible( false ) ;

@@ -62,12 +62,25 @@ public class LoginMenu extends Application {
                 else {
                     Alert alert = new Alert( Alert.AlertType.INFORMATION ) ;
                     alert.setTitle( "Signup successful" );
-                    alert.setContentText( "you have successfully logged in, " + usernameTextField.getText() );
                     GameController.currentUsername = usernameTextField.getText() ;
-                    GameController.currentNickname = SignupLoginMenuController.getInfo(GameController.currentUsername)[1] ;
-                    MainMenu.username = usernameTextField.getText() ;
+                    String[] info = SignupLoginMenuController.getInfo(GameController.currentUsername);
+                    GameController.currentNickname = info[1] ;
+                    GameController.currentSlogan = info[2] ;
+                    GameController.currentEmail = info[3] ;
+                    MainMenu.username = info[0] ;
+                    alert.setContentText( "you have successfully logged in, " + usernameTextField.getText()
+                        + "\nYour Username : " + info[0]
+                            + "\nYour nickname : " + info[1]
+                            + "\nYour slogan : " + info[2]
+                            + "\nYour email : " + info[3]
+                    );
                     alert.showAndWait() ;
-                    // proceed to profile menu
+                    try {
+                        System.out.println("nigg");
+                        new MainMenu().start( stage );
+                    } catch( Exception e ){
+                        e.printStackTrace();
+                    }
                 }
             }
         } ;

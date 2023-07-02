@@ -88,6 +88,11 @@ public class SignupMenu extends Application { // where you signup
                         alert.setTitle( "Signup successful" );
                         alert.setContentText( "you have successfully registered your account." );
                         alert.showAndWait() ;
+                        try {
+                            (new StartMenu()).start( SignupMenu.stage ) ;
+                        } catch(Exception e) {
+                            e.printStackTrace() ;
+                        }
                     }
 
                 } else {
