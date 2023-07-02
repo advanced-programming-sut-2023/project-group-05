@@ -24,25 +24,40 @@ public class GameMap {
         this.maskedMap = new int[height][width] ;
         this.maskedMapUpperGround = new int[height][width] ;
         this.maskedMapUnderGround = new int[height][width] ;
+
         for(int i = 0 ; i < height ; i++)
             for(int j = 0 ; j < width ; j++) {
-                if( i < 12 || i > 390 || j < 12 || j > 390 ) map[i][j] = new Cell( CellType.SEA , i , j ) ;
-                else map[i][j] = new Cell( CellType.GROUND , i , j );
-                maskedMap[i][j] = 0 ;
+                if( i < 12 || i > 390 || j < 12 || j > 390 ){
+                    map[i][j] = new Cell( CellType.SEA , i , j ) ;
+                    maskedMap[i][j] = 1 ;
+                }
+                else{
+                    map[i][j] = new Cell( CellType.GROUND , i , j );
+                    maskedMap[i][j] = 0 ;
+                }
                 maskedMapUnderGround[i][j] = 0 ;
                 maskedMapUpperGround[i][j] = 1 ;
             }
-        // creating a grass circle with radius 10 and center ( 30 , 30 )
-        for(int i = 20 ; i <= 40 ; i++)
-            for(int j = 20 ; j <= 40 ; j++)
-                if( Math.pow((i-30),2) + Math.pow(j-30,2) <= 100 )
-                    map[i][j].setCellType(CellType.GRASS) ;
 
-        map[13][30].setCellType( CellType.SEA ) ;
-        map[30][40].setCellType( CellType.SEA ) ;
-        map[13][31].setCellType( CellType.SEA ) ;
-        map[13][32].setCellType( CellType.SEA ) ;
-        map[13][33].setCellType( CellType.SEA ) ;
+        int grassWidth = 30 ;
+
+        for(int i = 0 ; i < height ; i++){
+            for(int j = height / 2 - grassWidth ; j < height / 2 + grassWidth ; j++){
+                if( i < 12 || i > 390 || j < 12 || j > 390 ) continue ;
+                map[i][j].setCellType( CellType.GRASS );
+                map[j][i].setCellType( CellType.GRASS );
+            }
+        }
+
+
+        for(int i = 0 ; i < height ; i++){
+            for(int j = 0 ; j < height ; j++){
+                if( (i - 200)*(i-200) + (j-200) * (j-200) <= 4900 ){
+                    map[i][j].setCellType( CellType.SEA ) ;
+                    maskedMap[i][j] = 1 ;
+                }
+            }
+        }
 
     }
 

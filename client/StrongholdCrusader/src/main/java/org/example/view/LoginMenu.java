@@ -61,7 +61,8 @@ public class LoginMenu extends Application {
                 else {
                     Alert alert = new Alert( Alert.AlertType.INFORMATION ) ;
                     alert.setTitle( "Signup successful" );
-                    alert.setContentText( "you have successfully logged in." );
+                    alert.setContentText( "you have successfully logged in, " + usernameTextField.getText() );
+                    MainMenu.username = usernameTextField.getText() ;
                     alert.showAndWait() ;
                     // proceed to profile menu
                 }

@@ -20,6 +20,8 @@ import java.util.Scanner;
 
 public class MainMenu extends Application {
 
+    public static String username ;
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -53,22 +55,23 @@ public class MainMenu extends Application {
         });
 
         TextField port = new TextField();
-        port.setPromptText("Enter Room Port Number");
-        /// port.setAlignment(Pos.CENTER);
+        port.setPromptText("Enter Room Number");
 
         TextField password = new TextField();
         password.setPromptText("Enter Room Password");
-        /// password.setAlignment(Pos.CENTER);
 
         port.setMaxWidth(200);
         password.setMaxWidth(200);
 
         Button joinRoom = new Button("Join Room");
-        /// joinRoom.setAlignment(Pos.CENTER);
         joinRoom.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println("Join the room and start the game");
+                try {
+                    (new Game()).start( stage ) ;
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 

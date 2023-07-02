@@ -3,9 +3,12 @@ package org.example.model;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import org.example.Main;
 import org.example.controller.Camera;
 import org.example.controller.GameController;
 
@@ -22,6 +25,7 @@ public class Minimap extends Group {
         camera.setMinimap( this ) ;
         this.gameController = gameController ;
         minimapRectangle = new Rectangle(0, 0, size, size) ;
+        minimapRectangle.setFill( new ImagePattern( new Image( Main.class.getResource("/images/MenuBackGrounds/map.png").toExternalForm() ) ) ) ;
         setMouseClick() ;
         this.getChildren().add( minimapRectangle ) ;
 
