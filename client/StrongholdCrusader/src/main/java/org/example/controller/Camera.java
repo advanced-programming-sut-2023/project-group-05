@@ -1,7 +1,7 @@
 package org.example.controller;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -14,13 +14,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 import org.example.model.BuildingEnum;
 import org.example.model.BuildingImages;
 import org.example.model.Minimap;
 import org.example.model.Player;
 import org.example.model.animations.ClownAnimation;
-import org.example.model.building.Building;
 import org.example.model.unit.Unit;
 
 import java.util.ArrayList;
@@ -28,11 +26,9 @@ import java.util.ArrayList;
 
 public class Camera {
     // a brief view of the pane children :
-    // {
     // all map[i][j]s ,
     // units & buildings in order of non-decreasing ( i + j ) ~ y ,
     // reserved nodes ( menus, ..., etc, things that should be on top of every thing
-    // }
     private Polygon[][] map ; // the map that the camera is viewing
     private ArrayList<Polygon> buildings ; // buildings in our view
     private int[] pos ; // the position for reference cell
@@ -45,6 +41,9 @@ public class Camera {
     private final int yShift = TILE_HEIGHT * 12 ;
     private GameController gameController;
     private int unitCount ;
+    private final Group lastNode ;
+    private final Group middleNode ;
+    private final Group firstNode ;
 
     public Camera(Polygon[][] map, Pane pane, GameController gameController){
         this.map = map ;
@@ -53,6 +52,9 @@ public class Camera {
         this.buildings = new ArrayList<>() ;
         this.gameController = gameController ;
         this.size = map.length ;
+        this.lastNode = GameGraphicalController.lastNode ;
+        this.firstNode = GameGraphicalController.firstNode ;
+        this.middleNode = GameGraphicalController.middleNode ;
         this.unitCount = 0 ;
     }
 
@@ -90,7 +92,7 @@ public class Camera {
         Rectangle rect = new Rectangle( 0 , 0 , 190 , 140 ) ;
         text.setFont( new Font(20) ) ;
         text.setFill( Color.RED ) ;
-        pane.getChildren().add( hexagon ) ;
+        middleNode.getChildren().add( hexagon ) ;
         text.setVisible( false ) ;
         rect.setVisible( false ) ;
         text.setOpacity( 0.85 ) ;
@@ -183,13 +185,13 @@ public class Camera {
         }
 
         for( int i = 0 ; i < viewSize ; i++ )
-            for( int j = 0 ; j < viewSize ; j++ ){
-                pane.getChildren().add( 0 , map[i][j] ) ;
-            }
+            for( int j = 0 ; j < viewSize ; j++ )
+                firstNode.getChildren().add( 0 , map[i][j] ) ;
+
         for( int i = 0 ; i < viewSize ; i++)
             for( int j = 0 ; j < viewSize ; j++ )
                 for( Unit unit : gameController.getGameMap().getCell( i , j ).units )
-                    pane.getChildren().addAll( unit.getShape() , unit.getHealthBar() ) ;
+                    middleNode.getChildren().addAll( unit.getShape() , unit.getHealthBar() ) ;
 
     }
 
@@ -226,13 +228,13 @@ public class Camera {
             int xRemove = dx == 1 ? this.pos[0] : this.pos[0] + viewSize - 1;
             int xAdd = dx == - 1 ? this.pos[0] - 1 : this.pos[0] + viewSize;
             for( int j = this.pos[1]; j < this.pos[1] + viewSize; j++ ){
-                pane.getChildren().remove( map[xRemove][j] );
+                firstNode.getChildren().remove( map[xRemove][j] );
                 ArrayList <Shape> units = new ArrayList<>() ;
                 for( Unit unit : gameController.getGameMap().getCell( xRemove , j ).getUnits() ){
                     units.add( unit.getShape() ) ;
                     units.add( unit.getHealthBar() ) ;
                 }
-                pane.getChildren().removeAll( units );
+                middleNode.getChildren().removeAll( units );
             }
             if( xAdd >= 0 && xAdd < size ) for( int j = this.pos[1]; j < this.pos[1] + viewSize; j++ ){
                 ArrayList <Shape> units = new ArrayList<>() ;
@@ -241,21 +243,21 @@ public class Camera {
                     units.add( unit.getHealthBar() ) ;
                 }
                 // pane.getChildren().add( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size(), map[xAdd][j] );
-                pane.getChildren().addAll( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size() , units ) ;
+                middleNode.getChildren().addAll( units ) ;
                 // pane.getChildren().addAll( 0, units ) ;
-                pane.getChildren().add( 0, map[xAdd][j] );
+                firstNode.getChildren().add( 0 , map[xAdd][j] );
             }
         } else {
             int yRemove = dy == 1 ? this.pos[1] : this.pos[1] + viewSize - 1 ;
             int yAdd = dy == -1 ? this.pos[1] - 1 : this.pos[1] + viewSize ;
             for( int i = this.pos[0] ; i < this.pos[0] + viewSize ; i++ ){
-                pane.getChildren().remove( map[i][yRemove] ) ;
+                firstNode.getChildren().remove( map[i][yRemove] ) ;
                 ArrayList <Shape> units = new ArrayList<>() ;
                 for( Unit unit : gameController.getGameMap().getCell( i , yRemove ).getUnits() ){
                     units.add( unit.getShape() ) ;
                     units.add( unit.getHealthBar() ) ;
                 }
-                pane.getChildren().removeAll( units ) ;
+                middleNode.getChildren().removeAll( units ) ;
             }
             if( yAdd >= 0 && yAdd < size ) for( int i = this.pos[0] ; i < this.pos[0] + viewSize ; i++ ){
                 ArrayList <Shape> units = new ArrayList<>() ;
@@ -263,9 +265,11 @@ public class Camera {
                     units.add( unit.getShape() ) ;
                     units.add( unit.getHealthBar() ) ;
                 }
-                pane.getChildren().addAll( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size() , units ) ;
+                //pane.getChildren().addAll( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size() , units ) ;
                 // pane.getChildren().addAll( 0 , units ) ;
-                pane.getChildren().add( 0 , map[i][yAdd] ) ;
+                //pane.getChildren().add( 0 , map[i][yAdd] ) ;
+                middleNode.getChildren().addAll( units ) ;
+                firstNode.getChildren().add( map[i][yAdd] ) ;
             }
         }
 

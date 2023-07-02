@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
@@ -50,13 +51,15 @@ public class GameGraphicalController {
     public static Rectangle attackingMouse = new Rectangle( 0 , 0 , 40 , 40 ) ;
     public static String chosenBuildingName = "" ;
     public static String selectedBuildingName = "" ;
-    public static ArrayList<Rectangle> current;
-    public static ArrayList<Circle> buttons = new ArrayList<>();
-    public static HashMap<Circle, ArrayList<Rectangle>> buttonMap = new HashMap<>();
-    public static ArrayList<ArrayList<Rectangle>> menuMap = new ArrayList<>();
+    public static Group lastNode = new Group() ;
+    public static Group firstNode = new Group() ;
+    public static Group middleNode = new Group() ;
 
     public static void init(Stage stage, Pane pane , GameController gameController) {
         GameGraphicalController.pane = pane;
+        pane.getChildren().add(firstNode) ;
+        pane.getChildren().add(middleNode) ;
+        pane.getChildren().add(lastNode) ;
         GameGraphicalController.stage = stage;
         GameGraphicalController.gameController = gameController ;
         reservedShapes = new ArrayList<>();
