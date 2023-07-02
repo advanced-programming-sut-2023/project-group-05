@@ -1,43 +1,26 @@
 package org.example.view;
 
-public class ProfileMenu {
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
-    /*public static void run( Account account ){
-        System.out.println( "YOU ARE NOW IN PROFILE MENU ( enter exit to get back )" ) ;
-        ProfileMenuController profileMenuController = new ProfileMenuController( account ) ;
-        Matcher matcher;
-        String input;
-        while (true){
-            input = Menu.getScanner().nextLine();
-            if ((matcher = Commands.getMatchingMatcher(input,Commands.CHANGE_USERNAME))!=null)
-                profileMenuController.changeUsername(matcher);
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.CHANGE_PASSWORD))!=null)
-                profileMenuController.changePassword(matcher);
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.CHANGE_NICKNAME))!=null)
-                profileMenuController.changeNickname(matcher);
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.CHANGE_EMAIL))!=null)
-                profileMenuController.changeEmail(matcher);
-            else if((matcher = Commands.getMatchingMatcher(input,Commands.CHANGE_SLOGAN))!=null)
-                profileMenuController.changeSlogan(matcher);
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DISPLAY_HIGHSCORE))!=null)
-                profileMenuController.displayHighScore(matcher);
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DISPLAY_RANK))!=null)
-                profileMenuController.displayRank(matcher);
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DISPLAY_SLOGAN))!=null)
-                profileMenuController.displaySlogan(matcher);
-            else if ((matcher = Commands.getMatchingMatcher(input,Commands.DISPLAY_WHOLE_PROFILE))!= null)
-                profileMenuController.displayProfile(matcher);
-            else if ((matcher =Commands.getMatchingMatcher(input,Commands.REMOVE_SLOGAN))!=null)
-                profileMenuController.removeSlogan(matcher);
-            else if ( input.equals("exit") )
-                return ;
-            else
-                System.out.println("Invalid Command");
-        }
-    }
+import java.net.URL;
+
+public class ProfileMenu extends Application {
+
+    public VBox mainVBox;
+    public Text text;
 
     @Override
-    public void start(Stage stage) throws Exception {
-
-    }*/
+    public void start( Stage stage) throws Exception {
+        BorderPane pane = FXMLLoader.load( new URL( MainMenu.class.getResource( "/fxml/ProfileMenu.fxml" ).toExternalForm()) );
+        Scene scene = new Scene( pane ) ;
+        stage.setScene( scene ) ;
+        stage.show() ;
+    }
 }

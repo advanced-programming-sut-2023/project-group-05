@@ -1,6 +1,20 @@
 package org.example.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Orientation;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProfileMenuController {
 /*
@@ -101,4 +115,48 @@ public class ProfileMenuController {
         System.out.println( "slogan : " + account.getSlogan() ) ;
         System.out.println( "highest score : " + account.getHighScore() ) ;
     }*/
+
+    public void scoreBoardMenu(Stage stage) {
+        Pane pane = new Pane();
+        Scene scene = new Scene(pane);
+        VBox vBox = new VBox();
+        ScrollBar scrollBar = new ScrollBar();
+        pane.getChildren().addAll(vBox,scrollBar);
+        ArrayList<String> scores = SignupLoginMenuController.getAccountList();
+        HashMap<Integer,ArrayList<String>> rankToAccount = new HashMap<>();
+        int size = scores.size();
+        Text[] ranking = new Text[size / 2];
+        String[] users = new String[size / 2];
+        int[] ranks = new int[size];
+        ArrayList<String> buffer;
+        for (int i = 0; i < size; ++i) {
+            if (i % 2 == 1)
+            {
+                buffer = rankToAccount.get(ranks[i]);
+                buffer.add(users[i-1]);
+                rankToAccount.replace(ranks[i],rankToAccount.get(ranks[i]),buffer);
+            }
+        }
+        int cnt = 0;
+        for (int rank : rankToAccount.keySet()){
+            for (String account : rankToAccount.get(rank))
+                ranking[cnt] = new Text(5,5+cnt++*50,rank+". Username : "+account);
+        }
+        scrollBar.setLayoutX(scene.getWidth()-scrollBar.getWidth());
+        scrollBar.setMin(0);
+        scrollBar.setOrientation(Orientation.VERTICAL);
+        scrollBar.setPrefHeight(180);
+        scrollBar.setMax(360);
+        for (Text text : ranking)
+            vBox.getChildren().add(text);
+        scrollBar.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                vBox.setLayoutY(-new_val.doubleValue());
+            }
+        });
+        stage.setScene(scene);
+        stage.show();
+    }
 }
+
