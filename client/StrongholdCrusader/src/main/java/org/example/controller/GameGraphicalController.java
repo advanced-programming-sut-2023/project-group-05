@@ -220,13 +220,15 @@ public class GameGraphicalController {
                     buildingShape.setEffect( glow ) ;
                     selectedBuildingsShapes.add( buildingShape ) ;
                 } else {
+                    if (chosenBuildingName.equals("market"))
+                        bottomMenu.deSelectMarket();
                     buildingShape.setEffect( null );
                     selectedBuildingsShapes.remove( buildingShape ) ;
+                    return;
                 }
                 selectedBuildingName = chosenBuildingName ;
-                if( mouseEvent.getButton() == MouseButton.PRIMARY && selectedBuildingName.equals( "market" ) ){
+                if( mouseEvent.getButton() == MouseButton.PRIMARY && selectedBuildingName.equals( "market" ) && !pane.getChildren().contains(bottomMenu.info) )
                     bottomMenu.preInitShop(); ;
-                }
             }
         } );
     }

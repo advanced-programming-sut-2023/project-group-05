@@ -1381,83 +1381,83 @@ public class GameController {
 
         if( price < 0 )
             return "PRICE CAN'T BE NEGATIVE MY LORD." ;
-        new Trade( player , message , cost , price , amount , resourceType ) ;
+        //new Trade( player , message , cost , price , amount , resourceType ) ;
         return "TRADE SUCCESSFULLY HAS BEEN PUBLISHED" ;
     }
 
     public String tradeList(Matcher matcher){
-        String ret = "TRADE LIST :" ;
-        int index = 1 ;
-        ret += "----------------------------------------" ;
-        for( Trade trade : Trade.getTrades() ){
-            ret += "\nINDEX : " + index + " < " ;
-            ret += "\nPlayer : " + trade.getPlayer1().getNickname() ;
-            ret += "\n  -> Price : " + trade.getPrice() ;
-            ret += "\n  -> Amount : " + trade.getAmount() ;
-            ret += "\n  -> Resource : " + trade.getResourceType() ;
-            ret += "\n  -> Message : " + trade.getMessage1() ;
-            if( trade.getOpen() ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
-            else ret += "\n>>>>TRADE IS CLOSED<<<<\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
-            ret += "\n----------------------------------------" ;
-            index++ ;
-        }
-        return ret ;
+//        String ret = "TRADE LIST :" ;
+//        int index = 1 ;
+//        ret += "----------------------------------------" ;
+//        for( Trade trade : Trade.getTrades() ){
+//            ret += "\nINDEX : " + index + " < " ;
+//            ret += "\nPlayer : " + trade.getPlayer1().getNickname() ;
+//            ret += "\n  -> Price : " + trade.getPrice() ;
+//            ret += "\n  -> Amount : " + trade.getAmount() ;
+//            ret += "\n  -> Resource : " + trade.getResourceType() ;
+//            ret += "\n  -> Message : " + trade.getMessage1() ;
+//            if( trade.getOpen() ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
+//            else ret += "\n>>>>TRADE IS CLOSED<<<<\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
+//            ret += "\n----------------------------------------" ;
+//            index++ ;
+//        }
+        return "";
     }
 
     public String tradeAccept(Matcher matcher){
-        int id = Integer.parseInt(matcher.group("id")) - 1 ;
-        String message = matcher.group("message") ;
-        if( id < 0 || id >= Trade.getTrades().size() )
-            return "INVALID ID." ;
-        Trade trade = Trade.getTrades().get(id) ;
-        Cost cost = trade.getCost() ;
-        if( player.equals(trade.getPlayer1()) )
-            return "YOU CAN NOT TRADE WITH YOURSELF MY LORD" ;
-        if( !trade.getOpen() ) return "TRADE NOT AVAILABLE" ;
-        String outputOfDecreaseCost = player.decreaseCost( cost ) ;
-        player.increaseGold( trade.getPrice() );
-        trade.getPlayer1().decreaseCost( Cost.negative( cost ) ) ;
-        if( outputOfDecreaseCost != null ) return outputOfDecreaseCost ;
-        trade.setMessage2( message ) ;
-        trade.setPlayer2( player ) ;
-        trade.setOpen(false) ;
+//        int id = Integer.parseInt(matcher.group("id")) - 1 ;
+//        String message = matcher.group("message") ;
+//        if( id < 0 || id >= Trade.getTrades().size() )
+//            return "INVALID ID." ;
+//        Trade trade = Trade.getTrades().get(id) ;
+//        Cost cost = trade.getCost() ;
+//        if( player.equals(trade.getPlayer1()) )
+//            return "YOU CAN NOT TRADE WITH YOURSELF MY LORD" ;
+//        if( !trade.getOpen() ) return "TRADE NOT AVAILABLE" ;
+//        String outputOfDecreaseCost = player.decreaseCost( cost ) ;
+//        player.increaseGold( trade.getPrice() );
+//        trade.getPlayer1().decreaseCost( Cost.negative( cost ) ) ;
+//        if( outputOfDecreaseCost != null ) return outputOfDecreaseCost ;
+//        trade.setMessage2( message ) ;
+//        trade.setPlayer2( player ) ;
+//        trade.setOpen(false) ;
         return "YOU HAVE TRADED WITH OTHER KINGDOMS SUCCESSFULLY , MY LORD." ;
     }
 
     public String tradeHistory(Matcher matcher){
-        String ret = "" ;
-        ret += "TRADES YOU STARTED : " ;
-        Trade trade ;
-        for(int i = 0 ; i < Trade.getTrades().size() ; i++){
-            trade = Trade.getTrades().get(i) ;
-            if( trade.getPlayer1() == player ){
-                ret += "\n----------------------------------------" ;
-                ret += "INDEX " + (i + 1) + "\n";
-                ret += "\nPrice : " + trade.getPrice() ;
-                ret += "\nAmount : " + trade.getAmount() ;
-                ret += "\nResource : " + trade.getResourceType() ;
-                ret += "\nMessage : " + trade.getMessage1() ;
-                if( trade.getMessage2() == null ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
-                else ret += "\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
-                ret += "\n----------------------------------------" ;
-            }
-        }
-        ret += "\nTRADES YOU ACCEPTED : " ;
-        for(int i = 0 ; i < Trade.getTrades().size() ; i++){
-            trade = Trade.getTrades().get(i) ;
-            if( trade.getPlayer2() == player ){
-                ret += "\n----------------------------------------" ;
-                ret += "INDEX " + (i + 1) + "\n";
-                ret += "\nPrice : " + trade.getPrice() ;
-                ret += "\nAmount : " + trade.getAmount() ;
-                ret += "\nResource : " + trade.getResourceType() ;
-                ret += "\nMessage : " + trade.getMessage1() ;
-                if( trade.getMessage2() == null ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
-                else ret += "\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
-                ret += "\n----------------------------------------" ;
-            }
-        }
-        return ret ;
+//        String ret = "" ;
+//        ret += "TRADES YOU STARTED : " ;
+//        Trade trade ;
+//        for(int i = 0 ; i < Trade.getTrades().size() ; i++){
+//            trade = Trade.getTrades().get(i) ;
+//            if( trade.getPlayer1() == player ){
+//                ret += "\n----------------------------------------" ;
+//                ret += "INDEX " + (i + 1) + "\n";
+//                ret += "\nPrice : " + trade.getPrice() ;
+//                ret += "\nAmount : " + trade.getAmount() ;
+//                ret += "\nResource : " + trade.getResourceType() ;
+//                ret += "\nMessage : " + trade.getMessage1() ;
+//                if( trade.getMessage2() == null ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
+//                else ret += "\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
+//                ret += "\n----------------------------------------" ;
+//            }
+//        }
+//        ret += "\nTRADES YOU ACCEPTED : " ;
+//        for(int i = 0 ; i < Trade.getTrades().size() ; i++){
+//            trade = Trade.getTrades().get(i) ;
+//            if( trade.getPlayer2() == player ){
+//                ret += "\n----------------------------------------" ;
+//                ret += "INDEX " + (i + 1) + "\n";
+//                ret += "\nPrice : " + trade.getPrice() ;
+//                ret += "\nAmount : " + trade.getAmount() ;
+//                ret += "\nResource : " + trade.getResourceType() ;
+//                ret += "\nMessage : " + trade.getMessage1() ;
+//                if( trade.getMessage2() == null ) ret += "\n>>>>TRADE IS OPEN<<<<" ;
+//                else ret += "\n  -> Cosing Message : " + trade.getMessage2() + "\n>>>>TRADE IS CLOSED<<<<" ;
+//                ret += "\n----------------------------------------" ;
+//            }
+//        }
+        return "" ;
     }
 
     public String showPriceList(Matcher matcher){

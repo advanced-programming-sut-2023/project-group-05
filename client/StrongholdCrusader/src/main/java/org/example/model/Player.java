@@ -6,11 +6,24 @@ import org.example.model.unit.Jobless;
 import org.example.model.unit.Unit;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Player {
     String username ;
     String nickname ;
     private ArrayList <Building> buildings ;
+    public ArrayList <Trade> receivedTrades = new ArrayList<>();
+    public ArrayList <Trade> sentTrades = new ArrayList<>();
+
+    public static HashMap<Integer,Double> commodityPrice =  new HashMap<>();
+    static {
+        for (int i = 1;i<=20;++i)
+            commodityPrice.put(i,10.0);
+    }
+    public  int[] commodityByIndex  = new int[21];
     private ArrayList<Unit> units ;
     //TODO : Handle Castle
     private Building castle;
@@ -48,6 +61,7 @@ public class Player {
     public int mace ;
     public int ale ;
     public int bow ;
+    public int rice;
     public int pike ;
     public int metalArmour ;
     public int flour ;
@@ -59,41 +73,60 @@ public class Player {
         this.nickname = nickname ;
         this.isGranaryCreated = false;
         this.isStockPileCreated = false;
-        this.mace = 0 ;
-        this.spear = 0 ;
-        this.pike = 0 ;
-        this.bow = 0 ;
-        this.metalArmour = 0 ;
-        this.wheat = 0 ;
-        this.ale = 0 ;
-        this.flour = 0 ;
-        this.crossbow = 0 ;
-        this.fearRate = 0 ;
-        this.taxRate = 0 ;
-        this.foodRate = 0 ;
-        this.religionRate = 0 ;
-        this.pitchCapacity = 0 ;
-        this.meatCapacity = 0 ;
-        this.breadCapacity = 0 ;
-        this.cheeseCapacity = 0 ;
-        this.hop = 0 ;
-        this.cheese = 0 ;
-        this.bread = 0 ;
-        this.sword = 0 ;
-        this.meat = 0 ;
-        this.pitch = 0 ;
-        this.apple = 0 ;
-        this.wineUsage = 0 ;
-        this.gold = 0 ;
-        this.stone = 0 ;
-        this.leatherArmour = 0 ;
-        this.wood = 0 ;
-        this.iron = 0 ;
-        this.population = 0 ;
-        this.populationCapacity = 0 ;
-        this.popularity = 0 ;
-        this.score = 0 ;
-
+//        this.mace = 0 ;
+//        this.spear = 0 ;
+//        this.pike = 0 ;
+//        this.bow = 0 ;
+//        this.metalArmour = 0 ;
+//        this.wheat = 0 ;
+//        this.ale = 0 ;
+//        this.flour = 0 ;
+//        this.crossbow = 0 ;
+//        this.fearRate = 0 ;
+//        this.taxRate = 0 ;
+//        this.foodRate = 0 ;
+//        this.religionRate = 0 ;
+//        this.pitchCapacity = 0 ;
+//        this.meatCapacity = 0 ;
+//        this.breadCapacity = 0 ;
+//        this.cheeseCapacity = 0 ;
+//        this.hop = 0 ;
+//        this.cheese = 0 ;
+//        this.bread = 0 ;
+//        this.sword = 0 ;
+//        this.meat = 0 ;
+//        this.pitch = 0 ;
+//        this.apple = 0 ;
+//        this.wineUsage = 0 ;
+//        this.gold = 0 ;
+//        this.stone = 0 ;
+//        this.leatherArmour = 0 ;
+//        this.wood = 0 ;
+//        this.iron = 0 ;
+//        this.population = 0 ;
+//        this.populationCapacity = 0 ;
+//        this.popularity = 0 ;
+//        this.score = 0 ;
+        commodityByIndex[1]=this.rice;
+        commodityByIndex[2]=this.meat;
+        commodityByIndex[3] = this.cheese;
+        commodityByIndex[4]=this.bread;
+        commodityByIndex[5] = apple;
+        commodityByIndex[6]=ale;
+        commodityByIndex[7]=hop;
+        commodityByIndex[8]=wheat;
+        commodityByIndex[9]=iron;
+        commodityByIndex[10]=pitch;
+        commodityByIndex[11]=stone;
+        commodityByIndex[12]=wood;
+        commodityByIndex[13]=leatherArmour;
+        commodityByIndex[14]=bow;
+        commodityByIndex[15]=crossbow;
+        commodityByIndex[16]=mace;
+        commodityByIndex[17]=metalArmour;
+        commodityByIndex[18]=pike;
+        commodityByIndex[19]=spear;
+        commodityByIndex[20]=sword;
         //TODO : IS IT RIGHT ?
         this.selectedBuilding = null ;
         this.buildings = new ArrayList<>();
@@ -202,6 +235,7 @@ public class Player {
             return 2;
         return 0;
     }
+
 
     public void setGold(double gold){
         this.gold = gold;
