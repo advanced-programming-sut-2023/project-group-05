@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.example.controller.GameController;
 import org.example.controller.SignupLoginMenuController;
 import org.example.controller.graphicalMenuController.CaptchaController;
 
@@ -62,6 +63,8 @@ public class LoginMenu extends Application {
                     Alert alert = new Alert( Alert.AlertType.INFORMATION ) ;
                     alert.setTitle( "Signup successful" );
                     alert.setContentText( "you have successfully logged in, " + usernameTextField.getText() );
+                    GameController.currentUsername = usernameTextField.getText() ;
+                    GameController.currentNickname = SignupLoginMenuController.getInfo(GameController.currentUsername)[1] ;
                     MainMenu.username = usernameTextField.getText() ;
                     alert.showAndWait() ;
                     // proceed to profile menu

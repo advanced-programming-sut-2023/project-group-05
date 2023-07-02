@@ -99,6 +99,24 @@ public class SignupLoginMenuController {
         // TODO
     }
 
+    public static String[] getInfo( String username ){
+        while( true ){
+            try{
+                Socket socket = new Socket( "localhost" , 2020 ) ;
+                DataOutputStream writer = new DataOutputStream( socket.getOutputStream() ) ;
+                DataInputStream reader = new DataInputStream( socket.getInputStream() ) ;
+                String[] arr = { "getinfo" , username } ;
+                writer.writeUTF( (new Gson()).toJson( arr ) ) ;
+                writer.flush() ;
+                String[] ret = (new Gson()).fromJson( reader.readUTF() , String[].class );
+                socket.close() ;
+                return ret;
+            } catch( Exception e ){
+                e.printStackTrace() ;
+            }
+        }
+    }
+
     /*public static String loginUserStayLoggedIn( Scanner scanner, Matcher matcher) throws Exception
     {
         ArrayList < Account > myList = DataBase.getStayLoggedInAccount();

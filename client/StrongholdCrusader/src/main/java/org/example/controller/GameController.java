@@ -16,6 +16,8 @@ import java.util.regex.Matcher;
 
 public class GameController {
 
+    public static String currentUsername ;
+    public static String currentNickname ;
     ArrayList<Player> players ;
     private int turn ;
     private Player winner ;

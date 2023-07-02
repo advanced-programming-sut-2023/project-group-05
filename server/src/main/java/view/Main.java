@@ -15,7 +15,7 @@ public class Main extends Application
     /*
     * port list
     * 2019 : asking for free port ( for GameConnectionReader/Writer class in client )
-    * 2020 : asking for register/login
+    * 2020 : asking for register/login/forget/getInfo
     * 2021+: for chatting
     * 4000+: for the actual game
     *

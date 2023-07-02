@@ -45,6 +45,22 @@ public class LoginRegisterController {
         }
     }
 
+    private static void sendInfo( String username , DataOutputStream writer ){
+        Account acc = Account.getAccountsMap().get(username) ;
+        String[] output = { acc.getUserName() , acc.getNickName() , acc.getSlogan() , acc.getEmail() } ;
+        try{
+            writer.writeUTF( (new Gson()).toJson(output) ) ;
+            writer.flush() ;
+        } catch( Exception ignored ){ }
+    }
+
+    private static void changeAccount( String[] command ){
+        // command = { "getinfo" , username , password , nickname , slogan }
+        // change in Account & Database
+        // close socket in client-side
+        // update in client side too
+    }
+
     public static void handle( Socket socket ){
         try{
             DataOutputStream writer = new DataOutputStream( socket.getOutputStream() ) ;
@@ -73,6 +89,10 @@ public class LoginRegisterController {
                 System.out.println( "login status : " + ok ) ;
             } else if ( command[0].equals("scoreboard") ){
                 sendScoreBoard( writer ) ;
+            } else if ( command[0].equals("change") ){
+                changeAccount( command ) ;
+            } else if ( command[0].equals("getinfo") ){
+                sendInfo( command[1], writer ) ;
             }
             else {
                 System.out.println( "Unknown command in LoginRegister." ) ;
