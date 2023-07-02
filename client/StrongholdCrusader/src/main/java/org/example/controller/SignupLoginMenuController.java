@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -139,6 +140,11 @@ public class SignupLoginMenuController {
         Account.addAccount(account) ;
         return "password recovered successfully";
     }*/
+
+    public static ArrayList<String> getAccountList()
+    {
+        return null;
+    }
 
     public static String logout(Matcher matcher){
         return "logged out" ;
