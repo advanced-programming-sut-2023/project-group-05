@@ -23,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.PopupWindow;
 import javafx.util.Pair;
+import org.example.Main;
 import org.example.model.*;
 import org.example.view.Game;
 import org.example.view.MainMenu;
@@ -47,8 +48,7 @@ public class bottomMenu {
     public static ArrayList<Image> badThings = new ArrayList<>();
     public static ArrayList<Image> towerAndWalls = new ArrayList<>();
     public static ArrayList<Image> industries = new ArrayList<>();
-    private static Rectangle graphicalMenu = new Rectangle(0, SCREEN_HEIGHT * 0.7, SCREEN_WIDTH, SCREEN_HEIGHT * 0.3);
-    ;
+    private static Rectangle graphicalMenu = new Rectangle(0, SCREEN_HEIGHT * 0.78, SCREEN_WIDTH, SCREEN_HEIGHT * 0.22);
     public static ArrayList<Node> reservedShapes = GameGraphicalController.reservedShapes;
     private static GameController gameController = GameGraphicalController.gameController;
     private static Camera camera = GameGraphicalController.camera;
@@ -70,6 +70,7 @@ public class bottomMenu {
         reservedShapes.add(minimap);
         graphicalMenu.setFill(new ImagePattern(BuildingImages.MENU.getImage()));
         reservedShapes.add(graphicalMenu);
+
 
         ArrayList<String> armouryNames = new ArrayList<>(Arrays.asList("armourer", "blacksmith", "fletcher", "poleturner", "tanner"));
         initArray(armoury, armouries, 40, 40, armouryNames);
@@ -100,6 +101,9 @@ public class bottomMenu {
         // adding the minimap
         pane.getChildren().add(minimap);
         pane.getChildren().add(graphicalMenu);
+        Circle shrekFace = new Circle(SCREEN_WIDTH * 0.77 ,graphicalMenu.getY() - 20 ,65) ;
+        shrekFace.setFill( new ImagePattern( new Image( Main.class.getResource( "/images/buildings/buildingMenu/menu/face1.png" ).toExternalForm() ) ) ) ;
+        pane.getChildren().add(shrekFace) ;
         for (Rectangle rectangle : houseAndStorages)
             pane.getChildren().add(rectangle);
         current = houseAndStorages;
