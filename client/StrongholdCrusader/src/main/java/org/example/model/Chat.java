@@ -47,6 +47,7 @@ public class Chat
     public void AddMessage(Message message)
     {
         messages.add(message);
+
     }
 
     public String getFirst() {

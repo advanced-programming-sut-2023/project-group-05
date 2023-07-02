@@ -17,15 +17,17 @@ import org.example.controller.ProfileMenuController;
 import org.example.controller.URLFinder;
 import org.example.model.Commands;
 
+import java.io.IOException;
+import java.util.Collection;
 import java.util.Scanner;
 
 public class MainMenu extends Application {
 
+    public static Stage stage;
 
     @Override
-    public void start(Stage stage) throws Exception {
-        String userName = "Danial";
-        ChatConnection connection = new ChatConnection("localhost", 2021, userName);
+    public void start(Stage _stage) throws Exception {
+        stage = _stage;
         stage.setTitle("Main Menu");
         BorderPane borderPane = FXMLLoader.load(URLFinder.run("/fxml/MainMenu.fxml"));
         VBox vBox = new VBox();
@@ -37,9 +39,8 @@ public class MainMenu extends Application {
         goToChat.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println("TODO: Go To Client Chat");
                 try {
-                    new ChatMenu().start(stage);
+                    ChatConnection.Run("localhost", 2021, "Danial");
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
