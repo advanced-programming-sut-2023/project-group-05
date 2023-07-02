@@ -209,7 +209,9 @@ public class Unit {
         this.owner.setPopulation( this.owner.getPopulation() - 1 );
         Unit.getUnits().remove(this) ;
         gameMap.getCell(this.getRow() , this.getColumn()).getUnits().remove(this) ;
-        GameGraphicalController.getPane().getChildren().remove( this.shape ) ;
+        GameGraphicalController.middleNode.getChildren().remove( this.shape ) ;
+        GameGraphicalController.middleNode.getChildren().remove( this.healthBar ) ;
+        GameGraphicalController.camera.removeUnit( this ) ;
     }
 
     public void getDamaged(int x , GameMap gameMap){
@@ -255,7 +257,7 @@ public class Unit {
     public void attack(){ // this will deal damage to the enemy in range
         boolean canAttack = false ;
         for( int i = 0 ; i < 4 ; i++){
-            if( this.row == enemy.getRow() + adjacencyArray[i][0] && this.column == enemy.getColumn() + adjacencyArray[i][1] ){
+            if( enemy.getHitPoint() > 0 && this.hitPoint > 0 && this.row == enemy.getRow() + adjacencyArray[i][0] && this.column == enemy.getColumn() + adjacencyArray[i][1] ){
                 canAttack = true ;
                 break ;
             }
@@ -263,10 +265,9 @@ public class Unit {
         if(!canAttack) return ;
         enemy.getDamaged( 10 , gameMap ) ;
         if( enemy.getHitPoint() <= 0 ){
-            System.out.println( "killed the enemy" ) ;
             enemy = null ;
             return ;
-        } else if( enemy.enemy == null ) {
+        } else if( enemy.enemy != this ) {
             enemy.enemy = this ;
             enemy.attack() ;
         }

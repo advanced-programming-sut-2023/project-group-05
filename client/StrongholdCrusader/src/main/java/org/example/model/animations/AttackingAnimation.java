@@ -24,7 +24,7 @@ public class AttackingAnimation extends Transition {
         this.enemy = enemy ;
         this.sword = new Rectangle( unit.getShape().getX() - Unit.UNIT_SIZE / 5 , unit.getShape().getY() , Unit.UNIT_SIZE / 2 , Unit.UNIT_SIZE / 2 ) ;
         sword.setFill( swordImagePattern ) ;
-        GameGraphicalController.getPane().getChildren().add( sword ) ;
+        GameGraphicalController.weaponsNode.getChildren().add( sword ) ;
         this.setCycleDuration( Duration.millis( 1000 ) ) ;
     }
 
@@ -35,7 +35,7 @@ public class AttackingAnimation extends Transition {
         }
         else if ( !finished ){
             finished = true ;
-            GameGraphicalController.getPane().getChildren().remove( sword ) ;
+            GameGraphicalController.weaponsNode.getChildren().remove( sword ) ;
             unit.getShape().setRotate( 0 ) ;
             unit.attack() ;
         }

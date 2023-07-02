@@ -80,6 +80,11 @@ public class Camera {
         return index ;
     }
 
+    public void removeUnit( Unit unit ){
+        loadedUnits.remove( unit ) ;
+
+    }
+
     public Polygon addBuilding(int row , int column , String chosenBuildingName){
         ImagePattern imagePattern = BuildingImages.getImagePattern( chosenBuildingName ) ;
         int width = BuildingEnum.getBuildingWidthByName( chosenBuildingName ) ;
@@ -303,6 +308,13 @@ public class Camera {
         for(Polygon building : buildings){
             building.setLayoutX( building.getLayoutX() + TILE_WIDTH * (-dx+dy) / 2 );
             building.setLayoutY( building.getLayoutY() + TILE_HEIGHT * (-dx-dy) / 2 );
+        }
+
+        // moving weapons currently being used in battles
+        for(Node node : GameGraphicalController.weaponsNode.getChildren()){
+            Shape shape = ( Shape ) node ;
+            shape.setLayoutX( shape.getLayoutX() + TILE_WIDTH * ( -dx + dy ) / 2 ) ;
+            shape.setLayoutY( shape.getLayoutY() + TILE_HEIGHT * ( -dx - dy ) / 2) ;
         }
 
         for(int i = this.pos[0] ; i < Math.min ( size , this.pos[0] + viewSize ) ; i++)

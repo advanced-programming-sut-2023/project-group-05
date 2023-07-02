@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.example.controller.GameConnectionReader;
+import org.example.controller.GameConnectionWriter;
 import org.example.controller.GameController;
 import org.example.controller.GameGraphicalController;
 import org.example.model.Player;
@@ -20,6 +22,8 @@ public class Game extends Application {
         Scene scene = new Scene( pane ) ;
         stage.setScene( scene ) ;
         stage.show() ;
+        ( new GameConnectionReader() ).start() ;
+        ( new GameConnectionWriter() ).start() ;
         // for test
         // our player : ( always the 0-th index )
         Player player1 = new Player( "username1" , "nickname1" ) ;
