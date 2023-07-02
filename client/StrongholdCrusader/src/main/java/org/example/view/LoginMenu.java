@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.example.controller.Hash;
 import org.example.controller.SignupLoginMenuController;
 import org.example.controller.graphicalMenuController.CaptchaController;
 

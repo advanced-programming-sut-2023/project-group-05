@@ -68,11 +68,29 @@ public class SignupLoginMenuController {
             writer.writeUTF( (new Gson()).toJson( createUserJson ) );
             writer.flush() ;
             boolean ok = reader.readBoolean() ;
+            socket.close() ;
             if( !ok ) return "register failed : username already exists" ;
         } catch( Exception e ){
             e.printStackTrace();
         }
         return null ;
+    }
+
+    public static String[] getScoreboard(){
+        String[] returnValue = null ;
+        try{
+            Socket socket = new Socket( "localhost" , 2020 ) ;
+            DataInputStream reader = new DataInputStream( socket.getInputStream() ) ;
+            returnValue = (new Gson()).fromJson( reader.readUTF() , String[].class ) ;
+            socket.close() ;
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
+        return returnValue ;
+    }
+
+    public static void forgetPassword(){
+        // TODO
     }
 
     /*public static String loginUserStayLoggedIn( Scanner scanner, Matcher matcher) throws Exception

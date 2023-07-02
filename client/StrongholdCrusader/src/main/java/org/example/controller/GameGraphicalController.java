@@ -246,14 +246,14 @@ public class GameGraphicalController {
     private static void initTestMode(){
         System.out.println( "you are running the test mode" ) ;
         System.out.println( "GameGraphicalController : " + gameController.dropUnit( "archer" , 1 , 13 , 13 ) ) ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 15 ) ) ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 17 ) ) ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 20 ) ) ;
+        //System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 15 ) ) ;
+        //System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 17 ) ) ;
+        //System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 20 ) ) ;
        // System.out.println( "GameGraphicalController : " + gameController.dropUnit( "operator" , 1 , 20 , 20 ) ) ;
-        gameController.nextTurn() ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 13 ) ) ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 17 ) ) ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 22 ) ) ;
+        //gameController.nextTurn() ;
+        //System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 13 ) ) ;
+        //System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 17 ) ) ;
+        //System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 22 ) ) ;
     }
     private static void debug(){
         for( Unit unit : Unit.getUnits() ){

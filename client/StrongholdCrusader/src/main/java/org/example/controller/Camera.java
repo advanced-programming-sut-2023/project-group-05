@@ -2,6 +2,7 @@ package org.example.controller;
 
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -44,6 +45,8 @@ public class Camera {
     private final Group lastNode ;
     private final Group middleNode ;
     private final Group firstNode ;
+    private final ArrayList<Unit> loadedUnits = new ArrayList<Unit>() ;
+    private final ArrayList<Integer> loadedBuildingsY = new ArrayList<Integer>() ;
 
     public Camera(Polygon[][] map, Pane pane, GameController gameController){
         this.map = map ;
@@ -64,6 +67,17 @@ public class Camera {
 
     public int getViewSize(){
         return this.viewSize ;
+    }
+
+    private int findIndex(int y){
+        int index = 0;
+        for(Integer x : loadedBuildingsY){
+            if( x <= y ) index++ ;
+        }
+        for(Unit unit : loadedUnits){
+            if(unit.getRow() + unit.getColumn() <= y) index+=2 ;
+        }
+        return index ;
     }
 
     public Polygon addBuilding(int row , int column , String chosenBuildingName){
@@ -92,7 +106,10 @@ public class Camera {
         Rectangle rect = new Rectangle( 0 , 0 , 190 , 140 ) ;
         text.setFont( new Font(20) ) ;
         text.setFill( Color.RED ) ;
-        middleNode.getChildren().add( hexagon ) ;
+        System.out.println( middleNode.getChildren().size() ) ;
+        System.out.println( findIndex(row+column + 2 * width - 2) ) ;
+        middleNode.getChildren().add( findIndex(row+column + 2 * width - 2) , hexagon ) ;
+        loadedBuildingsY.add( row + column + 2 * width - 2 ) ;
         text.setVisible( false ) ;
         rect.setVisible( false ) ;
         text.setOpacity( 0.85 ) ;
@@ -190,8 +207,10 @@ public class Camera {
 
         for( int i = 0 ; i < viewSize ; i++)
             for( int j = 0 ; j < viewSize ; j++ )
-                for( Unit unit : gameController.getGameMap().getCell( i , j ).units )
+                for( Unit unit : gameController.getGameMap().getCell( i , j ).units ){
                     middleNode.getChildren().addAll( unit.getShape() , unit.getHealthBar() ) ;
+                    loadedUnits.add( unit ) ;
+                }
 
     }
 
@@ -223,7 +242,7 @@ public class Camera {
 
         moveMinimap(dx, dy) ;
 
-        // removing tiles & units exiting our view, and removing tiles entering our view :
+        // removing tiles & units exiting our view, and adding tiles and units entering our view :
         if( dx != 0 ){
             int xRemove = dx == 1 ? this.pos[0] : this.pos[0] + viewSize - 1;
             int xAdd = dx == - 1 ? this.pos[0] - 1 : this.pos[0] + viewSize;
@@ -233,19 +252,21 @@ public class Camera {
                 for( Unit unit : gameController.getGameMap().getCell( xRemove , j ).getUnits() ){
                     units.add( unit.getShape() ) ;
                     units.add( unit.getHealthBar() ) ;
+                    loadedUnits.remove( unit ) ;
                 }
                 middleNode.getChildren().removeAll( units );
             }
             if( xAdd >= 0 && xAdd < size ) for( int j = this.pos[1]; j < this.pos[1] + viewSize; j++ ){
-                ArrayList <Shape> units = new ArrayList<>() ;
+
                 for( Unit unit : gameController.getGameMap().getCell( xAdd , j ).getUnits() ){
-                    units.add( unit.getShape() ) ;
-                    units.add( unit.getHealthBar() ) ;
+                    int index = findIndex( unit.getRow() + unit.getColumn() ) ;
+                    middleNode.getChildren().add( index , unit.getShape() ) ;
+                    middleNode.getChildren().add( index , unit.getHealthBar() ) ;
+                    loadedUnits.add( unit ) ;
                 }
                 // pane.getChildren().add( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size(), map[xAdd][j] );
-                middleNode.getChildren().addAll( units ) ;
                 // pane.getChildren().addAll( 0, units ) ;
-                firstNode.getChildren().add( 0 , map[xAdd][j] );
+                firstNode.getChildren().add( map[xAdd][j] );
             }
         } else {
             int yRemove = dy == 1 ? this.pos[1] : this.pos[1] + viewSize - 1 ;
@@ -256,19 +277,20 @@ public class Camera {
                 for( Unit unit : gameController.getGameMap().getCell( i , yRemove ).getUnits() ){
                     units.add( unit.getShape() ) ;
                     units.add( unit.getHealthBar() ) ;
+                    loadedUnits.remove( unit ) ;
                 }
                 middleNode.getChildren().removeAll( units ) ;
             }
             if( yAdd >= 0 && yAdd < size ) for( int i = this.pos[0] ; i < this.pos[0] + viewSize ; i++ ){
-                ArrayList <Shape> units = new ArrayList<>() ;
                 for( Unit unit : gameController.getGameMap().getCell( i , yAdd ).getUnits() ){
-                    units.add( unit.getShape() ) ;
-                    units.add( unit.getHealthBar() ) ;
+                    int index = findIndex( unit.getRow() + unit.getColumn() ) ;
+                    middleNode.getChildren().add( index , unit.getShape() ) ;
+                    middleNode.getChildren().add( index , unit.getHealthBar() ) ;
+                    loadedUnits.add( unit ) ;
                 }
                 //pane.getChildren().addAll( pane.getChildren().size() - 1 - GameGraphicalController.reservedShapes.size() , units ) ;
                 // pane.getChildren().addAll( 0 , units ) ;
                 //pane.getChildren().add( 0 , map[i][yAdd] ) ;
-                middleNode.getChildren().addAll( units ) ;
                 firstNode.getChildren().add( map[i][yAdd] ) ;
             }
         }

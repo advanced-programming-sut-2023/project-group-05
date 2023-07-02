@@ -3,16 +3,12 @@ package org.example.view;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.effect.Effect;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import org.example.controller.GameController;
 import org.example.controller.GameGraphicalController;
 import org.example.model.Player;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 

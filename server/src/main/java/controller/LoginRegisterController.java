@@ -6,6 +6,7 @@ import model.DataBase;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.util.Map;
 
 import model.Hash;
 import model.Account ;
@@ -27,6 +28,21 @@ public class LoginRegisterController {
     private static boolean login( String username , String password ){
         Account account = Account.getAccountsMap().get(username) ;
         return account != null && ( account.getPasswordHash() == Hash.encode( password ) );
+    }
+
+    private static void sendScoreBoard( DataOutputStream writer ){
+        String[] scoreboard = new String[Account.getAccountsMap().size()] ;
+        int index = 0 ;
+        for(Map.Entry acc : Account.getAccountsMap().entrySet()){
+            scoreboard[index++] = (String)acc.getKey() ;
+            scoreboard[index++] = ""+((Account)acc.getValue()).getHighScore() ;
+        }
+        try{
+            writer.writeUTF((new Gson()).toJson(scoreboard)) ;
+            writer.flush() ;
+        } catch(Exception e){
+            e.printStackTrace() ;
+        }
     }
 
     public static void handle( Socket socket ){
@@ -55,7 +71,10 @@ public class LoginRegisterController {
                 boolean ok ;
                 writer.writeBoolean( ok = login( command[1] , command[2] ) );
                 System.out.println( "login status : " + ok ) ;
-            } else {
+            } else if ( command[0].equals("scoreboard") ){
+                sendScoreBoard( writer ) ;
+            }
+            else {
                 System.out.println( "Unknown command in LoginRegister." ) ;
             }
 
