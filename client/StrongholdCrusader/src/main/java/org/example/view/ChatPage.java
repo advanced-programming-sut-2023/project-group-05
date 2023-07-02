@@ -42,6 +42,10 @@ public class ChatPage extends Application
         stage.show();
 
         scrollPane = (ScrollPane) borderPane.getCenter();
+        updatePane();
+    }
+
+    public static void updatePane(){
         VBox vBox = new VBox();
         vBox.setSpacing(20);
 
@@ -80,4 +84,5 @@ public class ChatPage extends Application
         }
         scrollPane.setContent(vBox);
     }
+
 }

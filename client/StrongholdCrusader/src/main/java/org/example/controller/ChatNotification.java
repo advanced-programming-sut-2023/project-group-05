@@ -47,7 +47,7 @@ public class ChatNotification extends Thread
                         ChatPage.chat = Chat.fromJson(jsonObject);
                         System.out.println(ChatPage.chat.toJson().toJSONString());
                         ///ChatPage.updatePane();
-                        new ChatPage().start(ChatMenu.stage);
+                        //new ChatPage().start(ChatMenu.stage);
                     }
                     else if (chatPacket.command.equals("GetChatList"))
                     {

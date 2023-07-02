@@ -40,7 +40,7 @@ public class MainMenu extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
-                    ChatConnection.Run("localhost", 2021, "Danial");
+                    ChatConnection.Run("localhost", 2021, "Ariya");
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
