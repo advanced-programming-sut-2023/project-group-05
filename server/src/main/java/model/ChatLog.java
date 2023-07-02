@@ -13,7 +13,8 @@ import java.util.ArrayList;
 
 public class ChatLog
 {
-    public static String location = "/home/aria/tamrin/AP/project-group-05/server/src/main/resources/ChatLog.json";
+    // public static String location = "/home/aria/tamrin/AP/project-group-05/server/src/main/resources/ChatLog.json";
+    public static String location = "C:\\Users\\TUF\\Desktop\\university\\AdvancedProgramming\\project-group-05\\server\\src\\main\\resources\\ChatLog.json" ;
     public static ArrayList < Chat > chatLog = new ArrayList<>();
     public static void WAKEUP() throws FileNotFoundException {
         JSONParser jsonParser = new JSONParser();

@@ -38,10 +38,8 @@ public class ChatPage extends Application
         stage.setTitle("Chat Page");
         BorderPane borderPane = FXMLLoader.load(URLFinder.run("/fxml/ChatPage.fxml"));
 
-        /*if(chat == null)
-        {
-            return;
-        }*/
+        stage.setScene(new Scene(borderPane));
+        stage.show();
 
         scrollPane = (ScrollPane) borderPane.getCenter();
         VBox vBox = new VBox();
@@ -81,7 +79,5 @@ public class ChatPage extends Application
             vBox.getChildren().add(text);
         }
         scrollPane.setContent(vBox);
-        stage.setScene(new Scene(borderPane));
-        stage.show();
     }
 }

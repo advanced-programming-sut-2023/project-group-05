@@ -4,7 +4,7 @@ import org.example.model.*;
 import org.example.model.building.Building;
 import org.example.model.building.TradeBuilding;
 import org.example.model.unit.*;
-import org.example.view.Menu;
+import org.example.view.Menu ;
 
 import java.util.ArrayList;
 import java.util.Arrays;
