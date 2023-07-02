@@ -31,7 +31,7 @@ public class LoginRegisterController {
     }
 
     private static void sendScoreBoard( DataOutputStream writer ){
-        String[] scoreboard = new String[Account.getAccountsMap().size()] ;
+        String[] scoreboard = new String[2*Account.getAccountsMap().size()] ;
         int index = 0 ;
         for(Map.Entry acc : Account.getAccountsMap().entrySet()){
             scoreboard[index++] = (String)acc.getKey() ;

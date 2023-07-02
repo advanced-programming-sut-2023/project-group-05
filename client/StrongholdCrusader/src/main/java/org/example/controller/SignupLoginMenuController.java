@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import javafx.scene.control.Alert;
 
 import java.io.DataInputStream;
+import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -81,6 +82,10 @@ public class SignupLoginMenuController {
         String[] returnValue = null ;
         try{
             Socket socket = new Socket( "localhost" , 2020 ) ;
+            DataOutputStream writer = new DataOutputStream( socket.getOutputStream() ) ;
+            String[] arr = { "scoreboard" } ;
+            writer.writeUTF( (new Gson()).toJson( arr ) ) ;
+            writer.flush() ;
             DataInputStream reader = new DataInputStream( socket.getInputStream() ) ;
             returnValue = (new Gson()).fromJson( reader.readUTF() , String[].class ) ;
             socket.close() ;
