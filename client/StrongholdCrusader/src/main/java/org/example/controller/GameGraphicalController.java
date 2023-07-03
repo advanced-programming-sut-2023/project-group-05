@@ -49,8 +49,10 @@ public class GameGraphicalController {
     public static Minimap minimap ;
     public static ArrayList<Node> reservedShapes;
     public static Rectangle attackingMouse = new Rectangle( 0 , 0 , 40 , 40 ) ;
+    public static Rectangle copyingMouse = new Rectangle( 0 , 0 , 40 , 40 ) ;
     public static String chosenBuildingName = "" ;
     public static String selectedBuildingName = "" ;
+    public static String copiedBuildingName = null ;
     public static Group lastNode = new Group() ;
     public static Group firstNode = new Group() ;
     public static Group weaponsNode = new Group() ;
@@ -92,9 +94,19 @@ public class GameGraphicalController {
 
     private static void initMouse(){
         attackingMouse.setFill( new ImagePattern( new Image( Main.class.getResource( "/images/icons/sword.png" ).toExternalForm() ) ) ) ;
-        pane.getChildren().add( attackingMouse ) ;
+        lastNode.getChildren().add( attackingMouse ) ;
         attackingMouse.setVisible( false ) ;
         mouse.setOpacity( 0.5 );
+        copyingMouse.setFill( new ImagePattern( new Image( Main.class.getResource( "/images/icons/copy.png" ).toExternalForm() ) ) ) ;
+        copyingMouse.setVisible( false ) ;
+        lastNode.getChildren().add( copyingMouse ) ;
+        pane.setOnMouseMoved( new EventHandler <MouseEvent>() {
+            @Override
+            public void handle( MouseEvent mouseEvent ){
+                copyingMouse.setX( mouseEvent.getX() - copyingMouse.getWidth() - 1 ) ;
+                copyingMouse.setY( mouseEvent.getY() - copyingMouse.getHeight() - 1 ) ;
+            }
+        } ) ;
         for(int i = 0 ; i < 400 ; i++)
             for(int j = 0 ; j < 400 ; j++){
                 Polygon cell = camera.getMap()[i][j] ;
@@ -182,6 +194,28 @@ public class GameGraphicalController {
                 }
                 if( keyEvent.getCode().equals(KeyCode.S) ){
                     SoundController.setMusicMute( ! SoundController.isMusicMute );
+                }
+                if( keyEvent.getCode().equals(KeyCode.C) ){
+                    copyingMouse.setVisible( true ) ;
+                    mouse.setVisible( true ) ;
+                    
+                    String buildingName = camera.getHoveredBuilding() ;
+                    if( null == buildingName ){
+                        copyingMouse.setVisible( false ); ;
+                        mouse.setVisible( false ) ;
+                    } else {
+                        copiedBuildingName = buildingName ;
+                    }
+
+                }
+                if( keyEvent.getCode().equals(KeyCode.V) ){
+                    if( copyingMouse.isVisible() ){
+                        Building pastedBuilding = Building.createBuildingByName( copiedBuildingName , getPlayer() , mouseRow , mouseColumn ) ;
+                        gameController.putBuildingInPlace( pastedBuilding );
+                        camera.addBuilding( mouseRow , mouseColumn , pastedBuilding.getName() ) ;
+                    }
+                    copyingMouse.setVisible( false ) ;
+                    mouse.setVisible( false ) ;
                 }
                 if( keyEvent.getCode().equals(KeyCode.A) ){
                     for( Unit unit : Unit.getUnits() ){

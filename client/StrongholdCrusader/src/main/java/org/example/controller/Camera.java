@@ -20,6 +20,7 @@ import org.example.model.BuildingImages;
 import org.example.model.Minimap;
 import org.example.model.Player;
 import org.example.model.animations.ClownAnimation;
+import org.example.model.building.Building;
 import org.example.model.unit.Unit;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class Camera {
     private final int viewSize = 50 ;
     private final int xShift = TILE_WIDTH * 11 ;
     private final int yShift = TILE_HEIGHT * 12 ;
+    private String hoveredBuildingName = null ;
     private GameController gameController;
     private int unitCount ;
     private final Group lastNode ;
@@ -121,6 +123,7 @@ public class Camera {
         hexagon.setOnMouseMoved( new EventHandler <MouseEvent>() {
             @Override
             public void handle( MouseEvent mouseEvent ){
+                hoveredBuildingName = chosenBuildingName ;
                 text.setX( hexagon.getLayoutX() + mouseEvent.getX() + 5 ) ;
                 text.setY( hexagon.getLayoutY() + mouseEvent.getY() + 20 ) ;
                 rect.setX( hexagon.getLayoutX() + mouseEvent.getX() + 1 ) ;
@@ -138,6 +141,7 @@ public class Camera {
         hexagon.setOnMouseExited( new EventHandler <MouseEvent>() {
             @Override
             public void handle( MouseEvent mouseEvent ){
+                hoveredBuildingName = null ;
                 text.setVisible( false ) ;
                 rect.setVisible( false ) ;
                 GameGraphicalController.getPane().getChildren().remove( rect ) ;
@@ -364,6 +368,10 @@ public class Camera {
     private void moveMinimap(int dx, int dy){
         if(minimap == null) return;
         minimap.move(dx, dy) ;
+    }
+
+    public String getHoveredBuilding(){
+        return hoveredBuildingName ;
     }
 
 }
