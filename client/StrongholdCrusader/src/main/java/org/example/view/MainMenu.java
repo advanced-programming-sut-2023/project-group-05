@@ -30,7 +30,6 @@ public class MainMenu extends Application {
         vBox.setAlignment(Pos.CENTER);
         Button goToChat = new Button("Go To Chats");
         /// goToChat.setAlignment(Pos.CENTER);
-
         goToChat.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {

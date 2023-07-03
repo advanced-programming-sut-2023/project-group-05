@@ -2,7 +2,7 @@ package org.example.model;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
-import org.example.controller.bottomMenu;
+import org.example.controller.BottomMenu;
 import org.example.view.MainMenu;
 
 public enum MenuImages {
@@ -17,7 +17,7 @@ public enum MenuImages {
     {
         this.image = new Image(MainMenu.class.getResource("/images/MenuBackGrounds/"+menuName).toString());
         this.imagePattern = new ImagePattern(image);
-        bottomMenu.menuImages.add(image);
+        BottomMenu.menuImages.add(image);
     }
     public Image getImage(){
         return this.image;

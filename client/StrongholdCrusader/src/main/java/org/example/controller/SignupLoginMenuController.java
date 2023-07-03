@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import javafx.scene.control.Alert;
 
 import java.io.DataInputStream;
+import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class SignupLoginMenuController {
             writer.writeUTF( (new Gson()).toJson( createUserJson ) );
             writer.flush() ;
             boolean ok = reader.readBoolean() ;
+            socket.close() ;
             if( !ok ) return "register failed : username already exists" ;
         } catch( Exception e ){
             e.printStackTrace();
@@ -76,17 +78,44 @@ public class SignupLoginMenuController {
         return null ;
     }
 
-    /*public static String loginUserStayLoggedIn( Scanner scanner, Matcher matcher) throws Exception
-    {
-        ArrayList < Account > myList = DataBase.getStayLoggedInAccount();
-        for(Account cur : myList)
-        {
-            System.out.println("User Logged In ;)");
-            MainMenu.run(scanner, cur);
-            return "success";
+    public static String[] getScoreboard(){
+        String[] returnValue = null ;
+        try{
+            Socket socket = new Socket( "localhost" , 2020 ) ;
+            DataOutputStream writer = new DataOutputStream( socket.getOutputStream() ) ;
+            String[] arr = { "scoreboard" } ;
+            writer.writeUTF( (new Gson()).toJson( arr ) ) ;
+            writer.flush() ;
+            DataInputStream reader = new DataInputStream( socket.getInputStream() ) ;
+            returnValue = (new Gson()).fromJson( reader.readUTF() , String[].class ) ;
+            socket.close() ;
+        } catch( Exception e ){
+            e.printStackTrace();
         }
-        return "there are not any stayed logged in account :(";
-    }*/
+        return returnValue ;
+    }
+
+    public static void forgetPassword(){
+        // TODO
+    }
+
+    public static String[] getInfo( String username ){
+        while( true ){
+            try{
+                Socket socket = new Socket( "localhost" , 2020 ) ;
+                DataOutputStream writer = new DataOutputStream( socket.getOutputStream() ) ;
+                DataInputStream reader = new DataInputStream( socket.getInputStream() ) ;
+                String[] arr = { "getinfo" , username } ;
+                writer.writeUTF( (new Gson()).toJson( arr ) ) ;
+                writer.flush() ;
+                String[] ret = (new Gson()).fromJson( reader.readUTF() , String[].class );
+                socket.close() ;
+                return ret;
+            } catch( Exception e ){
+                e.printStackTrace() ;
+            }
+        }
+    }
 
     public static String loginUser( String username , String password ) {
         if(!validUserName(username) || ! validPassword(password))
@@ -140,11 +169,6 @@ public class SignupLoginMenuController {
         Account.addAccount(account) ;
         return "password recovered successfully";
     }*/
-
-    public static ArrayList<String> getAccountList()
-    {
-        return null;
-    }
 
     public static String logout(Matcher matcher){
         return "logged out" ;
