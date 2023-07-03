@@ -13,8 +13,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.controller.ProfileMenuController;
-import org.example.controller.URLFinder;
-import org.example.model.Commands;
 
 import java.util.Scanner;
 
@@ -24,13 +22,12 @@ public class MainMenu extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Main Menu");
-        BorderPane borderPane = FXMLLoader.load(URLFinder.run("/fxml/MainMenu.fxml"));
+        BorderPane borderPane = FXMLLoader.load(MainMenu.class.getResource("/fxml/MainMenu.fxml"));
         VBox vBox = new VBox();
         vBox.setSpacing(25);
         vBox.setAlignment(Pos.CENTER);
         Button goToChat = new Button("Go To Chats");
         /// goToChat.setAlignment(Pos.CENTER);
-
         goToChat.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {

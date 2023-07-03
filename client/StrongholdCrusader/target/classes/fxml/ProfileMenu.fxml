@@ -16,7 +16,9 @@
 
         <VBox styleClass = "vbox" fx:id = "mainVBox">
             <Text styleClass="text" fx:id="text" text = "testinh" />
-            <HBox><Button text = "Back" /><Button text = "ScoreBoard"/>
+            <HBox>
+                <Button text = "Back" />
+                <Button text = "ScoreBoard"/>
             </HBox>
         </VBox>
     </center>

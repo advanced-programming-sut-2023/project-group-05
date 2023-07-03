@@ -122,9 +122,9 @@ public class ProfileMenuController {
         VBox vBox = new VBox();
         ScrollBar scrollBar = new ScrollBar();
         pane.getChildren().addAll(vBox,scrollBar);
-        ArrayList<String> scores = SignupLoginMenuController.getAccountList();
+        String[] scores = SignupLoginMenuController.getScoreboard();
         HashMap<Integer,ArrayList<String>> rankToAccount = new HashMap<>();
-        int size = scores.size();
+        int size = scores.length;
         Text[] ranking = new Text[size / 2];
         String[] users = new String[size / 2];
         int[] ranks = new int[size];
