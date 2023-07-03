@@ -29,7 +29,6 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class BottomMenu {
-    public static ArrayList<Node> current;
     private static Player player = GameGraphicalController.getPlayer();
     public static ArrayList<Circle> buttons = new ArrayList<>();
     public static HashMap<Circle, ArrayList<Node>> buttonMap = new HashMap<Circle, ArrayList<Node>>();
@@ -103,8 +102,6 @@ public class BottomMenu {
     }
 
     public static void initGraphicalMenu() {
-        // adding the minimap
-        currentBuilding = "graphicalMenu";
         pane.getChildren().add(minimap);
         pane.getChildren().add(graphicalMenu);
         Circle shrekFace = new Circle(SCREEN_WIDTH * 0.77 ,graphicalMenu.getY() - 20 ,65) ;
@@ -180,16 +177,6 @@ public class BottomMenu {
         setActionButtons();
         buffer.addAll(buttons);
         addToPane(buffer);
-    }
-
-    private static void alterButton(boolean show) {
-        if (show) {
-            for (Circle button : buttons)
-                pane.getChildren().add(button);
-            return;
-        }
-        for (Circle button : buttons)
-            pane.getChildren().remove(button);
     }
 
     public static <T, K> void alterMenu(ArrayList<T> first, ArrayList<K> second, Group pane) {
@@ -321,18 +308,19 @@ public class BottomMenu {
         text.setX(SCREEN_WIDTH * 0.3);
         text.setY(SCREEN_HEIGHT * 0.3);
         text.setFill(Color.WHITE);
-        text.setStyle("-fx-font-size: 12px");
+        text.setStyle("-fx-font-size: 20px");
+        text.setStyle("-fx-font-weight: bold");
         Rectangle information = new Rectangle(50, 50, SCREEN_WIDTH * 0.8, SCREEN_HEIGHT * 0.8);
         information.setOpacity(0.8);
         info.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (infoToggle) {
-                    pane.getChildren().add(text);
                     pane.getChildren().add(information);
+                    pane.getChildren().add(text);
                 } else {
-                    pane.getChildren().remove(text);
                     pane.getChildren().remove(information);
+                    pane.getChildren().remove(text);
                 }
                 infoToggle = !infoToggle;
             }
@@ -346,7 +334,6 @@ public class BottomMenu {
                         buffer.clear();
                         buffer.addAll(houseAndStorages);
                         buffer.addAll(buttons);
-                        currentBuilding = "graphicalMenu";
                         addToPane(buffer);
                     }
                     case 1 -> {
@@ -406,13 +393,8 @@ public class BottomMenu {
             }
         });
     }
-    private static String currentBuilding = "" ;
     public static void preInitShop() {
-//        buffer.clear();
-//        if (currentBuilding.equals("graphicalMenu"))
-//            buffer.addAll(buttons);
         removePastThings();
-        currentBuilding = "market";
         initShopMenu(null, 0, 0);
     }
 
