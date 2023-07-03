@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import org.example.Main;
 import org.example.model.*;
@@ -51,6 +52,7 @@ public class GameGraphicalController {
     public static Group firstNode = new Group() ;
     public static Group weaponsNode = new Group() ;
     public static Group middleNode = new Group() ;
+    public static Scale scale = new Scale() ;
 
     public static void init(Stage stage, Pane pane, GameController gameController) {
         GameGraphicalController.pane = pane;
@@ -89,10 +91,17 @@ public class GameGraphicalController {
 
     public static void zoomIn(){
 
+        if( pane.getTransforms().isEmpty() ) pane.getTransforms().add( scale ) ;
+        if( scale.getX() < 1.05 ) return ;
+        scale.setX( scale.getX() - 0.1 );
+        scale.setY( scale.getY() - 0.1 );
+
     }
 
     public static void zoomOut(){
-
+        if( pane.getTransforms().isEmpty() ) pane.getTransforms().add( scale ) ;
+        scale.setX( scale.getX() + 0.1 );
+        scale.setY( scale.getY() + 0.1 );
     }
 
     private static void initMouse(){

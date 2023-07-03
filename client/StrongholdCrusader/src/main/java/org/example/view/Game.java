@@ -18,7 +18,7 @@ public class Game extends Application {
     // TODO : check if kiani is removing from pane or setting visible !!!
     @Override
     public void start( Stage stage ) throws Exception {
-        /*String username = "Danial" ;
+        /*
         GameConnectionReader gcr = new GameConnectionReader(username) ;
         GameConnectionWriter gcw = new GameConnectionWriter(username) ;
         gcr.start() ;
