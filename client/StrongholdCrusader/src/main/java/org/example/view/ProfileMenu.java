@@ -33,9 +33,10 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class ProfileMenu extends Application {
-    private String username = GameController.currentUsername ;
-    String nickname = GameController.currentNickname ;
-    String email = GameController.currentEmail ;
+    private String username  ;
+    String nickname ;
+    String email ;
+    String slogan ;
     Image image = null ;
     private static Stage stage;
     private static BorderPane bufferPane;
@@ -43,26 +44,38 @@ public class ProfileMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        this.username = GameController.currentUsername;
+        nickname = GameController.currentNickname;
+        email = GameController.currentEmail ;
+        slogan = GameController.currentSlogan;
+        System.out.println(username);
+
+//        System.out.println("here");
+//
+//
+//        BorderPane bufferPane = new BorderPane();
+//        welcome.setTextAlignment(TextAlignment.CENTER);
+//        pane.getChildren().add(welcome);
+//        bufferPane.getChildren().add(welcome);
+//        ProfileMenu.stage = stage;
+//        ProfileMenu.bufferPane = bufferPane;
+//        VBox data = new VBox();
+//        VBox change = new VBox();
+//        HashMap<Button, Runnable> setOn = new HashMap<>();
+//
+//        ProfileMenu.scene = scene;
+//        initData(data);
+//        initButtons(setOn, change, pane);
+//        pane.getChildren().addAll(change, data);
+//        bufferPane.getChildren().addAll(pane.getChildren());
         Text welcome = new Text("Welcome To Profile Menu");
+        welcome.setTextAlignment(TextAlignment.CENTER);
         welcome.setStyle("-fx-font-size: 32px;\n" +
                 "    -fx-font-weight: bold;\n" +
-                "    -fx-text-fill: #05c2c7;");
+               "    -fx-text-fill: #05c2c7;");
         BorderPane pane = new BorderPane();
-        BorderPane bufferPane = new BorderPane();
-        welcome.setTextAlignment(TextAlignment.CENTER);
-        pane.getChildren().add(welcome);
-        bufferPane.getChildren().add(welcome);
-        ProfileMenu.stage = stage;
-        ProfileMenu.bufferPane = bufferPane;
-        VBox data = new VBox();
-        VBox change = new VBox();
-        HashMap<Button, Runnable> setOn = new HashMap<>();
         Scene scene = new Scene(pane);
-        ProfileMenu.scene = scene;
-        initData(data);
-        initButtons(setOn, change, pane);
-        pane.getChildren().addAll(change, data);
-        bufferPane.getChildren().addAll(pane.getChildren());
+        pane.getChildren().add(welcome);
         stage.setScene(scene);
         stage.show();
     }
@@ -146,10 +159,10 @@ public class ProfileMenu extends Application {
         mail.setStyle("-fx-font-size: 16px;\n" +
                 "    -fx-font-weight: bold;\n" +
                 "    -fx-text-fill: #a874ee;");
-        Circle avatarImage = new Circle(20);
-        avatarImage.setFill(new ImagePattern(image));
+        //Circle avatarImage = new Circle(20);
+        //avatarImage.setFill(new ImagePattern(image));
         data.setAlignment(Pos.CENTER_LEFT);
-        data.getChildren().addAll(user, nick, mail, avatarImage);
+        data.getChildren().addAll(user, nick, mail);
     }
 
 
@@ -241,6 +254,7 @@ public class ProfileMenu extends Application {
                 throw new RuntimeException(e);
             }
         });
+        setSubmitButton(hBox,error,mode);
         hBox.getChildren().add(input);
         pane.getChildren().add(hBox);
     }
