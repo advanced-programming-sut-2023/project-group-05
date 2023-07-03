@@ -45,8 +45,8 @@ public class GameGraphicalController {
     public static ArrayList<Node> reservedShapes;
     public static Rectangle attackingMouse = new Rectangle( 0 , 0 , 40 , 40 ) ;
     public static Rectangle copyingMouse = new Rectangle( 0 , 0 , 40 , 40 ) ;
-    public static String chosenBuildingName = "" ;
-    public static String selectedBuildingName = "" ;
+    public static String chosenBuildingName = null ;
+    public static String selectedBuildingName = null ;
     public static String copiedBuildingName = null ;
     public static Group lastNode = new Group() ;
     public static Group firstNode = new Group() ;
@@ -90,18 +90,25 @@ public class GameGraphicalController {
 
 
     public static void zoomIn(){
-
         if( pane.getTransforms().isEmpty() ) pane.getTransforms().add( scale ) ;
         if( scale.getX() < 1.05 ) return ;
         scale.setX( scale.getX() - 0.1 );
         scale.setY( scale.getY() - 0.1 );
-
     }
 
     public static void zoomOut(){
         if( pane.getTransforms().isEmpty() ) pane.getTransforms().add( scale ) ;
         scale.setX( scale.getX() + 0.1 );
         scale.setY( scale.getY() + 0.1 );
+    }
+
+    public static void putMangonel(){
+        chosenBuildingName = "mangonel" ;
+        mouse.setFill( Color.RED ) ;
+        mouseWidth = 2 ;
+        mouseHeight = 2 ;
+        updateMouse() ;
+        mouse.setVisible( true ) ;
     }
 
     private static void initMouse(){
@@ -274,20 +281,21 @@ public class GameGraphicalController {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-
+                    selectedBuildingName = name ;
                     Glow glow = new Glow();
                     glow.setLevel(100);
                     buildingShape.setEffect(glow);
                     selectedBuildingsShapes.add(buildingShape);
+                    System.out.println( name ) ;
                 } else {
                     switch (chosenBuildingName) {
                         case "market" -> BottomMenu.deSelectMarket();
                     }
                     buildingShape.setEffect(null);
                     selectedBuildingsShapes.remove(buildingShape);
+                    selectedBuildingName = null ;
                     return;
                 }
-                selectedBuildingName = chosenBuildingName;
                 if (mouseEvent.getButton() == MouseButton.PRIMARY && !lastNode.getChildren().contains(BottomMenu.back)) {
                     switch (selectedBuildingName) {
                         case "market" -> BottomMenu.preInitShop();
@@ -322,6 +330,9 @@ public class GameGraphicalController {
     }
 
     private static void debug() {
+        getPlayer().setGold( getPlayer().getGold() + 1000 ) ;
+        System.out.println( selectedBuildingName ) ;
+        BottomMenu.updateScribeNotes();
         for (Unit unit : Unit.getUnits()) {
             System.out.println(unit.getOwner().getNickname());
         }

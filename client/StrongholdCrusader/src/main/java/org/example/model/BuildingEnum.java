@@ -80,7 +80,13 @@ public enum BuildingEnum {
     ROCK_WEST("rockwest",new ArrayList<Integer>(Arrays.asList(1,1)),100),
 
     //Castle
-    CASTLE("castle",new ArrayList<Integer>(Arrays.asList()),1000000);
+    CASTLE("castle",new ArrayList<Integer>(Arrays.asList()),1000),
+
+
+    // STUFF
+    MANGONEL( "mangonel" , new ArrayList<Integer>(Arrays.asList()) , 500 ) ;
+
+
     String name;
     int hitPoint;
     ArrayList<Integer> shape;
@@ -106,5 +112,7 @@ public enum BuildingEnum {
     public static int getBuildingHeightByName(String name){
         return Building.getBuildingEnumByName().get(name).shape.get(1);
     }
+
+
 
 }

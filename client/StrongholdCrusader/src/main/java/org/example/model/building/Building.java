@@ -230,6 +230,8 @@ public class Building {
             return new StorageBuilding(type,1,1,false,"",owner,row,column,getBuildingCost(type),500,0,false,800, BuildingEnum.GRANARY);
         if (type.equals("inn"))
             return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,300,getBuildingCost(type),1, 0, BuildingEnum.INN);
+        if (type.equals("inn"))
+            return new Building(type , 2 , 2 , false , "" , owner , row , column , getBuildingCost(type), 500 , -1 , false , BuildingEnum.MANGONEL , 1);
         if (type.equals("mill"))
             return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,400,getBuildingCost(type),3, 0, BuildingEnum.MILL);
         if (type.equals("ironmine"))
@@ -515,6 +517,10 @@ public class Building {
                 0,0,0,0,0, 0) ;
 
         if (type.equals("fletcher")) return new Cost( 0 , 0 , 0 , 0 , 100 , 20 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+
+        if (type.equals("mangonel")) return new Cost( 0 , 0 , 0 , 0 , 100 , 100 ,
                 0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
                 0,0,0,0,0, 0) ;
 

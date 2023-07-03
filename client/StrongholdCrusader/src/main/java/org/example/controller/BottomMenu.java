@@ -793,7 +793,7 @@ public class BottomMenu {
                     new Alert(Alert.AlertType.INFORMATION,"Not Enough Gold").showAndWait();
                 else {
                     player.gold -= 150;
-                    //todo : hossein tabar , here you go
+                    GameGraphicalController.putMangonel() ;
                 }
             }
         });

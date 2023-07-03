@@ -24,6 +24,7 @@ public enum BuildingImages {
     BARRACKS("militaryBuildings/barracks.png",4),
     MERCENARY_POST("militaryBuildings/mercenarypost.png",4),
     ENGINEER_GUILD("militaryBuildings/engineerguild.png",4),
+    MANGONEL("mangonel/mangonel.png",-1),
 //    KILLING_PIT(),
     OIL_SMELTER("towersAndWalls/traps/oilSmelter.png",7),
 //    PITCH_DITCH(),
