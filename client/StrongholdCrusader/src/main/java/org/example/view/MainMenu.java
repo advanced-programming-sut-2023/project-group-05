@@ -48,7 +48,11 @@ public class MainMenu extends Application {
         goToProfile.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println("TODO: Go To Profile Menu");
+                try{
+                    new ProfileMenu().start( stage ) ;
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 

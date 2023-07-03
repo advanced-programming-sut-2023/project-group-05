@@ -60,6 +60,7 @@ public class LoginRegisterController {
         // change in Account & Database
         // close socket in client-side
         // update in client side too
+
     }
 
     private static void joinRoom( String[] command , DataOutputStream writer ){

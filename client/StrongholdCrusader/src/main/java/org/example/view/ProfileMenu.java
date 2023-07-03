@@ -23,6 +23,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import org.example.controller.GameController;
 import org.example.controller.SignupLoginMenuController;
 
 import java.lang.reflect.InvocationTargetException;
@@ -32,10 +33,10 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class ProfileMenu extends Application {
-    private String username;
-    String nickname;
-    String email;
-    Image image;
+    private String username = GameController.currentUsername ;
+    String nickname = GameController.currentNickname ;
+    String email = GameController.currentEmail ;
+    Image image = null ;
     private static Stage stage;
     private static BorderPane bufferPane;
     private static Scene scene;

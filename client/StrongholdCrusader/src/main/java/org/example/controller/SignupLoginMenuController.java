@@ -194,6 +194,13 @@ public class SignupLoginMenuController {
         Account.addAccount(account) ;
         return "password recovered successfully";
     }*/
+// sabr kon
+    public static boolean changePassword( String username , String oldPassword , String newPassword ){
+        // TODO : return true - > password change mishe
+        // todo : return false - > old Password eshtebah bude
+        // yes
+        return false ;
+    }
 
     public static String logout(Matcher matcher){
         return "logged out" ;
