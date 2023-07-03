@@ -80,11 +80,11 @@ public enum BuildingEnum {
     ROCK_WEST("rockwest",new ArrayList<Integer>(Arrays.asList(1,1)),100),
 
     //Castle
-    CASTLE("castle",new ArrayList<Integer>(Arrays.asList()),1000),
+    CASTLE("castle",new ArrayList<Integer>(Arrays.asList(3,3)),1000),
 
 
     // STUFF
-    MANGONEL( "mangonel" , new ArrayList<Integer>(Arrays.asList()) , 500 ) ;
+    MANGONEL( "mangonel" , new ArrayList<Integer>(Arrays.asList(2,2)) , 500 ) ;
 
 
     String name;

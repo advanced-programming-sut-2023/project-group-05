@@ -288,9 +288,7 @@ public class GameGraphicalController {
                     selectedBuildingsShapes.add(buildingShape);
                     System.out.println( name ) ;
                 } else {
-                    switch (chosenBuildingName) {
-                        case "market" -> BottomMenu.deSelectMarket();
-                    }
+                    BottomMenu.deSelect();
                     buildingShape.setEffect(null);
                     selectedBuildingsShapes.remove(buildingShape);
                     selectedBuildingName = null ;
