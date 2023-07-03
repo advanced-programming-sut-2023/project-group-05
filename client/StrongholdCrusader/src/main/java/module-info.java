@@ -16,4 +16,6 @@ module AA {
     opens org.example.controller to javafx.fxml;
     exports org.example.controller.graphicalMenuController;
     opens org.example.controller.graphicalMenuController to javafx.fxml;
+    exports org.example.model.enums;
+    opens org.example.model.enums to javafx.fxml;
 }

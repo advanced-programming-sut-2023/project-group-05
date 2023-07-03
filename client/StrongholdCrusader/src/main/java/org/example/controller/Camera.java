@@ -16,7 +16,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import org.example.model.BuildingEnum;
-import org.example.model.BuildingImages;
+import org.example.model.enums.BuildingImages;
 import org.example.model.Minimap;
 import org.example.model.Player;
 import org.example.model.animations.ClownAnimation;

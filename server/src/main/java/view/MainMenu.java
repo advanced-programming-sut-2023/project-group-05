@@ -27,6 +27,7 @@ public class MainMenu extends Application
     public static Stage stage;
     public void updateRoomVbox()
     {
+        // TODO : button
         for( Map.Entry x : GameRoom.gameRoomHashMap.entrySet() ){
             Button button = new Button() ;
             button.setText( "room name : " + x.getKey() + " , user count : " + ((GameRoom)x.getValue()).getUsernames().size() + "/" + ((GameRoom)x.getValue()).getCapacity() );
