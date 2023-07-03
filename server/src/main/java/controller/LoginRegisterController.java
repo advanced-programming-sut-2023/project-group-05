@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import controller.GameMaster.GameRoom;
 import model.DataBase;
 
 import java.io.DataInputStream;
@@ -61,6 +62,34 @@ public class LoginRegisterController {
         // update in client side too
     }
 
+    private static void joinRoom( String[] command , DataOutputStream writer ){
+        String username = command[1] ;
+        String gameRoomName = command[2] ;
+        String password = command[3] ;
+        boolean ok = true ;
+        GameRoom gameRoom = GameRoom.gameRoomHashMap.get(gameRoomName) ;
+        if( gameRoom == null ) ok = false ;
+        ok = gameRoom.addUser( username, password ) ;
+        if( ok ){
+            String[] output = new String[ 1 + 2 * gameRoom.getUsernames().size() ] ;
+            output[0] = "1" ;
+            for(int i = 1 ; i < output.length ; i+=2 ){
+                output[i] = gameRoom.getUsernames().get( i - 1 );
+                output[i+1] = Account.getAccountsMap().get(output[i]).getNickName() ;
+                try {
+                    writer.writeUTF( ( new Gson() ).toJson( output ) );
+                } catch( Exception e ) { e.printStackTrace(); }
+            }
+        } else {
+            String[] output = { "0" } ;
+            try {
+                writer.writeUTF( (new Gson()).toJson(output) ) ;
+            } catch( Exception e ){
+                e.printStackTrace() ;
+            }
+        }
+    }
+
     public static void handle( Socket socket ){
         try{
             DataOutputStream writer = new DataOutputStream( socket.getOutputStream() ) ;
@@ -93,6 +122,8 @@ public class LoginRegisterController {
                 changeAccount( command ) ;
             } else if ( command[0].equals("getinfo") ){
                 sendInfo( command[1], writer ) ;
+            } else if ( command[0].equals("join") ){
+                joinRoom( command , writer ) ;
             }
             else {
                 System.out.println( "Unknown command in LoginRegister." ) ;

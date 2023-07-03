@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.controller.ProfileMenuController;
+import org.example.controller.SignupLoginMenuController;
 import org.example.controller.URLFinder;
 import org.example.model.Commands;
 
@@ -54,34 +55,33 @@ public class MainMenu extends Application {
             }
         });
 
-        TextField port = new TextField();
-        port.setPromptText("Enter Room Number");
+        TextField roomName = new TextField();
+        roomName.setPromptText("Enter Room Name");
 
         TextField password = new TextField();
         password.setPromptText("Enter Room Password");
 
-        port.setMaxWidth(200);
+        roomName.setMaxWidth(200);
         password.setMaxWidth(200);
 
         Button joinRoom = new Button("Join Room");
         joinRoom.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                try {
-                    (new Game()).start( stage ) ;
-                } catch(Exception e) {
-                    e.printStackTrace();
-                }
+                GameRoomMenu gameRoomMenu = new GameRoomMenu() ;
+                if( SignupLoginMenuController.joinRoom( roomName.getText() , password.getText() , gameRoomMenu ) )
+                    try{gameRoomMenu.start( stage ) ;}catch( Exception e ){ e.printStackTrace(); }
+
             }
         });
 
-        vBox.getChildren().addAll(goToChat, goToProfile, port, password, joinRoom);
+        vBox.getChildren().addAll(goToChat, goToProfile, roomName, password, joinRoom);
 
         borderPane.setCenter(vBox);
 
         goToChat.setAlignment(Pos.TOP_RIGHT);
         goToProfile.setAlignment(Pos.CENTER);
-        port.setAlignment(Pos.BASELINE_CENTER);
+        roomName.setAlignment(Pos.BASELINE_CENTER);
         password.setAlignment(Pos.BASELINE_CENTER);
         joinRoom.setAlignment(Pos.CENTER);
 

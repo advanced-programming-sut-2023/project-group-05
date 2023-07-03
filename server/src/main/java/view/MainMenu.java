@@ -1,6 +1,7 @@
 package view;
 
 import controller.ChatController;
+import controller.GameMaster.GameRoom;
 import controller.GameRoomController;
 import controller.URLFinder;
 import model.Chat;
@@ -17,6 +18,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Map;
+
 public class MainMenu extends Application
 {
     public VBox roomVbox;
@@ -24,28 +27,11 @@ public class MainMenu extends Application
     public static Stage stage;
     public void updateRoomVbox()
     {
-        VBox vBox = roomVbox;
-        vBox.getChildren().clear();
-        vBox.setSpacing(20);
-        vBox.getChildren().add(new Label("Game Rooms' List:"));
-        for(int i = 0; i < GameRoomController.Rooms.size(); i ++)
-        {
-            GameRoomConnection gameRoomConnection = GameRoomController.Rooms.get(i);
-            Label label = new Label("Room number " + (i + 1) + " name: " + gameRoomConnection.getServerName() + " port: " + gameRoomConnection.getServerPort() + " Capacity: " + gameRoomConnection.getClients().size() + "/" + gameRoomConnection.getMaxCapacity());
-            vBox.getChildren().add(label);
+        for( Map.Entry x : GameRoom.gameRoomHashMap.entrySet() ){
+            Button button = new Button() ;
+            button.setText( "room name : " + x.getKey() + " , user count : " + ((GameRoom)x.getValue()).getUsernames().size() + "/" + ((GameRoom)x.getValue()).getCapacity() );
+            roomVbox.getChildren().add( button ) ;
         }
-        Button createRoomButton = new Button("Create New Room");
-        createRoomButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                try {
-                    new CreateGameRoomMenu().start(stage);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-        vBox.getChildren().add(createRoomButton);
     }
 
     public void updateChatVbox()

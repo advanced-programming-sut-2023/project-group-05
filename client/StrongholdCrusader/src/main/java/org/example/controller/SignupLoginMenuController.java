@@ -2,6 +2,7 @@ package org.example.controller;
 
 import com.google.gson.Gson;
 import javafx.scene.control.Alert;
+import org.example.view.GameRoomMenu;
 
 import java.io.DataInputStream;
 import java.io.DataOutput;
@@ -115,6 +116,30 @@ public class SignupLoginMenuController {
                 e.printStackTrace() ;
             }
         }
+    }
+
+    public static boolean joinRoom( String roomName , String password , GameRoomMenu gameRoomMenu ){
+        try{
+            Socket socket = new Socket("localhost" , 2020) ;
+            DataOutputStream writer = new DataOutputStream( socket.getOutputStream() ) ;
+            DataInputStream reader = new DataInputStream( socket.getInputStream() ) ;
+            String[] command = { "join" , GameController.currentUsername , roomName , password } ;
+            writer.writeUTF( (new Gson()).toJson( command ) );
+            String[] response = new Gson().fromJson( reader.readUTF() , String[].class ) ;
+            if( response[0].equals("0") ) return false ;
+            else{
+                String[] usernamesAndNicknames = new String[ response.length - 1 ] ;
+                for(int i = 1 ; i < response.length ; i++){
+                    usernamesAndNicknames[i-1] = response[i] ;
+                }
+                gameRoomMenu.setUsernamesAndNicknames( usernamesAndNicknames );
+            }
+            socket.close() ;
+        } catch( Exception e ){
+            e.printStackTrace();
+            return false ;
+        }
+        return true ;
     }
 
     public static String loginUser( String username , String password ) {
