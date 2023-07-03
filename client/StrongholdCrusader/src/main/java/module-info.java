@@ -6,6 +6,7 @@ module AA {
     requires junit;
     requires javafx.graphics;
     requires com.google.gson;
+    requires java.datatransfer;
 
     exports org.example.model;
     exports org.example.view;

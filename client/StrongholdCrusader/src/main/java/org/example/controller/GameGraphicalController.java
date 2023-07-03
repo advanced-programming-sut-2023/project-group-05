@@ -5,10 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -22,6 +19,7 @@ import org.example.model.*;
 import org.example.model.building.Building;
 import org.example.model.unit.Unit;
 
+import java.awt.datatransfer.Clipboard;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -198,7 +196,6 @@ public class GameGraphicalController {
                 if( keyEvent.getCode().equals(KeyCode.C) ){
                     copyingMouse.setVisible( true ) ;
                     mouse.setVisible( true ) ;
-                    
                     String buildingName = camera.getHoveredBuilding() ;
                     if( null == buildingName ){
                         copyingMouse.setVisible( false ); ;
