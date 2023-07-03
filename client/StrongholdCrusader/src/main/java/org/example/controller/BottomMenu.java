@@ -112,8 +112,7 @@ public class BottomMenu {
         pane.getChildren().add(shrekFace) ;
         pane.getChildren().addAll(popularity,treasure,labourForce);
         for (Node rectangle : houseAndStorages)
-            pane.getChildren().add(rectangle);
-        current = houseAndStorages;
+            buffer.add(rectangle);
         setMenuButtons(pane);
     }
 
@@ -170,13 +169,17 @@ public class BottomMenu {
             circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    alterMenu(current, buttonMap.get(circle), pane);
-                    current = buttonMap.get(circle);
+                    removeFromPane(buffer);
+                    buffer.clear();
+                    buffer.addAll(buttonMap.get(circle));
+                    buffer.addAll(buttons);
+                    addToPane(buffer);
                 }
             });
         }
         setActionButtons();
-        alterButton(true);
+        buffer.addAll(buttons);
+        addToPane(buffer);
     }
 
     private static void alterButton(boolean show) {
@@ -266,8 +269,6 @@ public class BottomMenu {
     }
 
     public static void pauseGame() {
-        System.out.println(SCREEN_HEIGHT);
-        System.out.println("IN PAUSE FUNC");
         if (!paused)
             pane.getChildren().addAll(pauseMenu, sound, exit, resume);
         else
@@ -286,15 +287,12 @@ public class BottomMenu {
     private static Rectangle sell = new Rectangle(SCREEN_WIDTH * 0.4, SCREEN_HEIGHT * 0.85 + 50, 100, 50);
     private static int currentCommodity;
     public static Circle back = new Circle(SCREEN_WIDTH * 0.65 + 20, SCREEN_HEIGHT * 0.9 - 50, 15);
-    public static void deSelectMarket()
+    public static void deSelect()
     {
-        currentDepth = 0;
-        ArrayList<Node> buffer = new ArrayList<>();
+        removePastThings();
         buffer.addAll(houseAndStorages);
         buffer.addAll(buttons);
-        pane.getChildren().removeAll(back, info);
-        alterMenu(current, buffer, pane);
-        current = houseAndStorages;
+        addToPane(buffer);
     }
 
     static {
@@ -318,12 +316,12 @@ public class BottomMenu {
                 "Iron : To Build Armor\n" +
                 "Foods : To Make People Happy\n" +
                 "Bow And CrossBow : Suitable For Distant Attack\n" +
-                "Spear And Pike : Suitable For Attacking By Spearmen And Pikemen\n" +
+                "Spear And Pike : Suitable For Attacking\n" +
                 "Sword : Suitable For Strong Swordsmen");
         text.setX(SCREEN_WIDTH * 0.3);
         text.setY(SCREEN_HEIGHT * 0.3);
         text.setFill(Color.WHITE);
-        text.setFont(new Font("Courier", 25));
+        text.setStyle("-fx-font-size: 12px");
         Rectangle information = new Rectangle(50, 50, SCREEN_WIDTH * 0.8, SCREEN_HEIGHT * 0.8);
         information.setOpacity(0.8);
         info.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -344,26 +342,27 @@ public class BottomMenu {
             public void handle(MouseEvent mouseEvent) {
                 switch (currentDepth) {
                     case 0 -> {
-                        ArrayList<Node> buffer = new ArrayList<>();
+                        removeFromPane(buffer);
+                        buffer.clear();
                         buffer.addAll(houseAndStorages);
                         buffer.addAll(buttons);
-                        if (currentBuilding.equals("market"))
-                            Collections.addAll(current,back,info);
-                        alterMenu(current, buffer, pane);
-                        current = houseAndStorages;
+                        currentBuilding = "graphicalMenu";
+                        addToPane(buffer);
                     }
                     case 1 -> {
-                        ArrayList<Node> buffer = new ArrayList<>();
+                        removeFromPane(buffer);
+                        buffer.clear();
+                        Collections.addAll(buffer,back,info);
                         buffer.addAll(ShopImages.shopMap.get(0));
-                        alterMenu(current, buffer, pane);
-                        current = buffer;
+                        addToPane(buffer);
                         currentDepth = 0;
                     }
                     case 2 -> {
-                        ArrayList<Node> buffer = new ArrayList<>();
+                        removeFromPane(buffer);
+                        buffer.clear();
+                        Collections.addAll(buffer,back,info);
                         buffer.addAll(ShopImages.shopMap.get(currentShopMode));
-                        alterMenu(current, buffer, pane);
-                        current = buffer;
+                        addToPane(buffer);
                         currentDepth = 1;
                     }
                 }
@@ -385,7 +384,7 @@ public class BottomMenu {
                     alert.setTitle("Bought Failed");
                     alert.setContentText("Not Enough Gold");
                 }
-                    alert.showAndWait();
+                alert.showAndWait();
             }
         });
         sell.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -409,22 +408,21 @@ public class BottomMenu {
     }
     private static String currentBuilding = "" ;
     public static void preInitShop() {
-        buffer.clear();
-        if (currentBuilding.equals("graphicalMenu"))
-            buffer.addAll(buttons);
+//        buffer.clear();
+//        if (currentBuilding.equals("graphicalMenu"))
+//            buffer.addAll(buttons);
+        removePastThings();
         currentBuilding = "market";
-        removeFromPane(buffer);
         initShopMenu(null, 0, 0);
     }
 
     public static void initShopMenu(Rectangle rectangle, int mode, int identity) {
+        removeFromPane(buffer);
+        buffer.clear();
+        Collections.addAll(buffer,back,info);
         if (rectangle == null) {
             HashMap<Integer, ArrayList<Rectangle>> map = ShopImages.shopMap;
-            buffer.clear();
             buffer.addAll(map.get(mode));
-            buffer.add(shopKeys.get(0));
-            buffer.add(shopKeys.get(3));
-            //TODO : Inventory
             if (mode > 0) {
                 pane.getChildren().removeAll(map.get(0));
                 for (int i = 0; i < map.get(mode).size(); ++i)
@@ -432,9 +430,8 @@ public class BottomMenu {
                             map.get(mode).get(i).getY() + 7 + map.get(mode).get(i).getHeight(),
                             Integer.toString(player.commodityByIndex[ShopImages.recToIdentity.get(map.get(mode).get(i))])));
             }
-            alterMenu(current, buffer, pane);
+            addToPane(buffer);
             currentDepth = (mode == 0) ? 0 : 1;
-            current = buffer;
             return;
         }
         currentCommodity = identity;
@@ -444,17 +441,12 @@ public class BottomMenu {
 
         Text buyPrice = new Text(buy.getX()+buy.getWidth()+30,buy.getY()+buy.getHeight()/2,Double.toString(Player.commodityPrice.get(currentCommodity)));
         Text sellPrice = new Text(sell.getX()+sell.getWidth()+30,sell.getY()+sell.getHeight()/2,Double.toString(Player.commodityPrice.get(currentCommodity)/2));
-        ArrayList<Node> secondBuffer = new ArrayList<>();
-        addToBuffer(secondBuffer, rectangle1, shopKeys.get(1), shopKeys.get(2), buyPrice, sellPrice);
-        alterMenu(current, secondBuffer, pane);
-        current = secondBuffer;
-
+        Collections.addAll(buffer,rectangle1,shopKeys.get(1),shopKeys.get(2),buyPrice,sellPrice);
+        //addToBuffer(secondBuffer, rectangle1, shopKeys.get(1), shopKeys.get(2), buyPrice, sellPrice);
+        addToPane(buffer);
         currentDepth = 2;
     }
 
-    private static void addToBuffer(ArrayList<Node> buffer, Node... nodes) {
-        buffer.addAll(Arrays.asList(nodes));
-    }
 
     //Trade
 
@@ -776,13 +768,17 @@ public class BottomMenu {
         return true;
     }
 
+    //Other Buildings
 
-    public static void initEngineerGuild() {
-        System.out.println("here");
-        if (currentBuilding.equals("graphicalMenu"))
-            buffer.addAll(buttons);
+    private static void removePastThings()
+    {
+        currentDepth = 0;
         removeFromPane(buffer);
         buffer.clear();
+    }
+
+    public static void initEngineerGuild() {
+        removePastThings();
         Rectangle mangonel = new Rectangle(SCREEN_WIDTH*0.15,SCREEN_HEIGHT*0.85,90,90);
         mangonel.setFill(new ImagePattern(new Image(MainMenu.class.getResource("/images/units/mangonel.png").toString())));
         mangonel.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -798,12 +794,11 @@ public class BottomMenu {
             }
         });
         Collections.addAll(buffer,back,mangonel);
-        alterMenu(current,buffer,pane);
+        addToPane(buffer);
     }
 
     public static void initBarracks() {
-        removeFromPane(buffer);
-        buffer.clear();
+        removePastThings();
         Rectangle swordsman = new Rectangle(SCREEN_WIDTH*0.15,SCREEN_HEIGHT*0.85,90,90);
         swordsman.setFill(new ImagePattern(new Image(MainMenu.class.getResource("/images/units/swordsman.png").toString())));
         swordsman.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -819,8 +814,9 @@ public class BottomMenu {
             }
         });
         Collections.addAll(buffer,back,swordsman);
-        alterMenu(current,buffer,pane);
+        addToPane(buffer);
     }
+
 
     public static void updateScribeNotes()
     {
@@ -840,6 +836,8 @@ public class BottomMenu {
 
 
 }
+
+//todo : current is what we are showing know,buffer is what we want to show next- what we showed before
 
 // todo : handle buffer-current + menuBuffer-menuCurrent
 

@@ -1,0 +1,22 @@
+.button {
+    -fx-font-size: 20px ;
+    -fx-background-color: black ;
+    -fx-text-fill: white ;
+    -fx-opacity: 0.5 ;
+}
+
+.button:hover {
+    -fx-opacity: 1 ;
+}
+
+.text-field {
+    -fx-font-size: 20px ;
+    -fx-background-color: black ;
+    -fx-text-fill: white ;
+    -fx-opacity: 0.5 ;
+    -fx-max-width: 200 ;
+}
+
+.text-field:hover {
+    -fx-opacity: 1 ;
+}
