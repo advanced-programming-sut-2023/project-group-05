@@ -96,6 +96,28 @@ public class SignupLoginMenuController {
         return returnValue ;
     }
 
+    public static boolean changeThing(String newThing,int mode)
+    {   // todo : 1 = username change , 2 = nickname change , 3 = email change , 4 = slogan change
+        switch (mode)
+        {
+            case 1 -> {
+            return false;
+        }
+            case 2 -> {
+                return false;
+            }
+            case 3 ->{
+                return false;
+            }
+            case 4 -> {
+
+            }
+        }
+        return false;
+    }
+
+
+
     public static void forgetPassword(){
         // TODO
     }

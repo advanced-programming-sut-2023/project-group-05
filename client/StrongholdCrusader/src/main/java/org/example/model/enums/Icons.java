@@ -26,7 +26,11 @@ public enum Icons {
     INDUSTRY("industry.png"),
     FOOD("food.jpeg"),
     HOUSE("house.png"),
-    MILITARY("military.png");
+    HIDE("hide.png"),
+    SHOW("show.png"),
+    MILITARY("military.png"),
+    WHITE("white.png"),
+    BG("bg.jpg");
     private ImagePattern imagePattern;
     Icons(String name){
         this.imagePattern = new ImagePattern(new Image(MainMenu.class.getResource("/images/icons/"+name).toString()));

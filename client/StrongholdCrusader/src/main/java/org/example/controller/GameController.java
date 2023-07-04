@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import javafx.scene.image.Image;
 import org.example.model.*;
 import org.example.model.building.Building;
 import org.example.model.building.TradeBuilding;
@@ -20,6 +21,7 @@ public class GameController {
     public static String currentNickname ;
     public static String currentSlogan ;
     public static String currentEmail ;
+    public static Image currentAvatar = null;
     ArrayList<Player> players ;
     private int turn ;
     private Player winner ;

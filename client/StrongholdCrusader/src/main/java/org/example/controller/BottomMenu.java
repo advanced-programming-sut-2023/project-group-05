@@ -601,6 +601,7 @@ public class BottomMenu {
         lower.setFill(minus);
         upper.setFill(plus);
         Text value = new Text((lower.getCenterX()+upper.getCenterX())/2,commodity.getCenterY(),Integer.toString(currentTradeLetter.get(item.getIdentity())));
+        value.setStyle("-fx-font-size: 20px");
         tradePair = new Pair<>(item.getIdentity(),0);
         lower.setOnMouseClicked(new EventHandler<MouseEvent>() {
             int p;

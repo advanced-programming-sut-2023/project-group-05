@@ -10,18 +10,6 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.view.ProfileMenu"
-            stylesheets="@../css/Menu/ProfileMenu.css"
-            prefHeight="400.0" prefWidth="600.0">
-    <center>
-
-        <VBox styleClass = "vbox" fx:id = "mainVBox">
-            <Text styleClass="text" fx:id="text" text = "testinh" />
-            <HBox>
-                <Button text = "Back" />
-                <Button text = "ScoreBoard"/>
-            </HBox>
-        </VBox>
-    </center>
-
+            prefHeight="700.0" prefWidth="700.0">
 
 </BorderPane>

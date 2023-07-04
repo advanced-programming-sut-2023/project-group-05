@@ -49,7 +49,8 @@ public class MainMenu extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try{
-                    new ProfileMenu().start( stage ) ;
+                    stage.close();
+                    new ProfileMenu().start(new Stage()) ;
                 }catch(Exception e){
                     e.printStackTrace();
                 }
