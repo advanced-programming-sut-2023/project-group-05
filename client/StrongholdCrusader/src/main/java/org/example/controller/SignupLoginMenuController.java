@@ -96,6 +96,39 @@ public class SignupLoginMenuController {
         return returnValue ;
     }
 
+    public static boolean changeThing(String newThing,int mode)
+    {   // todo : 1 = username change , 2 = nickname change , 3 = email change , 4 = slogan change , 5 : new password
+
+        switch( mode ){
+            case 1 -> GameController.currentUsername = newThing ;
+            case 2 -> GameController.currentNickname = newThing ;
+            case 3 -> GameController.currentEmail = newThing ;
+            case 4 -> GameController.currentSlogan = newThing ;
+            case 5 -> GameController.currentPassword= newThing ;
+        }
+
+        Socket socket ;
+        DataOutputStream writer ;
+        DataInputStream reader ;
+        boolean ret ;
+        try{
+            socket = new Socket( "localhost" , 2020 ) ;
+            writer = new DataOutputStream( socket.getOutputStream() ) ;
+            reader = new DataInputStream( socket.getInputStream() ) ;
+            String[] output ;
+            output = new String[]{ "change" , GameController.currentUsername , GameController.currentPassword , GameController.currentEmail , GameController.currentSlogan , GameController.currentNickname } ;
+            writer.writeUTF((new Gson()).toJson(output)) ;
+            ret = reader.readBoolean() ;
+            socket.close() ;
+            return ret;
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
+        return false ;
+    }
+
+
+
     public static void forgetPassword(){
         // TODO
     }

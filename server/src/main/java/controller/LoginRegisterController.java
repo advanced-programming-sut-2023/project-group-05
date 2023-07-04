@@ -55,12 +55,20 @@ public class LoginRegisterController {
         } catch( Exception ignored ){ }
     }
 
-    private static void changeAccount( String[] command ){
-        // command = { "getinfo" , username , password , nickname , slogan }
-        // change in Account & Database
-        // close socket in client-side
-        // update in client side too
-
+    private static boolean changeAccount( String[] command ){
+        // input = { "change" , "username" , "password" , "email" , "slogan" , "nickname" }
+        long answer = Account.getAccountsMap().get( command[1] ).getAnswer() ;
+        long question = Account.getAccountsMap().get( command[1] ).getQuestion() ;
+        long highscore = Account.getAccountsMap().get( command[1] ).getHighScore() ;
+        Account newAccount = new Account( command[1] , command[5] , command[3] , Hash.encode(command[2]) , highscore ,command[4] ,question, answer ) ;
+        DataBase.deleteAccount( "userName" , newAccount.getUserName() );
+        DataBase.addNewAccount( newAccount );
+        Account.getAccountsMap().remove(Account.getAccountsMap().get(command[1])) ;
+        for(String string : command){
+            System.out.print( string ) ;
+        }
+        System.out.println("") ;
+        return true ;
     }
 
     private static void joinRoom( String[] command , DataOutputStream writer ){
@@ -120,7 +128,8 @@ public class LoginRegisterController {
             } else if ( command[0].equals("scoreboard") ){
                 sendScoreBoard( writer ) ;
             } else if ( command[0].equals("change") ){
-                changeAccount( command ) ;
+                System.out.print( "New Request to change account info : " ) ;
+                writer.writeBoolean( changeAccount( command ) ) ;
             } else if ( command[0].equals("getinfo") ){
                 sendInfo( command[1], writer ) ;
             } else if ( command[0].equals("join") ){

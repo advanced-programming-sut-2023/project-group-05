@@ -67,6 +67,7 @@ public class LoginMenu extends Application {
                     GameController.currentNickname = info[1] ;
                     GameController.currentSlogan = info[2] ;
                     GameController.currentEmail = info[3] ;
+                    GameController.currentPassword = passwordField.getText() ;
                     MainMenu.username = info[0] ;
                     alert.setContentText( "you have successfully logged in, " + usernameTextField.getText()
                         + "\nYour Username : " + info[0]

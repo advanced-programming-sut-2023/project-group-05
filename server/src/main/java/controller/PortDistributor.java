@@ -27,7 +27,6 @@ public class PortDistributor extends Thread {
                 while( freePort < 4050 ){
                     try{
                         (new ServerSocket( freePort )).close() ; // checking if freePort is really free
-                        new DataOutputStream(client.getOutputStream()).writeInt(freePort);
                         writer.writeInt( freePort ) ;
                         writer.flush() ;
                         String clientType = new DataInputStream( client.getInputStream() ).readUTF() ;
