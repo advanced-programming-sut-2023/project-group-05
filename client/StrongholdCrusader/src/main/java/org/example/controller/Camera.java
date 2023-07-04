@@ -15,6 +15,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import org.example.controller.graphicalMenuController.MangonelPanel;
 import org.example.model.BuildingEnum;
 import org.example.model.enums.BuildingImages;
 import org.example.model.Minimap;
@@ -197,12 +198,18 @@ public class Camera {
                             }
                             GameGraphicalController.selectedBuildingsShapes.clear() ;
                         }
-                        else
+                        else{
+                            // deselecting unit's
                             for( Player player : gameController.getPlayers() )
-                                for(Unit unit : player.getSelectedUnits()){
-                                    unit.moveTo(finalI, finalJ) ;
+                                for( Unit unit : player.getSelectedUnits() ){
+                                    unit.moveTo( finalI, finalJ );
                                 }
-
+                            // deactivation mangonel
+                            if( MangonelPanel.isActive() ){
+                                MangonelPanel.setActive(false);
+                                GameGraphicalController.weaponsNode.getChildren().remove(MangonelPanel.getInstance().getShape());
+                            }
+                        }
                     }
                 } );
             }
@@ -345,6 +352,13 @@ public class Camera {
         int J = y - this.pos[1] ;
         return new double[]{( I - J ) * ( TILE_WIDTH / 2 ) + xShift - unit.getShape().getWidth() / 2 ,
                             ( I + J ) * ( TILE_HEIGHT / 2 ) - yShift + TILE_HEIGHT / 2 - unit.getShape().getHeight() };
+    }
+
+    public double[] getCellCoordinates(int x , int y){
+        int I = x - this.pos[0] ;
+        int J = y - this.pos[1] ;
+        return new double[]{( I - J ) * ( TILE_WIDTH / 2 ) + xShift ,
+                ( I + J ) * ( TILE_HEIGHT / 2 ) - yShift + TILE_HEIGHT / 2};
     }
 
     public int[] getMapPos( double x , double y ){

@@ -14,11 +14,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import org.example.Main;
+import org.example.controller.graphicalMenuController.MangonelPanel;
 import org.example.model.*;
+import org.example.model.animations.ShootingAnimation;
 import org.example.model.building.Building;
 import org.example.model.unit.Unit;
 
-import java.awt.datatransfer.Clipboard;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -45,6 +46,7 @@ public class GameGraphicalController {
     public static ArrayList<Node> reservedShapes;
     public static Rectangle attackingMouse = new Rectangle( 0 , 0 , 40 , 40 ) ;
     public static Rectangle copyingMouse = new Rectangle( 0 , 0 , 40 , 40 ) ;
+    public static Rectangle mangonelMouse = new Rectangle( 0 , 0 , 40 , 40 ) ;
     public static String chosenBuildingName = null ;
     public static String selectedBuildingName = null ;
     public static String copiedBuildingName = null ;
@@ -66,7 +68,7 @@ public class GameGraphicalController {
         width = 400;
         height = 400;
         pane.requestFocus();
-        // initTestMode() ;
+        initTestMode() ;
         instantiate() ;
         initGraphicalMenu();
         initMap(height, width);
@@ -118,7 +120,10 @@ public class GameGraphicalController {
         mouse.setOpacity( 0.5 );
         copyingMouse.setFill( new ImagePattern( new Image( Main.class.getResource( "/images/icons/copy.png" ).toExternalForm() ) ) ) ;
         copyingMouse.setVisible( false ) ;
+        mangonelMouse.setVisible( false ) ;
+        mangonelMouse.setFill( new ImagePattern( new Image( Main.class.getResource( "/images/icons/crosshair.png" ).toExternalForm() ) ) ) ;
         lastNode.getChildren().add( copyingMouse ) ;
+        lastNode.getChildren().add( mangonelMouse ) ;
         pane.setOnMouseMoved( new EventHandler <MouseEvent>() {
             @Override
             public void handle( MouseEvent mouseEvent ){
@@ -146,6 +151,10 @@ public class GameGraphicalController {
                     public void handle(MouseEvent mouseEvent) {
                         mouse.setLayoutX(cell.getLayoutX());
                         mouse.setLayoutY(cell.getLayoutY());
+                        if( !MangonelPanel.hasTarget() ){
+                            mangonelMouse.setLayoutX( cell.getLayoutX() - 20 );
+                            mangonelMouse.setLayoutY( cell.getLayoutY() - 10 );
+                        }
                         mouseRow = finalI;
                         mouseColumn = finalJ;
                         boolean green = true;
@@ -176,6 +185,11 @@ public class GameGraphicalController {
                 }
             }
         });
+        mangonelMouse.setOnMouseClicked( new EventHandler<MouseEvent>(){
+            public void handle( MouseEvent mouseEvent ){
+                MangonelPanel.setTarget( mouseRow , mouseColumn ) ;
+            }
+        }) ;
         reservedShapes.add(mouse);
         mouse.setVisible(false);
         pane.getChildren().add(mouse);
@@ -301,6 +315,13 @@ public class GameGraphicalController {
                         case "barracks" -> BottomMenu.initBarracks();
                     }
                 }
+                if(mouseEvent.getButton()==MouseButton.PRIMARY && name.equals("mangonel")){
+                    MangonelPanel.setMangonel( buildingShape , row , column , camera ) ;
+                    if( !MangonelPanel.isActive() ) weaponsNode.getChildren().add( MangonelPanel.getInstance().getShape() ) ;
+                    MangonelPanel.setActive( true ) ;
+                    MangonelPanel.getInstance().getShape().setLayoutX( buildingShape.getLayoutX() + mouseEvent.getX() + 15 );
+                    MangonelPanel.getInstance().getShape().setLayoutY( buildingShape.getLayoutY() + mouseEvent.getY() - 20 );
+                }
             }
         });
     }
@@ -310,6 +331,11 @@ public class GameGraphicalController {
         ImagePattern imagePattern;
         imagePattern = new ImagePattern(new Image(url.toExternalForm()));
         return imagePattern;
+    }
+
+    public static void setMangonelMouse( boolean visible ){
+        System.out.println("now visible");
+        mangonelMouse.setVisible( visible ) ;
     }
 
 
@@ -327,13 +353,19 @@ public class GameGraphicalController {
 
     }
 
+    public static GameMap getGameMap(){
+        return gameController.getGameMap() ;
+    }
+
     private static void debug() {
+        //( new ShootingAnimation( 100 , 100 , 500 , 500 , weaponsNode , true ) ).play() ;
+        // (new FireAnimation( middleNode , 100 , 100 ) ).play() ;
         getPlayer().setGold( getPlayer().getGold() + 1000 ) ;
-        System.out.println( selectedBuildingName ) ;
         BottomMenu.updateScribeNotes();
-        for (Unit unit : Unit.getUnits()) {
+        //System.out.println( selectedBuildingName ) ;
+        /*for (Unit unit : Unit.getUnits()) {
             System.out.println(unit.getOwner().getNickname());
-        }
+        }*/
     }
 
 }
