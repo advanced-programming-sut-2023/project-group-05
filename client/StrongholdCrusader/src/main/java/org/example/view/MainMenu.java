@@ -8,22 +8,33 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.controller.ChatConnection;
+import org.example.controller.GameController;
 import org.example.controller.ProfileMenuController;
 import org.example.controller.SignupLoginMenuController;
 
+import java.io.IOException;
+import java.util.Collection;
 import java.util.Scanner;
 
 public class MainMenu extends Application {
 
     public static String username ;
-
+    public static Stage stage;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage _stage) throws Exception
+    {
+
+        String currentUserName = GameController.currentUsername ;
+
+        stage = _stage;
         stage.setTitle("Main Menu");
         BorderPane borderPane = FXMLLoader.load(MainMenu.class.getResource("/fxml/MainMenu.fxml"));
         VBox vBox = new VBox();
@@ -34,10 +45,10 @@ public class MainMenu extends Application {
         goToChat.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println("TODO: Go To Client Chat");
                 try {
-                    new ChatMenu().start(stage);
+                    ChatConnection.Run(currentUserName);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     throw new RuntimeException(e);
                 }
             }

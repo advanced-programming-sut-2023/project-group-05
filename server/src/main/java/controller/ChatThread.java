@@ -1,21 +1,32 @@
 package controller;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ChatThread extends Thread {
+public class ChatThread extends Thread
+{
+    int port;
+    ChatThread(int _port)
+    {
+        port = _port;
+    }
 
     @Override
-    public void run(){
-        ServerSocket serverSocket ;
-        try{
-            serverSocket = new ServerSocket( 2021 ) ;
-            while(true){
-                Socket client = serverSocket.accept() ;
-
+    public void run()
+    {
+        System.out.println("Chat Threads are Online on port " + port + " currently listening");
+        try {
+            ServerSocket serverSocket = new ServerSocket(port);
+            while(true)
+            {
+                Socket client = serverSocket.accept();
+                System.out.println( "new client connected to " ) ;
+                (new ChatConnection(client)).start();
             }
-        } catch( Exception e ){
-            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+
     }
 }

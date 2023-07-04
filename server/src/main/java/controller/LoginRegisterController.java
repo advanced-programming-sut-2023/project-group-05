@@ -2,15 +2,12 @@ package controller;
 
 import com.google.gson.Gson;
 import controller.GameMaster.GameRoom;
-import model.DataBase;
+import model.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.Map;
-
-import model.Hash;
-import model.Account ;
 
 public class LoginRegisterController {
 
@@ -23,6 +20,8 @@ public class LoginRegisterController {
         } catch( Exception e ) {
             e.printStackTrace() ;
         }
+        for(int i = 1 ; i <=3 ; i++)
+            ChatLog.addChat( new Chat( newAccount.getUserName(), "group" + i) ) ;
         return true ;
     }
 

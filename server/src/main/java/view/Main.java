@@ -1,12 +1,13 @@
 package view;
 
+
 import controller.PortDistributor;
 import controller.LoginRegisterThread;
-import controller.ChatController;
 import controller.GameRoomController;
-import model.Chat;
 import model.DataBase;
 import model.GameRoomConnection;
+import controller.*;
+import model.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -27,11 +28,12 @@ public class Main extends Application
     }
     @Override
     public void start(Stage _stage) throws Exception {
-        DataBase.wakeUp() ;
+        DataBase.wakeUp();
+        ChatLog.WAKEUP();
         stage = _stage;
         (new PortDistributor()).start() ;
         (new LoginRegisterThread()).start() ;
-        ChatController.AddChat(new Chat("Ali", "ghasem"));
+        (new ChatPortDistributor()).start();
         GameRoomController.AddServer(new GameRoomConnection("Test", "1234", 8888, 8));
         new MainMenu().start(stage);
     }

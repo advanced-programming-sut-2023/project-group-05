@@ -1,30 +1,47 @@
 package model;
 
+import org.json.simple.JSONObject;
+
+import java.util.Date;
+
 public class Message
 {
 
-    private String sender;
-    private String receiver; /// These 2 are UserNames :)
-    private String text;
-    private String date;
-    private boolean Seen;
+    public String sender;
+    public String text;
+    public String date;
+    public boolean Seen;
 
-    public Message(String sender, String receiver, String text, String date)
+    public Message(String sender, String text)
     {
         this.sender = sender;
-        this.receiver = receiver;
         this.text = text;
-        this.date = date;
+        this.date = (new Date()).toString();
         Seen = false;
+    }
+
+    public JSONObject toJson()
+    {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sender", sender);
+        jsonObject.put("text", text);
+        jsonObject.put("date", date);
+        jsonObject.put("Seen", Seen);
+        return jsonObject;
+    }
+
+    public static Message fromJson(JSONObject jsonObject)
+    {
+        Message message =  new Message(jsonObject.get("sender").toString(), jsonObject.get("text").toString());
+        message.setDate(jsonObject.get("date").toString());
+        message.setSeen((boolean) jsonObject.get("Seen"));
+        return message;
     }
 
     public String getSender() {
         return sender;
     }
 
-    public String getReceiver() {
-        return receiver;
-    }
 
     public String getText() {
         return text;
@@ -42,9 +59,6 @@ public class Message
         this.sender = sender;
     }
 
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
-    }
 
     public void setText(String text) {
         this.text = text;
