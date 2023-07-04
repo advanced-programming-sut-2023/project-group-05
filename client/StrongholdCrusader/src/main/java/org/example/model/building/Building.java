@@ -152,6 +152,10 @@ public class Building {
 
     public static Building createBuildingByName (String type , Player owner,int row , int column){
 
+        // castle
+
+        if( type.equals("castle") ) return new Building( "castle" , 3 , 3 , false , "" , owner , row , column , getBuildingCost( type ) , 1000 , 0 , false , BuildingEnum.CASTLE , 0 ) ;
+
         // TREES
 
         if(type.equals("deserttree")) return new Building( "deserttree" , 1 , 1 , false , "" , owner , row , column , getBuildingCost(type) , 1 , 0 , false , BuildingEnum.DESERT_TREE , 0 ) ;

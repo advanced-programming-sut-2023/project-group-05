@@ -25,10 +25,12 @@ public enum BuildingImages {
     MERCENARY_POST("militaryBuildings/mercenarypost.png",4),
     ENGINEER_GUILD("militaryBuildings/engineerguild.png",4),
     MANGONEL("mangonel/mangonel.png",-1),
+    CASTLE("mangonel/castle.png",-1),
 //    KILLING_PIT(),
     OIL_SMELTER("towersAndWalls/traps/oilSmelter.png",7),
 //    PITCH_DITCH(),
     CAGED_WAR_DOGS("towersAndWalls/traps/dogTrap.png",7),
+
     SIEGE_TENT("militaryBuildings/siegetent.png",4),
     STABLE("militaryBuildings/stable.png",4),
     TUNNELER_GUILD("militaryBuildings/tunnelerGuild.png",4),

@@ -27,7 +27,7 @@ public class GameMap {
 
         for(int i = 0 ; i < height ; i++)
             for(int j = 0 ; j < width ; j++) {
-                if( i < 12 || i > 390 || j < 12 || j > 390 ){
+                if( i < 10 || i > 389 || j < 10 || j > 389 ){
                     map[i][j] = new Cell( CellType.SEA , i , j ) ;
                     maskedMap[i][j] = 1 ;
                 }
@@ -43,7 +43,7 @@ public class GameMap {
 
         for(int i = 0 ; i < height ; i++){
             for(int j = height / 2 - grassWidth ; j < height / 2 + grassWidth ; j++){
-                if( i < 12 || i > 390 || j < 12 || j > 390 ) continue ;
+                if( i < 10 || i > 389 || j < 10 || j > 389 ) continue ;
                 map[i][j].setCellType( CellType.GRASS );
                 map[j][i].setCellType( CellType.GRASS );
             }

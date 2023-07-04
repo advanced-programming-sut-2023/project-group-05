@@ -74,6 +74,7 @@ public class GameGraphicalController {
         initMap(height, width);
         initMouse() ;
         initKeyboardControlKeys() ;
+        gameController.putCastles();
     }
 
     public static void updateMouse() {
@@ -288,7 +289,7 @@ public class GameGraphicalController {
 
     }
 
-    private static void addBuildingImage(int row, int column, String name) {
+    public static void addBuildingImage(int row, int column, String name) {
         Polygon buildingShape = camera.addBuilding(row, column, name);
         mouse.setVisible(false);
         buildingShape.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -300,7 +301,6 @@ public class GameGraphicalController {
                     glow.setLevel(100);
                     buildingShape.setEffect(glow);
                     selectedBuildingsShapes.add(buildingShape);
-                    System.out.println( name ) ;
                 } else {
                     BottomMenu.deSelect();
                     buildingShape.setEffect(null);
@@ -334,22 +334,21 @@ public class GameGraphicalController {
     }
 
     public static void setMangonelMouse( boolean visible ){
-        System.out.println("now visible");
         mangonelMouse.setVisible( visible ) ;
     }
 
 
     private static void initTestMode(){
-        System.out.println( "you are running the test mode" ) ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "archer" , 1 , 13 , 13 ) ) ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 15 ) ) ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 17 ) ) ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 20 ) ) ;
+        //System.out.println( "you are running the test mode" ) ;
+//        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "archer" , 1 , 13 , 13 ) ) ;
+//        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 15 ) ) ;
+//        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 17 ) ) ;
+//        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 13 , 20 ) ) ;
         //System.out.println( "GameGraphicalController : " + gameController.dropUnit( "operator" , 1 , 20 , 20 ) ) ;
-        gameController.nextTurn() ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 13 ) ) ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 17 ) ) ;
-        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 22 ) ) ;
+//        gameController.nextTurn() ;
+//        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 13 ) ) ;
+//        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 17 ) ) ;
+//        System.out.println( "GameGraphicalController : " + gameController.dropUnit( "swordsman" , 1 , 20 , 22 ) ) ;
 
     }
 
@@ -358,10 +357,17 @@ public class GameGraphicalController {
     }
 
     private static void debug() {
+        System.out.println( "DEBUG : " ) ;
         //( new ShootingAnimation( 100 , 100 , 500 , 500 , weaponsNode , true ) ).play() ;
         // (new FireAnimation( middleNode , 100 , 100 ) ).play() ;
         getPlayer().setGold( getPlayer().getGold() + 1000 ) ;
         BottomMenu.updateScribeNotes();
+        for(int i = 0 ; i < 400 ; i++){
+            for(int j = 0 ; j < 400 ; j++){
+                if( getGameMap().getCell(i , j).getBuilding() != null )
+                    System.out.println( getGameMap().getCell(i,j).getBuilding().getName() );
+            }
+        }
         //System.out.println( selectedBuildingName ) ;
         /*for (Unit unit : Unit.getUnits()) {
             System.out.println(unit.getOwner().getNickname());
