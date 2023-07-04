@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class ChatConnection extends Thread
 {
-    public static PushNotification notifications;
+    public PushNotification notifications;
     public static ArrayList < ChatConnection > connections = new ArrayList<>();
     public String userName;
     Socket socket;
@@ -26,12 +26,15 @@ public class ChatConnection extends Thread
 
     public ChatConnection(Socket _socket) throws IOException
     {
-        System.out.println("ANOTHER CONNECTION HERE!!");
+        System.out.println("ANOTHER CONNECTION HERE!! at port " + _socket.getPort());
         socket = _socket;
         dataInputStream = new DataInputStream(socket.getInputStream());
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
         connections.add(this);
+        notifications = new PushNotification(socket);
+        notifications.start();
         userName = dataInputStream.readUTF();
+
     }
 
     @Override
@@ -39,6 +42,19 @@ public class ChatConnection extends Thread
     {
         while (true)
         {
+            if(!socket.isConnected())
+            {
+                System.out.println("Socket " + userName + " is Disconnected");
+                /// connections.remove(this);
+                /*try {
+                    socket.close();
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }*/
+                break;
+            }
             try {
                 if(dataInputStream.available() != 0)
                 {
@@ -129,6 +145,7 @@ public class ChatConnection extends Thread
                 }
 
             } catch (IOException e) {
+                e.printStackTrace();
                 throw new RuntimeException(e);
             }
         }

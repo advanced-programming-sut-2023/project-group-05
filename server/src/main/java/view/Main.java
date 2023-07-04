@@ -1,9 +1,7 @@
 package view;
 
 import com.google.gson.Gson;
-import controller.ChatThread;
-import controller.LoginRegisterThread;
-import controller.GameRoomController;
+import controller.*;
 import model.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -20,9 +18,8 @@ public class Main extends Application
         DataBase.wakeUp();
         ChatLog.WAKEUP();
         stage = _stage;
-        (new LoginRegisterThread()).start() ;
-        (new ChatThread()).start();
-
+        (new LoginRegisterThread()).start();
+        (new ChatPortDistributor()).start();
         /// System.out.println((new ChatPacket("Me", "Suck My Cock", "You", "{'size':'big'}")).toJson());
 
         /*Chat chat = new Chat("Ariya", "Danial");

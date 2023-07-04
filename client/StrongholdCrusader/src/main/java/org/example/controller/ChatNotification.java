@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import javafx.stage.Stage;
 import org.example.model.Chat;
 import org.example.model.ChatPacket;
+import org.example.model.Message;
 import org.example.view.ChatMenu;
 import org.example.view.ChatPage;
 import org.example.view.Game;
@@ -33,7 +34,7 @@ public class ChatNotification extends Thread
                 System.out.println("Got Input: " + data);
                 if(!data.startsWith("{"))
                 {
-                    System.out.println(data);
+                    /// System.out.println(data);
                 }
                 else
                 {
@@ -42,23 +43,25 @@ public class ChatNotification extends Thread
                     /// System.out.println(chatPacket.toJson());
                     if(chatPacket.command.equals("DATA") || chatPacket.command.equals("UPDATE"))
                     {
+                        System.out.println(chatPacket.command);
                         JSONParser jsonParser = new JSONParser();
                         JSONObject jsonObject = (JSONObject) jsonParser.parse(chatPacket.jsonInfo);
                         ChatPage.chat = Chat.fromJson(jsonObject);
-                        System.out.println(ChatPage.chat.toJson().toJSONString());
+                        ///ChatPage.updatePane();
+                        /// System.out.println(ChatPage.chat.toJson().toJSONString());
                         ///ChatPage.updatePane();
                         //new ChatPage().start(ChatMenu.stage);
                     }
                     else if (chatPacket.command.equals("GetChatList"))
                     {
-                        System.out.println("We Are Here!");
+                        /// System.out.println("We Are Here!");
                         ChatMenu.privateChatNumber.clear();
                         ChatMenu.privateChatNames.clear();
                         ChatMenu.publicChatNames.clear();
                         ChatMenu.publicChatNumber.clear();
                         JSONParser jsonParser = new JSONParser();
                         JSONArray jsonArray = (JSONArray) jsonParser.parse(chatPacket.jsonInfo);
-                        System.out.println(jsonArray);
+                        /// System.out.println(jsonArray);
                         for(int i = 0; i < jsonArray.size(); i ++)
                         {
                             JSONObject now = (JSONObject) jsonArray.get(i);

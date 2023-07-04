@@ -24,10 +24,23 @@ public class ChatConnection
 
     public static ChatMenu chatMenu;
 
-    public static void Run(String host, int port, String _userName) throws Exception
+    public static void Run(String _userName) throws Exception
     {
         userName = _userName;
-        System.out.println("Starting Client service...");
+        String host = "localhost";
+        int port = -1;
+        System.out.println("get the port from server");
+        Socket getPortSocket = new Socket(host, 2018);
+        DataInputStream getPortInput = new DataInputStream(getPortSocket.getInputStream());
+        DataOutputStream getPortOutput = new DataOutputStream(getPortSocket.getOutputStream());
+
+        getPortOutput.writeUTF(userName);
+        getPortOutput.flush();
+
+        port = Integer.parseInt(getPortInput.readUTF());
+        getPortSocket.close();
+
+        System.out.println("Starting Client service on port " + port);
         Socket socket = new Socket(host, port);
         System.out.println(socket.isConnected());
         dataInputStream = new DataInputStream(socket.getInputStream());

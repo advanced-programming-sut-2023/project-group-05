@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -26,7 +28,12 @@ public class MainMenu extends Application {
     public static Stage stage;
 
     @Override
-    public void start(Stage _stage) throws Exception {
+    public void start(Stage _stage) throws Exception
+    {
+        Scanner scanner = new Scanner(System.in);
+
+        String currentUserName = scanner.next();
+
         stage = _stage;
         stage.setTitle("Main Menu");
         BorderPane borderPane = FXMLLoader.load(URLFinder.run("/fxml/MainMenu.fxml"));
@@ -40,8 +47,9 @@ public class MainMenu extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 try {
-                    ChatConnection.Run("localhost", 2021, "Ariya");
+                    ChatConnection.Run(currentUserName);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     throw new RuntimeException(e);
                 }
             }
