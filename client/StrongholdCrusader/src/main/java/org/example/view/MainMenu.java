@@ -42,14 +42,14 @@ public class MainMenu extends Application {
         // ### for testing ###
 
 
-        SignupLoginMenuController.loginUser( "Danial" , "Pass1$" ) ;
+        /*SignupLoginMenuController.loginUser( "Danial" , "Pass1$" ) ;
         // SignupLoginMenuController.loginUser( "Arya" , "Pass1$" ) ;
         GameController.currentPassword = "Pass1$" ;
         GameController.currentSlogan = "dsfaasdf" ;
         GameController.currentNickname = "nick"  ;
         GameController.currentUsername = "Danial" ;
         GameController.currentEmail = "alsdjfk@gmial.com" ;
-
+         */
         // ### for testing ###
 
 

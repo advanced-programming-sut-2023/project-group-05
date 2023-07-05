@@ -7,6 +7,7 @@ import model.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.util.Date;
 import java.util.Map;
 
 public class LoginRegisterController {
@@ -27,7 +28,20 @@ public class LoginRegisterController {
 
     private static boolean login( String username , String password ){
         Account account = Account.getAccountsMap().get(username) ;
-        return account != null && ( account.getPasswordHash() == Hash.encode( password ) );
+        boolean ret = account != null && ( account.getPasswordHash() == Hash.encode( password ) );
+        if ( ret ) if(ChatPortDistributor.offlineUsers.get(username) != null) ChatPortDistributor.offlineUsers.remove(username); ;
+        return ret ;
+    }
+
+    public static boolean logout(String userName)
+    {
+        Account account = Account.getAccountsMap().get(userName);
+        boolean ret = account != null;
+        if(ChatPortDistributor.offlineUsers.get(userName) != null)
+        {
+            ChatPortDistributor.offlineUsers.put(userName, String.valueOf(new Date()));
+        }
+        return ret;
     }
 
     private static void sendScoreBoard( DataOutputStream writer ){

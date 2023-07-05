@@ -1,15 +1,20 @@
 package controller;
 
+import model.Hash;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 
-public class ChatPortDistributor extends Thread {
+public class ChatPortDistributor extends Thread
+{
 
     private int freePort = 3051;
     public static HashMap < String, Integer > ports = new HashMap<>();
+
+    public static HashMap < String , String > offlineUsers = new HashMap<>();
     public void OUTPUT(String userName, int port)
     {
         System.out.println("user: " + userName + " connected to port: "  + port);
@@ -27,6 +32,7 @@ public class ChatPortDistributor extends Thread {
             while(true)
             {
                 Socket client = serverSocket.accept();
+                System.out.println(ChatPortDistributor.offlineUsers);
                 System.out.println("new request for Chat's port distributor has received.");
                 reader = new DataInputStream(client.getInputStream());
                 writer = new DataOutputStream(client.getOutputStream());

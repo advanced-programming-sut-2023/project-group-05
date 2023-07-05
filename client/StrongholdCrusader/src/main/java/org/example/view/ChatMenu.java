@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.controller.ChatConnection;
+import org.example.controller.PlayerList;
 import org.example.controller.URLFinder;
 import org.example.model.Chat;
 import org.example.model.ChatPacket;
@@ -30,6 +31,7 @@ public class ChatMenu extends Application
     public static ArrayList < String > privateChatNames = new ArrayList<>();
     public static ArrayList < Long > publicChatNumber = new ArrayList<>();
     public static ArrayList < Long > privateChatNumber = new ArrayList<>();
+    public static ArrayList < String > privateChatStatus = new ArrayList<>();
     public static Tab publicChatTab;
     public static Tab privateChatTab;
     public static void updatePublicChat()
@@ -39,7 +41,7 @@ public class ChatMenu extends Application
         pChats.setSpacing(20);
         for(int i = 0; i < publicChatNames.size(); i ++)
         {
-            Text text = new Text(publicChatNames.get(i) + " with " + publicChatNumber.get(i) + " total number of messages");
+            Text text = new Text(publicChatNames.get(i) + " with " + publicChatNumber.get(i) + " messages");
             pChats.getChildren().add(text);
         }
 
@@ -73,7 +75,7 @@ public class ChatMenu extends Application
         for(int i = 0; i < privateChatNames.size(); i ++)
         {
             Text text = new Text();
-            text.setText(privateChatNames.get(i) + " with " + privateChatNumber.get(i) + " total number of messages");
+            text.setText(privateChatNames.get(i) + " with " + privateChatNumber.get(i) + " messages, status: " + privateChatStatus.get(i));
             pChats.getChildren().add(text);
         }
 
