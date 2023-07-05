@@ -76,6 +76,7 @@ public class ChatNotification extends Thread
                             {
                                 ChatMenu.privateChatNumber.add(num);
                                 ChatMenu.privateChatNames.add(chatName);
+                                ChatMenu.privateChatStatus.add((String)now.get("lastOnline"));
                             }
                         }
                         ChatMenu.updatePublicChat();

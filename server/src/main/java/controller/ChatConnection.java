@@ -11,6 +11,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 public class ChatConnection extends Thread
@@ -43,6 +44,7 @@ public class ChatConnection extends Thread
             if(!socket.isConnected())
             {
                 System.out.println("Socket " + userName + " is Disconnected");
+                // ChatPortDistributor.offlineUsers.put(userName, String.valueOf(new Date()));
                 /// connections.remove(this);
                 /*try {
                     socket.close();
@@ -144,6 +146,9 @@ public class ChatConnection extends Thread
                                     JSONObject jsonObject = new JSONObject();
                                     jsonObject.put("name", chat.getSecond());
                                     jsonObject.put("numberOfMessages", chat.getMessages().size());
+                                    String user = chat.getSecond();
+                                    String status = (ChatPortDistributor.offlineUsers.get(user) == null? "ONLINE" : ChatPortDistributor.offlineUsers.get(user));
+                                    jsonObject.put("lastOnline", status);
                                     jsonArray.add(jsonObject);
                                 }
                                 else if(chat.getSecond().equals(this.userName))
@@ -151,6 +156,11 @@ public class ChatConnection extends Thread
                                     JSONObject jsonObject = new JSONObject();
                                     jsonObject.put("name", chat.getFirst());
                                     jsonObject.put("numberOfMessages", chat.getMessages().size());
+
+                                    String user = chat.getFirst();
+                                    String status = (ChatPortDistributor.offlineUsers.get(user) == null? "ONLINE" : ChatPortDistributor.offlineUsers.get(user));
+                                    jsonObject.put("lastOnline", status);
+
                                     jsonArray.add(jsonObject);
                                 }
                             }

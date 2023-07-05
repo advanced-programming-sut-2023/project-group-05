@@ -1,5 +1,6 @@
 package model ;
 
+import controller.ChatPortDistributor;
 import model.Account ;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 public class DataBase
 {
     //public static String location = "/home/kimoam03/project-group-05/server/src/main/resources/data.json";
-    //public static String locsetTopation = "/home/aria/tamrin/AP/project-group-05/server/src/main/resources/data.json";
+    //public static String location = "/home/aria/tamrin/AP/project-group-05/server/src/main/resources/data.json";
     public static String location = "C:\\Users\\TUF\\Desktop\\university\\AdvancedProgramming\\project-group-05\\server\\src\\main\\resources\\data.json" ;
     public static void deleteAccount( String type, String S )
     {
@@ -202,6 +203,7 @@ public class DataBase
             {
                 JSONObject currentObject = (JSONObject) datum;
                 String userName = (String) currentObject.get("userName");
+                ChatPortDistributor.offlineUsers.put(userName, "OFFLINE");
                 String nickName = (String) currentObject.get("nickName");
                 String email = (String) currentObject.get("email");
                 long password = (long) currentObject.get("password");
