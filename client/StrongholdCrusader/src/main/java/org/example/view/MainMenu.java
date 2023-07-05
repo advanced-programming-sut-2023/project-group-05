@@ -235,18 +235,21 @@ public class MainMenu extends Application {
         stage.setScene(scene1);
         stage.close();
         pane.setCenter(vBox);
-        HBox hBox = new HBox();
         for (String string : invites){
             Text text = new Text("User : "+string);
             text.setStyle(style);
             text.setFill(Color.LIGHTBLUE);
+            HBox hBox = new HBox();
             hBox.getChildren().clear();
             Button accept = new Button();
             accept.setBackground(new Background(new BackgroundFill(Icons.APPROVE.getImagePattern(),null,null)));
             accept.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    //todo : what should we do here
+                    //todo : danial add it to friends
+                    new Alert(Alert.AlertType.INFORMATION,"Added To Friends").showAndWait();
+                    vBox.getChildren().remove(hBox);
+                    invites.remove(string);
                 }
             });
             Button reject = new Button();
@@ -255,6 +258,9 @@ public class MainMenu extends Application {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     // todo : what should we do here
+                    new Alert(Alert.AlertType.INFORMATION,"Rejected").showAndWait();
+                    vBox.getChildren().remove(hBox);
+                    invites.remove(string);
                 }
             });
             hBox.getChildren().addAll(reject,accept,text);
