@@ -15,9 +15,12 @@ public class GameRoom {
     private final String password ;
     private final int capacity ;
     private boolean locked = false ;
+    private String name ;
 
     public GameRoom(String name, String password, int capacity){
+        System.out.println( "new GameRoom created" ) ;
         this.capacity = capacity ;
+        this.name = name ;
         usernames = new ArrayList <>() ;
         this.password = password ;
         gameRoomHashMap.put( name , this ) ;
@@ -29,6 +32,7 @@ public class GameRoom {
         if( !this.password.equals(password) ) return false ;
         usernames.add( username ) ;
         usernameToGameRoom.put( username , this ) ;
+        System.out.println( "new user added to " + "(" + name + ") game room" ) ;
         return true ;
     }
 

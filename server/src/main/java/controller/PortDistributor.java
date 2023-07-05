@@ -35,14 +35,14 @@ public class PortDistributor extends Thread {
                         System.out.println( freePort + " is going to be given to a client's " + clientType ) ;
                         if( clientType.contains("reader") ){
                             String username = clientType.replaceAll("^reader","") ;
-                            GameMasterWriter newGMW = new GameMasterWriter(freePort) ;
-                            GameRoom.usernameToGameRoom.get( username ).userToGMW.put( username , newGMW ) ;
-                            portToWriter.put( username , newGMW ) ;
-                        } else if ( clientType.contains("writer") ){
-                            String username = clientType.replaceAll("^writer" , "") ;
                             GameMasterReader newGMR = (new GameMasterReader(freePort,username)) ;
                             GameRoom.usernameToGameRoom.get( username ).userToGMR.put( username , newGMR ) ;
                             newGMR.start() ;
+                        } else if ( clientType.contains("writer") ){
+                            String username = clientType.replaceAll("^writer" , "") ;
+                            GameMasterWriter newGMW = new GameMasterWriter(freePort) ;
+                            GameRoom.usernameToGameRoom.get( username ).userToGMW.put( username , newGMW ) ;
+
                         } else {
                             System.out.println( "Unexpected client type." ) ;
                         }
