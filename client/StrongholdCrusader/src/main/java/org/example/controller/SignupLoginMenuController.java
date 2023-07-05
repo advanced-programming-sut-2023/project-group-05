@@ -175,6 +175,12 @@ public class SignupLoginMenuController {
         return true ;
     }
 
+    public static boolean userExists( String username ){
+        return true ;
+    }
+
+
+
     public static String loginUser( String username , String password ) {
         if(!validUserName(username) || ! validPassword(password))
             return "login failed : Invalid username / password";
@@ -237,5 +243,9 @@ public class SignupLoginMenuController {
 
     public static String logout(Matcher matcher){
         return "logged out" ;
+    }
+
+    public static void updateInvites( String currentUsername, ArrayList<String> invites ){
+
     }
 }

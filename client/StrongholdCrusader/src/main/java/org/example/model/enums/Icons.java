@@ -30,6 +30,13 @@ public enum Icons {
     SHOW("show.png"),
     MILITARY("military.png"),
     WHITE("white.png"),
+    FACE_BACKGROUND("face.jpeg"),
+    HAPPY("happy.png"),
+    NEUTRAL("neutral.png"),
+    SAD("sad.png"),
+    FRIEND("friend.png"),
+    MAIN_MENU_BG("mainMenuBackground.jpg"),
+    FRIEND_BG("friendBackground.jpg"),
     BG("bg.jpg");
     private ImagePattern imagePattern;
     Icons(String name){
