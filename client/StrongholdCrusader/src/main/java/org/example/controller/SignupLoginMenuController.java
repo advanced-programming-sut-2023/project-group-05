@@ -248,4 +248,7 @@ public class SignupLoginMenuController {
     public static void updateInvites( String currentUsername, ArrayList<String> invites ){
 
     }
+
+    public static void updateFriends(String currentUsername, ArrayList<String> myFriends) {
+    }
 }
