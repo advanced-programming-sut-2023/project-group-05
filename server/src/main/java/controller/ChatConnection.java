@@ -1,9 +1,6 @@
 package controller;
 
-import model.Account;
-import model.Chat;
-import model.ChatLog;
-import model.ChatPacket;
+import model.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -104,9 +101,9 @@ public class ChatConnection extends Thread
                             String secondName = chat.getSecond() ;
                             int groupIndex = 0 ;
                             if( firstName.startsWith( "group" ) )
-                                groupIndex = Integer.parseInt( firstName.substring( 5 , 1 ) ) ;
+                                groupIndex = Integer.parseInt( firstName.substring( 5 , 6 ) ) ;
                             else if ( secondName.startsWith("group") )
-                                groupIndex = Integer.parseInt( secondName.substring( 5 , 1 ) ) ;
+                                groupIndex = Integer.parseInt( secondName.substring( 5 , 6 ) ) ;
                             for(int i = 0; i < ChatLog.chatLog.size(); i ++)
                             {
                                 Chat cur = ChatLog.chatLog.get(i);
@@ -119,16 +116,22 @@ public class ChatConnection extends Thread
                                     break;
                                 }
                             }
-                            if( groupIndex == 0 ) ChatLog.addChat(chat);
+                            if( groupIndex == 0 ){
+                                ChatLog.addChat(chat);
+                                f = new ChatPacket(chat.getFirst(), "UPDATE", "", chat.toJson().toJSONString());
+                                s = new ChatPacket(chat.getSecond(), "UPDATE", "", chat.toJson().toJSONString());
+                                notifications.Push(f);
+                                notifications.Push(s);
+                            }
                             else {
                                 for( Map.Entry acc : Account.getAccountsMap().entrySet() ){
-                                    
+                                    Chat cur = new Chat( (String)acc.getKey() , "group" + groupIndex ) ;
+                                    cur.setMessages( chat.getMessages() ) ;
+                                    ChatLog.addChat( cur ) ;
+                                    ChatPacket chatPacket = new ChatPacket( cur.getFirst() , "UPDATE" , "" , cur.toJson().toJSONString() ) ;
+                                    notifications.Push( chatPacket ) ;
                                 }
                             }
-                            f = new ChatPacket(chat.getFirst(), "UPDATE", "", chat.toJson().toJSONString());
-                            s = new ChatPacket(chat.getSecond(), "UPDATE", "", chat.toJson().toJSONString());
-                            notifications.Push(f);
-                            notifications.Push(s);
                         }
                         else if(command.equals("GetChatList"))
                         {

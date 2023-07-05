@@ -21,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.controller.ChatConnection;
+import org.example.controller.ChatUpdator;
 import org.example.controller.URLFinder;
 import org.example.model.Chat;
 import org.example.model.Message;
@@ -35,6 +36,7 @@ public class ChatPage extends Application
     public static String other = null;
     public static Chat chat = null;
     public static ScrollPane scrollPane = null;
+    public static VBox vBox = null;
 
     @Override
     public void start(Stage stage) throws Exception
@@ -46,49 +48,11 @@ public class ChatPage extends Application
         stage.show();
 
         scrollPane = (ScrollPane) borderPane.getCenter();
-        scrollPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if(keyEvent.getCode() == KeyCode.R)
-                {
-                    try {
-                        ChatPage.updatePane();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
-        updatePane();
-    }
 
-    public static void updatePane() throws IOException {
-        if(scrollPane == null || chat == null)
-        {
-            return;
-        }
+        vBox = new VBox();
 
-        boolean shouldUPD = false;
-        for(int i = 0; i < chat.getMessages().size(); i ++)
-        {
-            Message cur = chat.getMessages().get(i);
-            if(!cur.sender.equals(ChatConnection.userName))
-            {
-                if(!cur.isSeen())
-                {
-                    shouldUPD = true;
-                    cur.setSeen(true);
-                }
-            }
-        }
-        if(shouldUPD)
-        {
-            String other = ChatPage.other;
-            ChatConnection.updateChatWith(other, ChatPage.chat);
-        }
-
-        VBox vBox = new VBox();
         vBox.setSpacing(20);
+
 
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER);
@@ -114,7 +78,55 @@ public class ChatPage extends Application
 
         hBox.getChildren().addAll(textField, sendMessage);
 
-        vBox.getChildren().add(hBox);
+        vBox.getChildren().add( hBox );
+
+        new ChatUpdator().play() ;
+
+        /*scrollPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if(keyEvent.getCode() == KeyCode.R)
+                {
+                    try {
+                        ChatPage.updatePane();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });*/
+        updatePane();
+    }
+
+    public static void updatePane() throws IOException {
+        if(scrollPane == null || chat == null)
+        {
+            return;
+        }
+
+        while( vBox.getChildren().size() > 1 )
+        {
+            vBox.getChildren().remove( vBox.getChildren().size() - 1 );
+        }
+
+        boolean shouldUPD = false;
+        for(int i = 0; i < chat.getMessages().size(); i ++)
+        {
+            Message cur = chat.getMessages().get(i);
+            if(!cur.sender.equals(ChatConnection.userName))
+            {
+                if(!cur.isSeen())
+                {
+                    shouldUPD = true;
+                    cur.setSeen(true);
+                }
+            }
+        }
+        if(shouldUPD)
+        {
+            String other = ChatPage.other;
+            ChatConnection.updateChatWith(other, ChatPage.chat);
+        }
 
         for(int i = chat.getMessages().size() - 1; i >= 0; i --)
         {
@@ -201,14 +213,10 @@ public class ChatPage extends Application
                                 });
                             }
                         });
-                        //EDITHBOX.setLayoutX(mouseEvent.getX());
-                        //EDITHBOX.setLayoutY(mouseEvent.getY());
                         EDITHBOX.getChildren().add(deleteText);
                         EDITHBOX.getChildren().add(editText);
-                        vBox.getChildren().add(chat.getMessages().size() - j,EDITHBOX);
+                        vBox.getChildren().add(chat.getMessages().size() - j, EDITHBOX);
                         int size = vBox.getChildren().size();
-                        //vBox.getChildren().get(size - 1).setLayoutX(mouseEvent.getX());
-                        //vBox.getChildren().get(size - 1).setLayoutY(mouseEvent.getY());
 
                     }
                 }

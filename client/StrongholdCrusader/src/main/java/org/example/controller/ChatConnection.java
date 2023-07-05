@@ -68,7 +68,7 @@ public class ChatConnection
     }
     public static void updateChatWith(String otherPerson, Chat chat) throws IOException {
         System.out.println("updateChat");
-        ChatPage.updatePane() ;
+        //ChatPage.updatePane() ;
         dataOutputStream.writeUTF(new ChatPacket("", "UpdateChat", "", chat.toJson().toJSONString()).toJson().toJSONString());
     }
 }

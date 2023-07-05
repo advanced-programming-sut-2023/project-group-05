@@ -77,7 +77,7 @@ public class LoginMenu extends Application {
                     );
                     alert.showAndWait() ;
                     try {
-                        System.out.println("nigg");
+                        /// System.out.println("nigg");
                         new MainMenu().start( stage );
                     } catch( Exception e ){
                         e.printStackTrace();

@@ -31,6 +31,18 @@ public class MainMenu extends Application {
     @Override
     public void start(Stage _stage) throws Exception
     {
+        // ### for testing ###
+
+
+        SignupLoginMenuController.loginUser( "Danial" , "Pass1$" ) ;
+        // SignupLoginMenuController.loginUser( "Arya" , "Pass1$" ) ;
+        GameController.currentPassword = "Pass1$" ;
+        GameController.currentSlogan = "" ;
+        GameController.currentNickname = ""  ;
+        GameController.currentUsername = "" ;
+        GameController.currentEmail = "" ;
+
+        // ### for testing ###
 
         String currentUserName = GameController.currentUsername ;
 

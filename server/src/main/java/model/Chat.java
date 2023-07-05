@@ -24,6 +24,10 @@ public class Chat
         return chat;
     }
 
+    public void setMessages( ArrayList<Message> arr ){
+        this.messages = arr ;
+    }
+
     public Chat(String first, String second)
     {
         this.first = first;
