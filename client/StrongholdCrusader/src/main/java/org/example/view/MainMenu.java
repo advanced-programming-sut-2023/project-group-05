@@ -134,6 +134,14 @@ public class MainMenu extends Application {
                 viewInvites(borderPane);
             }
         });
+
+        Button viewFriends = new Button("View Friends");
+        viewFriends.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                viewFriends(borderPane);
+            }
+        });
         back.setAlignment(Pos.BASELINE_LEFT);
         back.setPrefHeight(50);
         back.setPrefWidth(50);
@@ -148,11 +156,11 @@ public class MainMenu extends Application {
                 }
             }
         });
-        vBox.getChildren().addAll(goToChat, goToProfile, roomName, password, joinRoom,search,viewInvites);
+        vBox.getChildren().addAll(goToChat, goToProfile, roomName, password, joinRoom,search,viewInvites,viewFriends);
         for (Node node : vBox.getChildren())
             node.setStyle(buttonStyle);
         borderPane.setBottom(back);
-        borderPane.setCenter(vBox);
+        borderPane.setTop(vBox);
         this.buttons = vBox;
 
         goToChat.setAlignment(Pos.TOP_RIGHT);
@@ -323,6 +331,42 @@ public class MainMenu extends Application {
         vBox.getChildren().addAll(find,submit,template);
         vBox.setSpacing(30);
         pane.setTop(vBox);
+    }
+
+    private void viewFriends(BorderPane pane)
+    {
+        pane.getChildren().clear();
+        SignupLoginMenuController.updateFriends( GameController.currentUsername , myFriends ) ;
+        setBackButton(pane);
+        back.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    new MainMenu().start(stage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        ScrollPane scrollPane = new ScrollPane(pane);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+        String style = "-fx-font-size: 16px;\n" +
+                "    -fx-font-weight: bold;\n" +
+                "    -fx-text-fill: #18cb2b;";
+        VBox vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(40);
+        Scene scene1 = new Scene(scrollPane);
+        stage.setScene(scene1);
+        stage.close();
+        pane.setTop(vBox);
+        for (String fr : myFriends) {
+            Text text = new Text("Username : "+fr);
+            text.setStyle(style);
+            vBox.getChildren().add(text);
+        }
+        stage.show();
     }
 
 }
