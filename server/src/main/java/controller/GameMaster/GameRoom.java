@@ -9,10 +9,14 @@ public class GameRoom {
 
     private ArrayList <String> usernames ;
     public static HashMap <String,GameRoom> gameRoomHashMap = new HashMap<>() ;
+    public static HashMap <String,GameRoom> usernameToGameRoom = new HashMap<>();
+    public HashMap<String,GameMasterWriter> userToGMW = new HashMap<>() ;
+    public HashMap<String,GameMasterReader> userToGMR = new HashMap<>() ;
     private final String password ;
     private final int capacity ;
+    private boolean locked = false ;
 
-    public GameRoom(String name, String password, int capacity ){
+    public GameRoom(String name, String password, int capacity){
         this.capacity = capacity ;
         usernames = new ArrayList <>() ;
         this.password = password ;
@@ -24,11 +28,26 @@ public class GameRoom {
         if( Account.getAccountsMap().get(username) == null ) return false ;
         if( !this.password.equals(password) ) return false ;
         usernames.add( username ) ;
+        usernameToGameRoom.put( username , this ) ;
         return true ;
     }
 
     public int getCapacity(){
         return this.capacity ;
+    }
+
+    public void start(){
+        if( usernames.size() < 2 ) return ;
+        if( locked ) return ;
+        locked = true;
+        ArrayList<GameMasterReader> orderedGMRs = new ArrayList<>() ;
+        ArrayList<GameMasterWriter> orderedGMWs = new ArrayList<>() ;
+        // first we should give some order to the users and then start a game for them in GameMaster
+        for( String username : usernames ){
+            orderedGMWs.add( userToGMW.get( username ) ) ;
+            orderedGMRs.add( userToGMR.get( username ) ) ;
+        }
+        new GameMaster( usernames , orderedGMRs , orderedGMWs ) ;
     }
 
     public ArrayList<String> getUsernames(){

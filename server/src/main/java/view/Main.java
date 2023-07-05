@@ -34,7 +34,7 @@ public class Main extends Application
         (new PortDistributor()).start() ;
         (new LoginRegisterThread()).start() ;
         (new ChatPortDistributor()).start();
-        GameRoomController.AddServer(new GameRoomConnection("Test", "1234", 8888, 8));
+        // GameRoomController.AddServer(new GameRoomConnection("Test", "1234", 8888, 8));
         new MainMenu().start(stage);
     }
 }

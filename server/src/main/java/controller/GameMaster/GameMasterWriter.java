@@ -7,8 +7,8 @@ import java.net.Socket;
 public class GameMasterWriter {
 
     private int port ;
+    private GameMaster gm ;
     private DataOutputStream writer ;
-    private GameMasterReader gmr ;
     private ServerSocket serverSocket ;
     private String username ;
 
@@ -33,11 +33,8 @@ public class GameMasterWriter {
         }
     }
 
-    public void setGmr( GameMasterReader gmr ){
-        this.gmr = gmr ;
-    }
-    public void setUsername( String username ){
-        this.username = username ;
+    public void setGameMaster( GameMaster gm ){
+        this.gm = gm ;
     }
 
 }

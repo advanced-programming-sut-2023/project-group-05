@@ -78,8 +78,23 @@ public class LoginRegisterController {
         String password = command[3] ;
         boolean ok = true ;
         GameRoom gameRoom = GameRoom.gameRoomHashMap.get(gameRoomName) ;
-        if( gameRoom == null ) ok = false ;
+        if( gameRoom == null ){
+            String[] output = { "0" } ;
+            try {
+                writer.writeUTF( (new Gson()).toJson(output) ) ;
+            } catch( Exception e ){
+                e.printStackTrace() ;
+            }
+        }
         ok = gameRoom.addUser( username, password ) ;
+        if( !ok ){
+            String[] output = { "0" } ;
+            try {
+                writer.writeUTF( (new Gson()).toJson(output) ) ;
+            } catch( Exception e ){
+                e.printStackTrace() ;
+            }
+        }
         if( ok ){
             String[] output = new String[ 1 + 2 * gameRoom.getUsernames().size() ] ;
             output[0] = "1" ;
@@ -89,13 +104,6 @@ public class LoginRegisterController {
                 try {
                     writer.writeUTF( ( new Gson() ).toJson( output ) );
                 } catch( Exception e ) { e.printStackTrace(); }
-            }
-        } else {
-            String[] output = { "0" } ;
-            try {
-                writer.writeUTF( (new Gson()).toJson(output) ) ;
-            } catch( Exception e ){
-                e.printStackTrace() ;
             }
         }
     }

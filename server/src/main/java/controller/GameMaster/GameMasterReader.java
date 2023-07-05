@@ -10,17 +10,18 @@ import java.net.Socket;
 public class GameMasterReader extends Thread {
 
     private int port ;
-    private GameMasterWriter gmw ;
     private DataInputStream reader ;
     private ServerSocket serverSocket ;
     private String username ;
+    private GameMaster gm ;
 
-    public GameMasterReader(int port, GameMasterWriter gmw, String username){
+    public void setGameMaster( GameMaster gm ){
+        this.gm = gm ;
+    }
+
+    public GameMasterReader(int port, String username){
         this.port = port ;
-        this.gmw = gmw ;
         this.username = username ;
-        gmw.setGmr( this ) ;
-        gmw.setUsername( username );
         while(true){
             try{
                 serverSocket = new ServerSocket(port) ;

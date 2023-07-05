@@ -24,11 +24,11 @@ public class Game extends Application {
         stage.show() ;
 
 
-        /* FOR ONLINE GAME :
-        GameConnectionReader gcr = new GameConnectionReader(username) ;
-        GameConnectionWriter gcw = new GameConnectionWriter(username) ;
+        // FOR ONLINE GAME :
+        GameConnectionReader gcr = new GameConnectionReader(GameController.currentUsername) ;
+        GameConnectionWriter gcw = new GameConnectionWriter(GameController.currentUsername) ;
         gcr.start() ;
-        */
+
 
         Player player1 = new Player( "username1" , "nickname1" ) ; // this is us
         Player player2 = new Player( "username2" , "nickname2" ) ;

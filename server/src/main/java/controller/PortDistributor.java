@@ -2,6 +2,7 @@ package controller;
 
 import controller.GameMaster.GameMasterReader;
 import controller.GameMaster.GameMasterWriter;
+import controller.GameMaster.GameRoom;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -34,10 +35,14 @@ public class PortDistributor extends Thread {
                         System.out.println( freePort + " is going to be given to a client's " + clientType ) ;
                         if( clientType.contains("reader") ){
                             String username = clientType.replaceAll("^reader","") ;
-                            portToWriter.put( username , new GameMasterWriter(freePort) ) ;
+                            GameMasterWriter newGMW = new GameMasterWriter(freePort) ;
+                            GameRoom.usernameToGameRoom.get( username ).userToGMW.put( username , newGMW ) ;
+                            portToWriter.put( username , newGMW ) ;
                         } else if ( clientType.contains("writer") ){
                             String username = clientType.replaceAll("^writer" , "") ;
-                            (new GameMasterReader(freePort,portToWriter.get(username),username)).start() ;
+                            GameMasterReader newGMR = (new GameMasterReader(freePort,username)) ;
+                            GameRoom.usernameToGameRoom.get( username ).userToGMR.put( username , newGMR ) ;
+                            newGMR.start() ;
                         } else {
                             System.out.println( "Unexpected client type." ) ;
                         }

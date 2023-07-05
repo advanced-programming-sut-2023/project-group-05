@@ -317,7 +317,22 @@ public class SignupLoginMenuController {
     }
 
     public static void updateFriends(String currentUsername, ArrayList<String> myFriends) {
-        // todo : Danial
+        try{
+            Socket socket = new Socket() ;
+            DataOutputStream writer = new DataOutputStream( socket.getOutputStream() ) ;
+            DataInputStream reader = new DataInputStream( socket.getInputStream() ) ;
+            String[] command = { "updatefriends" , GameController.currentUsername } ;
+            writer.writeUTF( new Gson().toJson( command ) ) ;
+            writer.flush() ;
+            String input = reader.readUTF() ;
+            String[] friendsArr = new Gson().fromJson( input , String[].class ) ;
+            myFriends.clear() ;
+            for(String string : friendsArr)
+                myFriends.add( string ) ;
+            socket.close() ;
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
     }
 
     public static void inviteFriend( String username ){
