@@ -169,7 +169,7 @@ public class ProfileMenu extends Application {
         Text nick = new Text("Nickname : " + nickname);
         nick.setStyle("-fx-font-size: 16px;\n" +
                 "    -fx-font-weight: bold;\n" +
-                "    -fx-text-fill: #6af334;");
+                "    -fx-text-fill: #25f1c0;");
         nick.setFill(Color.WHITE);
         Text mail = new Text("Email : " + email);
         mail.setStyle("-fx-font-size: 16px;\n" +

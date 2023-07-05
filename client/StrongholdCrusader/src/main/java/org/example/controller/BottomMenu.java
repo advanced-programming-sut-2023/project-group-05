@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -134,7 +135,7 @@ public class BottomMenu {
         brief.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                // todo :
+                initFaceAnimations();
             }
         });
     }
@@ -835,6 +836,85 @@ public class BottomMenu {
         labourForce.setText(player.population+"/"+player.populationCapacity);
     }
 
+    private static void initFaceAnimations()
+    {
+        menuBuffer.clear();
+        Rectangle backGround = new Rectangle(SCREEN_WIDTH*0.1,SCREEN_HEIGHT*0.05,SCREEN_WIDTH*0.8,SCREEN_HEIGHT*0.9);
+        backGround.setFill(Icons.FACE_BACKGROUND.getImagePattern());
+        Text title = new Text("Popularity Effects");
+        title.setX(backGround.getX()+50);title.setY(backGround.getY()+50);title.setStyle("-fx-font-size: 15px");title.setStyle("-fx-font-weight: bold");
+        Circle close = new Circle(backGround.getX(),backGround.getY(),20);close.setFill(Icons.BACK.getImagePattern());
+        close.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                removeFromPane(menuBuffer);
+            }
+        });
+        String style = "";
+        style+="-fx-font-size: 15px" ;
+        Text foodE = new Text("Food Rate : "+player.getFearRate());foodE.setStyle(style);
+        foodE.setX(backGround.getX()+20);foodE.setY(backGround.getY()+100);
+        Text fearRate = new Text("Fear Rate : "+player.getFearRate());fearRate.setStyle(style);
+        fearRate.setX(backGround.getX()+20);fearRate.setY(backGround.getY()+200);
+        Text treasureRate = new Text("Gold : "+player.getGold());treasureRate.setStyle(style);
+        treasureRate.setX(backGround.getX()+20);treasureRate.setY(backGround.getY()+300);
+        Text popularity = new Text("Popularity : "+player.getPopularity());popularity.setStyle(style);
+        popularity.setX(backGround.getX()+20);popularity.setY(backGround.getY()+400);
+        Circle foodFace = new Circle(foodE.getX()+backGround.getWidth()/2,foodE.getY(),40);
+        Circle fearFace = new Circle(fearRate.getX()+backGround.getWidth()/2,fearRate.getY(),40);
+        Circle treasureFace = new Circle(treasureRate.getX()+backGround.getWidth()/2,treasureRate.getY(),40);
+        Circle popularityFace = new Circle(popularity.getX()+backGround.getWidth()/2,popularity.getY(),40);
+        if (player.getFearRate() < 0 ){
+            fearRate.setFill(Color.RED);
+            fearFace.setFill(Icons.SAD.getImagePattern());
+        }
+        else if (player.getFearRate() < 1){
+            fearRate.setFill(Color.YELLOW);
+            fearFace.setFill(Icons.NEUTRAL.getImagePattern());
+        }
+        else {
+            fearRate.setFill(Color.GREEN);
+            fearFace.setFill(Icons.HAPPY.getImagePattern());
+        }
+        if (player.getGold() < 50 ){
+            treasureRate.setFill(Color.RED);
+            treasureFace.setFill(Icons.SAD.getImagePattern());
+        }
+        else if (player.getGold() <= 100){
+            treasureRate.setFill(Color.YELLOW);
+            treasureFace.setFill(Icons.NEUTRAL.getImagePattern());
+        }
+        else {
+            treasureRate.setFill(Color.GREEN);
+            treasureFace.setFill(Icons.HAPPY.getImagePattern());
+        }
+        if (player.getFoodRate() < 0 ){
+            foodE.setFill(Color.RED);
+            foodFace.setFill(Icons.SAD.getImagePattern());
+        }
+        else if (player.getFoodRate() < 0.5){
+            foodE.setFill(Color.YELLOW);
+            foodFace.setFill(Icons.NEUTRAL.getImagePattern());
+        }
+        else {
+            foodE.setFill(Color.GREEN);
+            foodFace.setFill(Icons.HAPPY.getImagePattern());
+        }
+        if (player.getPopularity() < 40 ){
+            popularity.setFill(Color.RED);
+            popularityFace.setFill(Icons.SAD.getImagePattern());
+        }
+        else if (player.getPopularity() < 60){
+            popularity.setFill(Color.YELLOW);
+            popularityFace.setFill(Icons.NEUTRAL.getImagePattern());
+        }
+        else {
+            popularity.setFill(Color.GREEN);
+            popularityFace.setFill(Icons.HAPPY.getImagePattern());
+        }
+        Collections.addAll(menuBuffer,backGround,title,close,foodE,foodFace,treasureFace,treasureRate,popularity,popularityFace,fearFace,fearRate);
+        addToPane(menuBuffer);
+    }
 
 }
 

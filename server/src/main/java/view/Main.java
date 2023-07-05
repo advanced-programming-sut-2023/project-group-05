@@ -29,7 +29,7 @@ public class Main extends Application
     @Override
     public void start(Stage _stage) throws Exception {
         DataBase.wakeUp();
-        ChatLog.WAKEUP();
+        //ChatLog.WAKEUP();
         stage = _stage;
         (new PortDistributor()).start() ;
         (new LoginRegisterThread()).start() ;
