@@ -1,9 +1,11 @@
 package org.example.controller;
 
 import com.google.gson.Gson;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import org.example.view.GameRoomMenu;
 
+import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
@@ -176,7 +178,20 @@ public class SignupLoginMenuController {
     }
 
     public static boolean userExists( String username ){
-        return true ;
+        boolean ret = false ;
+        try {
+            Socket socket = new Socket( "localhost", 2020 );
+            DataOutputStream writer = new DataOutputStream( socket.getOutputStream() );
+            DataInputStream reader = new DataInputStream( socket.getInputStream() );
+            String[] command = {"userexists", username};
+            writer.writeUTF( new Gson().toJson( command ) );
+            writer.flush();
+            ret = reader.readBoolean();
+            socket.close() ;
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
+        return ret ;
     }
 
 
@@ -233,7 +248,41 @@ public class SignupLoginMenuController {
         Account.addAccount(account) ;
         return "password recovered successfully";
     }*/
-// sabr kon
+
+    public static void addFriend( String friendName ){
+        try {
+            Socket socket = new Socket( "localhost", 2020 );
+            DataOutputStream writer = new DataOutputStream( socket.getOutputStream() );
+            String[] command = {"addfriend", GameController.currentUsername, friendName};
+            writer.writeUTF( new Gson().toJson( command ) );
+            writer.flush();
+            socket.close();
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateFriends( ArrayList<String> friends ){
+        friends.clear() ;
+        String[] friendsArr = null ;
+        try {
+            Socket socket = new Socket( "localhost", 2020 );
+            DataInputStream reader = new DataInputStream( socket.getInputStream() );
+            DataOutputStream writer = new DataOutputStream( socket.getOutputStream() );
+            String[] command = {"updatefriends", GameController.currentUsername};
+            writer.writeUTF( ( new Gson() ).toJson( command ) );
+            writer.flush() ;
+            String input = reader.readUTF();
+            socket.close();
+            friendsArr = ( new Gson() ).fromJson( input, String[].class );
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
+        for(int i = 0; i < friendsArr.length ; i++){
+            friends.add( friendsArr[i] ) ;
+        }
+    }
+
     public static boolean changePassword( String username , String oldPassword , String newPassword ){
         // TODO : return true - > password change mishe
         // todo : return false - > old Password eshtebah bude
@@ -241,14 +290,46 @@ public class SignupLoginMenuController {
         return false ;
     }
 
-    public static String logout(Matcher matcher){
-        return "logged out" ;
+    public static void logout(Matcher matcher){
+        try {
+            Socket socket = new Socket( "localhost", 2020 );
+            DataOutputStream writer = new DataOutputStream( socket.getOutputStream() );
+            String[] command = {"logout", GameController.currentUsername};
+            writer.writeUTF((new Gson()).toJson(command));
+            socket.close();
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
     }
 
-    public static void updateInvites( String currentUsername, ArrayList<String> invites ){
-
+    public static void updateInvites( ArrayList<String> invites ){
+        try{
+            Socket socket = new Socket( "localhost", 2020 );
+            DataOutputStream writer = new DataOutputStream( socket.getOutputStream() );
+            DataInputStream reader = new DataInputStream( socket.getInputStream() ) ;
+            String[] command = { "updateinvites" , GameController.currentUsername } ;
+            writer.flush();
+            socket.close();
+        }
+        catch( Exception e ){
+            e.printStackTrace();
+        }
     }
 
     public static void updateFriends(String currentUsername, ArrayList<String> myFriends) {
+        // todo : Danial
     }
+
+    public static void inviteFriend( String username ){
+        try{
+            Socket socket = new Socket( "localhost", 2020 );
+            DataOutputStream writer = new DataOutputStream( socket.getOutputStream() );
+            String[] command = { "invitefriend" , GameController.currentUsername  , username } ;
+            writer.flush();
+            socket.close();
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
+    }
+
 }

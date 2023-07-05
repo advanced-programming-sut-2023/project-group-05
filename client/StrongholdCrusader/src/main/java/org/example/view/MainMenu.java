@@ -42,7 +42,7 @@ public class MainMenu extends Application {
         // ### for testing ###
 
 
-        /*SignupLoginMenuController.loginUser( "Danial" , "Pass1$" ) ;
+        SignupLoginMenuController.loginUser( "Danial" , "Pass1$" ) ;
         // SignupLoginMenuController.loginUser( "Arya" , "Pass1$" ) ;
         GameController.currentPassword = "Pass1$" ;
         GameController.currentSlogan = "dsfaasdf" ;
@@ -51,7 +51,7 @@ public class MainMenu extends Application {
         GameController.currentEmail = "alsdjfk@gmial.com" ;
 
         // ### for testing ###
-*/
+
 
 
         String currentUserName = GameController.currentUsername ;
@@ -207,9 +207,8 @@ public class MainMenu extends Application {
 
     private void viewInvites(BorderPane pane)
     {
-        //todo : i suppose i have an arraylist of invites that have username called invites
         pane.getChildren().clear();
-        SignupLoginMenuController.updateInvites( GameController.currentUsername , invites ) ;
+        SignupLoginMenuController.updateInvites( invites ) ;
         setBackButton(pane);
         pane.setBackground(new Background(new BackgroundFill(Icons.WHITE.getImagePattern(),null,null)));
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -246,7 +245,8 @@ public class MainMenu extends Application {
             accept.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    //todo : what should we do here
+                    myFriends.add( string ) ;
+                    SignupLoginMenuController.addFriend( string ) ;
                 }
             });
             Button reject = new Button();
@@ -254,7 +254,8 @@ public class MainMenu extends Application {
             reject.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    // todo : what should we do here
+                    invites.remove( string ) ;
+                    // TODO : some kind of error
                 }
             });
             hBox.getChildren().addAll(reject,accept,text);
@@ -336,7 +337,7 @@ public class MainMenu extends Application {
     private void viewFriends(BorderPane pane)
     {
         pane.getChildren().clear();
-        SignupLoginMenuController.updateFriends( GameController.currentUsername , myFriends ) ;
+        SignupLoginMenuController.updateFriends( myFriends ) ;
         setBackButton(pane);
         back.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

@@ -7,6 +7,8 @@ import model.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 public class LoginRegisterController {
@@ -98,6 +100,56 @@ public class LoginRegisterController {
         }
     }
 
+    public static void updateFriends( String[] command , DataOutputStream writer ){
+        String username = command[1] ;
+        System.out.println( "update friend request from " + username ) ;
+        // todo : get friends from database
+        ArrayList <String> friends = new ArrayList <>( Arrays.asList( "Arya" , "Amin" , "Danial" ) ) ;
+        String[] friendsArr = new String[ friends.size() ] ;
+        for(int i = 0 ; i < friends.size() ; i++)
+            friendsArr[i] = friends.get( i ) ;
+        try {
+            writer.writeUTF( ( new Gson() ).toJson( friends ) );
+            writer.flush();
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
+    }
+
+    public static void addFriend( String[] command ){
+        String username = command[1] ;
+        String newFriend = command[2] ;
+        System.out.println( "add friend request from " + username + " to add " + newFriend ) ;
+        // todo : add to friends
+    }
+
+    public static void logout( String[] command ){
+        String username = command[1] ;
+        // todo : logout
+    }
+
+    public static void userExists( String[] command , DataOutputStream writer ){
+        try {
+            writer.writeBoolean( Account.getAccountsMap().containsKey( command[1] ) );
+            writer.flush();
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
+    }
+
+    public static void inviteFriend( String[] command ){
+        String username = command[1] ;
+        String newFriend = command[2] ;
+        // todo : username invites newFriends to be their friend
+    }
+
+    public static void updateInvites( String[] command , DataOutputStream writer ){
+        String username = command[1] ;
+        // todo : get invites
+        //String[] invitesArr ;
+        //writer.writeUTF( new Gson().toJson( invitesArr ) ) ;
+    }
+
     public static void handle( Socket socket ){
         try{
             DataOutputStream writer = new DataOutputStream( socket.getOutputStream() ) ;
@@ -126,6 +178,12 @@ public class LoginRegisterController {
                 System.out.println( "login status : " + ok ) ;
             } else if ( command[0].equals("scoreboard") ){
                 sendScoreBoard( writer ) ;
+            } else if ( command[0].equals( "updateinvites" ) ){
+                updateInvites( command , writer );
+            } else if ( command[0].equals( "invitefriend" ) ){
+                inviteFriend( command ) ;
+            } else if ( command[0].equals( "userexists" ) ){
+                userExists( command , writer ) ;
             } else if ( command[0].equals("change") ){
                 System.out.print( "New Request to change account info : " ) ;
                 writer.writeBoolean( changeAccount( command ) ) ;
@@ -133,6 +191,12 @@ public class LoginRegisterController {
                 sendInfo( command[1], writer ) ;
             } else if ( command[0].equals("join") ){
                 joinRoom( command , writer ) ;
+            } else if ( command[0].equals("updatefriends") ){
+                updateFriends( command , writer ) ;
+            } else if ( command[0].equals("logout") ){
+                logout( command ) ;
+            } else if ( command[0].equals("addfriend") ){
+                addFriend( command ) ;
             }
             else {
                 System.out.println( "Unknown command in LoginRegister." ) ;
