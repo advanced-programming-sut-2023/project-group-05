@@ -918,13 +918,5 @@ public class BottomMenu {
 
 }
 
-//todo : current is what we are showing know,buffer is what we want to show next- what we showed before
-
-// todo : handle buffer-current + menuBuffer-menuCurrent
-
-// todo : popularityPanel + colorfulPopularity
-
-// todo : select on other Buildings
-
 
 

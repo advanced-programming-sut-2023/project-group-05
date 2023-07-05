@@ -162,13 +162,6 @@ public class SignupLoginMenuController {
             writer.writeUTF( (new Gson()).toJson( command ) );
             String[] response = new Gson().fromJson( reader.readUTF() , String[].class ) ;
             if( response[0].equals("0") ) return false ;
-            else{
-                String[] usernamesAndNicknames = new String[ response.length - 1 ] ;
-                for(int i = 1 ; i < response.length ; i++){
-                    usernamesAndNicknames[i-1] = response[i] ;
-                }
-                gameRoomMenu.setUsernamesAndNicknames( usernamesAndNicknames );
-            }
             socket.close() ;
         } catch( Exception e ){
             e.printStackTrace();

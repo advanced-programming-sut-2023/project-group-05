@@ -1,6 +1,8 @@
 package view;
 
 import controller.GameRoomController;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import model.ClientConnection;
 import model.GameRoomConnection;
 import javafx.application.Application;
@@ -90,4 +92,6 @@ public class GameRoomMenu extends Application
         stage.setScene(scene);
         stage.show();
     }
+
+
 }

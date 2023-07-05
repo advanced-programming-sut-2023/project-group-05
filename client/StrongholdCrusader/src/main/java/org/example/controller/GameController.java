@@ -22,6 +22,8 @@ public class GameController {
     public static String currentSlogan ;
     public static String currentEmail ;
     public static String currentPassword ;
+    public static GameConnectionWriter gcw ;
+    public static GameConnectionReader gcr ;
     public static Image currentAvatar = null;
     ArrayList<Player> players ;
     private int turn ;

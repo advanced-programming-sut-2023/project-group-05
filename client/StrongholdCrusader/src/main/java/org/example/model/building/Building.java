@@ -177,7 +177,7 @@ public class Building {
             return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),500,0,false,BuildingEnum.SMALL_STONE_WALL,0);
         if (type.equals("bigstonewall"))
             return new Building(type,2,2,false,"",owner,row,column,getBuildingCost(type),2000,0,false,BuildingEnum.BIG_STONE_WALL,0);
-        if (type.equals("drawbridge"))
+        if (type.equals("taw3"))
             return new Building(type,1,3,true,"",owner,row,column,getBuildingCost(type),200,0,false,BuildingEnum.DRAW_BRIDGE,0);
         if (type.equals("lookouttower"))
             return new AttackDefenceBuilding(type,2,2,false,"",owner,row,column,getBuildingCost(type),5000,0,false,70,20,false,20,BuildingEnum.LOOKOUT_TOWER);
@@ -194,20 +194,20 @@ public class Building {
         if (type.equals("bigstonegatehouse"))
             return new AttackDefenceBuilding(type,4,4,true,"",owner,row,column,getBuildingCost(type),1000,0,false,40,20,false,20,BuildingEnum.BIG_STONE_GATEHOUSE);
         if (type.equals("armoury"))
-
             return  new StorageBuilding(type,2,2,false,"",owner,row,column,getBuildingCost(type),2000,0,false,200,BuildingEnum.ARMOURY);
         if (type.equals("barracks"))
             return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,2000,getBuildingCost(type),0, 200000 , BuildingEnum.BARRACKS);
         if (type.equals("mercenarypost"))
             return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,2000,getBuildingCost(type),0, 200000 , BuildingEnum.MERCENARY_POST);
-
+        if (type.equals("tanner"))
+            return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,100,getBuildingCost(type),1,1,BuildingEnum.TANNER);
         if (type.equals("engineerguild"))
             return new TradeBuilding(type,"",2,3,false,0,false,owner,row,column,400,getBuildingCost(type),0,0, BuildingEnum.ENGINEER_GUILD);
         if (type.equals("killingpit"))
             return new TradeBuilding(type,"",1,1,true,0,false,owner,row,column,0,getBuildingCost(type),0, 0, BuildingEnum.KILLING_PIT);
         if (type.equals("pitchditch"))
             return new TradeBuilding(type,"",1,1,true,0,false,owner,row,column,0,getBuildingCost(type),0, 200000 , BuildingEnum.PITCH_DITCH);
-        if (type.equals("cagedwardog"))
+        if (type.equals("taw9"))
             return new TradeBuilding(type,"",1,1,false,0,true,owner,row,column,100,getBuildingCost(type),3, 200000 , BuildingEnum.CAGED_WAR_DOGS);//TODO : HOW MANY OPERATOR?
         if (type.equals("siegetent"))
             return new TradeBuilding(type,"",2,2,true,0,false,owner,row,column,300,getBuildingCost(type),1,200000 , BuildingEnum.SIEGE_TENT);
@@ -218,7 +218,7 @@ public class Building {
             return new TradeBuilding(type,"",2,3,false,0,false,owner,row,column,0,getBuildingCost(type),0, 0, BuildingEnum.TUNNELER_GUILD);//TODO : HOW MANY OPERATOS?
         if (type.equals("appleorchard"))
             return new TradeBuilding(type,"",3,5,true,0,false,owner,row,column,300,getBuildingCost(type),1, 3, BuildingEnum.APPLE_ORCHARD);
-        if (type.equals("diaryfarmer"))
+        if (type.equals("dairyfarmer"))
             return new TradeBuilding(type,"",3,5,true,0,false,owner,row,column,300,getBuildingCost(type),1, 3, BuildingEnum.DIARY_FARMER);
         if (type.equals("hopsfarmer"))
             return new TradeBuilding(type,"",3,5,true,0,false,owner,row,column,300,getBuildingCost(type),1, 3,BuildingEnum.HOPS_FARMER);
@@ -236,7 +236,7 @@ public class Building {
             return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,300,getBuildingCost(type),1, 0, BuildingEnum.INN);
         if (type.equals("mangonel"))
             return new Building(type , 2 , 2 , false , "" , owner , row , column , getBuildingCost(type), 500 , -1 , false , BuildingEnum.MANGONEL , 1);
-        if (type.equals("mill"))
+        if (type.equals("food9"))
             return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,400,getBuildingCost(type),3, 0, BuildingEnum.MILL);
         if (type.equals("ironmine"))
             return new TradeBuilding(type,"",3,3,false,0,false,owner,row,column,300,getBuildingCost(type),1, 0, BuildingEnum.IRON_MINE);
@@ -260,11 +260,12 @@ public class Building {
             return new TradeBuilding(type,"",2,4,false,+1,false,owner,row,column,400,getBuildingCost(type),0, 0, BuildingEnum.CHURCH);//TODO
         if (type.equals("cathedral"))
             return new TradeBuilding(type,"",3,5,false,+1,false,owner,row,column,400,getBuildingCost(type),0, 0, BuildingEnum.CATHEDRAL);//TODO
-        if (type.equals("well"))
+        if (type.equals("has5"))
             return new TradeBuilding(type,"",1,1,false,0,false,owner,row,column,50,getBuildingCost(type),1, 0, BuildingEnum.WELL);//TODO
-        if (type.equals("waterpot"))
+        if (type.equals("has6"))
             return new Building(type , 1 , 1 , false , "" , owner , row , column , getBuildingCost( type ) , 50 , 200000 , false , BuildingEnum.WATER_POT , 0 );//TODO
-
+        if (type.equals("taw8"))
+            return new Building(type,2,2,false,"",owner,row,column,getBuildingCost(type),100,0,false,BuildingEnum.OIL_SMELTER,0);
         if (type.equals("goodthings"))
             return new TradeBuilding(type,"",1,1,false,+2,false,owner,row,column,50,getBuildingCost(type),0, 0, BuildingEnum.GOOD_THINGS);//TODO
         if (type.equals("badthings"))
@@ -277,13 +278,44 @@ public class Building {
             return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),1, 0, BuildingEnum.FLETCHER);//TODO
         if (type.equals("poleturner"))
             return new TradeBuilding(type,"",2,2,false,0,false,owner,row,column,300,getBuildingCost(type),1, 0, BuildingEnum.POLE_TURNER);//TODO
-        if (type.equals("signpost"))
+        if (type.equals("has7"))
             return new TradeBuilding(type,"",1,1,false,-3,false,owner,row,column,150,getBuildingCost(type),0, 0, BuildingEnum.SIGNPOST);//TODO
         if (type.equals("tunnelentrance"))
             return new Building(type , 1 , 1 , true , "", owner , row , column , getBuildingCost( type ) , 100 , 0 , false , BuildingEnum.TUNNEL_ENTRANCE , 0 );//TODO
         if (type.equals("staircase"))
             return new Building(type,1,1,true,"",owner,row,column,getBuildingCost(type),20,0,false,BuildingEnum.STAIR,0);
-
+        if (type.equals("gt1"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,+1,false,BuildingEnum.GT1,0);
+        if (type.equals("gt2"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,+1,false,BuildingEnum.GT2,0);
+        if (type.equals("gt3"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,+1,false,BuildingEnum.GT3,0);
+        if (type.equals("gt4"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,+1,false,BuildingEnum.GT4,0);
+        if (type.equals("gt5"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,+1,false,BuildingEnum.GT5,0);
+        if (type.equals("gt6"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,+1,false,BuildingEnum.GT6,0);
+        if (type.equals("gt7"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,+1,false,BuildingEnum.GT7,0);
+        if (type.equals("gt8"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,+1,false,BuildingEnum.GT8,0);
+        if (type.equals("bt1"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,-1,false,BuildingEnum.BT1,0);
+        if (type.equals("bt2"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,-1,false,BuildingEnum.BT2,0);
+        if (type.equals("bt3"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,-1,false,BuildingEnum.BT3,0);
+        if (type.equals("bt4"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,-1,false,BuildingEnum.BT4,0);
+        if (type.equals("bt5"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,-1,false,BuildingEnum.BT5,0);
+        if (type.equals("bt6"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,-1,false,BuildingEnum.BT6,0);
+        if (type.equals("bt7"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,-1,false,BuildingEnum.BT7,0);
+        if (type.equals("bt8"))
+            return new Building(type,1,1,false,"",owner,row,column,getBuildingCost(type),50,-1,false,BuildingEnum.BT8,0);
         return null ;
 
     }
@@ -342,7 +374,10 @@ public class Building {
 
 
         // OTHER
-        if (type.equals("drawbridge")) return new Cost( 0 , 0 , 0 , 0 , 0 , 10 ,
+        if (type.equals("taw8")) return new Cost( 0 , 0 , 0 , 0 , 10, 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0);
+        if (type.equals("taw3")) return new Cost( 0 , 0 , 0 , 0 , 0 , 10 ,
                 0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
                 0,0,0,0,0, 0) ;
 
@@ -353,6 +388,9 @@ public class Building {
         if (type.equals("perimetertower")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
                 10 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
                 0,0,0,0,0, 0) ;
+        if (type.equals("tanner")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                10 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0);
 
         if (type.equals("squaretower")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
                 35 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
@@ -399,13 +437,62 @@ public class Building {
                 0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
                 0,0,0,0,0, 0) ;
 
-        if (type.equals("cagedwardog")) return new Cost( 0 , 0 , 0 , 0 , 100 , 10 ,
+        if (type.equals("taw9")) return new Cost( 0 , 0 , 0 , 0 , 100 , 10 ,
                 0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
                 0,0,0,0,0, 0) ;
 
         if (type.equals("siegetent")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
                 0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
                 0,0,0,0,0, 0) ;
+        if (type.equals("gt1")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("gt2")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("gt3")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("gt4")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("gt5")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("gt6")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("gt7")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("gt8")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("bt1")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("bt2")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("bt3")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("bt4")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("bt5")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("bt6")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("bt7")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+        if (type.equals("bt8")) return new Cost( 0 , 0 , 0 , 0 , 0 , 0 ,
+                0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
+                0,0,0,0,0, 0) ;
+
 
         if (type.equals("stable")) return new Cost( 0 , 0 , 0 , 0 , 400 , 20 ,
                 0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
@@ -451,7 +538,7 @@ public class Building {
                 0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
                 0,0,0,0,0, 0) ;
 
-        if (type.equals("mill")) return new Cost( 0 , 0 , 0 , 0 , 0 , 20 ,
+        if (type.equals("food9")) return new Cost( 0 , 0 , 0 , 0 , 0 , 20 ,
                 0 , 0 , 0 , 0 , 0 , 0, 0,0,0,0,0,
                 0,0,0,0,0, 0) ;
 

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class DataBase
 {
-    //public static String location = ( Main.class.getResource("/data.json").toString()).replaceAll("file:/","") ;
     //public static String location = "/home/kimoam03/project-group-05/server/src/main/resources/data.json";
     //public static String locsetTopation = "/home/aria/tamrin/AP/project-group-05/server/src/main/resources/data.json";
     public static String location = "C:\\Users\\TUF\\Desktop\\university\\AdvancedProgramming\\project-group-05\\server\\src\\main\\resources\\data.json" ;
