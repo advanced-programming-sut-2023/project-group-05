@@ -49,11 +49,7 @@ public class MainMenu extends Application {
         GameController.currentNickname = "nick"  ;
         GameController.currentUsername = "Danial" ;
         GameController.currentEmail = "alsdjfk@gmial.com" ;
-
         // ### for testing ###
-
-
-
         String currentUserName = GameController.currentUsername ;
         String buttonStyle = "-fx-background-color:\n" +
                 "            #3c7fb1,\n" +
@@ -66,7 +62,7 @@ public class MainMenu extends Application {
                 "    -fx-font-size: 15px;\n" +
                 "    -fx-border-radius: 5px;";
         stage = _stage;
-        stage.setTitle("Main Menu");
+        stage.setTitle("Main Menu - " + GameController.currentUsername);
         BorderPane borderPane = FXMLLoader.load(MainMenu.class.getResource("/fxml/MainMenu.fxml"));
         VBox vBox = new VBox();
         vBox.setSpacing(25);
@@ -84,7 +80,6 @@ public class MainMenu extends Application {
                 }
             }
         });
-
         Button goToProfile = new Button("View Profile!");
         /// goToChat.setAlignment(Pos.CENTER);
         goToProfile.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -101,10 +96,8 @@ public class MainMenu extends Application {
 
         TextField roomName = new TextField();
         roomName.setPromptText("Enter Room Name");
-
         TextField password = new TextField();
         password.setPromptText("Enter Room Password");
-
         roomName.setMaxWidth(200);
         password.setMaxWidth(200);
 
@@ -113,7 +106,7 @@ public class MainMenu extends Application {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 GameRoomMenu gameRoomMenu = new GameRoomMenu() ;
-                if( SignupLoginMenuController.joinRoom( roomName.getText() , password.getText() , gameRoomMenu ) )
+//                if( SignupLoginMenuController.joinRoom( roomName.getText() , password.getText() , gameRoomMenu ) )
                     try{gameRoomMenu.start( stage ) ;}catch( Exception e ){ e.printStackTrace(); }
 
             }
@@ -172,6 +165,7 @@ public class MainMenu extends Application {
         stage.setScene(new Scene(borderPane));
         stage.show();
     }
+
 
     private void setBackButton(BorderPane pane)
     {
@@ -307,10 +301,10 @@ public class MainMenu extends Application {
         user.setStyle(style);nick.setStyle(style);mail.setStyle(style);noFound.setStyle(style);
         noFound.setStyle("-fx-font-size: 20px");
         noFound.setFill(Color.RED);
-        Button sendFriendShip = new Button();
-        sendFriendShip.setPrefHeight(80);
-        sendFriendShip.setPrefWidth(80);
-        sendFriendShip.setBackground(new Background(new BackgroundFill(Icons.FRIEND.getImagePattern(),null,null)));
+        Button sendThing = new Button();
+        sendThing.setPrefHeight(80);
+        sendThing.setPrefWidth(80);
+        sendThing.setBackground(new Background(new BackgroundFill(Icons.FRIEND.getImagePattern(),null,null)));
         find.textProperty().addListener((observable, oldValue, newValue) -> {
             template.getChildren().clear();
         });
@@ -324,13 +318,13 @@ public class MainMenu extends Application {
                     user.setText("Username : "+username);
                     nick.setText("Nickname : "+nickname);
                     mail.setText("Email : "+email);
-                    sendFriendShip.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    sendThing.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent mouseEvent) {
                             // todo : how to invite him ?
                         }
                     });
-                    template.getChildren().addAll(user,nick,mail,sendFriendShip);
+                    template.getChildren().addAll(user,nick,mail,sendThing);
                 }
             }
         });
