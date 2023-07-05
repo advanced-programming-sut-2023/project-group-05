@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 
 import java.io.Serializable;
+import java.util.Random;
 
 public class ChatPacket implements Serializable {
     public String to;
@@ -11,12 +12,16 @@ public class ChatPacket implements Serializable {
     public String name;
     public String jsonInfo;
 
+    public Token token;
+
     public ChatPacket(String to, String command, String name, String jsonInfo)
     {
         this.to = to;
         this.command = command;
         this.name = name;
         this.jsonInfo = jsonInfo;
+        Random rand = new Random();
+        token = new Token(rand.nextLong(), rand.nextLong());
     }
     public JSONObject toJson()
     {
@@ -25,6 +30,7 @@ public class ChatPacket implements Serializable {
         jsonObject.put("command", command);
         jsonObject.put("name", name);
         jsonObject.put("jsonInfo", jsonInfo);
+        jsonObject.put("token", token.toJson().toJSONString());
         return jsonObject;
     }
     public static ChatPacket fromJson(JSONObject jsonObject)
