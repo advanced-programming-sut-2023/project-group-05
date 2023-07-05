@@ -106,9 +106,6 @@ public class MainMenu extends Application {
                 GameRoomMenu gameRoomMenu = new GameRoomMenu() ;
                 if( SignupLoginMenuController.joinRoom( roomName.getText() , password.getText() , gameRoomMenu ) ){
                     try{gameRoomMenu.start( stage ) ;}catch( Exception e ){ e.printStackTrace(); }
-                    GameController.gcw = new GameConnectionWriter(GameController.currentUsername) ;
-                    GameController.gcr = new GameConnectionReader(GameController.currentUsername) ;
-                    GameController.gcr.start() ;
                 }
 
             }

@@ -14,6 +14,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.example.controller.GameConnectionReader;
+import org.example.controller.GameConnectionWriter;
 import org.example.controller.GameController;
 import org.example.controller.SignupLoginMenuController;
 import org.example.model.enums.Icons;
@@ -31,6 +33,9 @@ public class GameRoomMenu extends Application {
         stage.setScene(scene);
         stage.setTitle("Room Menu - " + GameController.currentUsername);
         stage.show();
+        GameController.gcw = new GameConnectionWriter(GameController.currentUsername) ;
+        GameController.gcr = new GameConnectionReader(GameController.currentUsername,stage) ;
+        GameController.gcr.play() ;
     }
 
     public void setUsernamesAndNicknames( String[] usernamesAndNicknames ){

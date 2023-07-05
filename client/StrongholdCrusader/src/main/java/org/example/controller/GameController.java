@@ -51,8 +51,8 @@ public class GameController {
 
     public void putCastles(){
         for(int i = 0 ; i < players.size() ; i++){
-            int castleRow = (i % 2 == 0 ? 20 : 50) ;
-            int castleColumn = ((i/2) % 2 == 0 ? 20 : 50) ;
+            int castleRow = (i % 2 == 0 ? 15 : 25) ;
+            int castleColumn = ((i/2) % 2 == 0 ? 15 : 25) ;
             System.out.println( "castle built on " + castleRow + " " + castleColumn ) ;
             putBuildingInPlace ( Building.createBuildingByName( "castle" , players.get(i) , castleRow , castleColumn ) ) ;
             GameGraphicalController.addBuildingImage( castleRow , castleColumn , "castle" ) ;

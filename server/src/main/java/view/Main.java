@@ -3,15 +3,11 @@ package view;
 
 import controller.PortDistributor;
 import controller.LoginRegisterThread;
-import controller.GameRoomController;
 import model.DataBase;
-import model.GameRoomConnection;
 import controller.*;
 import model.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import java.util.zip.CheckedInputStream;
 
 public class Main extends Application
 {

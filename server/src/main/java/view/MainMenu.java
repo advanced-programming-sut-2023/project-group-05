@@ -115,7 +115,9 @@ public class MainMenu extends Application
                     GameRoom gameRoom = new GameRoom( roomNumber.getText() , roomPass.getText() , 4  ) ;
                     new Alert(Alert.AlertType.INFORMATION,"Room Created Successfully").showAndWait();
                     Label text = new Label( "name = " + roomNumber.getText() + " " + "pass = " + roomPass.getText() ) ;
+                    Button button = new Button( "START" ) ;
                     vBox.getChildren().add( text ) ;
+                    vBox.getChildren().add( button ) ;
                     text.setOnMouseClicked( new EventHandler <MouseEvent>() {
                         @Override
                         public void handle( MouseEvent mouseEvent ){
@@ -123,6 +125,12 @@ public class MainMenu extends Application
                             for( String username : gameRoom.getUsernames() ){
                                 System.out.print( " user : " + username ) ;
                             }
+                        }
+                    } );
+                    button.setOnMouseClicked( new EventHandler <MouseEvent>() {
+                        @Override
+                        public void handle( MouseEvent mouseEvent ){
+                            gameRoom.start() ;
                         }
                     } );
                 }

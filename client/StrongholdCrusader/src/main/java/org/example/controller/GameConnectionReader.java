@@ -1,18 +1,26 @@
 package org.example.controller;
 
+import javafx.animation.Transition;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 
-public class GameConnectionReader extends Thread {
+public class GameConnectionReader extends Transition {
 
     private int port = -1 ;
     private Socket socket = null ;
     private DataInputStream reader ;
+    private Stage stage ;
 
-    public GameConnectionReader(String username){
+    public GameConnectionReader(String username, Stage stage){
+
+        this.setCycleCount( -1 );
+        this.setCycleDuration( Duration.millis( 1000 ) );
+        this.stage = stage ;
 
         while( port == -1 ){
             try{
@@ -49,17 +57,18 @@ public class GameConnectionReader extends Thread {
     }
 
     @Override
-    public void run(){
-
+    protected void interpolate( double v ){
         String input ;
         try{while( true ){
 
 
             input = reader.readUTF() ;
-            System.out.println( "gcr = " + input ) ;
+            /*handle(){
 
+            }*/
 
         }} catch( Exception e ){ e.printStackTrace(); }
-
+        System.out.println( "you shouldn't see this" );
     }
+
 }

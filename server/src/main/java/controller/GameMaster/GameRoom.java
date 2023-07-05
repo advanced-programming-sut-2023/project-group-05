@@ -41,7 +41,10 @@ public class GameRoom {
     }
 
     public void start(){
-        if( usernames.size() < 2 ) return ;
+        if( usernames.size() < 2 ){
+            System.out.println( "can't start the game due to small number of players" );
+            return ;
+        }
         if( locked ) return ;
         locked = true;
         ArrayList<GameMasterReader> orderedGMRs = new ArrayList<>() ;
@@ -51,6 +54,7 @@ public class GameRoom {
             orderedGMWs.add( userToGMW.get( username ) ) ;
             orderedGMRs.add( userToGMR.get( username ) ) ;
         }
+        System.out.println( "game started" ) ;
         new GameMaster( usernames , orderedGMRs , orderedGMWs ) ;
     }
 
